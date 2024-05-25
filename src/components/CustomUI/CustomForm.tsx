@@ -5,7 +5,6 @@ import CustomInput from "./CustomInput";
 import CustomSelect from "./CustomSelect";
 import { cn } from "@/utils";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { IDiamondType } from "@/types/formTypes";
 
 type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   elements: ElementType[];

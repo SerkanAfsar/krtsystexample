@@ -12,3 +12,8 @@ export type CustomOptionType = {
   titleVal: string;
   valueVal: string;
 };
+
+export type LoginType = {
+  email: string;
+  password: string;
+};

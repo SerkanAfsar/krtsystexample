@@ -1,0 +1,12 @@
+export type LoginResultType = {
+  message?: string | null;
+  result: boolean;
+  payload: {
+    token?: string;
+    user?: {
+      email: string;
+    };
+    password?: string[];
+    username?: string[];
+  };
+};

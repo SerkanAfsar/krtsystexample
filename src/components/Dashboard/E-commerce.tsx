@@ -10,7 +10,6 @@ import MapOne from "../Maps/MapOne";
 
 import { GiCutDiamond, GiDiamondTrophy } from "react-icons/gi";
 import { MdWork } from "react-icons/md";
-
 import { FaUserFriends } from "react-icons/fa";
 
 const ECommerce: React.FC = () => {
@@ -39,17 +38,6 @@ const ECommerce: React.FC = () => {
         <CardDataStats title="Müşteri" total="3.456" rate="0.95%" levelUp>
           <FaUserFriends size={"25px"} />
         </CardDataStats>
-      </div>
-
-      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
-        <ChartOne />
-        <ChartTwo />
-        <ChartThree />
-        <MapOne />
-        <div className="col-span-12 xl:col-span-8">
-          <TableOne />
-        </div>
-        <ChatCard />
       </div>
     </>
   );
