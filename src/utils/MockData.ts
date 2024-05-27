@@ -54,6 +54,62 @@ export const AddStoneFields: Array<ElementType> = [
         titleVal: "L",
         valueVal: "L",
       },
+      {
+        titleVal: "M",
+        valueVal: "M",
+      },
+      {
+        titleVal: "N",
+        valueVal: "N",
+      },
+      {
+        titleVal: "O",
+        valueVal: "O",
+      },
+      {
+        titleVal: "P",
+        valueVal: "P",
+      },
+      {
+        titleVal: "Q",
+        valueVal: "Q",
+      },
+      {
+        titleVal: "R",
+        valueVal: "R",
+      },
+      {
+        titleVal: "S",
+        valueVal: "S",
+      },
+      {
+        titleVal: "T",
+        valueVal: "T",
+      },
+      {
+        titleVal: "U",
+        valueVal: "U",
+      },
+      {
+        titleVal: "V",
+        valueVal: "V",
+      },
+      {
+        titleVal: "W",
+        valueVal: "W",
+      },
+      {
+        titleVal: "X",
+        valueVal: "X",
+      },
+      {
+        titleVal: "Y",
+        valueVal: "Y",
+      },
+      {
+        titleVal: "Z",
+        valueVal: "Z",
+      },
     ],
   },
   {
@@ -469,19 +525,219 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "elek",
-        type: "text",
+        type: "select",
         title: "Elek",
         placeholder: "Elek Değerini Giriniz...",
         required: true,
         requiredMessage: "Elek Değeri Boş Bırakılamaz",
+        options: [
+          {
+            titleVal: "60",
+            valueVal: "60",
+          },
+          {
+            titleVal: "70",
+            valueVal: "70",
+          },
+          {
+            titleVal: "80",
+            valueVal: "80",
+          },
+          {
+            titleVal: "90",
+            valueVal: "90",
+          },
+          {
+            titleVal: "100",
+            valueVal: "100",
+          },
+          {
+            titleVal: "110",
+            valueVal: "110",
+          },
+          {
+            titleVal: "115",
+            valueVal: "115",
+          },
+          {
+            titleVal: "120",
+            valueVal: "120",
+          },
+          {
+            titleVal: "125",
+            valueVal: "125",
+          },
+          {
+            titleVal: "130",
+            valueVal: "130",
+          },
+          {
+            titleVal: "135",
+            valueVal: "135",
+          },
+          {
+            titleVal: "140",
+            valueVal: "140",
+          },
+          {
+            titleVal: "145",
+            valueVal: "145",
+          },
+          {
+            titleVal: "150",
+            valueVal: "150",
+          },
+          {
+            titleVal: "155",
+            valueVal: "155",
+          },
+          {
+            titleVal: "160",
+            valueVal: "160",
+          },
+          {
+            titleVal: "170",
+            valueVal: "170",
+          },
+          {
+            titleVal: "180",
+            valueVal: "180",
+          },
+          {
+            titleVal: "190",
+            valueVal: "190",
+          },
+          {
+            titleVal: "200",
+            valueVal: "200",
+          },
+          {
+            titleVal: "210",
+            valueVal: "210",
+          },
+          {
+            titleVal: "220",
+            valueVal: "220",
+          },
+          {
+            titleVal: "230",
+            valueVal: "230",
+          },
+          {
+            titleVal: "240",
+            valueVal: "240",
+          },
+          {
+            titleVal: "250",
+            valueVal: "250",
+          },
+          {
+            titleVal: "260",
+            valueVal: "260",
+          },
+          {
+            titleVal: "270",
+            valueVal: "270",
+          },
+          {
+            titleVal: "70",
+            valueVal: "70",
+          },
+        ],
       },
       {
         name: "boy",
-        type: "text",
+        type: "select",
         title: "Boy",
         placeholder: "Boy Değerini Giriniz...",
         required: true,
         requiredMessage: "Boy Değeri Boş Bırakılamaz",
+        options: [
+          {
+            titleVal: "00",
+            valueVal: "00",
+          },
+          {
+            titleVal: "0.01-0.03",
+            valueVal: "0.01-0.03",
+          },
+          {
+            titleVal: "0.03-0.07",
+            valueVal: "0.03-0.07",
+          },
+          {
+            titleVal: "0.08-0.13",
+            valueVal: "0.08-0.13",
+          },
+          {
+            titleVal: "0.13-0.17",
+            valueVal: "0.13-0.17",
+          },
+          {
+            titleVal: "0.18-0.23",
+            valueVal: "0.18-0.23",
+          },
+          {
+            titleVal: "0.23-0.29",
+            valueVal: "0.23-0.29",
+          },
+          {
+            titleVal: "0.30-0.39",
+            valueVal: "0.30-0.39",
+          },
+          {
+            titleVal: "0.40-0.49",
+            valueVal: "0.40-0.49",
+          },
+          {
+            titleVal: "0.50-0.59",
+            valueVal: "0.50-0.59",
+          },
+          {
+            titleVal: "0.60-0.69",
+            valueVal: "0.60-0.69",
+          },
+          {
+            titleVal: "0.70-0.79",
+            valueVal: "0.70-0.79",
+          },
+          {
+            titleVal: "0.80-0.89",
+            valueVal: "0.80-0.89",
+          },
+          {
+            titleVal: "0.90-0.99",
+            valueVal: "0.90-0.99",
+          },
+          {
+            titleVal: "1.00-1.49",
+            valueVal: "1.00-1.49",
+          },
+          {
+            titleVal: "1.50-1.99",
+            valueVal: "1.00-1.49",
+          },
+          {
+            titleVal: "2.00-2.99",
+            valueVal: "2.00-2.99",
+          },
+          {
+            titleVal: "3.00-3.99",
+            valueVal: "3.00-3.99",
+          },
+          {
+            titleVal: "4.00-4.99",
+            valueVal: "4.00-4.99",
+          },
+          {
+            titleVal: "5.00-5.99",
+            valueVal: "5.00-5.99",
+          },
+          {
+            titleVal: "6+",
+            valueVal: "6+",
+          },
+        ],
       },
       {
         name: "aciklama",
@@ -516,6 +772,10 @@ export const AddStoneSections: Array<FormSectionType> = [
             titleVal: "GIA",
             valueVal: "GIA",
           },
+          {
+            titleVal: "NONE",
+            valueVal: "NONE",
+          },
         ],
       },
       {
@@ -531,7 +791,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "sertifikaTarihi",
-        type: "text",
+        type: "datepicker",
         title: "Sertifika Tarihi",
         placeholder: "Sertifika Tarihi Değerini Giriniz...",
         required: true,
@@ -566,6 +826,10 @@ export const AddStoneSections: Array<FormSectionType> = [
           {
             titleVal: "P",
             valueVal: "P",
+          },
+          {
+            titleVal: "-",
+            valueVal: "-",
           },
         ],
       },
@@ -699,6 +963,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         disabled: true,
         relativeTo: "sertifika",
         span: 4,
+        rightIcon: "%",
       },
       {
         name: "totalDepth",
@@ -710,6 +975,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         disabled: true,
         relativeTo: "sertifika",
         span: 4,
+        rightIcon: "%",
       },
       {
         name: "girdle",
@@ -722,29 +988,28 @@ export const AddStoneSections: Array<FormSectionType> = [
         disabled: true,
         span: 4,
       },
-    ],
-  },
-  {
-    colsLenght: 4,
-    sectionTitle: "Pırlanta Fiyat Bilgileri",
-    groupNumber: 2,
-    elements: [
+
       {
         name: "satinAlmaTarihi",
-        type: "text",
+        type: "datepicker",
         title: "Satin Alma Tarihi",
         placeholder: "Satın Alma Tarihi Değerini Giriniz...",
         required: true,
         requiredMessage: "Satın Alma Tarihi Değerini Boş Bırakılamaz",
+        span: 3,
       },
       {
-        name: "rapaportFiyat",
+        name: "rapaportPrice",
         type: "text",
         title: "Rapaport Güncel Fiyatı",
         placeholder: "Rapaport Güncel Fiyatı...",
         required: true,
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
         disabled: true,
+        span: 3,
+        rightIcon: "$",
+        value: "2500",
+        isCurrency: true,
       },
       {
         name: "iskonto",
@@ -753,6 +1018,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "İskonto...",
         required: true,
         requiredMessage: "İskonto Boş Bırakılamaz",
+        span: 3,
       },
       {
         name: "pricePerCarat",
@@ -762,7 +1028,18 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: false,
         requiredMessage: "İskonto Boş Bırakılamaz",
         disabled: true,
+        span: 3,
+        isCurrency: true,
+        rightIcon: "$",
       },
     ],
   },
+  // {
+  //   colsLenght: 4,
+  //   sectionTitle: "Pırlanta Fiyat Bilgileri",
+  //   groupNumber: 2,
+  //   elements: [
+
+  //   ],
+  // },
 ];

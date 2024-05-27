@@ -1,5 +1,5 @@
 export type ElementType = {
-  type: "text" | "password" | "email" | "select";
+  type: "text" | "password" | "email" | "select" | "datepicker";
   title: string;
   name: string;
   placeholder?: string | null;
@@ -9,6 +9,9 @@ export type ElementType = {
   span?: number;
   disabled?: boolean;
   relativeTo?: string;
+  rightIcon?: string;
+  value?: string;
+  isCurrency?: boolean;
 };
 
 export type CustomOptionType = {

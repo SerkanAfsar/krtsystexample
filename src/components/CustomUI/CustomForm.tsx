@@ -6,6 +6,7 @@ import CustomSelect from "./CustomSelect";
 import { cn } from "@/utils";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FormSectionType } from "@/types/formTypes";
+import CustomDatePicker from "./CustomDatePicker";
 
 type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   section?: FormSectionType;
@@ -16,6 +17,15 @@ type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   activeStep: number;
   stepCount: number;
 };
+
+const formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+
+  // These options are needed to round to whole numbers if that's what you want.
+  //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+  //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+});
 
 const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
   (
@@ -42,11 +52,11 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       defaultValues: data,
     });
 
-    const [items, setItems] = React.useState<typeof formItemType>(null);
+    // const [items, setItems] = React.useState<typeof formItemType>(null);
 
     React.useEffect(() => {
       const subscription = watch((value: typeof formItemType) => {
-        setItems(value);
+        setData(value);
       });
       return () => subscription.unsubscribe();
     }, [watch]);
@@ -62,8 +72,8 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       relativeTo,
       ...rest
     }: ElementType) => {
-      const isDisabled = items && relativeTo ? !items[relativeTo] : disabled;
-
+      const isDisabled = data && relativeTo ? !data[relativeTo] : disabled;
+      const val = (data && data[name]) || null;
       switch (type) {
         case "text":
         default: {
@@ -73,10 +83,26 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
                 required:
                   !isDisabled && required ? rest.requiredMessage : false,
               })}
+              value={rest.isCurrency ? formatter.format(val) : val}
               title={title}
               placeholder={placeholder ?? undefined}
               err={errors[name]?.message?.toString() ?? null}
               outerClass={cn(rest?.span && `col-span-${rest.span.toString()}`)}
+              disabled={isDisabled}
+              {...rest}
+            />
+          );
+        }
+        case "datepicker": {
+          return (
+            <CustomDatePicker
+              {...register(name, {
+                required:
+                  !isDisabled && required ? rest.requiredMessage : false,
+              })}
+              title={title}
+              err={errors[name]?.message?.toString() ?? null}
+              outerClass={cn(rest.span && `col-span-${rest.span.toString()}`)}
               disabled={isDisabled}
               {...rest}
             />

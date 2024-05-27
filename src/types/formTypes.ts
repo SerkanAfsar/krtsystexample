@@ -26,7 +26,16 @@ export type ISertifikaType = {
   girdle?: string;
 };
 
-export type AddDiamondStep1Type = IDiamondType & ISertifikaType;
+export type IPirlantaPricingType = {
+  satinAlmaTarihi?: string;
+  rapaportPrice?: string;
+  iskonto?: string;
+  pricePerCarat?: string;
+};
+
+export type AddDiamondStep1Type = IDiamondType &
+  ISertifikaType &
+  IPirlantaPricingType;
 
 export type ISadeType = {
   sadeKodu?: string;
