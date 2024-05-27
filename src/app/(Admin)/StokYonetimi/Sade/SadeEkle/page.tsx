@@ -18,7 +18,7 @@ const ProFormLayout = () => {
                 Yeni Sade Ekle
               </h3>
             </div>
-            <CustomForm IFormInput={sadeType} elements={AddSadeFields} />
+            {/* <CustomForm IFormInput={sadeType} elements={AddSadeFields} /> */}
           </div>
         </div>
       </div>
