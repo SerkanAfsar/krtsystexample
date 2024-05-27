@@ -6,6 +6,9 @@ export type ElementType = {
   options?: CustomOptionType[] | null;
   required: boolean;
   requiredMessage?: string;
+  span?: number;
+  disabled?: boolean;
+  relativeTo?: string;
 };
 
 export type CustomOptionType = {

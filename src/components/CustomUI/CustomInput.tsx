@@ -27,13 +27,18 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
     },
     ref,
   ) => {
+    const id = React.useId();
     return (
       <div className={cn("w-full", outerClass && outerClass)}>
-        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+        <label
+          htmlFor={id}
+          className="mb-3 block text-sm font-medium text-black dark:text-white"
+        >
           {title}
         </label>
         <div className="relative">
           <input
+            id={id}
             ref={ref}
             type={type}
             name={name}
@@ -50,7 +55,9 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
           {icon && icon}
         </div>
         {err && (
-          <span className="mt-2 block w-full text-left text-red">{err}</span>
+          <span className="mt-2 block w-full text-left text-sm text-red">
+            {err}
+          </span>
         )}
       </div>
     );

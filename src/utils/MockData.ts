@@ -1,3 +1,4 @@
+import { FormSectionType } from "@/types/formTypes";
 import { ElementType } from "@/types/inputTypes";
 
 export const AddStoneFields: Array<ElementType> = [
@@ -169,13 +170,6 @@ export const AddStoneFields: Array<ElementType> = [
   },
 ];
 
-// sadeKodu?: string;
-// altinRengi?: string;
-// altinAyari?: string;
-// sadeGrami?: string;
-// hasGrami?: string;
-// mensei?: string;
-// toplamIscilik?: string;
 export const AddSadeFields: Array<ElementType> = [
   {
     name: "sadeKodu",
@@ -298,5 +292,477 @@ export const AddSadeFields: Array<ElementType> = [
     placeholder: "Toplam İşçilik Giriniz...",
     required: true,
     requiredMessage: "Toplam İşçilik Boş Bırakılamaz",
+  },
+];
+
+export const AddStoneSections: Array<FormSectionType> = [
+  {
+    colsLenght: 4,
+    sectionTitle: "Pırlanta Bilgileri",
+    groupNumber: 1,
+    elements: [
+      {
+        name: "kesim",
+        type: "select",
+        title: "Kesim",
+        placeholder: "Kesim Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Kesim Değerini Boş Bırakılamaz",
+        options: [
+          {
+            titleVal: "ROUND",
+            valueVal: "ROUND",
+          },
+          {
+            titleVal: "HEART",
+            valueVal: "HEART",
+          },
+          {
+            titleVal: "PEAR",
+            valueVal: "PEAR",
+          },
+          {
+            titleVal: "MARQUISE",
+            valueVal: "MARQUISE",
+          },
+          {
+            titleVal: "OVAL",
+            valueVal: "OVAL",
+          },
+          {
+            titleVal: "BAGET",
+            valueVal: "BAGET",
+          },
+          {
+            titleVal: "TRAPEZ",
+            valueVal: "TRAPEZ",
+          },
+          {
+            titleVal: "TRIANGLE",
+            valueVal: "TRIANGLE",
+          },
+          {
+            titleVal: "PRENSES",
+            valueVal: "PRENSES",
+          },
+          {
+            titleVal: "RADIANT",
+            valueVal: "RADIANT",
+          },
+          {
+            titleVal: "EMERALD",
+            valueVal: "EMERALD",
+          },
+          {
+            titleVal: "CUSHION",
+            valueVal: "CUSHION",
+          },
+        ],
+      },
+      {
+        name: "karat",
+        type: "text",
+        title: "Karat",
+        placeholder: "Karat Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Karat Değeri Boş Bırakılamaz",
+      },
+      {
+        name: "renk",
+        type: "select",
+        title: "Renk",
+        placeholder: "Renk Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Renk Değeri Boş Bırakılamaz",
+        options: [
+          {
+            titleVal: "D",
+            valueVal: "D",
+          },
+          {
+            titleVal: "E",
+            valueVal: "E",
+          },
+          {
+            titleVal: "F",
+            valueVal: "F",
+          },
+          {
+            titleVal: "G",
+            valueVal: "G",
+          },
+          {
+            titleVal: "H",
+            valueVal: "H",
+          },
+          {
+            titleVal: "I",
+            valueVal: "I",
+          },
+          {
+            titleVal: "J",
+            valueVal: "J",
+          },
+          {
+            titleVal: "K",
+            valueVal: "K",
+          },
+          {
+            titleVal: "L",
+            valueVal: "L",
+          },
+        ],
+      },
+      {
+        name: "berraklik",
+        type: "select",
+        title: "Berraklık",
+        placeholder: "Berraklık Değerini Giriniz...",
+        requiredMessage: "Berraklık Değeri Boş Bırakılamaz",
+        required: true,
+        options: [
+          {
+            titleVal: "FL",
+            valueVal: "FL",
+          },
+          {
+            titleVal: "IF",
+            valueVal: "IF",
+          },
+          {
+            titleVal: "VVS1",
+            valueVal: "VVS1",
+          },
+          {
+            titleVal: "VVS2",
+            valueVal: "VVS2",
+          },
+          {
+            titleVal: "VS1",
+            valueVal: "VS1",
+          },
+          {
+            titleVal: "VS2",
+            valueVal: "VS2",
+          },
+          {
+            titleVal: "SI1",
+            valueVal: "SI1",
+          },
+          {
+            titleVal: "SI2",
+            valueVal: "SI2",
+          },
+          {
+            titleVal: "I1",
+            valueVal: "I1",
+          },
+          {
+            titleVal: "I2",
+            valueVal: "I2",
+          },
+          {
+            titleVal: "I3",
+            valueVal: "I3",
+          },
+        ],
+      },
+      {
+        name: "elek",
+        type: "text",
+        title: "Elek",
+        placeholder: "Elek Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Elek Değeri Boş Bırakılamaz",
+      },
+      {
+        name: "boy",
+        type: "text",
+        title: "Boy",
+        placeholder: "Boy Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Boy Değeri Boş Bırakılamaz",
+      },
+      {
+        name: "aciklama",
+        type: "text",
+        title: "Açıklama",
+        placeholder: "Açıklama Değerini Giriniz...",
+        required: false,
+        requiredMessage: "Açıklama Değeri Boş Bırakılamaz",
+        span: 2,
+      },
+    ],
+  },
+  {
+    colsLenght: 12,
+    sectionTitle: "Sertifika Bilgileri",
+    groupNumber: 1,
+    elements: [
+      {
+        name: "sertifika",
+        type: "select",
+        title: "Sertifika",
+        placeholder: "Sertifika Seçiniz...",
+        required: false,
+        span: 4,
+        requiredMessage: "Kesim Değerini Boş Bırakılamaz",
+        options: [
+          {
+            titleVal: "HRD",
+            valueVal: "HRD",
+          },
+          {
+            titleVal: "GIA",
+            valueVal: "GIA",
+          },
+        ],
+      },
+      {
+        name: "sertifikaNo",
+        type: "text",
+        relativeTo: "sertifika",
+        title: "Sertifika No",
+        placeholder: "Sertifika No Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Sertifika No Değeri Boş Bırakılamaz",
+        disabled: true,
+        span: 4,
+      },
+      {
+        name: "sertifikaTarihi",
+        type: "text",
+        title: "Sertifika Tarihi",
+        placeholder: "Sertifika Tarihi Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Sertifika Tarihi Değeri Boş Bırakılamaz",
+        disabled: true,
+        relativeTo: "sertifika",
+        span: 4,
+      },
+      {
+        name: "propotion",
+        type: "select",
+        title: "Propotion",
+        placeholder: "Propotion Seçiniz...",
+        required: true,
+        disabled: true,
+        span: 3,
+        relativeTo: "sertifika",
+        requiredMessage: "Propotion Değerini Boş Bırakılamaz",
+        options: [
+          {
+            titleVal: "EXC",
+            valueVal: "EXC",
+          },
+          {
+            titleVal: "VG",
+            valueVal: "VG",
+          },
+          {
+            titleVal: "F",
+            valueVal: "F",
+          },
+          {
+            titleVal: "P",
+            valueVal: "P",
+          },
+        ],
+      },
+      {
+        name: "polish",
+        type: "select",
+        title: "Polish",
+        relativeTo: "sertifika",
+        placeholder: "Polish Seçiniz...",
+        required: true,
+        disabled: true,
+        requiredMessage: "Polish Değerini Boş Bırakılamaz",
+        span: 3,
+        options: [
+          {
+            titleVal: "EXC",
+            valueVal: "EXC",
+          },
+          {
+            titleVal: "VG",
+            valueVal: "VG",
+          },
+          {
+            titleVal: "F",
+            valueVal: "F",
+          },
+          {
+            titleVal: "P",
+            valueVal: "P",
+          },
+        ],
+      },
+      {
+        name: "symmetry",
+        type: "select",
+        title: "Symmetry",
+        placeholder: "Symmetry Seçiniz...",
+        required: true,
+        disabled: true,
+        relativeTo: "sertifika",
+        span: 3,
+        requiredMessage: "Symmetry Değerini Boş Bırakılamaz",
+        options: [
+          {
+            titleVal: "EXC",
+            valueVal: "EXC",
+          },
+          {
+            titleVal: "VG",
+            valueVal: "VG",
+          },
+          {
+            titleVal: "F",
+            valueVal: "F",
+          },
+          {
+            titleVal: "P",
+            valueVal: "P",
+          },
+        ],
+      },
+      {
+        name: "fluorescence",
+        type: "select",
+        title: "Fluorescence",
+        placeholder: "Fluorescence Seçiniz...",
+        required: true,
+        relativeTo: "sertifika",
+        span: 3,
+        disabled: true,
+        requiredMessage: "Fluorescence Değerini Boş Bırakılamaz",
+        options: [
+          {
+            titleVal: "NONE",
+            valueVal: "NONE",
+          },
+          {
+            titleVal: "FAINT",
+            valueVal: "FAINT",
+          },
+          {
+            titleVal: "MEDIUM",
+            valueVal: "MEDIUM",
+          },
+          {
+            titleVal: "STRONG",
+            valueVal: "STRONG",
+          },
+        ],
+      },
+      {
+        name: "min",
+        type: "text",
+        title: "Min",
+        placeholder: "Min  Değerini Giriniz...",
+        required: true,
+        relativeTo: "sertifika",
+        requiredMessage: "Min Değeri Boş Bırakılamaz",
+        disabled: true,
+        span: 4,
+      },
+      {
+        name: "max",
+        type: "text",
+        title: "Max",
+        placeholder: "Max Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Max Değeri Boş Bırakılamaz",
+        disabled: true,
+        relativeTo: "sertifika",
+        span: 4,
+      },
+      {
+        name: "height",
+        type: "text",
+        title: "Height",
+        placeholder: "Height Değerini Giriniz...",
+        required: true,
+        relativeTo: "sertifika",
+        requiredMessage: "Height Değeri Boş Bırakılamaz",
+        disabled: true,
+        span: 4,
+      },
+      {
+        name: "table",
+        type: "text",
+        title: "Table",
+        placeholder: "Table Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Table Değeri Boş Bırakılamaz",
+        disabled: true,
+        relativeTo: "sertifika",
+        span: 4,
+      },
+      {
+        name: "totalDepth",
+        type: "text",
+        title: "Total Depth",
+        placeholder: "Total Depth Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Total Depth Değeri Boş Bırakılamaz",
+        disabled: true,
+        relativeTo: "sertifika",
+        span: 4,
+      },
+      {
+        name: "girdle",
+        type: "text",
+        title: "Girdle",
+        placeholder: "Girdle Değerini Giriniz...",
+        required: true,
+        relativeTo: "sertifika",
+        requiredMessage: "Girdle Değeri Boş Bırakılamaz",
+        disabled: true,
+        span: 4,
+      },
+    ],
+  },
+  {
+    colsLenght: 4,
+    sectionTitle: "Pırlanta Fiyat Bilgileri",
+    groupNumber: 2,
+    elements: [
+      {
+        name: "satinAlmaTarihi",
+        type: "text",
+        title: "Satin Alma Tarihi",
+        placeholder: "Satın Alma Tarihi Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Satın Alma Tarihi Değerini Boş Bırakılamaz",
+      },
+      {
+        name: "rapaportFiyat",
+        type: "text",
+        title: "Rapaport Güncel Fiyatı",
+        placeholder: "Rapaport Güncel Fiyatı...",
+        required: true,
+        requiredMessage: "Karat Değeri Boş Bırakılamaz",
+        disabled: true,
+      },
+      {
+        name: "iskonto",
+        type: "text",
+        title: "İskonto",
+        placeholder: "İskonto...",
+        required: true,
+        requiredMessage: "İskonto Boş Bırakılamaz",
+      },
+      {
+        name: "pricePerCarat",
+        type: "text",
+        title: "Price Per Carat",
+        placeholder: "Price Per Carat...",
+        required: false,
+        requiredMessage: "İskonto Boş Bırakılamaz",
+        disabled: true,
+      },
+    ],
   },
 ];

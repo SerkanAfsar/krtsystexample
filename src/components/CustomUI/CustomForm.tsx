@@ -5,77 +5,164 @@ import CustomInput from "./CustomInput";
 import CustomSelect from "./CustomSelect";
 import { cn } from "@/utils";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { FormSectionType } from "@/types/formTypes";
 
 type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
-  elements: ElementType[];
-  colsLenght?: number | null;
-  IFormInput: any;
+  section?: FormSectionType;
+  formItemType: any;
+  setData: any;
+  setActiveStep?: any;
+  data?: any;
+  activeStep: number;
+  stepCount: number;
 };
 
 const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
-  ({ className, elements, IFormInput, colsLenght, ...rest }, ref) => {
+  (
+    {
+      className,
+      section,
+      activeStep,
+      setActiveStep,
+      setData,
+      formItemType,
+      data,
+      stepCount,
+      ...rest
+    },
+    ref,
+  ) => {
     const {
       register,
       handleSubmit,
+      watch,
+      reset,
       formState: { errors },
-    } = useForm<typeof IFormInput>();
+    } = useForm<typeof formItemType>({
+      defaultValues: data,
+    });
 
-    const onSubmit: SubmitHandler<typeof IFormInput> = (data) =>
-      console.log(data);
+    const [items, setItems] = React.useState<typeof formItemType>(null);
+
+    React.useEffect(() => {
+      const subscription = watch((value: typeof formItemType) => {
+        setItems(value);
+      });
+      return () => subscription.unsubscribe();
+    }, [watch]);
+
+    const retunItem: any = ({
+      title,
+      placeholder,
+      options,
+      type,
+      required,
+      name,
+      disabled,
+      relativeTo,
+      ...rest
+    }: ElementType) => {
+      const isDisabled = items && relativeTo ? !items[relativeTo] : disabled;
+
+      switch (type) {
+        case "text":
+        default: {
+          return (
+            <CustomInput
+              {...register(name, {
+                required:
+                  !isDisabled && required ? rest.requiredMessage : false,
+              })}
+              title={title}
+              placeholder={placeholder ?? undefined}
+              err={errors[name]?.message?.toString() ?? null}
+              outerClass={cn(rest?.span && `col-span-${rest.span.toString()}`)}
+              disabled={isDisabled}
+              {...rest}
+            />
+          );
+        }
+        case "select": {
+          return (
+            <CustomSelect
+              {...register(name, {
+                required:
+                  !isDisabled && required ? rest.requiredMessage : false,
+              })}
+              options={options ?? null}
+              title={title}
+              err={errors[name]?.message?.toString() ?? null}
+              outerClass={cn(rest.span && `col-span-${rest.span.toString()}`)}
+              disabled={isDisabled}
+              {...rest}
+            />
+          );
+        }
+      }
+    };
+
+    const onSubmit: SubmitHandler<typeof formItemType> = (values) => {
+      setData((prev: typeof formItemType) => ({ ...prev, values }));
+      setActiveStep((prev: number) => (prev < stepCount - 1 ? prev + 1 : prev));
+    };
+
+    const setPrev = () => {
+      setActiveStep((prev: number) => (prev != 0 ? prev - 1 : 0));
+    };
+
+    const setNext = () => {
+      setActiveStep((prev: number) => (prev != stepCount ? prev + 1 : prev));
+    };
 
     return (
-      <div className="p-6.5">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className={cn(
-            "grid grid-cols-none gap-6",
-            colsLenght ? `md:grid-cols-${colsLenght}` : "sm::grid-cols-2",
-            className,
-          )}
-          {...rest}
-          ref={ref}
-        >
-          {elements.map((item, index) => {
-            switch (item.type) {
-              case "text":
-              default: {
-                return (
-                  <CustomInput
-                    {...register(item.name, {
-                      required: item.required ? item.requiredMessage : false,
-                    })}
-                    title={item.title}
-                    placeholder={item.placeholder ?? undefined}
-                    key={index}
-                    err={errors[item.name]?.message?.toString() ?? null}
-                  />
-                );
-              }
-              case "select": {
-                return (
-                  <CustomSelect
-                    {...register(item.name, {
-                      required: item.required ? item.requiredMessage : false,
-                    })}
-                    options={item.options ?? null}
-                    title={item.title}
-                    key={index}
-                    err={errors[item.name]?.message?.toString() ?? null}
-                  />
-                );
-              }
-            }
-          })}
-          <div className="flex w-full items-end justify-end md:col-start-2 md:col-end-3">
-            <button
-              type="submit"
-              className="flex w-full justify-center rounded  bg-primary p-3 font-medium text-gray hover:bg-opacity-90 md:w-1/3"
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={className}
+        {...rest}
+        ref={ref}
+      >
+        <div className="mb-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="border-b border-stroke pb-4  dark:border-strokedark">
+            <h3 className="p-4 text-lg font-medium text-black dark:text-white">
+              {section?.sectionTitle}
+            </h3>
+            <hr />
+
+            <div
+              className={cn(
+                `grid grid-cols-4 gap-6 p-4`,
+                section?.colsLenght
+                  ? `grid-cols-${section.colsLenght.toString()}`
+                  : "grid-cols-3",
+              )}
             >
-              Kaydet
-            </button>
+              {section?.elements.map((item, index) => (
+                <React.Fragment key={item.name}>
+                  {retunItem(item)}
+                </React.Fragment>
+              ))}
+            </div>
           </div>
-        </form>
-      </div>
+        </div>
+
+        <div className="flex w-full items-end justify-end">
+          {activeStep > 0 && (
+            <button
+              type="button"
+              onClick={() => setPrev()}
+              className="mr-5 flex w-full justify-center rounded  bg-red p-3 font-medium text-gray hover:bg-opacity-90 md:w-auto"
+            >
+              Geri
+            </button>
+          )}
+          <button
+            type="submit"
+            className="flex w-full justify-center rounded  bg-primary p-3 font-medium text-gray hover:bg-opacity-90 md:w-auto"
+          >
+            {activeStep == stepCount - 1 ? "Kaydet" : "İleri"}
+          </button>
+        </div>
+      </form>
     );
   },
 );

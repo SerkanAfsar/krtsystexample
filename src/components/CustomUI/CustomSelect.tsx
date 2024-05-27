@@ -1,12 +1,14 @@
 "use client";
 import { CustomOptionType } from "@/types/inputTypes";
 import { cn } from "@/utils";
-import React, { useEffect, useState } from "react";
+import { ClassValue } from "clsx";
+import React, { useEffect, useId, useState } from "react";
 
 type SelectElementProps = React.InputHTMLAttributes<HTMLSelectElement> & {
   title: string;
   options: CustomOptionType[] | null;
   err?: string | null;
+  outerClass?: ClassValue | null;
 };
 
 const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
@@ -19,29 +21,35 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
       onBlur,
       name,
       options,
+      outerClass,
       ...rest
     },
     ref,
   ) => {
     const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
-
+    const id = useId();
     const changeTextColor = () => {
       setIsOptionSelected(true);
     };
 
     return (
-      <div>
-        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+      <div className={cn("w-full", outerClass && outerClass)}>
+        <label
+          htmlFor={id}
+          className="mb-3 block text-sm font-medium text-black dark:text-white"
+        >
           {title}
         </label>
 
         <div className="relative z-20 bg-white dark:bg-form-input">
           <select
+            id={id}
             ref={ref}
             name={name}
             onChange={selectChange}
             className={cn(
-              "relative z-20 w-full appearance-none rounded border border-stone-400 bg-transparent px-6 py-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input ",
+              "relative z-20 w-full appearance-none rounded border border-stone-400 bg-transparent px-6 py-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input",
+              rest.disabled && "bg-[#f5f7fd]",
               isOptionSelected && "text-black dark:text-white",
               err && "border-red",
             )}
@@ -86,7 +94,9 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
           </span>
         </div>
         {err && (
-          <span className="mt-2 block w-full text-left text-red">{err}</span>
+          <span className="mt-2 block w-full text-left text-sm text-red">
+            {err}
+          </span>
         )}
       </div>
     );
