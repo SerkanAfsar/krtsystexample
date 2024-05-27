@@ -67,7 +67,7 @@ const Header = (props: {
         </div>
 
         <div className="hidden sm:block">
-          <form onSubmit={(e) => e.preventDefault()}>
+          <form action="https://formbold.com/s/unique_form_id" method="POST">
             <div className="relative">
               <button className="absolute left-0 top-1/2 -translate-y-1/2">
                 <svg
@@ -95,7 +95,7 @@ const Header = (props: {
 
               <input
                 type="text"
-                placeholder="Arama..."
+                placeholder="Type to search..."
                 className="w-full bg-transparent pl-9 pr-4 font-medium focus:outline-none xl:w-125"
               />
             </div>
@@ -113,7 +113,7 @@ const Header = (props: {
             {/* <!-- Notification Menu Area --> */}
 
             {/* <!-- Chat Notification Area --> */}
-            {/* <DropdownMessage /> */}
+            <DropdownMessage />
             {/* <!-- Chat Notification Area --> */}
           </ul>
 

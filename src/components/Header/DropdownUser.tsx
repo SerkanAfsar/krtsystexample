@@ -44,13 +44,13 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Admin
+            Thomas Anree
           </span>
-          <span className="block text-xs">Atilla Karat Admin</span>
+          <span className="block text-xs">UX Designer</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
-          {/* <Image
+          <Image
             width={112}
             height={112}
             src={"/images/user/user-01.png"}
@@ -59,10 +59,7 @@ const DropdownUser = () => {
               height: "auto",
             }}
             alt="User"
-          /> */}
-          <div className="flex h-full w-full items-center justify-center rounded-[50%] bg-primary text-base font-bold text-white">
-            A
-          </div>
+          />
         </span>
 
         <svg
@@ -94,7 +91,7 @@ const DropdownUser = () => {
         <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
           <li>
             <Link
-              href="/"
+              href="/profile"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <svg
@@ -114,12 +111,12 @@ const DropdownUser = () => {
                   fill=""
                 />
               </svg>
-              Profil Bilgilerim
+              My Profile
             </Link>
           </li>
           <li>
             <Link
-              href="/"
+              href="#"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <svg
@@ -135,12 +132,12 @@ const DropdownUser = () => {
                   fill=""
                 />
               </svg>
-              Atanmış İşler
+              My Contacts
             </Link>
           </li>
           <li>
             <Link
-              href="/"
+              href="/pages/settings"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <svg
@@ -160,7 +157,7 @@ const DropdownUser = () => {
                   fill=""
                 />
               </svg>
-              Hesap Bilgilerim
+              Account Settings
             </Link>
           </li>
         </ul>
@@ -182,7 +179,7 @@ const DropdownUser = () => {
               fill=""
             />
           </svg>
-          Güvenli Çıkış
+          Log Out
         </button>
       </div>
       {/* <!-- Dropdown End --> */}

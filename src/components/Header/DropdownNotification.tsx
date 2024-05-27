@@ -76,7 +76,7 @@ const DropdownNotification = () => {
         }`}
       >
         <div className="px-4.5 py-3">
-          <h5 className="text-sm font-medium text-bodydark2">Bildirimler</h5>
+          <h5 className="text-sm font-medium text-bodydark2">Notification</h5>
         </div>
 
         <ul className="flex h-auto flex-col overflow-y-auto">
@@ -87,12 +87,13 @@ const DropdownNotification = () => {
             >
               <p className="text-sm">
                 <span className="text-black dark:text-white">
-                  Beran Gürleme Yeni Sade Stok Ekledi.
+                  Edit your information in a swipe
                 </span>{" "}
-                10 Adet Stok Eklendi
+                Sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim.
               </p>
 
-              <p className="text-xs">23 Mayıs 2024,Perşembe</p>
+              <p className="text-xs">12 May, 2025</p>
             </Link>
           </li>
           <li>
@@ -102,12 +103,12 @@ const DropdownNotification = () => {
             >
               <p className="text-sm">
                 <span className="text-black dark:text-white">
-                  Serkan Afşar yeni mücevher ekledi
+                  It is a long established fact
                 </span>{" "}
-                10 Adet Mücevher yaratıldı
+                that a reader will be distracted by the readable.
               </p>
 
-              <p className="text-xs">23 Mayıs 2024,Perşembe</p>
+              <p className="text-xs">24 Feb, 2025</p>
             </Link>
           </li>
           <li>
@@ -117,12 +118,13 @@ const DropdownNotification = () => {
             >
               <p className="text-sm">
                 <span className="text-black dark:text-white">
-                  Beran Gürleme Yeni Sade Stok Ekledi.
+                  There are many variations
                 </span>{" "}
-                10 Adet Stok Eklendi
+                of passages of Lorem Ipsum available, but the majority have
+                suffered
               </p>
 
-              <p className="text-xs">23 Mayıs 2024,Perşembe</p>
+              <p className="text-xs">04 Jan, 2025</p>
             </Link>
           </li>
           <li>
@@ -132,12 +134,13 @@ const DropdownNotification = () => {
             >
               <p className="text-sm">
                 <span className="text-black dark:text-white">
-                  Serkan Afşar yeni mücevher ekledi
+                  There are many variations
                 </span>{" "}
-                10 Adet Mücevher yaratıldı
+                of passages of Lorem Ipsum available, but the majority have
+                suffered
               </p>
 
-              <p className="text-xs">23 Mayıs 2024,Perşembe</p>
+              <p className="text-xs">01 Dec, 2024</p>
             </Link>
           </li>
         </ul>
