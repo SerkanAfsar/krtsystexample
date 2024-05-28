@@ -1,5 +1,11 @@
 export type ElementType = {
-  type: "text" | "password" | "email" | "select";
+  type:
+    | "text"
+    | "password"
+    | "email"
+    | "select"
+    | "datepicker"
+    | "customButtonGroup";
   title: string;
   name: string;
   placeholder?: string | null;
@@ -9,6 +15,11 @@ export type ElementType = {
   span?: number;
   disabled?: boolean;
   relativeTo?: string;
+  rightIcon?: string;
+  value?: string;
+  isCurrency?: boolean;
+  checkBoxList?: string[];
+  checkBoxSetValueItem?: string;
 };
 
 export type CustomOptionType = {
