@@ -355,8 +355,18 @@ export const AddStoneSections: Array<FormSectionType> = [
   {
     colsLenght: 4,
     sectionTitle: "Pırlanta Bilgileri",
-    groupNumber: 1,
+    groupNumber: 0,
     elements: [
+      {
+        name: "tip",
+        type: "customButtonGroup",
+        title: "Tip",
+        checkBoxList: ["TEK TAŞ", "MIX"],
+        required: true,
+        requiredMessage: "Karat Değeri Boş Bırakılamaz",
+        checkBoxSetValueItem: "tip",
+        span: 4,
+      },
       {
         name: "kesim",
         type: "select",
@@ -364,6 +374,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Kesim Değerini Giriniz...",
         required: true,
         requiredMessage: "Kesim Değerini Boş Bırakılamaz",
+        relativeTo: "tip",
         options: [
           {
             titleVal: "ROUND",
@@ -422,6 +433,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Karat Değerini Giriniz...",
         required: true,
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
+        relativeTo: "tip",
       },
       {
         name: "renk",
@@ -468,6 +480,7 @@ export const AddStoneSections: Array<FormSectionType> = [
             valueVal: "L",
           },
         ],
+        relativeTo: "tip",
       },
       {
         name: "berraklik",
@@ -476,6 +489,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Berraklık Değerini Giriniz...",
         requiredMessage: "Berraklık Değeri Boş Bırakılamaz",
         required: true,
+        relativeTo: "tip",
         options: [
           {
             titleVal: "FL",
@@ -530,6 +544,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Elek Değerini Giriniz...",
         required: true,
         requiredMessage: "Elek Değeri Boş Bırakılamaz",
+        relativeTo: "tip",
         options: [
           {
             titleVal: "60",
@@ -652,6 +667,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Boy Değerini Giriniz...",
         required: true,
         requiredMessage: "Boy Değeri Boş Bırakılamaz",
+        relativeTo: "tip",
         options: [
           {
             titleVal: "00",
@@ -744,6 +760,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         type: "text",
         title: "Açıklama",
         placeholder: "Açıklama Değerini Giriniz...",
+        relativeTo: "tip",
         required: false,
         requiredMessage: "Açıklama Değeri Boş Bırakılamaz",
         span: 2,
@@ -988,7 +1005,13 @@ export const AddStoneSections: Array<FormSectionType> = [
         disabled: true,
         span: 4,
       },
-
+    ],
+  },
+  {
+    colsLenght: 4,
+    sectionTitle: "Pırlanta Fiyat Bilgileri",
+    groupNumber: 1,
+    elements: [
       {
         name: "satinAlmaTarihi",
         type: "datepicker",
@@ -996,7 +1019,6 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Satın Alma Tarihi Değerini Giriniz...",
         required: true,
         requiredMessage: "Satın Alma Tarihi Değerini Boş Bırakılamaz",
-        span: 3,
       },
       {
         name: "rapaportPrice",
@@ -1006,7 +1028,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
         disabled: true,
-        span: 3,
+
         rightIcon: "$",
         value: "2500",
         isCurrency: true,
@@ -1018,7 +1040,6 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "İskonto...",
         required: true,
         requiredMessage: "İskonto Boş Bırakılamaz",
-        span: 3,
       },
       {
         name: "pricePerCarat",
@@ -1028,18 +1049,10 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: false,
         requiredMessage: "İskonto Boş Bırakılamaz",
         disabled: true,
-        span: 3,
+
         isCurrency: true,
         rightIcon: "$",
       },
     ],
   },
-  // {
-  //   colsLenght: 4,
-  //   sectionTitle: "Pırlanta Fiyat Bilgileri",
-  //   groupNumber: 2,
-  //   elements: [
-
-  //   ],
-  // },
 ];

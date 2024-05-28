@@ -7,9 +7,10 @@ import { cn } from "@/utils";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FormSectionType } from "@/types/formTypes";
 import CustomDatePicker from "./CustomDatePicker";
+import CustomButtonGroups from "./CustomButtonGroups";
 
 type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
-  section?: FormSectionType;
+  sections?: FormSectionType[];
   formItemType: any;
   setData: any;
   setActiveStep?: any;
@@ -21,17 +22,13 @@ type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
-
-  // These options are needed to round to whole numbers if that's what you want.
-  //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-  //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
 });
 
 const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
   (
     {
       className,
-      section,
+      sections,
       activeStep,
       setActiveStep,
       setData,
@@ -46,20 +43,18 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       register,
       handleSubmit,
       watch,
-      reset,
+      setValue,
       formState: { errors },
     } = useForm<typeof formItemType>({
       defaultValues: data,
     });
-
-    // const [items, setItems] = React.useState<typeof formItemType>(null);
 
     React.useEffect(() => {
       const subscription = watch((value: typeof formItemType) => {
         setData(value);
       });
       return () => subscription.unsubscribe();
-    }, [watch]);
+    }, [watch, setData]);
 
     const retunItem: any = ({
       title,
@@ -70,6 +65,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       name,
       disabled,
       relativeTo,
+      checkBoxList,
       ...rest
     }: ElementType) => {
       const isDisabled = data && relativeTo ? !data[relativeTo] : disabled;
@@ -89,6 +85,23 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
               err={errors[name]?.message?.toString() ?? null}
               outerClass={cn(rest?.span && `col-span-${rest.span.toString()}`)}
               disabled={isDisabled}
+              {...rest}
+            />
+          );
+        }
+        case "customButtonGroup": {
+          register(name, {
+            required,
+          });
+          return (
+            <CustomButtonGroups
+              title={title}
+              checkBoxList={checkBoxList || ["DATA YOK"]}
+              setValue={setValue}
+              outerClass={cn(rest.span && `col-span-${rest.span.toString()}`)}
+              register={register}
+              name={name}
+              value={val}
               {...rest}
             />
           );
@@ -136,9 +149,9 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       setActiveStep((prev: number) => (prev != 0 ? prev - 1 : 0));
     };
 
-    const setNext = () => {
-      setActiveStep((prev: number) => (prev != stepCount ? prev + 1 : prev));
-    };
+    // const setNext = () => {
+    //   setActiveStep((prev: number) => (prev != stepCount ? prev + 1 : prev));
+    // };
 
     return (
       <form
@@ -147,29 +160,34 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
         {...rest}
         ref={ref}
       >
-        <div className="mb-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-          <div className="border-b border-stroke pb-4  dark:border-strokedark">
-            <h3 className="p-4 text-lg font-medium text-black dark:text-white">
-              {section?.sectionTitle}
-            </h3>
-            <hr />
+        {sections?.map((section, index) => (
+          <div
+            key={index}
+            className="mb-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+          >
+            <div className="border-b border-stroke pb-4  dark:border-strokedark">
+              <h3 className="p-4 text-lg font-medium text-black dark:text-white">
+                {section?.sectionTitle}
+              </h3>
+              <hr />
 
-            <div
-              className={cn(
-                `grid grid-cols-4 gap-6 p-4`,
-                section?.colsLenght
-                  ? `grid-cols-${section.colsLenght.toString()}`
-                  : "grid-cols-3",
-              )}
-            >
-              {section?.elements.map((item, index) => (
-                <React.Fragment key={item.name}>
-                  {retunItem(item)}
-                </React.Fragment>
-              ))}
+              <div
+                className={cn(
+                  `grid grid-cols-4 gap-6 p-4`,
+                  section?.colsLenght
+                    ? `grid-cols-${section.colsLenght.toString()}`
+                    : "grid-cols-3",
+                )}
+              >
+                {section?.elements.map((item, index) => (
+                  <React.Fragment key={item.name}>
+                    {retunItem(item)}
+                  </React.Fragment>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        ))}
 
         <div className="flex w-full items-end justify-end">
           {activeStep > 0 && (

@@ -9,11 +9,14 @@ import { useEffect, useState } from "react";
 const PirlantaEkle = () => {
   const diamondItem: AddDiamondStep1Type = {};
 
-  const [data, setData] = useState<AddDiamondStep1Type>();
+  const defaultItem = Object.keys(diamondItem).reduce((acc, next) => {
+    return { ...acc, [next]: undefined };
+  }, {});
+
+  const [data, setData] = useState<AddDiamondStep1Type>(defaultItem);
   const [activeStep, setActiveStep] = useState<number>(0);
 
   useEffect(() => {
-    // güncel rapaport fiyatı * (100 - Iskonto) / 100
     if (data?.iskonto) {
       const iskonto = parseFloat(data?.iskonto) || 0;
       const newResult = ((4200 * (100 - iskonto)) / 100).toString();
@@ -29,9 +32,9 @@ const PirlantaEkle = () => {
         activeStep={activeStep}
         setActiveStep={setActiveStep}
         formItemType={diamondItem}
-        section={AddStoneSections[activeStep]}
+        sections={AddStoneSections.filter((a) => a.groupNumber == activeStep)}
         data={data}
-        stepCount={AddStoneSections.length}
+        stepCount={2}
       />
     </DefaultLayout>
   );

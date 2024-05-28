@@ -1,5 +1,11 @@
 export type ElementType = {
-  type: "text" | "password" | "email" | "select" | "datepicker";
+  type:
+    | "text"
+    | "password"
+    | "email"
+    | "select"
+    | "datepicker"
+    | "customButtonGroup";
   title: string;
   name: string;
   placeholder?: string | null;
@@ -12,6 +18,8 @@ export type ElementType = {
   rightIcon?: string;
   value?: string;
   isCurrency?: boolean;
+  checkBoxList?: string[];
+  checkBoxSetValueItem?: string;
 };
 
 export type CustomOptionType = {
