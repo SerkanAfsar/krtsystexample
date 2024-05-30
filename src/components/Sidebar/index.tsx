@@ -279,10 +279,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                       <ul className="mb-3 mt-4 flex flex-col gap-2.5 pl-6">
                                         <li>
                                           <Link
-                                            href="/StokYonetimi/Pirlanta/PirlantaEkle"
+                                            href="/Admin/StokYonetimi/Pirlanta/PirlantaEkle"
                                             className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
                                               pathname ===
-                                                "/StokYonetimi/Pirlanta/PirlantaEkle" &&
+                                                "/Admin/StokYonetimi/Pirlanta/PirlantaEkle" &&
                                               "text-white"
                                             }`}
                                           >
@@ -292,10 +292,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
                                         <li>
                                           <Link
-                                            href="/"
+                                            href="/Admin/StokYonetimi/Pirlanta/PirlantaListesi"
                                             className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
                                               pathname ===
-                                                "/tasks/task-kanban" &&
+                                                "/Admin/StokYonetimi/Pirlanta/PirlantaListesi" &&
                                               "text-white"
                                             } `}
                                           >
@@ -364,7 +364,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                       <ul className="mb-3 mt-4 flex flex-col gap-2.5 pl-6">
                                         <li>
                                           <Link
-                                            href="/StokYonetimi/Sade/SadeEkle"
+                                            href="/Admin/StokYonetimi/Sade/SadeEkle"
                                             className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
                                               pathname ===
                                                 "/StokYonetimi/Sade/SadeEkle" &&

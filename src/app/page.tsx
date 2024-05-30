@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { LoginType } from "@/types/inputTypes";
 import { LoginService } from "@/Services/Auth.Services";
 import img from "../../public/images/logo.png";
+import { loginServer } from "@/actions/Auth.actions";
 
 export default function Home() {
   const {
@@ -74,16 +75,9 @@ export default function Home() {
   }, [watch]);
 
   const onSubmit = async (data: LoginType) => {
-    const result = await LoginService({ data });
-    console.log(result);
-    if (!result.result) {
-      const errString: string =
-        result.message ||
-        (result?.payload?.password && result?.payload?.password[0]) ||
-        (result?.payload?.username && result?.payload?.username[0]) ||
-        "Giriş Bilgileri Yanlış";
-
-      setErrList(errString);
+    const result = await loginServer(data);
+    if (result) {
+      setErrList(result);
     }
   };
   return (

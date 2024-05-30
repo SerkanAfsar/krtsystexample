@@ -5,15 +5,14 @@ import CustomForm from "@/components/CustomUI/CustomForm";
 import { AddStoneSections } from "@/utils/MockData";
 import { AddDiamondStep1Type } from "@/types/formTypes";
 import { useEffect, useState } from "react";
+import { setDefaultItemValues } from "@/utils";
 
 const PirlantaEkle = () => {
   const diamondItem: AddDiamondStep1Type = {};
 
-  const defaultItem = Object.keys(diamondItem).reduce((acc, next) => {
-    return { ...acc, [next]: undefined };
-  }, {});
-
-  const [data, setData] = useState<AddDiamondStep1Type>(defaultItem);
+  const [data, setData] = useState<AddDiamondStep1Type>(
+    setDefaultItemValues(diamondItem),
+  );
   const [activeStep, setActiveStep] = useState<number>(0);
 
   useEffect(() => {
