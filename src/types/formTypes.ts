@@ -50,7 +50,7 @@ export type ISadeType = {
 
 export type FormSectionType = {
   sectionTitle: string;
-  colsLenght: number;
+  colsLenght: string;
   elements: ElementType[];
   groupNumber: number;
 };

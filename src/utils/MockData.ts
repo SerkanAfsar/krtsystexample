@@ -128,7 +128,7 @@ export const AddSadeFields: Array<ElementType> = [
 
 export const AddStoneSections: Array<FormSectionType> = [
   {
-    colsLenght: 8,
+    colsLenght: "grid-cols-8",
     sectionTitle: "Pırlanta Bilgileri",
     groupNumber: 0,
     elements: [
@@ -140,7 +140,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
         checkBoxSetValueItem: "tip",
-        span: 8,
+        span: 12,
       },
       {
         name: "kesim",
@@ -212,7 +212,7 @@ export const AddStoneSections: Array<FormSectionType> = [
             extraValue: "CS",
           },
         ],
-        span: 2,
+        span: 4,
       },
       {
         name: "karat",
@@ -222,7 +222,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
         relativeTo: "tip",
-        span: 2,
+        span: 4,
         simgeturu: "caratType",
       },
       {
@@ -327,7 +327,7 @@ export const AddStoneSections: Array<FormSectionType> = [
           },
         ],
         relativeTo: "tip",
-        span: 1,
+        span: 2,
       },
       {
         name: "renk2",
@@ -336,7 +336,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Renk Değerini Giriniz...",
         required: true,
         requiredMessage: "Renk Değeri Boş Bırakılamaz",
-        span: 1,
+        span: 2,
         options: [
           {
             titleVal: "D",
@@ -434,119 +434,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         relativeTo: "tip",
         visibleRelative: "MIX",
       },
-      {
-        name: "berraklik",
-        type: "select",
-        title: "Berraklık",
-        placeholder: "Berraklık Değerini Giriniz...",
-        requiredMessage: "Berraklık Değeri Boş Bırakılamaz",
-        required: true,
-        relativeTo: "tip",
-        span: 1,
-        options: [
-          {
-            titleVal: "FL",
-            valueVal: "FL",
-          },
-          {
-            titleVal: "IF",
-            valueVal: "IF",
-          },
-          {
-            titleVal: "VVS1",
-            valueVal: "VVS1",
-          },
-          {
-            titleVal: "VVS2",
-            valueVal: "VVS2",
-          },
-          {
-            titleVal: "VS1",
-            valueVal: "VS1",
-          },
-          {
-            titleVal: "VS2",
-            valueVal: "VS2",
-          },
-          {
-            titleVal: "SI1",
-            valueVal: "SI1",
-          },
-          {
-            titleVal: "SI2",
-            valueVal: "SI2",
-          },
-          {
-            titleVal: "I1",
-            valueVal: "I1",
-          },
-          {
-            titleVal: "I2",
-            valueVal: "I2",
-          },
-          {
-            titleVal: "I3",
-            valueVal: "I3",
-          },
-        ],
-      },
-      {
-        name: "berraklik2",
-        type: "select",
-        title: "",
-        placeholder: "Berraklık Değerini Giriniz...",
-        requiredMessage: "Berraklık Değeri Boş Bırakılamaz",
-        required: true,
-        relativeTo: "tip",
-        span: 1,
-        options: [
-          {
-            titleVal: "FL",
-            valueVal: "FL",
-          },
-          {
-            titleVal: "IF",
-            valueVal: "IF",
-          },
-          {
-            titleVal: "VVS1",
-            valueVal: "VVS1",
-          },
-          {
-            titleVal: "VVS2",
-            valueVal: "VVS2",
-          },
-          {
-            titleVal: "VS1",
-            valueVal: "VS1",
-          },
-          {
-            titleVal: "VS2",
-            valueVal: "VS2",
-          },
-          {
-            titleVal: "SI1",
-            valueVal: "SI1",
-          },
-          {
-            titleVal: "SI2",
-            valueVal: "SI2",
-          },
-          {
-            titleVal: "I1",
-            valueVal: "I1",
-          },
-          {
-            titleVal: "I2",
-            valueVal: "I2",
-          },
-          {
-            titleVal: "I3",
-            valueVal: "I3",
-          },
-        ],
-        visibleRelative: "MIX",
-      },
+
       {
         name: "elek",
         type: "select",
@@ -555,7 +443,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Elek Değeri Boş Bırakılamaz",
         relativeTo: "tip",
-        span: 2,
+        span: 4,
         options: [
           {
             titleVal: "60",
@@ -675,7 +563,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         name: "boy",
         type: "select",
         title: "Boy",
-        span: 2,
+        span: 4,
         placeholder: "Boy Değerini Giriniz...",
         required: true,
         requiredMessage: "Boy Değeri Boş Bırakılamaz",
@@ -768,6 +656,119 @@ export const AddStoneSections: Array<FormSectionType> = [
         ],
       },
       {
+        name: "berraklik",
+        type: "select",
+        title: "Berraklık",
+        placeholder: "Berraklık Değerini Giriniz...",
+        requiredMessage: "Berraklık Değeri Boş Bırakılamaz",
+        required: true,
+        relativeTo: "tip",
+        span: 2,
+        options: [
+          {
+            titleVal: "FL",
+            valueVal: "FL",
+          },
+          {
+            titleVal: "IF",
+            valueVal: "IF",
+          },
+          {
+            titleVal: "VVS1",
+            valueVal: "VVS1",
+          },
+          {
+            titleVal: "VVS2",
+            valueVal: "VVS2",
+          },
+          {
+            titleVal: "VS1",
+            valueVal: "VS1",
+          },
+          {
+            titleVal: "VS2",
+            valueVal: "VS2",
+          },
+          {
+            titleVal: "SI1",
+            valueVal: "SI1",
+          },
+          {
+            titleVal: "SI2",
+            valueVal: "SI2",
+          },
+          {
+            titleVal: "I1",
+            valueVal: "I1",
+          },
+          {
+            titleVal: "I2",
+            valueVal: "I2",
+          },
+          {
+            titleVal: "I3",
+            valueVal: "I3",
+          },
+        ],
+      },
+      {
+        name: "berraklik2",
+        type: "select",
+        title: "",
+        placeholder: "Berraklık Değerini Giriniz...",
+        requiredMessage: "Berraklık Değeri Boş Bırakılamaz",
+        required: true,
+        relativeTo: "tip",
+        span: 2,
+        options: [
+          {
+            titleVal: "FL",
+            valueVal: "FL",
+          },
+          {
+            titleVal: "IF",
+            valueVal: "IF",
+          },
+          {
+            titleVal: "VVS1",
+            valueVal: "VVS1",
+          },
+          {
+            titleVal: "VVS2",
+            valueVal: "VVS2",
+          },
+          {
+            titleVal: "VS1",
+            valueVal: "VS1",
+          },
+          {
+            titleVal: "VS2",
+            valueVal: "VS2",
+          },
+          {
+            titleVal: "SI1",
+            valueVal: "SI1",
+          },
+          {
+            titleVal: "SI2",
+            valueVal: "SI2",
+          },
+          {
+            titleVal: "I1",
+            valueVal: "I1",
+          },
+          {
+            titleVal: "I2",
+            valueVal: "I2",
+          },
+          {
+            titleVal: "I3",
+            valueVal: "I3",
+          },
+        ],
+        visibleRelative: "MIX",
+      },
+      {
         name: "aciklama",
         type: "text",
         title: "Açıklama",
@@ -776,11 +777,13 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: false,
         requiredMessage: "Açıklama Değeri Boş Bırakılamaz",
         span: 4,
+        colStart: "5",
+        colEnd: "13",
       },
     ],
   },
   {
-    colsLenght: 12,
+    colsLenght: "grid-cols-12",
     sectionTitle: "Sertifika Bilgileri",
     groupNumber: 1,
     elements: [
@@ -1020,9 +1023,10 @@ export const AddStoneSections: Array<FormSectionType> = [
     ],
   },
   {
-    colsLenght: 4,
+    colsLenght: "grid-cols-4",
     sectionTitle: "Pırlanta Fiyat Bilgileri",
     groupNumber: 1,
+
     elements: [
       {
         name: "satinAlmaTarihi",
@@ -1031,6 +1035,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Satın Alma Tarihi Değerini Giriniz...",
         required: true,
         requiredMessage: "Satın Alma Tarihi Değerini Boş Bırakılamaz",
+        span: 3,
       },
       {
         name: "rapaportPrice",
@@ -1044,6 +1049,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         rightIcon: "$",
         value: "2500",
         isCurrency: true,
+        span: 3,
       },
       {
         name: "iskonto",
@@ -1052,6 +1058,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "İskonto...",
         required: true,
         requiredMessage: "İskonto Boş Bırakılamaz",
+        span: 3,
       },
       {
         name: "pricePerCarat",
@@ -1063,6 +1070,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         disabled: true,
         isCurrency: true,
         rightIcon: "$",
+        span: 3,
       },
       {
         name: "toplamFiyat",
@@ -1074,8 +1082,9 @@ export const AddStoneSections: Array<FormSectionType> = [
         disabled: true,
         isCurrency: true,
         rightIcon: "$",
-        colStart: "4",
-        colEnd: "0",
+        colStart: "10",
+        colEnd: "13",
+        span: 3,
       },
     ],
   },

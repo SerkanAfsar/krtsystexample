@@ -7,6 +7,17 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [
+    {
+      pattern: /grid-cols-./,
+    },
+    {
+      pattern: /col-start-./,
+    },
+    {
+      pattern: /col-end-./,
+    },
+  ],
   darkMode: "class",
   theme: {
     fontFamily: {
@@ -265,6 +276,7 @@ const config: Config = {
         4: "0px 0px 2px rgba(0, 0, 0, 0.2)",
         5: "0px 1px 5px rgba(0, 0, 0, 0.2)",
       },
+
       keyframes: {
         linspin: {
           "100%": { transform: "rotate(360deg)" },
