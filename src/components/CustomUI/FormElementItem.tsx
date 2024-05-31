@@ -4,6 +4,7 @@ import CustomButtonGroups from "./CustomButtonGroups";
 import CustomDatePicker from "./CustomDatePicker";
 import CustomSelect from "./CustomSelect";
 import { cn } from "@/utils";
+import { useEffect, useState } from "react";
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
@@ -23,7 +24,6 @@ export default function FormElementItem({
   errors: any;
   setValue: any;
 }) {
-  console.log(rest);
   const firstCondition =
     (data &&
       item.relativeTo &&
@@ -33,9 +33,22 @@ export default function FormElementItem({
 
   const secondCondition =
     data && item.relativeTo ? !data[item.relativeTo] : item.disabled;
+
   const isDisabled = firstCondition || secondCondition;
 
   const val = (data && data[item.name]) || null;
+
+  if (firstCondition) {
+    return null;
+  }
+
+  const colSpan =
+    item.spesificRelatedItem &&
+    item.relativeTo &&
+    item.spesificRelatedItem == data[item.relativeTo]
+      ? "1"
+      : item.span;
+
   switch (item.type) {
     case "text":
     default: {
@@ -103,7 +116,7 @@ export default function FormElementItem({
           options={item.options ?? null}
           title={item.title ?? undefined}
           err={errors[item.name]?.message?.toString() ?? null}
-          outerClass={cn(item.span && `col-span-${item.span.toString()}`)}
+          outerClass={cn(item.span && `col-span-${colSpan}`)}
           disabled={isDisabled}
           {...rest}
         />

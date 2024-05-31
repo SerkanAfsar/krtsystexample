@@ -24,7 +24,14 @@ export default function SectionFormItem({
         </h3>
         <hr />
 
-        <div className={"grid grid-cols-12 gap-6 p-4"}>
+        <div
+          className={cn(
+            "grid gap-6 p-4",
+            section.colsLenght
+              ? `grid-cols-${section.colsLenght}`
+              : "grid-cols-12",
+          )}
+        >
           {section?.elements.map((item, index) => (
             <FormElementItem
               register={register}

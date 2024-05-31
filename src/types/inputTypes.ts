@@ -26,6 +26,7 @@ export type ElementType = {
   visibleRelative?: string;
   colStart?: string;
   colEnd?: string;
+  spesificRelatedItem?: string;
 };
 
 export type CustomOptionType = {
