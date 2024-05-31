@@ -1035,7 +1035,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Satın Alma Tarihi Değerini Giriniz...",
         required: true,
         requiredMessage: "Satın Alma Tarihi Değerini Boş Bırakılamaz",
-        span: 3,
+        span: 1,
       },
       {
         name: "rapaportPrice",
@@ -1048,7 +1048,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         rightIcon: "$",
         value: "2500",
         isCurrency: true,
-        span: 3,
+        span: 1,
       },
       {
         name: "iskonto",
@@ -1057,7 +1057,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "İskonto...",
         required: true,
         requiredMessage: "İskonto Boş Bırakılamaz",
-        span: 3,
+        span: 1,
       },
       {
         name: "pricePerCarat",
@@ -1069,7 +1069,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         disabled: true,
         isCurrency: true,
         rightIcon: "$",
-        span: 3,
+        span: 1,
       },
       {
         name: "toplamFiyat",
@@ -1081,9 +1081,9 @@ export const AddStoneSections: Array<FormSectionType> = [
         disabled: true,
         isCurrency: true,
         rightIcon: "$",
-        colStart: "10",
-        colEnd: "13",
-        span: 3,
+        colStart: "4",
+        colEnd: "5",
+        span: 1,
       },
     ],
   },
