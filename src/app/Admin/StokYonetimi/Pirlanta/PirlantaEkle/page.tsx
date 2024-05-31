@@ -16,12 +16,19 @@ const PirlantaEkle = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
 
   useEffect(() => {
-    if (data?.iskonto) {
+    if (data?.iskonto && data?.karat) {
       const iskonto = parseFloat(data?.iskonto) || 0;
       const newResult = ((4200 * (100 - iskonto)) / 100).toString();
-      setData((prev) => ({ ...prev, pricePerCarat: newResult }));
+      const newToplamFiyat = (
+        parseFloat(newResult) * parseFloat(data.karat)
+      ).toString();
+      setData((prev) => ({
+        ...prev,
+        pricePerCarat: newResult,
+        toplamFiyat: newToplamFiyat,
+      }));
     }
-  }, [data?.iskonto]);
+  }, [data?.iskonto, data?.karat]);
 
   return (
     <DefaultLayout>

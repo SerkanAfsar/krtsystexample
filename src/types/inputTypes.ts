@@ -5,8 +5,9 @@ export type ElementType = {
     | "email"
     | "select"
     | "datepicker"
-    | "customButtonGroup";
-  title: string;
+    | "customButtonGroup"
+    | "number";
+  title?: string;
   name: string;
   placeholder?: string | null;
   options?: CustomOptionType[] | null;
@@ -20,11 +21,17 @@ export type ElementType = {
   isCurrency?: boolean;
   checkBoxList?: string[];
   checkBoxSetValueItem?: string;
+  pattern?: string;
+  simgeturu?: "caratType";
+  visibleRelative?: string;
+  colStart?: string;
+  colEnd?: string;
 };
 
 export type CustomOptionType = {
   titleVal: string;
   valueVal: string;
+  extraValue?: string;
 };
 
 export type LoginType = {

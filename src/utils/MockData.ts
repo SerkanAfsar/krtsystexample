@@ -1,230 +1,231 @@
 import { FormSectionType } from "@/types/formTypes";
 import { ElementType } from "@/types/inputTypes";
 
-export const AddStoneFields: Array<ElementType> = [
-  {
-    name: "karat",
-    type: "text",
-    title: "Karat",
-    placeholder: "Karat Değerini Giriniz...",
-    required: true,
-    requiredMessage: "Karat Değeri Boş Bırakılamaz",
-  },
-  {
-    name: "renk",
-    type: "select",
-    title: "Renk",
-    placeholder: "Renk Değerini Giriniz...",
-    required: true,
-    requiredMessage: "Renk Değeri Boş Bırakılamaz",
-    options: [
-      {
-        titleVal: "D",
-        valueVal: "D",
-      },
-      {
-        titleVal: "E",
-        valueVal: "E",
-      },
-      {
-        titleVal: "F",
-        valueVal: "F",
-      },
-      {
-        titleVal: "G",
-        valueVal: "G",
-      },
-      {
-        titleVal: "H",
-        valueVal: "H",
-      },
-      {
-        titleVal: "I",
-        valueVal: "I",
-      },
-      {
-        titleVal: "J",
-        valueVal: "J",
-      },
-      {
-        titleVal: "K",
-        valueVal: "K",
-      },
-      {
-        titleVal: "L",
-        valueVal: "L",
-      },
-      {
-        titleVal: "M",
-        valueVal: "M",
-      },
-      {
-        titleVal: "N",
-        valueVal: "N",
-      },
-      {
-        titleVal: "O",
-        valueVal: "O",
-      },
-      {
-        titleVal: "P",
-        valueVal: "P",
-      },
-      {
-        titleVal: "Q",
-        valueVal: "Q",
-      },
-      {
-        titleVal: "R",
-        valueVal: "R",
-      },
-      {
-        titleVal: "S",
-        valueVal: "S",
-      },
-      {
-        titleVal: "T",
-        valueVal: "T",
-      },
-      {
-        titleVal: "U",
-        valueVal: "U",
-      },
-      {
-        titleVal: "V",
-        valueVal: "V",
-      },
-      {
-        titleVal: "W",
-        valueVal: "W",
-      },
-      {
-        titleVal: "X",
-        valueVal: "X",
-      },
-      {
-        titleVal: "Y",
-        valueVal: "Y",
-      },
-      {
-        titleVal: "Z",
-        valueVal: "Z",
-      },
-    ],
-  },
-  {
-    name: "berraklik",
-    type: "select",
-    title: "Berraklık",
-    placeholder: "Berraklık Değerini Giriniz...",
-    requiredMessage: "Berraklık Değeri Boş Bırakılamaz",
-    required: true,
-    options: [
-      {
-        titleVal: "FL",
-        valueVal: "FL",
-      },
-      {
-        titleVal: "IF",
-        valueVal: "IF",
-      },
-      {
-        titleVal: "VVS1",
-        valueVal: "VVS1",
-      },
-      {
-        titleVal: "VVS2",
-        valueVal: "VVS2",
-      },
-      {
-        titleVal: "VS1",
-        valueVal: "VS1",
-      },
-      {
-        titleVal: "VS2",
-        valueVal: "VS2",
-      },
-      {
-        titleVal: "SI1",
-        valueVal: "SI1",
-      },
-      {
-        titleVal: "SI2",
-        valueVal: "SI2",
-      },
-      {
-        titleVal: "I1",
-        valueVal: "I1",
-      },
-      {
-        titleVal: "I2",
-        valueVal: "I2",
-      },
-      {
-        titleVal: "I3",
-        valueVal: "I3",
-      },
-    ],
-  },
-  {
-    name: "kesim",
-    type: "select",
-    title: "Kesim",
-    placeholder: "Kesim Değerini Giriniz...",
-    required: true,
-    requiredMessage: "Kesim Değerini Boş Bırakılamaz",
-    options: [
-      {
-        titleVal: "ROUND",
-        valueVal: "ROUND",
-      },
-      {
-        titleVal: "HEART",
-        valueVal: "HEART",
-      },
-      {
-        titleVal: "PEAR",
-        valueVal: "PEAR",
-      },
-      {
-        titleVal: "MARQUISE",
-        valueVal: "MARQUISE",
-      },
-      {
-        titleVal: "OVAL",
-        valueVal: "OVAL",
-      },
-      {
-        titleVal: "BAGET",
-        valueVal: "BAGET",
-      },
-      {
-        titleVal: "TRAPEZ",
-        valueVal: "TRAPEZ",
-      },
-      {
-        titleVal: "TRIANGLE",
-        valueVal: "TRIANGLE",
-      },
-      {
-        titleVal: "PRENSES",
-        valueVal: "PRENSES",
-      },
-      {
-        titleVal: "RADIANT",
-        valueVal: "RADIANT",
-      },
-      {
-        titleVal: "EMERALD",
-        valueVal: "EMERALD",
-      },
-      {
-        titleVal: "CUSHION",
-        valueVal: "CUSHION",
-      },
-    ],
-  },
-];
+// export const AddStoneFields: Array<ElementType> = [
+//   {
+//     name: "karat",
+//     type: "text",
+//     title: "Karat",
+//     placeholder: "Karat Değerini Giriniz...",
+//     required: true,
+//     requiredMessage: "Karat Değeri Boş Bırakılamaz",
+//   },
+//   {
+//     name: "renk",
+//     type: "select",
+//     title: "Renk Aralığı",
+//     placeholder: "Renk Değerini Giriniz...",
+//     required: true,
+//     requiredMessage: "Renk Değeri Boş Bırakılamaz",
+//     options: [
+//       {
+//         titleVal: "D",
+//         valueVal: "D",
+//       },
+//       {
+//         titleVal: "E",
+//         valueVal: "E",
+//       },
+//       {
+//         titleVal: "F",
+//         valueVal: "F",
+//       },
+//       {
+//         titleVal: "G",
+//         valueVal: "G",
+//       },
+//       {
+//         titleVal: "H",
+//         valueVal: "H",
+//       },
+//       {
+//         titleVal: "I",
+//         valueVal: "I",
+//       },
+//       {
+//         titleVal: "J",
+//         valueVal: "J",
+//       },
+//       {
+//         titleVal: "K",
+//         valueVal: "K",
+//       },
+//       {
+//         titleVal: "L",
+//         valueVal: "L",
+//       },
+//       {
+//         titleVal: "M",
+//         valueVal: "M",
+//       },
+//       {
+//         titleVal: "N",
+//         valueVal: "N",
+//       },
+//       {
+//         titleVal: "O",
+//         valueVal: "O",
+//       },
+//       {
+//         titleVal: "P",
+//         valueVal: "P",
+//       },
+//       {
+//         titleVal: "Q",
+//         valueVal: "Q",
+//       },
+//       {
+//         titleVal: "R",
+//         valueVal: "R",
+//       },
+//       {
+//         titleVal: "S",
+//         valueVal: "S",
+//       },
+//       {
+//         titleVal: "T",
+//         valueVal: "T",
+//       },
+//       {
+//         titleVal: "U",
+//         valueVal: "U",
+//       },
+//       {
+//         titleVal: "V",
+//         valueVal: "V",
+//       },
+//       {
+//         titleVal: "W",
+//         valueVal: "W",
+//       },
+//       {
+//         titleVal: "X",
+//         valueVal: "X",
+//       },
+//       {
+//         titleVal: "Y",
+//         valueVal: "Y",
+//       },
+//       {
+//         titleVal: "Z",
+//         valueVal: "Z",
+//       },
+//     ],
+//   },
+
+//   {
+//     name: "berraklik",
+//     type: "select",
+//     title: "Berraklık",
+//     placeholder: "Berraklık Değerini Giriniz...",
+//     requiredMessage: "Berraklık Değeri Boş Bırakılamaz",
+//     required: true,
+//     options: [
+//       {
+//         titleVal: "FL",
+//         valueVal: "FL",
+//       },
+//       {
+//         titleVal: "IF",
+//         valueVal: "IF",
+//       },
+//       {
+//         titleVal: "VVS1",
+//         valueVal: "VVS1",
+//       },
+//       {
+//         titleVal: "VVS2",
+//         valueVal: "VVS2",
+//       },
+//       {
+//         titleVal: "VS1",
+//         valueVal: "VS1",
+//       },
+//       {
+//         titleVal: "VS2",
+//         valueVal: "VS2",
+//       },
+//       {
+//         titleVal: "SI1",
+//         valueVal: "SI1",
+//       },
+//       {
+//         titleVal: "SI2",
+//         valueVal: "SI2",
+//       },
+//       {
+//         titleVal: "I1",
+//         valueVal: "I1",
+//       },
+//       {
+//         titleVal: "I2",
+//         valueVal: "I2",
+//       },
+//       {
+//         titleVal: "I3",
+//         valueVal: "I3",
+//       },
+//     ],
+//   },
+//   {
+//     name: "kesim",
+//     type: "select",
+//     title: "Kesim",
+//     placeholder: "Kesim Değerini Giriniz...",
+//     required: true,
+//     requiredMessage: "Kesim Değerini Boş Bırakılamaz",
+//     options: [
+//       {
+//         titleVal: "ROUND",
+//         valueVal: "ROUND",
+//       },
+//       {
+//         titleVal: "HEART",
+//         valueVal: "HEART",
+//       },
+//       {
+//         titleVal: "PEAR",
+//         valueVal: "PEAR",
+//       },
+//       {
+//         titleVal: "MARQUISE",
+//         valueVal: "MARQUISE",
+//       },
+//       {
+//         titleVal: "OVAL",
+//         valueVal: "OVAL",
+//       },
+//       {
+//         titleVal: "BAGET",
+//         valueVal: "BAGET",
+//       },
+//       {
+//         titleVal: "TRAPEZ",
+//         valueVal: "TRAPEZ",
+//       },
+//       {
+//         titleVal: "TRIANGLE",
+//         valueVal: "TRIANGLE",
+//       },
+//       {
+//         titleVal: "PRENSES",
+//         valueVal: "PRENSES",
+//       },
+//       {
+//         titleVal: "RADIANT",
+//         valueVal: "RADIANT",
+//       },
+//       {
+//         titleVal: "EMERALD",
+//         valueVal: "EMERALD",
+//       },
+//       {
+//         titleVal: "CUSHION",
+//         valueVal: "CUSHION",
+//       },
+//     ],
+//   },
+// ];
 
 export const AddSadeFields: Array<ElementType> = [
   {
@@ -353,7 +354,7 @@ export const AddSadeFields: Array<ElementType> = [
 
 export const AddStoneSections: Array<FormSectionType> = [
   {
-    colsLenght: 4,
+    colsLenght: 8,
     sectionTitle: "Pırlanta Bilgileri",
     groupNumber: 0,
     elements: [
@@ -365,7 +366,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
         checkBoxSetValueItem: "tip",
-        span: 4,
+        span: 8,
       },
       {
         name: "kesim",
@@ -379,61 +380,76 @@ export const AddStoneSections: Array<FormSectionType> = [
           {
             titleVal: "ROUND",
             valueVal: "ROUND",
+            extraValue: "BR",
           },
           {
             titleVal: "HEART",
             valueVal: "HEART",
+            extraValue: "HS",
           },
           {
             titleVal: "PEAR",
             valueVal: "PEAR",
+            extraValue: "PS",
           },
           {
             titleVal: "MARQUISE",
             valueVal: "MARQUISE",
+            extraValue: "MQ",
           },
           {
             titleVal: "OVAL",
             valueVal: "OVAL",
+            extraValue: "OV",
           },
           {
             titleVal: "BAGET",
             valueVal: "BAGET",
+            extraValue: "BG",
           },
           {
             titleVal: "TRAPEZ",
             valueVal: "TRAPEZ",
+            extraValue: "TP",
           },
           {
             titleVal: "TRIANGLE",
             valueVal: "TRIANGLE",
+            extraValue: "TR",
           },
           {
             titleVal: "PRENSES",
             valueVal: "PRENSES",
+            extraValue: "PR",
           },
           {
             titleVal: "RADIANT",
             valueVal: "RADIANT",
+            extraValue: "RD",
           },
           {
             titleVal: "EMERALD",
             valueVal: "EMERALD",
+            extraValue: "EM",
           },
           {
             titleVal: "CUSHION",
             valueVal: "CUSHION",
+            extraValue: "CS",
           },
         ],
+        span: 2,
       },
       {
         name: "karat",
-        type: "text",
+        type: "number",
         title: "Karat",
         placeholder: "Karat Değerini Giriniz...",
         required: true,
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
         relativeTo: "tip",
+        span: 2,
+        simgeturu: "caratType",
       },
       {
         name: "renk",
@@ -479,8 +495,170 @@ export const AddStoneSections: Array<FormSectionType> = [
             titleVal: "L",
             valueVal: "L",
           },
+          {
+            titleVal: "M",
+            valueVal: "M",
+          },
+          {
+            titleVal: "N",
+            valueVal: "N",
+          },
+          {
+            titleVal: "O",
+            valueVal: "O",
+          },
+          {
+            titleVal: "P",
+            valueVal: "P",
+          },
+          {
+            titleVal: "Q",
+            valueVal: "Q",
+          },
+          {
+            titleVal: "R",
+            valueVal: "R",
+          },
+          {
+            titleVal: "S",
+            valueVal: "S",
+          },
+          {
+            titleVal: "T",
+            valueVal: "T",
+          },
+          {
+            titleVal: "U",
+            valueVal: "U",
+          },
+          {
+            titleVal: "V",
+            valueVal: "V",
+          },
+          {
+            titleVal: "W",
+            valueVal: "W",
+          },
+          {
+            titleVal: "X",
+            valueVal: "X",
+          },
+          {
+            titleVal: "Y",
+            valueVal: "Y",
+          },
+          {
+            titleVal: "Z",
+            valueVal: "Z",
+          },
         ],
         relativeTo: "tip",
+        span: 1,
+      },
+      {
+        name: "renk2",
+        type: "select",
+        title: "",
+        placeholder: "Renk Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Renk Değeri Boş Bırakılamaz",
+        span: 1,
+        options: [
+          {
+            titleVal: "D",
+            valueVal: "D",
+          },
+          {
+            titleVal: "E",
+            valueVal: "E",
+          },
+          {
+            titleVal: "F",
+            valueVal: "F",
+          },
+          {
+            titleVal: "G",
+            valueVal: "G",
+          },
+          {
+            titleVal: "H",
+            valueVal: "H",
+          },
+          {
+            titleVal: "I",
+            valueVal: "I",
+          },
+          {
+            titleVal: "J",
+            valueVal: "J",
+          },
+          {
+            titleVal: "K",
+            valueVal: "K",
+          },
+          {
+            titleVal: "L",
+            valueVal: "L",
+          },
+          {
+            titleVal: "M",
+            valueVal: "M",
+          },
+          {
+            titleVal: "N",
+            valueVal: "N",
+          },
+          {
+            titleVal: "O",
+            valueVal: "O",
+          },
+          {
+            titleVal: "P",
+            valueVal: "P",
+          },
+          {
+            titleVal: "Q",
+            valueVal: "Q",
+          },
+          {
+            titleVal: "R",
+            valueVal: "R",
+          },
+          {
+            titleVal: "S",
+            valueVal: "S",
+          },
+          {
+            titleVal: "T",
+            valueVal: "T",
+          },
+          {
+            titleVal: "U",
+            valueVal: "U",
+          },
+          {
+            titleVal: "V",
+            valueVal: "V",
+          },
+          {
+            titleVal: "W",
+            valueVal: "W",
+          },
+          {
+            titleVal: "X",
+            valueVal: "X",
+          },
+          {
+            titleVal: "Y",
+            valueVal: "Y",
+          },
+          {
+            titleVal: "Z",
+            valueVal: "Z",
+          },
+        ],
+        relativeTo: "tip",
+        visibleRelative: "MIX",
       },
       {
         name: "berraklik",
@@ -490,6 +668,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         requiredMessage: "Berraklık Değeri Boş Bırakılamaz",
         required: true,
         relativeTo: "tip",
+        span: 1,
         options: [
           {
             titleVal: "FL",
@@ -538,6 +717,63 @@ export const AddStoneSections: Array<FormSectionType> = [
         ],
       },
       {
+        name: "berraklik2",
+        type: "select",
+        title: "",
+        placeholder: "Berraklık Değerini Giriniz...",
+        requiredMessage: "Berraklık Değeri Boş Bırakılamaz",
+        required: true,
+        relativeTo: "tip",
+        span: 1,
+        options: [
+          {
+            titleVal: "FL",
+            valueVal: "FL",
+          },
+          {
+            titleVal: "IF",
+            valueVal: "IF",
+          },
+          {
+            titleVal: "VVS1",
+            valueVal: "VVS1",
+          },
+          {
+            titleVal: "VVS2",
+            valueVal: "VVS2",
+          },
+          {
+            titleVal: "VS1",
+            valueVal: "VS1",
+          },
+          {
+            titleVal: "VS2",
+            valueVal: "VS2",
+          },
+          {
+            titleVal: "SI1",
+            valueVal: "SI1",
+          },
+          {
+            titleVal: "SI2",
+            valueVal: "SI2",
+          },
+          {
+            titleVal: "I1",
+            valueVal: "I1",
+          },
+          {
+            titleVal: "I2",
+            valueVal: "I2",
+          },
+          {
+            titleVal: "I3",
+            valueVal: "I3",
+          },
+        ],
+        visibleRelative: "MIX",
+      },
+      {
         name: "elek",
         type: "select",
         title: "Elek",
@@ -545,6 +781,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Elek Değeri Boş Bırakılamaz",
         relativeTo: "tip",
+        span: 2,
         options: [
           {
             titleVal: "60",
@@ -664,6 +901,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         name: "boy",
         type: "select",
         title: "Boy",
+        span: 2,
         placeholder: "Boy Değerini Giriniz...",
         required: true,
         requiredMessage: "Boy Değeri Boş Bırakılamaz",
@@ -763,7 +1001,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         relativeTo: "tip",
         required: false,
         requiredMessage: "Açıklama Değeri Boş Bırakılamaz",
-        span: 2,
+        span: 4,
       },
     ],
   },
@@ -1049,9 +1287,21 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: false,
         requiredMessage: "İskonto Boş Bırakılamaz",
         disabled: true,
-
         isCurrency: true,
         rightIcon: "$",
+      },
+      {
+        name: "toplamFiyat",
+        type: "text",
+        title: "Toplam Fiyat",
+        placeholder: "Toplam Fiyat...",
+        required: false,
+        requiredMessage: "Toplam Fiyat Bırakılamaz",
+        disabled: true,
+        isCurrency: true,
+        rightIcon: "$",
+        colStart: "4",
+        colEnd: "0",
       },
     ],
   },

@@ -30,7 +30,7 @@ const CustomDatePicker = React.forwardRef<HTMLInputElement, InputProps>(
     useEffect(() => {
       // Init flatpickr
 
-      if (rest.disabled == false) {
+      if (!rest.disabled) {
         flatpickr(".form-datepicker", {
           mode: "single",
           static: true,

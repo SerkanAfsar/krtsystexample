@@ -66,9 +66,20 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       disabled,
       relativeTo,
       checkBoxList,
+      visibleRelative,
       ...rest
     }: ElementType) => {
-      const isDisabled = data && relativeTo ? !data[relativeTo] : disabled;
+      const firstCondition =
+        (data &&
+          relativeTo &&
+          visibleRelative &&
+          data[relativeTo] !== visibleRelative) ||
+        undefined;
+
+      const secondCondition = data && relativeTo ? !data[relativeTo] : disabled;
+
+      const isDisabled = firstCondition || secondCondition;
+
       const val = (data && data[name]) || null;
       switch (type) {
         case "text":
@@ -79,11 +90,16 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
                 required:
                   !isDisabled && required ? rest.requiredMessage : false,
               })}
+              type={type}
               value={rest.isCurrency ? formatter.format(val) : val}
               title={title}
               placeholder={placeholder ?? undefined}
               err={errors[name]?.message?.toString() ?? null}
-              outerClass={cn(rest?.span && `col-span-${rest.span.toString()}`)}
+              outerClass={cn(
+                rest?.span && `col-span-${rest.span.toString()}`,
+                rest.colStart && `col-start-${rest.colStart}`,
+                // rest.colEnd && `col-end-${rest.colEnd}`,
+              )}
               disabled={isDisabled}
               {...rest}
             />
@@ -98,7 +114,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
               title={title}
               checkBoxList={checkBoxList || ["DATA YOK"]}
               setValue={setValue}
-              outerClass={cn(rest.span && `col-span-${rest.span.toString()}`)}
+              outerClass={cn(rest.span && `col-span-full`)}
               register={register}
               name={name}
               value={val}
@@ -114,6 +130,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
                   !isDisabled && required ? rest.requiredMessage : false,
               })}
               title={title}
+              type={type}
               err={errors[name]?.message?.toString() ?? null}
               outerClass={cn(rest.span && `col-span-${rest.span.toString()}`)}
               disabled={isDisabled}
@@ -129,7 +146,8 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
                   !isDisabled && required ? rest.requiredMessage : false,
               })}
               options={options ?? null}
-              title={title}
+              title={title ?? undefined}
+              type={type}
               err={errors[name]?.message?.toString() ?? null}
               outerClass={cn(rest.span && `col-span-${rest.span.toString()}`)}
               disabled={isDisabled}
@@ -173,7 +191,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
 
               <div
                 className={cn(
-                  `grid grid-cols-4 gap-6 p-4`,
+                  `grid gap-6 p-4`,
                   section?.colsLenght
                     ? `grid-cols-${section.colsLenght.toString()}`
                     : "grid-cols-3",

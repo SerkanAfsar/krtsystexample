@@ -31,6 +31,7 @@ export type IPirlantaPricingType = {
   rapaportPrice?: string;
   iskonto?: string;
   pricePerCarat?: string;
+  toplamFiyat?: string;
 };
 
 export type AddDiamondStep1Type = IDiamondType &
