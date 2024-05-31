@@ -1,7 +1,5 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import CustomForm from "@/components/CustomUI/CustomForm";
-import { AddSadeFields, AddStoneFields } from "@/utils/MockData";
 import { ISadeType } from "@/types/formTypes";
 
 const ProFormLayout = () => {
