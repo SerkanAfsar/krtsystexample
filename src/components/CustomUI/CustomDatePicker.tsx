@@ -4,32 +4,22 @@ import { useEffect } from "react";
 import { ClassValue } from "clsx";
 import React from "react";
 import { cn } from "@/utils";
+import { ElementType } from "@/types/inputTypes";
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   outerClass?: ClassValue | null;
   err?: string | null;
+} & {
+  item: ElementType;
 };
 
 const CustomDatePicker = React.forwardRef<HTMLInputElement, InputProps>(
   (
-    {
-      className,
-      onChange,
-      onBlur,
-      name,
-      outerClass,
-      title,
-      placeholder,
-      err,
-      type = "text",
-      ...rest
-    },
+    { item, className, onChange, onBlur, name, outerClass, err, ...rest },
     ref,
   ) => {
     const id = React.useId();
     useEffect(() => {
-      // Init flatpickr
-
       if (!rest.disabled) {
         flatpickr(".form-datepicker", {
           mode: "single",
@@ -47,7 +37,7 @@ const CustomDatePicker = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className={cn("w-full", outerClass && outerClass)}>
         <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-          {title}
+          {item.title}
         </label>
         <div className="relative">
           <input

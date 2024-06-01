@@ -4,7 +4,7 @@ import CustomButtonGroups from "./CustomButtonGroups";
 import CustomDatePicker from "./CustomDatePicker";
 import CustomSelect from "./CustomSelect";
 import { cn } from "@/utils";
-import { useEffect, useState } from "react";
+
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
@@ -16,7 +16,6 @@ export default function FormElementItem({
   data,
   setValue,
   errors,
-  ...rest
 }: {
   item: ElementType;
   register: any;
@@ -36,7 +35,7 @@ export default function FormElementItem({
 
   const isDisabled = firstCondition || secondCondition;
 
-  const val = (data && data[item.name]) || null;
+  const val = (data && data[item.name]) || item.value || null;
 
   if (firstCondition) {
     return null;
@@ -49,6 +48,8 @@ export default function FormElementItem({
       ? "1"
       : item.span;
 
+  const err = errors[item.name]?.message?.toString() ?? null;
+
   switch (item.type) {
     case "text":
     default: {
@@ -59,18 +60,14 @@ export default function FormElementItem({
               !isDisabled && item.required ? item.requiredMessage : false,
           })}
           value={item.isCurrency ? formatter.format(val) : val}
-          title={item.title}
-          placeholder={item.placeholder ?? undefined}
-          err={errors[item.name]?.message?.toString() ?? null}
+          err={err}
           outerClass={cn(
             item?.span && `col-span-${item.span.toString()}`,
             item.colStart && `col-start-${item.colStart}`,
             item.colEnd && `col-end-${item.colEnd}`,
           )}
-          rightIcon={item.rightIcon}
+          item={item}
           disabled={isDisabled}
-          simgeturu={item.simgeturu}
-          {...rest}
         />
       );
     }
@@ -87,7 +84,6 @@ export default function FormElementItem({
           register={register}
           name={item.name}
           value={val}
-          {...rest}
         />
       );
     }
@@ -98,11 +94,10 @@ export default function FormElementItem({
             required:
               !isDisabled && item.required ? item.requiredMessage : false,
           })}
-          title={item.title}
-          err={errors[item.name]?.message?.toString() ?? null}
+          item={item}
+          err={err}
           outerClass={cn(item.span && `col-span-${item.span.toString()}`)}
           disabled={isDisabled}
-          {...rest}
         />
       );
     }
@@ -113,12 +108,10 @@ export default function FormElementItem({
             required:
               !isDisabled && item.required ? item.requiredMessage : false,
           })}
-          options={item.options ?? null}
-          title={item.title ?? undefined}
-          err={errors[item.name]?.message?.toString() ?? null}
+          item={item}
+          err={err}
           outerClass={cn(item.span && `col-span-${colSpan}`)}
           disabled={isDisabled}
-          {...rest}
         />
       );
     }

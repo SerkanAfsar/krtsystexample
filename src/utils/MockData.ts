@@ -955,7 +955,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "min",
-        type: "text",
+        type: "number",
         title: "Min",
         placeholder: "Min  Değerini Giriniz...",
         required: true,
@@ -966,7 +966,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "max",
-        type: "text",
+        type: "number",
         title: "Max",
         placeholder: "Max Değerini Giriniz...",
         required: true,
@@ -977,7 +977,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "height",
-        type: "text",
+        type: "number",
         title: "Height",
         placeholder: "Height Değerini Giriniz...",
         required: true,
@@ -988,7 +988,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "table",
-        type: "text",
+        type: "number",
         title: "Table",
         placeholder: "Table Değerini Giriniz...",
         required: true,
@@ -1000,7 +1000,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "totalDepth",
-        type: "text",
+        type: "number",
         title: "Total Depth",
         placeholder: "Total Depth Değerini Giriniz...",
         required: true,
@@ -1012,7 +1012,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "girdle",
-        type: "text",
+        type: "number",
         title: "Girdle",
         placeholder: "Girdle Değerini Giriniz...",
         required: true,
@@ -1052,12 +1052,13 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "iskonto",
-        type: "text",
+        type: "number",
         title: "İskonto",
         placeholder: "İskonto...",
         required: true,
         requiredMessage: "İskonto Boş Bırakılamaz",
         span: 1,
+        rightIcon: "$",
       },
       {
         name: "pricePerCarat",

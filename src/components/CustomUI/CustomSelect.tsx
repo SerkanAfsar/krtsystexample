@@ -1,26 +1,23 @@
 "use client";
-import { CustomOptionType } from "@/types/inputTypes";
+import { CustomOptionType, ElementType } from "@/types/inputTypes";
 import { cn } from "@/utils";
 import { ClassValue } from "clsx";
 import React, { useEffect, useId, useState } from "react";
 
 type SelectElementProps = React.InputHTMLAttributes<HTMLSelectElement> & {
-  title: string | undefined;
-  options: CustomOptionType[] | null;
   err?: string | null;
   outerClass?: ClassValue | null;
-};
+} & { item: ElementType };
 
 const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
   (
     {
+      item,
       className,
-      title,
       err,
       onChange: selectChange,
       onBlur,
       name,
-      options,
       outerClass,
       ...rest
     },
@@ -28,6 +25,8 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
   ) => {
     const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
     const [selectedValue, setSelectedValue] = useState<string>("");
+
+    const options = item.options;
     const id = useId();
     const selectedExtraValue = options?.find(
       (a) => a.valueVal == selectedValue,
@@ -39,7 +38,7 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
           htmlFor={id}
           className="mb-3 block h-5 text-sm font-medium text-black dark:text-white"
         >
-          {title && title}
+          {item.title}
         </label>
         <div className="flex items-center justify-between gap-1">
           <div className="relative z-20 flex-1 bg-white dark:bg-form-input">
@@ -65,15 +64,15 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
                 disabled
                 className="text-body dark:text-bodydark"
               >
-                {title} Seçiniz
+                {item.title} Seçiniz
               </option>
-              {options?.map((item, index) => (
+              {options?.map((item2, index) => (
                 <option
                   key={index}
-                  value={item.valueVal}
+                  value={item2.valueVal}
                   className="text-body dark:text-bodydark"
                 >
-                  {item.titleVal}
+                  {item2.titleVal}
                 </option>
               ))}
             </select>
