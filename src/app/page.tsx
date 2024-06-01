@@ -4,7 +4,7 @@ import Image from "next/image";
 import CustomInput from "@/components/CustomUI/CustomInput";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { LoginType } from "@/types/inputTypes";
+import { ElementType, LoginType } from "@/types/inputTypes";
 import { LoginService } from "@/Services/Auth.Services";
 import img from "../../public/images/logo.png";
 import { loginServer } from "@/actions/Auth.actions";
@@ -68,6 +68,24 @@ export default function Home() {
     );
   }, []);
 
+  const elem1: ElementType = {
+    title: "E-Posta Adresinizi Giriniz",
+    placeholder: "E-Posta Adresiniz",
+    icon: emailIcon,
+    type: "email",
+    name: "email",
+    required: true,
+  };
+
+  const elem2: ElementType = {
+    title: "Şifrenizi Giriniz",
+    placeholder: "Şifrenizi Giriniz",
+    icon: emailIcon,
+    type: "password",
+    name: "password",
+    required: true,
+  };
+
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
       setErrList("");
@@ -83,6 +101,7 @@ export default function Home() {
       setIsLoading(false);
     }
   };
+
   return (
     <div className="h-1 min-h-screen rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="flex h-full flex-wrap items-center">
@@ -124,9 +143,7 @@ export default function Home() {
                       {...register("email", {
                         required: "E-Posta Boş Bırakılamaz",
                       })}
-                      title="E-Posta Adresinizi Giriniz"
-                      placeholder="E-Posta Adresiniz"
-                      icon={emailIcon}
+                      item={elem1}
                       err={errors["email"]?.message?.toString() ?? null}
                     />
                   </div>
@@ -136,10 +153,7 @@ export default function Home() {
                       {...register("password", {
                         required: "Şifre Boş Bırakılamaz",
                       })}
-                      type="password"
-                      icon={passwordIcon}
-                      title="Şifrenizi Giriniz"
-                      placeholder="Şifrenizi Giriniz"
+                      item={elem2}
                       err={errors["password"]?.message?.toString() ?? null}
                     />
                   </div>
@@ -197,9 +211,10 @@ export default function Home() {
                 </h2>
                 <div className="mb-4">
                   <CustomInput
-                    title="E-Posta Adresinizi Giriniz"
-                    placeholder="E-Posta Adresiniz"
-                    icon={emailIcon}
+                    // title="E-Posta Adresinizi Giriniz"
+                    // placeholder="E-Posta Adresiniz"
+                    // icon={emailIcon}
+                    item={elem1}
                   />
                 </div>
                 <input

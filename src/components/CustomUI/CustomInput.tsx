@@ -36,7 +36,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
               id={id}
               ref={ref}
               type={item.type}
-              placeholder={item.placeholder}
+              placeholder={item.placeholder ?? undefined}
               name={name}
               onChange={(e) => {
                 setValue(e.target.value);

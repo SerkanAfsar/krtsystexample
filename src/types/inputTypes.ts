@@ -27,6 +27,7 @@ export type ElementType = {
   colStart?: string;
   colEnd?: string;
   spesificRelatedItem?: string;
+  icon?: React.ReactNode;
 };
 
 export type CustomOptionType = {
