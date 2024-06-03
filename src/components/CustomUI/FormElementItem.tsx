@@ -30,16 +30,16 @@ export default function FormElementItem({
       data[item.relativeTo] !== item.visibleRelative) ||
     undefined;
 
+  if (firstCondition) {
+    return null;
+  }
+
   const secondCondition =
     data && item.relativeTo ? !data[item.relativeTo] : item.disabled;
 
   const isDisabled = firstCondition || secondCondition;
 
   const val = (data && data[item.name]) || item.value || null;
-
-  if (firstCondition) {
-    return null;
-  }
 
   const colSpan =
     item.spesificRelatedItem &&
