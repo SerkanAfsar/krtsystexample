@@ -1,14 +1,9 @@
 "use client";
-import { ElementType } from "@/types/inputTypes";
 import * as React from "react";
-import CustomInput from "./CustomInput";
-import CustomSelect from "./CustomSelect";
-import { cn } from "@/utils";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FormSectionType } from "@/types/formTypes";
-import CustomDatePicker from "./CustomDatePicker";
-import CustomButtonGroups from "./CustomButtonGroups";
 import SectionFormItem from "./SectionFormItem";
+import { toast } from "react-toastify";
 
 type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   sections?: FormSectionType[];
@@ -18,6 +13,8 @@ type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   data?: any;
   activeStep: number;
   stepCount: number;
+  serviceFunction?: any | null;
+  filteredData?: any | null;
 };
 
 const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
@@ -31,6 +28,8 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       formItemType,
       data,
       stepCount,
+      serviceFunction,
+      filteredData,
       ...rest
     },
     ref,
@@ -52,18 +51,23 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       return () => subscription.unsubscribe();
     }, [watch, setData]);
 
-    const onSubmit: SubmitHandler<typeof formItemType> = (values) => {
+    const onSubmit: SubmitHandler<typeof formItemType> = async (values) => {
       setData((prev: typeof formItemType) => ({ ...prev, values }));
       setActiveStep((prev: number) => (prev < stepCount - 1 ? prev + 1 : prev));
+
+      if (activeStep == stepCount - 1 && serviceFunction && filteredData) {
+        const result = await serviceFunction();
+
+        if (result.result) {
+          console.log(filteredData);
+          toast.success("Ekleme Başarılı", { position: "top-right" });
+        }
+      }
     };
 
     const setPrev = () => {
       setActiveStep((prev: number) => (prev != 0 ? prev - 1 : 0));
     };
-
-    // const setNext = () => {
-    //   setActiveStep((prev: number) => (prev != stepCount ? prev + 1 : prev));
-    // };
 
     return (
       <form

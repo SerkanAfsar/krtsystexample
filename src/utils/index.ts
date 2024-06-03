@@ -1,6 +1,7 @@
 import { clsx, ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { jwtDecode } from "jwt-decode";
+import { AddProductType } from "@/types/responseTypes";
 
 export const cn = (...args: ClassValue[]) => {
   return twMerge(clsx(args));

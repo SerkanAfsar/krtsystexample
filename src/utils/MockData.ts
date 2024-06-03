@@ -131,15 +131,16 @@ export const AddStoneSections: Array<FormSectionType> = [
     colsLenght: "8",
     sectionTitle: "Pırlanta Bilgileri",
     groupNumber: 0,
+    keyString: "properties",
     elements: [
       {
-        name: "tip",
+        name: "menstrual_status",
         type: "customButtonGroup",
         title: "Tip",
         checkBoxList: ["TEK TAŞ", "MIX"],
         required: true,
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
-        checkBoxSetValueItem: "tip",
+        checkBoxSetValueItem: "menstrual_status",
         span: 12,
       },
       {
@@ -149,7 +150,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Kesim Değerini Giriniz...",
         required: true,
         requiredMessage: "Kesim Değerini Boş Bırakılamaz",
-        relativeTo: "tip",
+        relativeTo: "menstrual_status",
         options: [
           {
             titleVal: "ROUND",
@@ -221,7 +222,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Karat Değerini Giriniz...",
         required: true,
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
-        relativeTo: "tip",
+        relativeTo: "menstrual_status",
         span: 2,
         simgeturu: "caratType",
       },
@@ -326,7 +327,7 @@ export const AddStoneSections: Array<FormSectionType> = [
             valueVal: "Z",
           },
         ],
-        relativeTo: "tip",
+        relativeTo: "menstrual_status",
         span: 2,
         spesificRelatedItem: "MIX",
       },
@@ -432,7 +433,7 @@ export const AddStoneSections: Array<FormSectionType> = [
             valueVal: "Z",
           },
         ],
-        relativeTo: "tip",
+        relativeTo: "menstrual_status",
         visibleRelative: "MIX",
       },
       {
@@ -442,7 +443,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Berraklık Değerini Giriniz...",
         requiredMessage: "Berraklık Değeri Boş Bırakılamaz",
         required: true,
-        relativeTo: "tip",
+        relativeTo: "menstrual_status",
         span: 2,
         options: [
           {
@@ -499,7 +500,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Berraklık Değerini Giriniz...",
         requiredMessage: "Berraklık Değeri Boş Bırakılamaz",
         required: true,
-        relativeTo: "tip",
+        relativeTo: "menstrual_status",
         span: 1,
         options: [
           {
@@ -557,7 +558,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Elek Değerini Giriniz...",
         required: true,
         requiredMessage: "Elek Değeri Boş Bırakılamaz",
-        relativeTo: "tip",
+        relativeTo: "menstrual_status",
         span: 2,
         options: [
           {
@@ -682,7 +683,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Boy Değerini Giriniz...",
         required: true,
         requiredMessage: "Boy Değeri Boş Bırakılamaz",
-        relativeTo: "tip",
+        relativeTo: "menstrual_status",
         options: [
           {
             titleVal: "00",
@@ -776,7 +777,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         type: "text",
         title: "Açıklama",
         placeholder: "Açıklama Değerini Giriniz...",
-        relativeTo: "tip",
+        relativeTo: "menstrual_status",
         required: false,
         requiredMessage: "Açıklama Değeri Boş Bırakılamaz",
         span: 4,
@@ -787,6 +788,7 @@ export const AddStoneSections: Array<FormSectionType> = [
     colsLenght: "12",
     sectionTitle: "Sertifika Bilgileri",
     groupNumber: 1,
+    keyString: "product_certificate",
     elements: [
       {
         name: "sertifika",
@@ -1027,6 +1029,7 @@ export const AddStoneSections: Array<FormSectionType> = [
     colsLenght: "4",
     sectionTitle: "Pırlanta Fiyat Bilgileri",
     groupNumber: 1,
+    keyString: "product_cost",
     elements: [
       {
         name: "satinAlmaTarihi",
@@ -1073,7 +1076,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         span: 1,
       },
       {
-        name: "toplamFiyat",
+        name: "total_cost",
         type: "text",
         title: "Toplam Fiyat",
         placeholder: "Toplam Fiyat...",

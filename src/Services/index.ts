@@ -1,4 +1,5 @@
 "use server";
+
 import { cookies } from "next/headers";
 export const BaseService = async ({
   url,
@@ -7,19 +8,19 @@ export const BaseService = async ({
 }: {
   url: string;
   method: string;
-  body: object | null;
+  body: any;
 }): Promise<any> => {
   try {
     const cookieStore = cookies();
-    const jwt = cookieStore.get("jwt") || null;
+    const jwt = cookieStore.get("jwt")?.value || null;
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
       method: method || "GET",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        // Authorization: `Bearer ${jwt}`,
+        Authorization: `Bearer ${jwt}`,
       },
-      body: body ? JSON.stringify(body) : null,
+      body: body ?? JSON.stringify(body),
     });
     const result = await response.json();
     return result;

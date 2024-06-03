@@ -1,6 +1,7 @@
 import { ElementType } from "./inputTypes";
 
 export type IDiamondType = {
+  menstrual_status?: string;
   karat?: string;
   renk?: string;
   berraklik?: string;
@@ -31,7 +32,7 @@ export type IPirlantaPricingType = {
   rapaportPrice?: string;
   iskonto?: string;
   pricePerCarat?: string;
-  toplamFiyat?: string;
+  total_cost?: string;
 };
 
 export type AddDiamondStep1Type = IDiamondType &
@@ -53,4 +54,5 @@ export type FormSectionType = {
   colsLenght: string;
   elements: ElementType[];
   groupNumber: number;
+  keyString: string;
 };

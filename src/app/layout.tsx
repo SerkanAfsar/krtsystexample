@@ -8,6 +8,8 @@ import "@/css/simple-datatables.css";
 import "@/css/style.css";
 import React, { useEffect, useState } from "react";
 import Loader from "@/components/common/Loader";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function RootLayout({
   children,
@@ -28,6 +30,7 @@ export default function RootLayout({
           {loading ? <Loader /> : children}
         </div>
       </body>
+      <ToastContainer />
     </html>
   );
 }

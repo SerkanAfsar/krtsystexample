@@ -6,6 +6,9 @@ import { AddStoneSections } from "@/utils/MockData";
 import { AddDiamondStep1Type } from "@/types/formTypes";
 import { useEffect, useState } from "react";
 import { setDefaultItemValues } from "@/utils";
+import { AddProductType } from "@/types/responseTypes";
+import { AddProductService } from "@/Services/Product.Services";
+import { deneme } from "@/Services";
 
 const PirlantaEkle = () => {
   const diamondItem: AddDiamondStep1Type = {};
@@ -13,6 +16,7 @@ const PirlantaEkle = () => {
   const [data, setData] = useState<AddDiamondStep1Type>(
     setDefaultItemValues(diamondItem),
   );
+
   const [activeStep, setActiveStep] = useState<number>(0);
 
   useEffect(() => {
@@ -25,10 +29,29 @@ const PirlantaEkle = () => {
       setData((prev) => ({
         ...prev,
         pricePerCarat: newResult,
-        toplamFiyat: newToplamFiyat,
+        total_cost: newToplamFiyat,
       }));
     }
   }, [data?.iskonto, data?.karat]);
+
+  const newData: AddProductType = AddStoneSections.reduce(
+    (acc, next) => {
+      const elems = next.elements.reduce((acc2, next2) => {
+        const name = next2.name;
+        if (data[name]) {
+          return { ...acc2, [next2.name]: data[next2.name] };
+        }
+        return { ...acc2 };
+      }, {});
+      return { ...acc, [next.keyString]: elems };
+    },
+    {
+      menstrual_status: data.menstrual_status,
+      total_cost: data.total_cost,
+      type: "Diamond",
+      buy_date: data.satinAlmaTarihi,
+    },
+  );
 
   return (
     <DefaultLayout>
@@ -41,6 +64,8 @@ const PirlantaEkle = () => {
         sections={AddStoneSections.filter((a) => a.groupNumber == activeStep)}
         data={data}
         stepCount={2}
+        serviceFunction={AddProductService}
+        filteredData={newData}
       />
     </DefaultLayout>
   );
