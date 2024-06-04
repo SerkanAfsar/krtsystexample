@@ -1,10 +1,16 @@
-import { AddProductType } from "@/types/responseTypes";
+import { AddProductType, ResponseResult } from "@/types/responseTypes";
 import { BaseService } from ".";
 
-export const AddProductService = async (data: AddProductType): Promise<any> => {
-  return await BaseService({
+export const AddProductService = async ({
+  data,
+}: {
+  data: AddProductType;
+}): Promise<ResponseResult> => {
+  const result = await BaseService({
     url: "product/",
-    body: data,
+    bodyData: data,
     method: "POST",
+    hasToken: true,
   });
+  return result as ResponseResult;
 };

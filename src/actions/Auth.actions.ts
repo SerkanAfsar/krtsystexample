@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 
 export const loginServer = async (data: LoginType) => {
   const result = await LoginService({ data });
+
   if (result.result && result.payload.token) {
     await cookies().set({
       name: "jwt",

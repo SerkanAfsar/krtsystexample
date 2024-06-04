@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { FormSectionType } from "@/types/formTypes";
 import SectionFormItem from "./SectionFormItem";
 import { toast } from "react-toastify";
+import { ResponseResult } from "@/types/responseTypes";
 
 type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   sections?: FormSectionType[];
@@ -56,11 +57,26 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       setActiveStep((prev: number) => (prev < stepCount - 1 ? prev + 1 : prev));
 
       if (activeStep == stepCount - 1 && serviceFunction && filteredData) {
-        const result = await serviceFunction();
+        const result: ResponseResult = await serviceFunction({
+          data: {
+            ...filteredData,
+            code: "Test Deneme 2",
+            menstrual_status: "Mixed",
+          },
+        });
 
         if (result.result) {
-          console.log(filteredData);
           toast.success("Ekleme Başarılı", { position: "top-right" });
+        } else {
+          Object.entries(result.payload).map(([key, value], index) => {
+            setTimeout(() => {
+              toast.error(
+                `${key.toUpperCase()} ${value[0].toLocaleUpperCase()}`,
+                { position: "top-right" },
+              );
+            }, 200 * index);
+          });
+          return;
         }
       }
     };

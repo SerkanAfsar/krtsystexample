@@ -2,7 +2,7 @@ import { ElementType } from "./inputTypes";
 
 export type IDiamondType = {
   menstrual_status?: string;
-  karat?: string;
+  carat?: number;
   renk?: string;
   berraklik?: string;
   kesim?: string;
@@ -28,11 +28,11 @@ export type ISertifikaType = {
 };
 
 export type IPirlantaPricingType = {
-  satinAlmaTarihi?: string;
+  buy_date?: string;
   rapaportPrice?: string;
   iskonto?: string;
   pricePerCarat?: string;
-  total_cost?: string;
+  total_cost?: number;
 };
 
 export type AddDiamondStep1Type = IDiamondType &

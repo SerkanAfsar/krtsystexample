@@ -137,7 +137,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         name: "menstrual_status",
         type: "customButtonGroup",
         title: "Tip",
-        checkBoxList: ["TEK TAŞ", "MIX"],
+        checkBoxList: ["TEK TAŞ", "MIXED"],
         required: true,
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
         checkBoxSetValueItem: "menstrual_status",
@@ -216,7 +216,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         span: 2,
       },
       {
-        name: "karat",
+        name: "carat",
         type: "number",
         title: "Karat",
         placeholder: "Karat Değerini Giriniz...",
@@ -1032,7 +1032,7 @@ export const AddStoneSections: Array<FormSectionType> = [
     keyString: "product_cost",
     elements: [
       {
-        name: "satinAlmaTarihi",
+        name: "buy_date",
         type: "datepicker",
         title: "Satin Alma Tarihi",
         placeholder: "Satın Alma Tarihi Değerini Giriniz...",

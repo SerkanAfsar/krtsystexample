@@ -1,26 +1,37 @@
 "use server";
 
 import { cookies } from "next/headers";
+type headersType = {
+  "Content-Type": string;
+  Authorization?: string;
+};
 export const BaseService = async ({
   url,
   method,
-  body,
+  bodyData,
+  hasToken,
 }: {
   url: string;
   method: string;
-  body: any;
+  bodyData: any;
+  hasToken: boolean;
 }): Promise<any> => {
   try {
     const cookieStore = cookies();
     const jwt = cookieStore.get("jwt")?.value || null;
 
+    const headers: headersType = {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${jwt}`,
+    };
+    if (!hasToken) {
+      delete headers.Authorization;
+    }
+
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
       method: method || "GET",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        Authorization: `Bearer ${jwt}`,
-      },
-      body: body ?? JSON.stringify(body),
+      headers: headers,
+      body: bodyData ? JSON.stringify(bodyData) : null,
     });
     const result = await response.json();
     return result;

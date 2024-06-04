@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { setDefaultItemValues } from "@/utils";
 import { AddProductType } from "@/types/responseTypes";
 import { AddProductService } from "@/Services/Product.Services";
-import { deneme } from "@/Services";
 
 const PirlantaEkle = () => {
   const diamondItem: AddDiamondStep1Type = {};
@@ -20,26 +19,24 @@ const PirlantaEkle = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
 
   useEffect(() => {
-    if (data?.iskonto && data?.karat) {
+    if (data?.iskonto && data?.carat) {
       const iskonto = parseFloat(data?.iskonto) || 0;
-      const newResult = ((4200 * (100 - iskonto)) / 100).toString();
-      const newToplamFiyat = (
-        parseFloat(newResult) * parseFloat(data.karat)
-      ).toString();
+      const newResult = (4200 * (100 - iskonto)) / 100;
+      const newToplamFiyat = newResult * data.carat;
       setData((prev) => ({
         ...prev,
-        pricePerCarat: newResult,
+        pricePerCarat: newResult.toString(),
         total_cost: newToplamFiyat,
       }));
     }
-  }, [data?.iskonto, data?.karat]);
+  }, [data?.iskonto, data?.carat]);
 
   const newData: AddProductType = AddStoneSections.reduce(
     (acc, next) => {
       const elems = next.elements.reduce((acc2, next2) => {
-        const name = next2.name;
+        const name = next2.name as keyof AddDiamondStep1Type;
         if (data[name]) {
-          return { ...acc2, [next2.name]: data[next2.name] };
+          return { ...acc2, [next2.name]: data[name] };
         }
         return { ...acc2 };
       }, {});
@@ -49,7 +46,7 @@ const PirlantaEkle = () => {
       menstrual_status: data.menstrual_status,
       total_cost: data.total_cost,
       type: "Diamond",
-      buy_date: data.satinAlmaTarihi,
+      buy_date: data.buy_date,
     },
   );
 
@@ -72,3 +69,5 @@ const PirlantaEkle = () => {
 };
 
 export default PirlantaEkle;
+
+export const dynamic = "force-dynamic";
