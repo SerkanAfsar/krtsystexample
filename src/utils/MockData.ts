@@ -137,7 +137,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         name: "menstrual_status",
         type: "customButtonGroup",
         title: "Tip",
-        checkBoxList: ["TEK TAŞ", "MIXED"],
+        checkBoxList: ["Sertifikalı", "Sertifikasız"],
         required: true,
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
         checkBoxSetValueItem: "menstrual_status",
@@ -329,7 +329,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         ],
         relativeTo: "menstrual_status",
         span: 2,
-        spesificRelatedItem: "MIX",
+        spesificRelatedItem: "Sertifikasız",
       },
       {
         name: "renk2",
@@ -434,7 +434,7 @@ export const AddStoneSections: Array<FormSectionType> = [
           },
         ],
         relativeTo: "menstrual_status",
-        visibleRelative: "MIX",
+        visibleRelative: "Sertifikasız",
       },
       {
         name: "berraklik",
@@ -491,7 +491,7 @@ export const AddStoneSections: Array<FormSectionType> = [
             valueVal: "I3",
           },
         ],
-        spesificRelatedItem: "MIX",
+        spesificRelatedItem: "Sertifikasız",
       },
       {
         name: "berraklik2",
@@ -548,7 +548,7 @@ export const AddStoneSections: Array<FormSectionType> = [
             valueVal: "I3",
           },
         ],
-        visibleRelative: "MIX",
+        visibleRelative: "Sertifikasız",
       },
 
       {
@@ -782,6 +782,17 @@ export const AddStoneSections: Array<FormSectionType> = [
         requiredMessage: "Açıklama Değeri Boş Bırakılamaz",
         span: 4,
       },
+      // {
+      //   name: "sertifikaResim",
+      //   type: "file",
+      //   title: "Sertifika",
+      //   placeholder: "Sertifika Resim Seçiniz...",
+      //   required: true,
+      //   requiredMessage: "Sertifika Resmi Seçiniz",
+      //   relativeTo: "menstrual_status",
+      //   span: 4,
+      //   visibleRelative: "Sertifikalı",
+      // },
     ],
   },
   {
@@ -952,6 +963,10 @@ export const AddStoneSections: Array<FormSectionType> = [
           {
             titleVal: "STRONG",
             valueVal: "STRONG",
+          },
+          {
+            titleVal: "SLIGHT",
+            valueVal: "SLIGHT",
           },
         ],
       },

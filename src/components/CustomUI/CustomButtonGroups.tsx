@@ -36,7 +36,7 @@ const CustomButtonGroups = React.forwardRef<HTMLDivElement, HtmlDivProps>(
               "border-primary bg-primary text-white",
           )}
         >
-          {checkBoxList[0]}
+          {checkBoxList[0].toLocaleUpperCase()}
         </div>
         {/* <div
           className={cn(
@@ -53,7 +53,7 @@ const CustomButtonGroups = React.forwardRef<HTMLDivElement, HtmlDivProps>(
               "border-primary bg-primary text-white",
           )}
         >
-          {checkBoxList[checkBoxList.length - 1]}
+          {checkBoxList[checkBoxList.length - 1].toLocaleUpperCase()}
         </div>
       </div>
     );

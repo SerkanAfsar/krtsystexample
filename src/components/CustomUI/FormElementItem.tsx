@@ -4,6 +4,7 @@ import CustomButtonGroups from "./CustomButtonGroups";
 import CustomDatePicker from "./CustomDatePicker";
 import CustomSelect from "./CustomSelect";
 import { cn } from "@/utils";
+import CustomFileSelect from "./CustomFileSelect";
 
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -16,12 +17,14 @@ export default function FormElementItem({
   data,
   setValue,
   errors,
+  setError,
 }: {
   item: ElementType;
   register: any;
   data: any;
   errors: any;
   setValue: any;
+  setError: any;
 }) {
   const firstCondition =
     (data &&
@@ -88,6 +91,9 @@ export default function FormElementItem({
       );
     }
     case "datepicker": {
+      register(item.name, {
+        required: item.required,
+      });
       return (
         <CustomDatePicker
           {...register(item.name, {
@@ -95,6 +101,7 @@ export default function FormElementItem({
               !isDisabled && item.required ? item.requiredMessage : false,
           })}
           item={item}
+          setValue={setValue}
           err={err}
           outerClass={cn(item.span && `col-span-${item.span.toString()}`)}
           disabled={isDisabled}
@@ -112,6 +119,21 @@ export default function FormElementItem({
           err={err}
           outerClass={cn(item.span && `col-span-${colSpan}`)}
           disabled={isDisabled}
+        />
+      );
+    }
+    case "file": {
+      return (
+        <CustomFileSelect
+          {...register(item.name, {
+            required:
+              !isDisabled && item.required ? item.requiredMessage : false,
+          })}
+          item={item}
+          err={err}
+          outerClass={cn(item.span && `col-span-${colSpan}`)}
+          disabled={isDisabled}
+          setError={setError}
         />
       );
     }

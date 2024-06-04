@@ -12,8 +12,8 @@ export type LoginResultType = {
 };
 
 export type AddProductType = {
-  code?: string;
-  type?: string;
+  code: string;
+  type: string;
   properties?: { [key: string]: string };
   image?: string;
   product_inside?: { [key: string]: string };
@@ -27,5 +27,5 @@ export type AddProductType = {
 export type ResponseResult = {
   result?: boolean;
   message?: string | null;
-  payload: { [key: string]: Array<string> };
+  payload: { [key: string]: Array<string> | number };
 };

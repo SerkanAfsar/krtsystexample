@@ -16,6 +16,7 @@ type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   stepCount: number;
   serviceFunction?: any | null;
   filteredData?: any | null;
+  productCode?: string | null;
 };
 
 const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
@@ -31,6 +32,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       stepCount,
       serviceFunction,
       filteredData,
+      productCode,
       ...rest
     },
     ref,
@@ -40,6 +42,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       handleSubmit,
       watch,
       setValue,
+      setError,
       formState: { errors },
     } = useForm<typeof formItemType>({
       defaultValues: data,
@@ -58,11 +61,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
 
       if (activeStep == stepCount - 1 && serviceFunction && filteredData) {
         const result: ResponseResult = await serviceFunction({
-          data: {
-            ...filteredData,
-            code: "Test Deneme 2",
-            menstrual_status: "Mixed",
-          },
+          data: filteredData,
         });
 
         if (result.result) {
@@ -70,8 +69,9 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
         } else {
           Object.entries(result.payload).map(([key, value], index) => {
             setTimeout(() => {
+              const res = value as string[];
               toast.error(
-                `${key.toUpperCase()} ${value[0].toLocaleUpperCase()}`,
+                `${key.toUpperCase()} ${res[0].toLocaleUpperCase()}`,
                 { position: "top-right" },
               );
             }, 200 * index);
@@ -100,6 +100,8 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
             register={register}
             section={section}
             key={section.sectionTitle}
+            setError={setError}
+            productCode={productCode}
           />
         ))}
 

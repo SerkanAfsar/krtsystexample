@@ -2,6 +2,7 @@ import { clsx, ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { jwtDecode } from "jwt-decode";
 import { AddProductType } from "@/types/responseTypes";
+import { CustomOptionType } from "@/types/inputTypes";
 
 export const cn = (...args: ClassValue[]) => {
   return twMerge(clsx(args));
@@ -67,3 +68,89 @@ export const caratType = (value: number): string => {
     return "UU";
   }
 };
+
+export const selectKesimValue = ({
+  selectedValue,
+  options,
+}: {
+  selectedValue: string;
+  options: CustomOptionType[] | undefined | null;
+}) => {
+  return options?.find((a) => a.valueVal == selectedValue)?.extraValue;
+};
+
+export const generateDiamondCode = ({
+  kesimKodu,
+  caratKodu,
+}: {
+  kesimKodu?: string;
+  caratKodu?: number;
+}): string => {
+  if (kesimKodu && caratKodu) {
+    return `${selectKesimValue({ selectedValue: kesimKodu, options: PirlantaKesimKodlari })}${caratType(caratKodu)}`;
+  }
+  return "Yükleniyor...";
+};
+
+const PirlantaKesimKodlari = [
+  {
+    titleVal: "ROUND",
+    valueVal: "ROUND",
+    extraValue: "BR",
+  },
+  {
+    titleVal: "HEART",
+    valueVal: "HEART",
+    extraValue: "HS",
+  },
+  {
+    titleVal: "PEAR",
+    valueVal: "PEAR",
+    extraValue: "PS",
+  },
+  {
+    titleVal: "MARQUISE",
+    valueVal: "MARQUISE",
+    extraValue: "MQ",
+  },
+  {
+    titleVal: "OVAL",
+    valueVal: "OVAL",
+    extraValue: "OV",
+  },
+  {
+    titleVal: "BAGET",
+    valueVal: "BAGET",
+    extraValue: "BG",
+  },
+  {
+    titleVal: "TRAPEZ",
+    valueVal: "TRAPEZ",
+    extraValue: "TP",
+  },
+  {
+    titleVal: "TRIANGLE",
+    valueVal: "TRIANGLE",
+    extraValue: "TR",
+  },
+  {
+    titleVal: "PRENSES",
+    valueVal: "PRENSES",
+    extraValue: "PR",
+  },
+  {
+    titleVal: "RADIANT",
+    valueVal: "RADIANT",
+    extraValue: "RD",
+  },
+  {
+    titleVal: "EMERALD",
+    valueVal: "EMERALD",
+    extraValue: "EM",
+  },
+  {
+    titleVal: "CUSHION",
+    valueVal: "CUSHION",
+    extraValue: "CS",
+  },
+];

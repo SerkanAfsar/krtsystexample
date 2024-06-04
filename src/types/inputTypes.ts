@@ -6,7 +6,8 @@ export type ElementType = {
     | "select"
     | "datepicker"
     | "customButtonGroup"
-    | "number";
+    | "number"
+    | "file";
   title?: string;
   name: string;
   placeholder?: string | null;
@@ -28,6 +29,7 @@ export type ElementType = {
   colEnd?: string;
   spesificRelatedItem?: string;
   icon?: React.ReactNode;
+  disabledRelative?: string;
 };
 
 export type CustomOptionType = {
@@ -39,4 +41,9 @@ export type CustomOptionType = {
 export type LoginType = {
   email: string;
   password: string;
+};
+
+export type GetNextOrderType = {
+  type: string;
+  code: string;
 };

@@ -5,12 +5,16 @@ import CustomForm from "@/components/CustomUI/CustomForm";
 import { AddStoneSections } from "@/utils/MockData";
 import { AddDiamondStep1Type } from "@/types/formTypes";
 import { useEffect, useState } from "react";
-import { setDefaultItemValues } from "@/utils";
-import { AddProductType } from "@/types/responseTypes";
-import { AddProductService } from "@/Services/Product.Services";
+import { generateDiamondCode, setDefaultItemValues } from "@/utils";
+import { AddProductType, ResponseResult } from "@/types/responseTypes";
+import {
+  AddProductService,
+  DiamondQueueByCodeService,
+} from "@/Services/Product.Services";
 
 const PirlantaEkle = () => {
   const diamondItem: AddDiamondStep1Type = {};
+  const [diamondCode, setDiamondCode] = useState<string>("");
 
   const [data, setData] = useState<AddDiamondStep1Type>(
     setDefaultItemValues(diamondItem),
@@ -31,6 +35,40 @@ const PirlantaEkle = () => {
     }
   }, [data?.iskonto, data?.carat]);
 
+  useEffect(() => {
+    if (data.kesim && data.carat) {
+      const timeFunc = setTimeout(() => {
+        const code = generateDiamondCode({
+          kesimKodu: data.kesim,
+          caratKodu: data.carat,
+        });
+        DiamondQueueByCodeService({ data: { code, type: "Diamond" } })
+          .then((res: ResponseResult) => {
+            if (res.result) {
+              const siraNo = res.payload["next_order"] as number;
+              setDiamondCode(`${code}-${siraNo.toString().padStart(3, "0")}`);
+            } else {
+              const errs = Object.entries(res.payload).map(
+                ([key, value], index) => {
+                  const arr = value as string[];
+                  return `${key} - ${arr[0]}`;
+                },
+              );
+              setDiamondCode(errs[0]);
+            }
+          })
+          .catch((err) => {
+            setDiamondCode(err.message);
+          });
+      }, 500);
+      return () => {
+        clearTimeout(timeFunc);
+      };
+    } else {
+      setDiamondCode("");
+    }
+  }, [data.kesim, data.carat]);
+
   const newData: AddProductType = AddStoneSections.reduce(
     (acc, next) => {
       const elems = next.elements.reduce((acc2, next2) => {
@@ -43,16 +81,19 @@ const PirlantaEkle = () => {
       return { ...acc, [next.keyString]: elems };
     },
     {
-      menstrual_status: data.menstrual_status,
+      menstrual_status:
+        data.menstrual_status == "Sertifikalı" ? "Single" : "Mixed",
       total_cost: data.total_cost,
       type: "Diamond",
       buy_date: data.buy_date,
+      code: diamondCode,
     },
   );
 
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Pırlanta Ekle" />
+
       <CustomForm
         setData={setData}
         activeStep={activeStep}
@@ -63,11 +104,10 @@ const PirlantaEkle = () => {
         stepCount={2}
         serviceFunction={AddProductService}
         filteredData={newData}
+        productCode={diamondCode}
       />
     </DefaultLayout>
   );
 };
 
 export default PirlantaEkle;
-
-export const dynamic = "force-dynamic";

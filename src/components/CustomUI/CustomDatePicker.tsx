@@ -9,13 +9,24 @@ import { ElementType } from "@/types/inputTypes";
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   outerClass?: ClassValue | null;
   err?: string | null;
+  setValue: any;
 } & {
   item: ElementType;
 };
 
 const CustomDatePicker = React.forwardRef<HTMLInputElement, InputProps>(
   (
-    { item, className, onChange, onBlur, name, outerClass, err, ...rest },
+    {
+      item,
+      className,
+      onChange: deneme,
+      onBlur,
+      name,
+      outerClass,
+      err,
+      setValue,
+      ...rest
+    },
     ref,
   ) => {
     const id = React.useId();
@@ -25,9 +36,10 @@ const CustomDatePicker = React.forwardRef<HTMLInputElement, InputProps>(
           mode: "single",
           static: true,
           monthSelectorType: "static",
-          // dateFormat: "M j, Y",
-          altFormat: "YYYY-MM-DD",
-          dateFormat: "F j, Y",
+          onChange: (selectedDates, dateStr, instance) => {
+            setValue(name, dateStr);
+          },
+
           prevArrow:
             '<svg className="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M5.4 10.8l1.4-1.4-4-4 4-4L5.4 0 0 5.4z" /></svg>',
           nextArrow:
@@ -44,6 +56,7 @@ const CustomDatePicker = React.forwardRef<HTMLInputElement, InputProps>(
         <div className="relative">
           <input
             ref={ref}
+            type="text"
             className={cn(
               "form-datepicker w-full rounded border-[1.5px] border-stone-400 bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary",
               className,
@@ -54,7 +67,9 @@ const CustomDatePicker = React.forwardRef<HTMLInputElement, InputProps>(
             data-class="flatpickr-right"
             id={id}
             name={name}
-            onChange={onChange}
+            onChange={(e) => {
+              alert("test");
+            }}
             onBlur={onBlur}
             {...rest}
           />

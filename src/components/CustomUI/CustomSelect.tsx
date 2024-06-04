@@ -1,8 +1,8 @@
 "use client";
-import { CustomOptionType, ElementType } from "@/types/inputTypes";
-import { cn } from "@/utils";
+import { ElementType } from "@/types/inputTypes";
+import { cn, selectKesimValue } from "@/utils";
 import { ClassValue } from "clsx";
-import React, { useEffect, useId, useState } from "react";
+import React, { useId, useState } from "react";
 
 type SelectElementProps = React.InputHTMLAttributes<HTMLSelectElement> & {
   err?: string | null;
@@ -28,9 +28,11 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
 
     const options = item.options;
     const id = useId();
-    const selectedExtraValue = options?.find(
-      (a) => a.valueVal == selectedValue,
-    )?.extraValue;
+
+    const selectedExtraValue = selectKesimValue({
+      selectedValue,
+      options,
+    });
 
     return (
       <div className={cn("w-full", outerClass && outerClass)}>
