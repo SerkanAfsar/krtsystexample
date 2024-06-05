@@ -36,8 +36,9 @@ const PirlantaEkle = () => {
   }, [data?.iskonto, data?.carat]);
 
   useEffect(() => {
+    let timeFunc: any;
     if (data.kesim && data.carat) {
-      const timeFunc = setTimeout(() => {
+      timeFunc = setTimeout(() => {
         const code = generateDiamondCode({
           kesimKodu: data.kesim,
           caratKodu: data.carat,
@@ -61,12 +62,12 @@ const PirlantaEkle = () => {
             setDiamondCode(err.message);
           });
       }, 500);
-      return () => {
-        clearTimeout(timeFunc);
-      };
     } else {
       setDiamondCode("");
     }
+    return () => {
+      clearTimeout(timeFunc);
+    };
   }, [data.kesim, data.carat]);
 
   const newData: AddProductType = AddStoneSections.reduce(
@@ -93,7 +94,6 @@ const PirlantaEkle = () => {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Pırlanta Ekle" />
-
       <CustomForm
         setData={setData}
         activeStep={activeStep}
