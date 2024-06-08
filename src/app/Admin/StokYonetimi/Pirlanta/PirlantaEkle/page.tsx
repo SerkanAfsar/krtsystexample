@@ -105,7 +105,7 @@ const PirlantaEkle = () => {
         serviceFunction={AddProductService}
         filteredData={newData}
         productCode={diamondCode}
-        redirectUrl="/Admin/Stokyonetimi/Pirlanta/PirlantaListesi"
+        redirectUrl="/Admin/StokYonetimi/Pirlanta/PirlantaListesi"
       />
     </DefaultLayout>
   );
