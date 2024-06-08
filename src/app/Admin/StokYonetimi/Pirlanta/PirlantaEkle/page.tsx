@@ -25,7 +25,7 @@ const PirlantaEkle = () => {
   useEffect(() => {
     if (data?.iskonto && data?.carat) {
       const iskonto = parseFloat(data?.iskonto) || 0;
-      const newResult = (4200 * (100 - iskonto)) / 100;
+      const newResult = (2500 * (100 - iskonto)) / 100;
       const newToplamFiyat = newResult * data.carat;
       setData((prev) => ({
         ...prev,
@@ -105,6 +105,7 @@ const PirlantaEkle = () => {
         serviceFunction={AddProductService}
         filteredData={newData}
         productCode={diamondCode}
+        redirectUrl="/Admin/Stokyonetimi/Pirlanta/PirlantaListesi"
       />
     </DefaultLayout>
   );

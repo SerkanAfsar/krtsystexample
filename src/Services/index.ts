@@ -33,6 +33,7 @@ export const BaseService = async ({
       headers: headers,
       body: bodyData ? JSON.stringify(bodyData) : null,
     });
+
     const result = await response.json();
     return result;
   } catch (err: unknown) {

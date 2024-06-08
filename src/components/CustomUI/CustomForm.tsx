@@ -5,6 +5,7 @@ import { FormSectionType } from "@/types/formTypes";
 import SectionFormItem from "./SectionFormItem";
 import { toast } from "react-toastify";
 import { ResponseResult } from "@/types/responseTypes";
+import { useRouter } from "next/navigation";
 
 type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   sections?: FormSectionType[];
@@ -17,6 +18,7 @@ type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   serviceFunction?: any | null;
   filteredData?: any | null;
   productCode?: string | null;
+  redirectUrl?: string;
 };
 
 const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
@@ -33,6 +35,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       serviceFunction,
       filteredData,
       productCode,
+      redirectUrl,
       ...rest
     },
     ref,
@@ -47,6 +50,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
     } = useForm<typeof formItemType>({
       defaultValues: data,
     });
+    const router = useRouter();
 
     React.useEffect(() => {
       const subscription = watch((value: typeof formItemType) => {
@@ -66,6 +70,9 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
 
         if (result.result) {
           toast.success("Ekleme Başarılı", { position: "top-right" });
+          if (redirectUrl) {
+            return router.push(redirectUrl);
+          }
         } else {
           Object.entries(result.payload).map(([key, value], index) => {
             setTimeout(() => {

@@ -29,3 +29,14 @@ export type ResponseResult = {
   message?: string | null;
   payload: { [key: string]: Array<string> | number };
 };
+
+export type ProductResponseType = {
+  result: boolean;
+  message: string | null;
+  payload: {
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: any[];
+  };
+};
