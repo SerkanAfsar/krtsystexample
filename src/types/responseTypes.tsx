@@ -27,7 +27,7 @@ export type AddProductType = {
 export type ResponseResult = {
   result?: boolean;
   message?: string | null;
-  payload: { [key: string]: Array<string> | number };
+  payload: any;
 };
 
 export type ProductResponseType = {

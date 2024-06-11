@@ -70,7 +70,7 @@ const CustomFileSelect = React.forwardRef<
           </div>
         )}
         {item.pictureExtraText && (
-          <div className="my-5 block w-full text-left text-center text-base font-bold text-black-2">
+          <div className="my-5 block w-full text-left  text-base font-bold text-black-2">
             {item.pictureExtraText}
           </div>
         )}

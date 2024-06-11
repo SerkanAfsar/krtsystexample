@@ -2,6 +2,7 @@ import { FormSectionType } from "@/types/formTypes";
 import FormElementItem from "./FormElementItem";
 import { ClassValue } from "clsx";
 import { cn } from "@/utils";
+import { SelectOptionsType } from "@/app/Admin/StokYonetimi/Pirlanta/PirlantaEkle/page";
 
 export default function SectionFormItem({
   section,
@@ -11,6 +12,7 @@ export default function SectionFormItem({
   setError,
   errors,
   productCode,
+  extraOptions,
 }: {
   section: FormSectionType;
   data: any;
@@ -19,6 +21,7 @@ export default function SectionFormItem({
   errors: any;
   setError: any;
   productCode?: string | null;
+  extraOptions?: SelectOptionsType[] | null;
 }) {
   return (
     <div className="mb-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -51,6 +54,31 @@ export default function SectionFormItem({
             />
           ))}
         </div>
+        {section.extraElementRelativeTo &&
+          data[section.extraElementRelativeTo] ==
+            section.extraElementVisibleRelative && (
+            <div
+              className={cn(
+                "grid gap-6 p-4",
+                section.colsLenght
+                  ? `grid-cols-${section.colsLenght}`
+                  : "grid-cols-12",
+              )}
+            >
+              {section?.extraElements?.map((item, index) => (
+                <FormElementItem
+                  register={register}
+                  setValue={setValue}
+                  errors={errors}
+                  key={item.name}
+                  item={item}
+                  data={data}
+                  setError={setError}
+                  extraOptions={extraOptions}
+                />
+              ))}
+            </div>
+          )}
       </div>
     </div>
   );

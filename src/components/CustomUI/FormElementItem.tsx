@@ -5,6 +5,7 @@ import CustomDatePicker from "./CustomDatePicker";
 import CustomSelect from "./CustomSelect";
 import { cn } from "@/utils";
 import CustomFileSelect from "./CustomFileSelect";
+import { SelectOptionsType } from "@/app/Admin/StokYonetimi/Pirlanta/PirlantaEkle/page";
 
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -18,6 +19,7 @@ export default function FormElementItem({
   setValue,
   errors,
   setError,
+  extraOptions,
 }: {
   item: ElementType;
   register: any;
@@ -25,6 +27,7 @@ export default function FormElementItem({
   errors: any;
   setValue: any;
   setError: any;
+  extraOptions?: SelectOptionsType[] | null;
 }) {
   const firstCondition =
     (data &&
@@ -84,7 +87,7 @@ export default function FormElementItem({
           title={item.title}
           checkBoxList={item.checkBoxList || ["DATA YOK"]}
           setValue={setValue}
-          outerClass={cn(item.span && `col-span-full`)}
+          outerClass={cn(item.span ? `col-span-${item.span}` : `col-span-full`)}
           register={register}
           name={item.name}
           value={val}
@@ -117,6 +120,7 @@ export default function FormElementItem({
               !isDisabled && item.required ? item.requiredMessage : false,
           })}
           item={item}
+          extraOptions={extraOptions}
           err={err}
           outerClass={cn(item.span && `col-span-${colSpan}`)}
           disabled={isDisabled}

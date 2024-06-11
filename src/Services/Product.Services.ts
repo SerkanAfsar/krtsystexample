@@ -63,3 +63,50 @@ export const GetDiamondDataTableService = async ({
   });
   return result as ProductResponseType;
 };
+
+export const GetNextOrderForMixedDiamondService = async ({
+  type = "Diamond",
+  code,
+}: {
+  type: string;
+  code: string;
+}): Promise<ResponseResult> => {
+  const data = { type, code };
+  const result = await BaseService({
+    url: "product/get-next-order-for-mixed-diamond/",
+    method: "Post",
+    bodyData: data,
+    hasToken: true,
+  });
+  return result as ResponseResult;
+};
+
+export const GetNextOrderFromSingleDiamondService = async ({
+  from_mixed = false,
+  code,
+}: {
+  from_mixed: boolean;
+  code: string;
+}): Promise<ResponseResult> => {
+  const data = { from_mixed, code };
+  const result = await BaseService({
+    url: "product/product-single-next-order/",
+    method: "Post",
+    bodyData: data,
+    hasToken: true,
+  });
+  return result as ResponseResult;
+};
+export const GetListMixedProductsCodeDiamondService = async ({
+  code,
+}: {
+  code: string;
+}): Promise<ResponseResult> => {
+  const result = await BaseService({
+    url: `product/list-mixed-products-codes/?code=${code}`,
+    method: "Get",
+    bodyData: null,
+    hasToken: true,
+  });
+  return result as ResponseResult;
+};

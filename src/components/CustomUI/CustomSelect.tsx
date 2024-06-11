@@ -1,4 +1,5 @@
 "use client";
+import { SelectOptionsType } from "@/app/Admin/StokYonetimi/Pirlanta/PirlantaEkle/page";
 import { ElementType } from "@/types/inputTypes";
 import { cn, selectKesimValue } from "@/utils";
 import { ClassValue } from "clsx";
@@ -7,6 +8,7 @@ import React, { useId, useState } from "react";
 type SelectElementProps = React.InputHTMLAttributes<HTMLSelectElement> & {
   err?: string | null;
   outerClass?: ClassValue | null;
+  extraOptions?: SelectOptionsType[];
 } & { item: ElementType };
 
 const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
@@ -18,6 +20,7 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
       onChange: selectChange,
       onBlur,
       name,
+      extraOptions,
       outerClass,
       ...rest
     },
@@ -26,7 +29,7 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
     const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
     const [selectedValue, setSelectedValue] = useState<string>("");
 
-    const options = item.options;
+    const options = item.isExtra ? extraOptions : item.options;
     const id = useId();
 
     const selectedExtraValue = selectKesimValue({
@@ -99,7 +102,7 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
             </span>
           </div>
 
-          {options && options[0].extraValue && selectedExtraValue && (
+          {options && options[0]?.extraValue && selectedExtraValue && (
             <div className="flex h-full  items-center justify-center rounded-sm bg-primary px-2 py-3 text-white">
               {selectedExtraValue}
             </div>

@@ -4,13 +4,21 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import CustomForm from "@/components/CustomUI/CustomForm";
 import { AddStoneSections } from "@/utils/MockData";
 import { AddDiamondStep1Type } from "@/types/formTypes";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { generateDiamondCode, setDefaultItemValues } from "@/utils";
 import { AddProductType, ResponseResult } from "@/types/responseTypes";
 import {
   AddProductService,
-  DiamondQueueByCodeService,
+  GetListMixedProductsCodeDiamondService,
+  GetNextOrderForMixedDiamondService,
+  GetNextOrderFromSingleDiamondService,
 } from "@/Services/Product.Services";
+
+export type SelectOptionsType = {
+  valueVal: string;
+  titleVal: string;
+  extraValue?: string;
+};
 
 const PirlantaEkle = () => {
   const diamondItem: AddDiamondStep1Type = {};
@@ -20,6 +28,9 @@ const PirlantaEkle = () => {
     setDefaultItemValues(diamondItem),
   );
 
+  const [extraOptions, setExtraOptions] = useState<SelectOptionsType[] | null>(
+    null,
+  );
   const [activeStep, setActiveStep] = useState<number>(0);
 
   useEffect(() => {
@@ -35,6 +46,24 @@ const PirlantaEkle = () => {
     }
   }, [data?.iskonto, data?.carat]);
 
+  const returnSameResult = (
+    promiseFunc: Promise<ResponseResult>,
+    code: string,
+  ) => {
+    return promiseFunc
+      .then((resp: ResponseResult) => {
+        if (resp.result) {
+          const siraNo = resp.payload["next_order"] as number;
+          setDiamondCode(`${code}-${siraNo}`);
+        } else {
+          setDiamondCode("Hata");
+        }
+      })
+      .catch((err) => {
+        setDiamondCode(err);
+      });
+  };
+
   useEffect(() => {
     let timeFunc: any;
     if (data.kesim && data.carat) {
@@ -43,24 +72,27 @@ const PirlantaEkle = () => {
           kesimKodu: data.kesim,
           caratKodu: data.carat,
         });
-        DiamondQueueByCodeService({ data: { code, type: "Diamond" } })
-          .then((res: ResponseResult) => {
-            if (res.result) {
-              const siraNo = res.payload["next_order"] as number;
-              setDiamondCode(`${code}-${siraNo.toString().padStart(3, "0")}`);
-            } else {
-              const errs = Object.entries(res.payload).map(
-                ([key, value], index) => {
-                  const arr = value as string[];
-                  return `${key} - ${arr[0]}`;
-                },
-              );
-              setDiamondCode(errs[0]);
-            }
-          })
-          .catch((err) => {
-            setDiamondCode(err.message);
-          });
+        if (data.menstrual_status == "Sertifikasız") {
+          returnSameResult(
+            GetNextOrderForMixedDiamondService({ type: "Diamond", code }),
+            code,
+          );
+        } else {
+          if (data.fromsingleormixed == "From Single") {
+            returnSameResult(
+              GetNextOrderFromSingleDiamondService({ from_mixed: false, code }),
+              code,
+            );
+          } else {
+            returnSameResult(
+              GetNextOrderFromSingleDiamondService({
+                from_mixed: true,
+                code: `${code}-${data.frommixedItem}`,
+              }),
+              `${code}-${data.frommixedItem}`,
+            );
+          }
+        }
       }, 500);
     } else {
       setDiamondCode("");
@@ -68,7 +100,38 @@ const PirlantaEkle = () => {
     return () => {
       clearTimeout(timeFunc);
     };
-  }, [data.kesim, data.carat]);
+  }, [
+    data.kesim,
+    data.carat,
+    data.menstrual_status,
+    data.fromsingleormixed,
+    data.frommixedItem,
+  ]);
+
+  useEffect(() => {
+    if (data.fromsingleormixed == "From Mixed") {
+      const code = generateDiamondCode({
+        kesimKodu: data.kesim,
+        caratKodu: data.carat,
+      });
+      GetListMixedProductsCodeDiamondService({ code })
+        .then((resp: ResponseResult) => {
+          if (resp.result) {
+            const respData = resp.payload as string[];
+            const sekoData: SelectOptionsType[] = respData.map((item) => ({
+              titleVal: item,
+              valueVal: item,
+            }));
+            setExtraOptions(sekoData);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setExtraOptions(null);
+    }
+  }, [data.fromsingleormixed]);
 
   const newData: AddProductType = AddStoneSections.reduce(
     (acc, next) => {
@@ -105,6 +168,7 @@ const PirlantaEkle = () => {
         serviceFunction={AddProductService}
         filteredData={newData}
         productCode={diamondCode}
+        extraOptions={extraOptions}
         redirectUrl="/Admin/StokYonetimi/Pirlanta/PirlantaListesi"
       />
     </DefaultLayout>

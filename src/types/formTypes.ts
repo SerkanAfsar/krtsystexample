@@ -9,6 +9,8 @@ export type IDiamondType = {
   elek?: string;
   boy?: string;
   aciklama?: string;
+  fromsingleormixed?: string;
+  frommixedItem?: string;
 };
 
 export type ISertifikaType = {
@@ -60,4 +62,7 @@ export type FormSectionType = {
   elements: ElementType[];
   groupNumber: number;
   keyString: string;
+  extraElements?: ElementType[];
+  extraElementRelativeTo?: string;
+  extraElementVisibleRelative?: string;
 };

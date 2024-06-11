@@ -6,6 +6,7 @@ import SectionFormItem from "./SectionFormItem";
 import { toast } from "react-toastify";
 import { ResponseResult } from "@/types/responseTypes";
 import { useRouter } from "next/navigation";
+import { SelectOptionsType } from "@/app/Admin/StokYonetimi/Pirlanta/PirlantaEkle/page";
 
 type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   sections?: FormSectionType[];
@@ -19,6 +20,7 @@ type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   filteredData?: any | null;
   productCode?: string | null;
   redirectUrl?: string;
+  extraOptions?: SelectOptionsType[] | null;
 };
 
 const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
@@ -36,6 +38,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       filteredData,
       productCode,
       redirectUrl,
+      extraOptions,
       ...rest
     },
     ref,
@@ -109,6 +112,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
             key={section.sectionTitle}
             setError={setError}
             productCode={productCode}
+            extraOptions={extraOptions}
           />
         ))}
 

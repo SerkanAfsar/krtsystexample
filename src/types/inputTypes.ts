@@ -34,6 +34,7 @@ export type ElementType = {
   height?: string;
   showPicture?: boolean;
   pictureExtraText?: string;
+  isExtra?: boolean;
 };
 
 export type CustomOptionType = {

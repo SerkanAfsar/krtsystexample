@@ -1,5 +1,4 @@
 import { FormSectionType } from "@/types/formTypes";
-import { ElementType } from "@/types/inputTypes";
 
 export const AddSadeSections: Array<FormSectionType> = [
   {
@@ -492,16 +491,42 @@ export const AddStoneSections: Array<FormSectionType> = [
     sectionTitle: "Pırlanta Bilgileri",
     groupNumber: 0,
     keyString: "properties",
+    extraElementRelativeTo: "menstrual_status",
+    extraElementVisibleRelative: "Sertifikalı",
+    extraElements: [
+      {
+        name: "fromsingleormixed",
+        type: "customButtonGroup",
+        title: "Tip",
+        checkBoxList: ["From Single", "From Mixed"],
+        required: true,
+        requiredMessage: "Karat Değeri Boş Bırakılamaz",
+        checkBoxSetValueItem: "fromsingleormixed",
+        span: 4,
+      },
+      {
+        name: "frommixedItem",
+        type: "select",
+        title: "Mixed Grubu",
+        required: true,
+        requiredMessage: "Kesim Değerini Boş Bırakılamaz",
+        relativeTo: "fromsingleormixed",
+        visibleRelative: "From Mixed",
+        isExtra: true,
+        span: 4,
+      },
+    ],
+
     elements: [
       {
         name: "menstrual_status",
         type: "customButtonGroup",
-        title: "Tip",
+
         checkBoxList: ["Sertifikalı", "Sertifikasız"],
         required: true,
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
         checkBoxSetValueItem: "menstrual_status",
-        span: 12,
+        span: 8,
       },
       {
         name: "kesim",
