@@ -39,6 +39,7 @@ export const AddSadeSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Sade Kodu Değeri Boş Bırakılamaz",
         relativeTo: "type",
+        value: "B000001",
         span: 3,
       },
       {
