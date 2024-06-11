@@ -17,6 +17,12 @@ const config: Config = {
     {
       pattern: /col-end-./,
     },
+    {
+      pattern: /col-span-./,
+    },
+    {
+      pattern: /row-span-./,
+    },
   ],
   darkMode: "class",
   theme: {

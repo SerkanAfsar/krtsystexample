@@ -15,6 +15,7 @@ export type ElementType = {
   required: boolean;
   requiredMessage?: string;
   span?: number;
+  rowSpan?: number;
   disabled?: boolean;
   relativeTo?: string;
   rightIcon?: string;
@@ -30,6 +31,9 @@ export type ElementType = {
   spesificRelatedItem?: string;
   icon?: React.ReactNode;
   disabledRelative?: string;
+  height?: string;
+  showPicture?: boolean;
+  pictureExtraText?: string;
 };
 
 export type CustomOptionType = {

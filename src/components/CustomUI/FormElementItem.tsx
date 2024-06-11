@@ -68,6 +68,7 @@ export default function FormElementItem({
             item?.span && `col-span-${item.span.toString()}`,
             item.colStart && `col-start-${item.colStart}`,
             item.colEnd && `col-end-${item.colEnd}`,
+            item.rowSpan && `row-span-${item.rowSpan}`,
           )}
           item={item}
           disabled={isDisabled}
@@ -131,7 +132,10 @@ export default function FormElementItem({
           })}
           item={item}
           err={err}
-          outerClass={cn(item.span && `col-span-${colSpan}`)}
+          outerClass={cn(
+            item.span && `col-span-${colSpan}`,
+            item.rowSpan && `row-span-${item.rowSpan}`,
+          )}
           disabled={isDisabled}
           setError={setError}
         />

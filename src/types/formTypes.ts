@@ -40,13 +40,18 @@ export type AddDiamondStep1Type = IDiamondType &
   IPirlantaPricingType;
 
 export type ISadeType = {
+  resim?: File;
   sadeKodu?: string;
+  modelTuru?: string;
+  modelKodu?: string;
+  atolye?: string;
+  iscilik?: string;
   altinRengi?: string;
-  altinAyari?: string;
-  sadeGrami?: string;
+  gram?: string;
+  ayar?: string;
   hasGrami?: string;
-  mensei?: string;
-  toplamIscilik?: string;
+  aciklama?: string;
+  girisTarihi?: string;
 };
 
 export type FormSectionType = {

@@ -1,25 +1,35 @@
+"use client";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import CustomForm from "@/components/CustomUI/CustomForm";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { ISadeType } from "@/types/formTypes";
+import { setDefaultItemValues } from "@/utils";
+import { AddSadeSections } from "@/utils/MockData";
+import { useState } from "react";
 
 const ProFormLayout = () => {
-  const sadeType: ISadeType = {};
+  const sadeItem: ISadeType = {};
+
+  const [sadeCode, setSadeCode] = useState<string>("");
+
+  const [data, setData] = useState<ISadeType>(setDefaultItemValues(sadeItem));
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Sade Ekle" />
 
-      <div className="grid grid-cols-none gap-9 ">
-        <div className="flex flex-col gap-9">
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Yeni Sade Ekle
-              </h3>
-            </div>
-            {/* <CustomForm IFormInput={sadeType} elements={AddSadeFields} /> */}
-          </div>
-        </div>
-      </div>
+      <CustomForm
+        setData={setData}
+        activeStep={0}
+        setActiveStep={0}
+        formItemType={sadeItem}
+        sections={AddSadeSections.filter((a) => a.groupNumber == 0)}
+        data={data}
+        stepCount={2}
+        // serviceFunction={AddProductService}
+        // filteredData={newData}
+        // productCode={diamondCode}
+        redirectUrl="/Admin/StokYonetimi/Pirlanta/PirlantaListesi"
+      />
     </DefaultLayout>
   );
 };
