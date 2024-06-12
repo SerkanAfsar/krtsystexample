@@ -20,15 +20,15 @@ export const AddSadeSections: Array<FormSectionType> = [
       {
         name: "sadeResim",
         type: "file",
-        title: "Resim",
-        placeholder: "Sade Resim Seçiniz...",
+        title: "Ürün Görseli",
+        placeholder: "Sade Ürün Görseli Seçiniz...",
         required: true,
-        requiredMessage: "Sade Resmi Seçiniz",
+        requiredMessage: "Sade Ürün Görseli Seçiniz",
         relativeTo: "type",
         span: 3,
         rowSpan: 5,
         showPicture: true,
-        pictureExtraText: "PNG,JPG,STL (MAX 3MB)",
+        pictureExtraText: "PNG,JPG (MAX 3MB)",
       },
 
       {
@@ -45,7 +45,7 @@ export const AddSadeSections: Array<FormSectionType> = [
       {
         name: "modelTuru",
         type: "select",
-        title: "ModelTuru",
+        title: "Model Türü",
         placeholder: "Model Türü Değerini Giriniz...",
         required: true,
         requiredMessage: "Model Türü Değeri Boş Bırakılamaz",
@@ -167,11 +167,7 @@ export const AddSadeSections: Array<FormSectionType> = [
             valueVal: "Rozet",
             extraValue: "RZ",
           },
-          {
-            titleVal: "Tamir",
-            valueVal: "Tamir",
-            extraValue: "TMR",
-          },
+
           {
             titleVal: "Takım Bileklik",
             valueVal: "Takım Bileklik",
@@ -202,11 +198,7 @@ export const AddSadeSections: Array<FormSectionType> = [
             valueVal: "Beş Taş Yüzük",
             extraValue: "WR",
           },
-          {
-            titleVal: "Yarı Mamül",
-            valueVal: "Yarı Mamül",
-            extraValue: "X",
-          },
+
           {
             titleVal: "Zincir",
             valueVal: "Zincir",
@@ -227,10 +219,10 @@ export const AddSadeSections: Array<FormSectionType> = [
       {
         name: "atolye",
         type: "select",
-        title: "Atolye Seçiniz",
-        placeholder: "Atolye Değerini Giriniz...",
+        title: "Atölye Seçiniz",
+        placeholder: "Atölye Değerini Giriniz...",
         required: true,
-        requiredMessage: "Atolye Değeri Boş Bırakılamaz",
+        requiredMessage: "Atölye Değeri Boş Bırakılamaz",
         relativeTo: "type",
         span: 3,
         options: [
@@ -504,6 +496,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
         checkBoxSetValueItem: "fromsingleormixed",
         span: 4,
+        value: "From Single",
       },
       {
         name: "frommixedItem",

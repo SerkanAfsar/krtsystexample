@@ -11,7 +11,8 @@ export const loginServer = async (data: LoginType) => {
     await cookies().set({
       name: "jwt",
       value: result.payload.token?.toString(),
-      httpOnly: true,
+      sameSite: true,
+      expires: new Date().setFullYear(new Date().getFullYear() + 1),
     });
     return redirect("/Admin/Dashboard");
   }

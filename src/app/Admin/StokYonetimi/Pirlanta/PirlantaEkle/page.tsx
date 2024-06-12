@@ -84,13 +84,17 @@ const PirlantaEkle = () => {
               code,
             );
           } else {
-            returnSameResult(
-              GetNextOrderFromSingleDiamondService({
-                from_mixed: true,
-                code: `${code}-${data.frommixedItem}`,
-              }),
-              `${code}-${data.frommixedItem}`,
-            );
+            if (data.frommixedItem) {
+              returnSameResult(
+                GetNextOrderFromSingleDiamondService({
+                  from_mixed: true,
+                  code: `${code}-${data.frommixedItem}`,
+                }),
+                `${code}-${data.frommixedItem}`,
+              );
+            } else {
+              setDiamondCode("");
+            }
           }
         }
       }, 500);
@@ -131,7 +135,7 @@ const PirlantaEkle = () => {
     } else {
       setExtraOptions(null);
     }
-  }, [data.fromsingleormixed]);
+  }, [data.fromsingleormixed, data.kesim, data.carat]);
 
   const newData: AddProductType = AddStoneSections.reduce(
     (acc, next) => {
