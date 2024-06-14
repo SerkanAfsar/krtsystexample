@@ -102,19 +102,29 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
         {...rest}
         ref={ref}
       >
-        {sections?.map((section, index) => (
-          <SectionFormItem
-            data={data}
-            setValue={setValue}
-            errors={errors}
-            register={register}
-            section={section}
-            key={section.sectionTitle}
-            setError={setError}
-            productCode={productCode}
-            extraOptions={extraOptions}
-          />
-        ))}
+        {sections?.map((section, index) => {
+          const isUnvisible =
+            section.visibleRelativeColumn &&
+            data[section.visibleRelativeColumn] !=
+              section.visibleRelativeToValue;
+          if (isUnvisible) {
+            delete filteredData[section.keyString];
+            return null;
+          }
+          return (
+            <SectionFormItem
+              data={data}
+              setValue={setValue}
+              errors={errors}
+              register={register}
+              section={section}
+              key={section.sectionTitle}
+              setError={setError}
+              productCode={productCode}
+              extraOptions={extraOptions}
+            />
+          );
+        })}
 
         <div className="flex w-full items-end justify-end">
           {activeStep > 0 && (

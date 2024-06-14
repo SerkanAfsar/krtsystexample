@@ -35,6 +35,7 @@ export type ElementType = {
   showPicture?: boolean;
   pictureExtraText?: string;
   isExtra?: boolean;
+  extraValidations?: object;
 };
 
 export type CustomOptionType = {

@@ -5,6 +5,7 @@ import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { ISadeType } from "@/types/formTypes";
 import { ProductResponseType } from "@/types/responseTypes";
+import { SadeModelTurleri } from "@/utils/MockData";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Column } from "react-table";
@@ -75,11 +76,11 @@ export default function SadeStokListesi() {
       if (resp.result) {
         const dataOneResult: any = resp.payload.results.map((item) => {
           return {
-            modelKodu: item?.properties?.modelKodu,
+            modelKodu: `${SadeModelTurleri.find((a) => a.titleVal == item.properties.modelTuru)?.extraValue}${item?.properties?.modelKodu}`,
             modelTuru: item?.properties?.modelTuru,
             sadeKodu: item?.code,
             ayar: item?.properties?.ayar
-              ? `${item?.properties?.ayar}K`
+              ? `${item?.properties?.ayar}${item.properties.ayar.length == 2 ? `K` : ""}`
               : undefined,
             gram: item?.properties?.gram
               ? `${item?.properties?.gram} gr`

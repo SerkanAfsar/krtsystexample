@@ -24,6 +24,50 @@ export const validateToken = (token: string): boolean => {
   return isExpired;
 };
 
+export const boyType = (value: string): string => {
+  if (value == "00") {
+    return "CR";
+  } else if (value == "0.01-0.03") {
+    return "ST";
+  } else if (value == "0.03-0.07") {
+    return "ML";
+  } else if (value == "0.08-0.13") {
+    return "PB";
+  } else if (value == "0.13-0.17") {
+    return "PC";
+  } else if (value == "0.18-0.23") {
+    return "PD";
+  } else if (value == "0.23-0.29") {
+    return "PE";
+  } else if (value == "0.30-0.39") {
+    return "PF";
+  } else if (value == "0.40-0.49") {
+    return "PG";
+  } else if (value == "0.50-0.59") {
+    return "PH";
+  } else if (value == "0.60-0.69") {
+    return "PK";
+  } else if (value == "0.70-0.79") {
+    return "PL";
+  } else if (value == "0.80-0.89") {
+    return "PM";
+  } else if (value == "0.90-0.99") {
+    return "UA";
+  } else if (value == "1.00-1.49") {
+    return "UB";
+  } else if (value == "2.00-2.99") {
+    return "UC";
+  } else if (value == "3.00-3.99") {
+    return "UE";
+  } else if (value == "4.00-4.99") {
+    return "UF";
+  } else if (value == "5.00-5.99") {
+    return "UG";
+  } else {
+    return "UU";
+  }
+};
+
 export const caratType = (value: number): string => {
   if (value == 0) {
     return "CR";
@@ -82,13 +126,13 @@ export const selectKesimValue = ({
 
 export const generateDiamondCode = ({
   kesimKodu,
-  caratKodu,
+  boyKodu,
 }: {
   kesimKodu?: string;
-  caratKodu?: number;
+  boyKodu?: string;
 }): string => {
-  if (kesimKodu && caratKodu) {
-    return `${selectKesimValue({ selectedValue: kesimKodu, options: PirlantaKesimKodlari })}${caratType(caratKodu)}`;
+  if (kesimKodu && boyKodu) {
+    return `${selectKesimValue({ selectedValue: kesimKodu, options: PirlantaKesimKodlari })}${boyType(boyKodu)}`;
   }
   return "Yükleniyor...";
 };

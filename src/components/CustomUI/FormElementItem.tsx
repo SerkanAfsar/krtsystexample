@@ -64,6 +64,7 @@ export default function FormElementItem({
           {...register(item.name, {
             required:
               !isDisabled && item.required ? item.requiredMessage : false,
+            ...item.extraValidations,
           })}
           value={item.isCurrency ? formatter.format(val) : val}
           err={err}

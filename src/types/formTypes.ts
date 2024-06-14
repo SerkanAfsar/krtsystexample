@@ -67,4 +67,6 @@ export type FormSectionType = {
   extraElements?: ElementType[];
   extraElementRelativeTo?: string;
   extraElementVisibleRelative?: string;
+  visibleRelativeColumn?: string;
+  visibleRelativeToValue?: string;
 };

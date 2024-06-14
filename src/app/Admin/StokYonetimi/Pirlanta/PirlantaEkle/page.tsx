@@ -4,7 +4,7 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import CustomForm from "@/components/CustomUI/CustomForm";
 import { AddStoneSections } from "@/utils/MockData";
 import { AddDiamondStep1Type } from "@/types/formTypes";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { generateDiamondCode, setDefaultItemValues } from "@/utils";
 import { AddProductType, ResponseResult } from "@/types/responseTypes";
 import {
@@ -66,12 +66,13 @@ const PirlantaEkle = () => {
 
   useEffect(() => {
     let timeFunc: any;
-    if (data.kesim && data.carat) {
+    if (data.kesim && data.boy) {
       timeFunc = setTimeout(() => {
         const code = generateDiamondCode({
           kesimKodu: data.kesim,
-          caratKodu: data.carat,
+          boyKodu: data.boy,
         });
+
         if (data.menstrual_status == "Sertifikasız") {
           returnSameResult(
             GetNextOrderForMixedDiamondService({ type: "Diamond", code }),
@@ -106,7 +107,7 @@ const PirlantaEkle = () => {
     };
   }, [
     data.kesim,
-    data.carat,
+    data.boy,
     data.menstrual_status,
     data.fromsingleormixed,
     data.frommixedItem,
@@ -116,7 +117,7 @@ const PirlantaEkle = () => {
     if (data.fromsingleormixed == "From Mixed") {
       const code = generateDiamondCode({
         kesimKodu: data.kesim,
-        caratKodu: data.carat,
+        boyKodu: data.boy,
       });
       GetListMixedProductsCodeDiamondService({ code })
         .then((resp: ResponseResult) => {
@@ -135,7 +136,7 @@ const PirlantaEkle = () => {
     } else {
       setExtraOptions(null);
     }
-  }, [data.fromsingleormixed, data.kesim, data.carat]);
+  }, [data.fromsingleormixed, data.kesim, data.boy]);
 
   const newData: AddProductType = AddStoneSections.reduce(
     (acc, next) => {

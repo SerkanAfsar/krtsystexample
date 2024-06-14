@@ -1,4 +1,5 @@
 import { FormSectionType } from "@/types/formTypes";
+import { CustomOptionType } from "@/types/inputTypes";
 
 export const AddSadeSections: Array<FormSectionType> = [
   {
@@ -214,6 +215,16 @@ export const AddSadeSections: Array<FormSectionType> = [
         requiredMessage: "Model Kodu Değeri Boş Bırakılamaz",
         relativeTo: "type",
         span: 3,
+        extraValidations: {
+          maxLength: {
+            value: 4,
+            message: "Model Kodu 4 Haneden Oluşmalıdır ",
+          },
+          minLength: {
+            value: 4,
+            message: "Model Kodu 4 Haneden Oluşmalıdır",
+          },
+        },
       },
       {
         name: "atolye",
@@ -529,7 +540,6 @@ export const AddStoneSections: Array<FormSectionType> = [
         span: 4,
       },
     ],
-
     elements: [
       {
         name: "menstrual_status",
@@ -1194,7 +1204,9 @@ export const AddStoneSections: Array<FormSectionType> = [
     ],
   },
   {
+    visibleRelativeColumn: "menstrual_status",
     colsLenght: "12",
+    visibleRelativeToValue: "Sertifikalı",
     sectionTitle: "Sertifika Bilgileri",
     groupNumber: 1,
     keyString: "product_certificate",
@@ -1503,5 +1515,160 @@ export const AddStoneSections: Array<FormSectionType> = [
         span: 1,
       },
     ],
+  },
+];
+
+export const SadeModelTurleri: CustomOptionType[] = [
+  {
+    titleVal: "Alyans",
+    valueVal: "Alyans",
+    extraValue: "ALY",
+  },
+  {
+    titleVal: "Bileklik",
+    valueVal: "Bileklik",
+    extraValue: "BL",
+  },
+  {
+    titleVal: "Kelepçe",
+    valueVal: "Kelepçe",
+    extraValue: "BNG",
+  },
+  {
+    titleVal: "Broş",
+    valueVal: "Broş",
+    extraValue: "BRS",
+  },
+  {
+    titleVal: "Kol Düğmesi",
+    valueVal: "Kol Düğmesi",
+    extraValue: "CF",
+  },
+  {
+    titleVal: "Küpe",
+    valueVal: "Küpe",
+    extraValue: "E",
+  },
+  {
+    titleVal: "Anturaj Küpe",
+    valueVal: "Anturaj Küpe",
+    extraValue: "EA",
+  },
+  {
+    titleVal: "Küpe Arkalığı",
+    valueVal: "Küpe Arkalığı",
+    extraValue: "EK",
+  },
+  {
+    titleVal: "Tektaş Küpe",
+    valueVal: "Tektaş Küpe",
+    extraValue: "ES",
+  },
+  {
+    titleVal: "Bilezik",
+    valueVal: "Bilezik",
+    extraValue: "FBR",
+  },
+  {
+    titleVal: "Kilit",
+    valueVal: "Kilit",
+    extraValue: "KLT",
+  },
+  {
+    titleVal: "Erkek Yüzüğü",
+    valueVal: "Erkek Yüzüğü",
+    extraValue: "MR",
+  },
+  {
+    titleVal: "Gerdanlık",
+    valueVal: "Gerdanlık",
+    extraValue: "NEC",
+  },
+  {
+    titleVal: "Zincirli Kolye",
+    valueVal: "Zincirli Kolye",
+    extraValue: "NZ",
+  },
+  {
+    titleVal: "Kolye Ucu",
+    valueVal: "Kolye Ucu",
+    extraValue: "P",
+  },
+  {
+    titleVal: "Anturaj Kolye Ucu",
+    valueVal: "Anturaj Kolye Ucu",
+    extraValue: "PA",
+  },
+  {
+    titleVal: "Tektaş Kolye ucu",
+    valueVal: "Tektaş Kolye ucu",
+    extraValue: "PS",
+  },
+  {
+    titleVal: "Anturaj Yüzük",
+    valueVal: "Anturaj Yüzük",
+    extraValue: "RA",
+  },
+  {
+    titleVal: "Genel Fantazi Yüzük",
+    valueVal: "Genel Fantazi Yüzük",
+    extraValue: "RF",
+  },
+  {
+    titleVal: "Tektaş Yüzük",
+    valueVal: "Tektaş Yüzük",
+    extraValue: "RS",
+  },
+  {
+    titleVal: "Tamtur Yüzük",
+    valueVal: "Tamtur Yüzük",
+    extraValue: "RTT",
+  },
+  {
+    titleVal: "Zincirler",
+    valueVal: "Zincirler",
+    extraValue: "RULO",
+  },
+  {
+    titleVal: "Rozet",
+    valueVal: "Rozet",
+    extraValue: "RZ",
+  },
+
+  {
+    titleVal: "Takım Bileklik",
+    valueVal: "Takım Bileklik",
+    extraValue: "TKB",
+  },
+  {
+    titleVal: "Takım Küpe",
+    valueVal: "Takım Küpe",
+    extraValue: "TKY",
+  },
+  {
+    titleVal: "Takım Kolye",
+    valueVal: "Takım Kolye",
+    extraValue: "TKP",
+  },
+  {
+    titleVal: "Takım Yüzük",
+    valueVal: "Takım Yüzük",
+    extraValue: "TKR",
+  },
+  {
+    titleVal: "Tespih",
+    valueVal: "Tespih",
+    extraValue: "TS",
+  },
+  {
+    titleVal: "Beş Taş Yüzük",
+    valueVal: "Beş Taş Yüzük",
+    extraValue: "WR",
+  },
+
+  {
+    titleVal: "Zincir",
+    valueVal: "Zincir",
+    extraValue: "ZN",
   },
 ];

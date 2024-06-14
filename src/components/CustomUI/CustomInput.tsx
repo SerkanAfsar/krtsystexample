@@ -1,6 +1,6 @@
 "use client";
 import { ElementType } from "@/types/inputTypes";
-import { caratType, cn } from "@/utils";
+import { boyType, caratType, cn } from "@/utils";
 import { ClassValue } from "clsx";
 import * as React from "react";
 import { FieldError } from "react-hook-form";

@@ -70,15 +70,17 @@ const ProFormLayout = () => {
   }, [data.ayar, data.gram]);
 
   const getBase64 = (file: any): any => {
-    var reader = new FileReader();
-    reader.readAsDataURL(file[0]);
-    reader.onload = function () {
-      setImage(reader.result);
-    };
-    reader.onerror = function (error) {
-      console.log("Error: ", error);
-      setImage(null);
-    };
+    if (file && file[0]) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file[0]);
+      reader.onload = function () {
+        setImage(reader.result);
+      };
+      reader.onerror = function (error) {
+        console.log("Error: ", error);
+        setImage(null);
+      };
+    }
   };
 
   const newData: ISadeType = AddSadeSections.filter(
