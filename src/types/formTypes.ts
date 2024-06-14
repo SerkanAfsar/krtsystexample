@@ -52,7 +52,7 @@ export type ISadeType = {
   altinRengi?: string;
   gram?: string;
   ayar?: string;
-  hasGrami?: number;
+  hasGrami?: string;
   aciklama?: string;
   girisTarihi?: string;
   cost_currency?: string;

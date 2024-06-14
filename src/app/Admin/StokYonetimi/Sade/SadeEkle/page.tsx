@@ -14,12 +14,11 @@ import { useEffect, useState } from "react";
 
 const ProFormLayout = () => {
   const sadeItem: ISadeType = {};
-
   const [sadeCode, setSadeCode] = useState<string | null>(null);
   const [activeStep, setActiveStep] = useState<number>(0);
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
-
   const [data, setData] = useState<ISadeType>(setDefaultItemValues(sadeItem));
+  const [hasGram, setHasgram] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     if (data.type) {
@@ -43,30 +42,24 @@ const ProFormLayout = () => {
 
   useEffect(() => {
     if (data.ayar && data.gram) {
-      let val: number;
+      let newVal: number;
       switch (data.ayar) {
         case "18":
         case "750": {
-          val = 18 / 24;
-          const newVal: number = val * parseFloat(data.gram);
-          setData((prev) => ({ ...prev, hasGrami: newVal }));
-
+          newVal = (18 / 24) * parseFloat(data.gram);
+          setHasgram(newVal.toFixed(2));
           break;
         }
         case "14":
         case "585": {
-          val = 14 / 24;
-          const newVal: number = val * parseFloat(data.gram);
-          setData((prev) => ({ ...prev, hasGrami: newVal }));
+          newVal = (14 / 24) * parseFloat(data.gram);
+          setHasgram(newVal.toFixed(2));
           break;
         }
+
         case "8": {
-          val = 8 / 24;
-          const newVal: number = val * parseFloat(data.gram);
-          setData((prev) => ({ ...prev, hasGrami: newVal }));
-          break;
-        }
-        default: {
+          newVal = (8 / 24) * parseFloat(data.gram);
+          setHasgram(newVal.toFixed(2));
           break;
         }
       }
@@ -91,9 +84,14 @@ const ProFormLayout = () => {
     (acc, next) => {
       const elems = next.elements.reduce((acc2, next2) => {
         const name = next2.name as keyof ISadeType;
-        if (data[name] && name != "resim") {
-          return { ...acc2, [next2.name]: data[name] };
+        if (name == "hasGrami") {
+          return { ...acc2, [next2.name]: hasGram };
+        } else {
+          if (data[name] && name != "resim") {
+            return { ...acc2, [next2.name]: data[name] };
+          }
         }
+
         return { ...acc2 };
       }, {});
       return { ...acc, [next.keyString]: elems };
@@ -115,7 +113,6 @@ const ProFormLayout = () => {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Sade Ekle" />
-
       <CustomForm
         setData={setData}
         activeStep={activeStep}

@@ -462,12 +462,12 @@ export const AddSadeSections: Array<FormSectionType> = [
       },
       {
         name: "hasGrami",
-        type: "number",
+        type: "text",
         title: "Has Gramı",
         placeholder: "Has Gramı Değerini Giriniz...",
         required: true,
         requiredMessage: "Has Gramı Değeri Boş Bırakılamaz",
-        disabled: true,
+        disabled: false,
         span: 3,
       },
       {
