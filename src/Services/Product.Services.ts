@@ -34,7 +34,7 @@ export const DiamondQueueByCodeService = async ({
   return result as ResponseResult;
 };
 
-export const GetDiamondDataTableService = async ({
+export const GetProductDatatableService = async ({
   order_by,
   page,
   type,
@@ -50,10 +50,9 @@ export const GetDiamondDataTableService = async ({
   if (page) {
     urlPath += `page=${page.toString()}`;
   }
-  // if (page) {
-  //   type += `type=${type}`;
-  // }
-  console.log(urlPath);
+  if (type) {
+    urlPath += `&type=${type}`;
+  }
 
   const result = await BaseService({
     url: urlPath,
@@ -106,6 +105,20 @@ export const GetListMixedProductsCodeDiamondService = async ({
     url: `product/list-mixed-products-codes/?code=${code}`,
     method: "Get",
     bodyData: null,
+    hasToken: true,
+  });
+  return result as ResponseResult;
+};
+
+export const GetSadeCodeByTypeService = async ({
+  type,
+}: {
+  type: string;
+}): Promise<ResponseResult> => {
+  const result = await BaseService({
+    url: `product/product-simple-next-order/`,
+    method: "Post",
+    bodyData: { type },
     hasToken: true,
   });
   return result as ResponseResult;

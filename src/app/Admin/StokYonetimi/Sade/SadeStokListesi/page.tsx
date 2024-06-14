@@ -1,22 +1,128 @@
+"use client";
+import { GetProductDatatableService } from "@/Services/Product.Services";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import { ISadeType } from "@/types/formTypes";
+import { ProductResponseType } from "@/types/responseTypes";
+import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
+import { Column } from "react-table";
+
+interface Diamond {
+  code?: string;
+  kesim?: string;
+  carat?: string;
+  sertifika?: string;
+  renk?: string;
+  berraklik?: string;
+  proposion?: string;
+  polish?: string;
+  symmetry?: string;
+  fluorescence?: string;
+  min?: string;
+  max?: string;
+  height?: string;
+  sertifikaNo?: string;
+  paraportFiyatı?: string;
+}
+
+const columns: Column<ISadeType>[] = [
+  {
+    Header: "Sade Kodu",
+    accessor: "sadeKodu",
+  },
+  {
+    Header: "Model Kodu",
+    accessor: "modelKodu",
+  },
+  {
+    Header: "Model Türü",
+    accessor: "modelTuru",
+  },
+  {
+    Header: "Altın Ayarı",
+    accessor: "ayar",
+  },
+  {
+    Header: "Sade Gramı",
+    accessor: "gram",
+  },
+  {
+    Header: "Has Gramı",
+    accessor: "hasGrami",
+  },
+  {
+    Header: "İşçilik",
+    accessor: "iscilik",
+  },
+];
 
 export default function SadeStokListesi() {
+  const [activePage, setActivePage] = useState<number>(1);
+  const [activeData, setActiveData] = useState<ISadeType[] | string | null>(
+    null,
+  );
+  const [totalPageCount, setTotalPageCount] = useState<number>(1);
+
+  useEffect(() => {
+    setActiveData(null);
+    GetProductDatatableService({
+      order_by: null,
+      page: activePage,
+      type: "Simple",
+    }).then((resp: ProductResponseType) => {
+      if (resp.result) {
+        const dataOneResult: any = resp.payload.results.map((item) => {
+          return {
+            modelKodu: item?.properties?.modelKodu,
+            modelTuru: item?.properties?.modelTuru,
+            sadeKodu: item?.code,
+            ayar: item?.properties?.ayar
+              ? `${item?.properties?.ayar}K`
+              : undefined,
+            gram: item?.properties?.gram
+              ? `${item?.properties?.gram} gr`
+              : undefined,
+            hasGrami: item?.properties?.hasGrami
+              ? `${item?.properties?.hasGrami} gr`
+              : undefined,
+            iscilik: item?.properties?.iscilik,
+          };
+        });
+        setActiveData(dataOneResult);
+        setTotalPageCount(
+          Math.ceil(
+            resp.payload.count /
+              Number(process.env.NEXT_PUBLIC_DATATABLE_ITEM_COUNT),
+          ),
+        );
+      } else {
+        setActiveData(resp.message || "Hata");
+      }
+    });
+  }, [activePage]);
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Sade Stok Listesi" />
-      <div className="grid grid-cols-none gap-9 ">
-        <div className="flex flex-col gap-9">
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Sade Stok Listesi
-              </h3>
-            </div>
-            {/* <CustomForm IFormInput={sadeType} elements={AddSadeFields} /> */}
-          </div>
+      {activeData ? (
+        <CustomDatatable
+          totalPageCount={totalPageCount}
+          columns={columns}
+          dataOne={activeData}
+          activePage={activePage}
+          setActivePage={setActivePage}
+        />
+      ) : activeData == "Hata" ? (
+        <div className="flex h-full w-full items-center justify-center">
+          Hata.
         </div>
-      </div>
+      ) : (
+        <div className="flex h-full w-full items-center justify-center">
+          Yükleniyor...
+        </div>
+      )}
     </DefaultLayout>
   );
 }

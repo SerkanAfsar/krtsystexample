@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 import { jwtDecode } from "jwt-decode";
 import { AddProductType } from "@/types/responseTypes";
 import { CustomOptionType } from "@/types/inputTypes";
+import { File } from "buffer";
 
 export const cn = (...args: ClassValue[]) => {
   return twMerge(clsx(args));

@@ -1,5 +1,5 @@
 "use client";
-import { GetDiamondDataTableService } from "@/Services/Product.Services";
+import { GetProductDatatableService } from "@/Services/Product.Services";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
@@ -110,10 +110,10 @@ export default function PirlantaListesi() {
 
   useEffect(() => {
     setActiveData(null);
-    GetDiamondDataTableService({
+    GetProductDatatableService({
       order_by: null,
       page: activePage,
-      type: null,
+      type: "Diamond",
     }).then((resp: ProductResponseType) => {
       if (resp.result) {
         const dataOneResult: Diamond[] = resp.payload.results.map((item) => {
