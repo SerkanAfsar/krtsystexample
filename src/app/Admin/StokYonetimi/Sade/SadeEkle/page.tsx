@@ -47,18 +47,21 @@ const ProFormLayout = () => {
         case "18":
         case "750": {
           newVal = (18 / 24) * parseFloat(data.gram);
+          setData((prev) => ({ ...prev, hasGrami: newVal.toFixed(2) }));
           setHasgram(newVal.toFixed(2));
           break;
         }
         case "14":
         case "585": {
           newVal = (14 / 24) * parseFloat(data.gram);
+          setData((prev) => ({ ...prev, hasGrami: newVal.toFixed(2) }));
           setHasgram(newVal.toFixed(2));
           break;
         }
 
         case "8": {
           newVal = (8 / 24) * parseFloat(data.gram);
+          setData((prev) => ({ ...prev, hasGrami: newVal.toFixed(2) }));
           setHasgram(newVal.toFixed(2));
           break;
         }

@@ -467,7 +467,7 @@ export const AddSadeSections: Array<FormSectionType> = [
         placeholder: "Has Gramı Değerini Giriniz...",
         required: true,
         requiredMessage: "Has Gramı Değeri Boş Bırakılamaz",
-        disabled: false,
+        disabled: true,
         span: 3,
       },
       {
