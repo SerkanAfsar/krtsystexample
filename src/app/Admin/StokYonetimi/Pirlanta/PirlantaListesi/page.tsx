@@ -104,6 +104,15 @@ export default function PirlantaListesi() {
           GIA
         </Link>
       );
+    } else if (item?.product_certificate?.sertifika == "HRD") {
+      return (
+        <Link
+          target="_blank"
+          href={`https://my.hrdantwerp.com/?record_number=${item?.product_certificate?.sertifikaNo}`}
+        >
+          HRD
+        </Link>
+      );
     }
     return item?.product_certificate?.sertifika;
   }, []);
@@ -119,14 +128,14 @@ export default function PirlantaListesi() {
         const dataOneResult: Diamond[] = resp.payload.results.map((item) => {
           return {
             berraklik: item?.properties?.berraklik,
-            carat: item?.carat,
+            carat: item?.properties.carat,
             code: item?.code,
             fluorescence: item?.product_certificate?.fluorescence,
             kesim: item?.properties?.kesim,
             max: item?.product_certificate?.max,
             min: item?.product_certificate?.min,
             polish: item?.product_certificate?.polish,
-            proposion: item?.product_certificate?.proposion,
+            proposion: item?.product_certificate?.propotion,
             sertifika: sertificateUrl(item),
             sertifikaNo: item?.product_certificate?.sertifikaNo,
             renk: item?.properties?.renk,

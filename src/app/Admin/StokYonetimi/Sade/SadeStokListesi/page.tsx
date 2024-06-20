@@ -6,6 +6,7 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { ISadeType } from "@/types/formTypes";
 import { ProductResponseType } from "@/types/responseTypes";
 import { SadeModelTurleri } from "@/utils/MockData";
+import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Column } from "react-table";
@@ -26,9 +27,14 @@ interface Diamond {
   height?: string;
   sertifikaNo?: string;
   paraportFiyatı?: string;
+  resim?: string;
 }
 
 const columns: Column<ISadeType>[] = [
+  {
+    Header: "Resim",
+    accessor: "resim",
+  },
   {
     Header: "Sade Kodu",
     accessor: "sadeKodu",
@@ -66,6 +72,13 @@ export default function SadeStokListesi() {
   );
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
 
+  const removeUrl = (url: string) => {
+    if (url) {
+      return url.replace("http://20.199.86.103/images/https%3A/", "https://");
+    }
+    return undefined;
+  };
+
   useEffect(() => {
     setActiveData(null);
     GetProductDatatableService({
@@ -75,7 +88,11 @@ export default function SadeStokListesi() {
     }).then((resp: ProductResponseType) => {
       if (resp.result) {
         const dataOneResult: any = resp.payload.results.map((item) => {
+          const imgUrl = removeUrl(item.image);
           return {
+            resim: imgUrl && (
+              <Image src={imgUrl} alt="Atilla Karat" width={150} height={80} />
+            ),
             modelKodu: `${SadeModelTurleri.find((a) => a.titleVal == item.properties.modelTuru)?.extraValue}${item?.properties?.modelKodu}`,
             modelTuru: item?.properties?.modelTuru,
             sadeKodu: item?.code,
@@ -88,7 +105,7 @@ export default function SadeStokListesi() {
             hasGrami: item?.properties?.hasGrami
               ? `${item?.properties?.hasGrami} gr`
               : undefined,
-            iscilik: item?.properties?.iscilik,
+            iscilik: `${item?.properties?.iscilik} ${item?.properties?.cost_currency}`,
           };
         });
         setActiveData(dataOneResult);

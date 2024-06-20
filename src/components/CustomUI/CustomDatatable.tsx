@@ -96,7 +96,7 @@ const CustomDatatable = ({
             <tr {...headerGroup.getHeaderGroupProps()} key={key}>
               {headerGroup.headers.map((column, key) => (
                 <th
-                  className={cn(key == 0 ? "w-40" : "w-30")}
+                  className={cn(key == 0 ? "w-40" : "w-34")}
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                   key={key}
                 >
@@ -146,7 +146,7 @@ const CustomDatatable = ({
                 {row.cells.map((cell, key) => {
                   return (
                     <td
-                      className="text-sm font-thin"
+                      className="!align-middle text-sm font-thin "
                       {...cell.getCellProps()}
                       key={key}
                     >
