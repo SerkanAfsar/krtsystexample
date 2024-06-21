@@ -73,6 +73,7 @@ export default function SadeStokListesi() {
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
 
   const removeUrl = (url: string) => {
+    console.log(url);
     if (url) {
       return url.replace("http://20.199.86.103/images/https%3A/", "https://");
     }
@@ -90,9 +91,9 @@ export default function SadeStokListesi() {
         const dataOneResult: any = resp.payload.results.map((item) => {
           const imgUrl = removeUrl(item.image);
           return {
-            resim: imgUrl && (
+            resim: imgUrl ? (
               <Image src={imgUrl} alt="Atilla Karat" width={150} height={80} />
-            ),
+            ) : undefined,
             modelKodu: `${SadeModelTurleri.find((a) => a.titleVal == item.properties.modelTuru)?.extraValue}${item?.properties?.modelKodu}`,
             modelTuru: item?.properties?.modelTuru,
             sadeKodu: item?.code,
@@ -144,3 +145,5 @@ export default function SadeStokListesi() {
     </DefaultLayout>
   );
 }
+
+export const dynamic = "force-dynamic";

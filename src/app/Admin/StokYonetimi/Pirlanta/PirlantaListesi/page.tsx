@@ -180,3 +180,5 @@ export default function PirlantaListesi() {
     </DefaultLayout>
   );
 }
+
+export const dynamic = "force-dynamic";
