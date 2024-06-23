@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { ResponseResult } from "@/types/responseTypes";
 import { useParams, useRouter } from "next/navigation";
 
-type SelectOptionsType = {
+export type SelectOptionsType = {
   valueVal: string;
   titleVal: string;
   extraValue?: string;

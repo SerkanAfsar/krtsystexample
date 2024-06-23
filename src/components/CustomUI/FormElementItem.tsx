@@ -5,7 +5,7 @@ import CustomDatePicker from "./CustomDatePicker";
 import CustomSelect from "./CustomSelect";
 import { cn } from "@/utils";
 import CustomFileSelect from "./CustomFileSelect";
-import { SelectOptionsType } from "@/app/Admin/StokYonetimi/Pirlanta/PirlantaEkle/page";
+import { SelectOptionsType } from "./CustomForm";
 
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",

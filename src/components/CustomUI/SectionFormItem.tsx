@@ -2,7 +2,7 @@ import { FormSectionType } from "@/types/formTypes";
 import FormElementItem from "./FormElementItem";
 import { ClassValue } from "clsx";
 import { cn } from "@/utils";
-import { SelectOptionsType } from "@/app/Admin/StokYonetimi/Pirlanta/PirlantaEkle/page";
+import { SelectOptionsType } from "./CustomForm";
 
 export default function SectionFormItem({
   section,

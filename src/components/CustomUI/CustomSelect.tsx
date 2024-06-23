@@ -1,9 +1,10 @@
 "use client";
-import { SelectOptionsType } from "@/app/Admin/StokYonetimi/Pirlanta/PirlantaEkle/page";
+
 import { ElementType } from "@/types/inputTypes";
 import { cn, selectKesimValue } from "@/utils";
 import { ClassValue } from "clsx";
 import React, { useId, useState } from "react";
+import { SelectOptionsType } from "./CustomForm";
 
 type SelectElementProps = React.InputHTMLAttributes<HTMLSelectElement> & {
   err?: string | null;

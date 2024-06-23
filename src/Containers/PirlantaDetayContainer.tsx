@@ -1,5 +1,7 @@
 "use client";
-import CustomForm from "@/components/CustomUI/CustomForm";
+import CustomForm, {
+  SelectOptionsType,
+} from "@/components/CustomUI/CustomForm";
 import { AddStoneSections } from "@/utils/MockData";
 import { AddDiamondType } from "@/types/formTypes";
 import { useCallback, useEffect, useState } from "react";
@@ -12,12 +14,6 @@ import {
   GetNextOrderFromSingleDiamondService,
   UpdateProductService,
 } from "@/Services/Product.Services";
-
-export type SelectOptionsType = {
-  valueVal: string;
-  titleVal: string;
-  extraValue?: string;
-};
 
 const PirlantaDetayContainer = ({
   pirlantaItemData,
