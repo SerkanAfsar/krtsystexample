@@ -1477,8 +1477,8 @@ export const AddStoneSections: Array<FormSectionType> = [
         value: "2500",
         isCurrency: true,
         span: 1,
-        relativeTo: "menstrual_status",
-        visibleRelative: "Sertifikalı",
+        // relativeTo: "menstrual_status",
+        // visibleRelative: "Sertifikalı",
       },
       {
         name: "iskonto",
@@ -1489,8 +1489,8 @@ export const AddStoneSections: Array<FormSectionType> = [
         requiredMessage: "İskonto Boş Bırakılamaz",
         span: 1,
         rightIcon: "$",
-        relativeTo: "menstrual_status",
-        visibleRelative: "Sertifikalı",
+        // relativeTo: "menstrual_status",
+        // visibleRelative: "Sertifikalı",
       },
       {
         name: "pricePerCarat",

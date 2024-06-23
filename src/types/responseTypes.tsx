@@ -12,14 +12,14 @@ export type LoginResultType = {
 };
 
 export type AddProductType = {
-  code: string;
+  code: string | null;
   type: string;
-  properties?: { [key: string]: string };
+  properties?: { [key: string]: string | number };
   image?: string;
-  product_inside?: { [key: string]: string };
+  product_inside?: { [key: string]: string | number };
   total_cost?: number;
   buy_date?: string;
-  product_certificate?: { [key: string]: string };
+  product_certificate?: { [key: string]: string | number };
   product_cost?: { [key: string]: string };
   menstrual_status?: string;
 };

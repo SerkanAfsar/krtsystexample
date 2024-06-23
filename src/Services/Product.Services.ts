@@ -6,6 +6,20 @@ import {
 import { BaseService } from ".";
 import { GetNextOrderType } from "@/types/inputTypes";
 
+export const GetProductService = async ({
+  id,
+}: {
+  id: Number;
+}): Promise<ResponseResult> => {
+  const result = await BaseService({
+    url: `product/${id.toString()}`,
+    bodyData: null,
+    method: "GET",
+    hasToken: true,
+  });
+  return result as ResponseResult;
+};
+
 export const AddProductService = async ({
   data,
 }: {
@@ -15,6 +29,36 @@ export const AddProductService = async ({
     url: "product/",
     bodyData: data,
     method: "POST",
+    hasToken: true,
+  });
+  return result as ResponseResult;
+};
+
+export const UpdateProductService = async ({
+  id,
+  data,
+}: {
+  id: Number;
+  data: AddProductType;
+}): Promise<ResponseResult> => {
+  const result = await BaseService({
+    url: `product/${id.toString()}`,
+    bodyData: data,
+    method: "PUT",
+    hasToken: true,
+  });
+  return result as ResponseResult;
+};
+
+export const DeleteProductService = async ({
+  id,
+}: {
+  id: Number;
+}): Promise<ResponseResult> => {
+  const result = await BaseService({
+    url: `product/${id.toString()}/`,
+    bodyData: null,
+    method: "DELETE",
     hasToken: true,
   });
   return result as ResponseResult;

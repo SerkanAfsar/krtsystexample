@@ -31,13 +31,13 @@ export type ISertifikaType = {
 
 export type IPirlantaPricingType = {
   buy_date?: string;
-  rapaportPrice?: string;
-  iskonto?: string;
-  pricePerCarat?: string;
+  rapaportPrice?: number;
+  iskonto?: number;
+  pricePerCarat?: Number;
   total_cost?: number;
 };
 
-export type AddDiamondStep1Type = IDiamondType &
+export type AddDiamondType = IDiamondType &
   ISertifikaType &
   IPirlantaPricingType;
 
@@ -56,6 +56,8 @@ export type ISadeType = {
   aciklama?: string;
   girisTarihi?: string;
   cost_currency?: string;
+  duzenle?: React.ReactNode;
+  sil?: React.ReactNode;
 };
 
 export type FormSectionType = {

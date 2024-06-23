@@ -37,7 +37,6 @@ export const BaseService = async ({
     const result = await response.json();
     return result;
   } catch (err: unknown) {
-    console.log("hata is ", err);
     let errMessage;
     if (typeof err === "string") {
       errMessage = err.toUpperCase();

@@ -1,5 +1,8 @@
 "use client";
-import { GetProductDatatableService } from "@/Services/Product.Services";
+import {
+  DeleteProductService,
+  GetProductDatatableService,
+} from "@/Services/Product.Services";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
@@ -10,25 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Column } from "react-table";
-
-interface Diamond {
-  code?: string;
-  kesim?: string;
-  carat?: string;
-  sertifika?: string;
-  renk?: string;
-  berraklik?: string;
-  proposion?: string;
-  polish?: string;
-  symmetry?: string;
-  fluorescence?: string;
-  min?: string;
-  max?: string;
-  height?: string;
-  sertifikaNo?: string;
-  paraportFiyatı?: string;
-  resim?: string;
-}
+import { toast } from "react-toastify";
 
 const columns: Column<ISadeType>[] = [
   {
@@ -63,6 +48,14 @@ const columns: Column<ISadeType>[] = [
     Header: "İşçilik",
     accessor: "iscilik",
   },
+  {
+    Header: "Düzenle",
+    accessor: "duzenle",
+  },
+  {
+    Header: "Sil",
+    accessor: "sil",
+  },
 ];
 
 export default function SadeStokListesi() {
@@ -72,15 +65,7 @@ export default function SadeStokListesi() {
   );
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
 
-  const removeUrl = (url: string) => {
-    console.log(url);
-    if (url) {
-      return url.replace("http://20.199.86.103/images/https%3A/", "https://");
-    }
-    return undefined;
-  };
-
-  useEffect(() => {
+  const updateData = useCallback(() => {
     setActiveData(null);
     GetProductDatatableService({
       order_by: null,
@@ -89,11 +74,15 @@ export default function SadeStokListesi() {
     }).then((resp: ProductResponseType) => {
       if (resp.result) {
         const dataOneResult: any = resp.payload.results.map((item) => {
-          const imgUrl = removeUrl(item.image);
           return {
-            resim: imgUrl ? (
-              <Image src={imgUrl} alt="Atilla Karat" width={150} height={80} />
-            ) : undefined,
+            resim: item.image ? (
+              <Image
+                src={item.image}
+                alt="Atilla Karat"
+                width={150}
+                height={80}
+              />
+            ) : null,
             modelKodu: `${SadeModelTurleri.find((a) => a.titleVal == item.properties.modelTuru)?.extraValue}${item?.properties?.modelKodu}`,
             modelTuru: item?.properties?.modelTuru,
             sadeKodu: item?.code,
@@ -107,6 +96,8 @@ export default function SadeStokListesi() {
               ? `${item?.properties?.hasGrami} gr`
               : undefined,
             iscilik: `${item?.properties?.iscilik} ${item?.properties?.cost_currency}`,
+            duzenle: duzenleButton(item),
+            sil: silButton(item),
           };
         });
         setActiveData(dataOneResult);
@@ -120,7 +111,46 @@ export default function SadeStokListesi() {
         setActiveData(resp.message || "Hata");
       }
     });
-  }, [activePage]);
+  }, []);
+
+  const duzenleButton = useCallback((item: any) => {
+    return (
+      <Link
+        className="btn rounded-md bg-yellow-600 p-3 text-white"
+        href={`/Admin/StokYonetimi/Sade/SadeEkle/${item.pk}`}
+      >
+        Güncelle
+      </Link>
+    );
+  }, []);
+
+  const silButton = useCallback(
+    async (item: any) => {
+      const id = item.pk as Number;
+      return (
+        <div
+          onClick={async () => {
+            const result = await DeleteProductService({ id });
+            if (result.result) {
+              toast.success("Ürün Silindi", { position: "top-right" });
+              updateData();
+            } else {
+              toast.error(result.message || "Hata", { position: "top-right" });
+              return;
+            }
+          }}
+          className="btn cursor-pointer rounded-md bg-danger p-3 text-center text-white"
+        >
+          Sil
+        </div>
+      );
+    },
+    [updateData],
+  );
+
+  useEffect(() => {
+    updateData();
+  }, [activePage, updateData]);
 
   return (
     <DefaultLayout>

@@ -1,0 +1,33 @@
+import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import PirlantaDetayContainer from "@/Containers/PirlantaDetayContainer";
+import { GetProductService } from "@/Services/Product.Services";
+import { notFound } from "next/navigation";
+
+const PirlantaGuncelle = async ({ params }: { params: { id: string } }) => {
+  const result = await GetProductService({ id: Number(params.id) });
+  if (result.result) {
+    const data = result.payload;
+    const properties = data.properties;
+    const product_certificate = data.product_certificate;
+    const product_cost = data.product_cost;
+    delete data.properties;
+    delete data.product_certificate;
+    delete data.product_cost;
+    const resultData = {
+      ...data,
+      ...properties,
+      ...product_certificate,
+      ...product_cost,
+    };
+    return (
+      <DefaultLayout>
+        <Breadcrumb pageName="Pırlanta Güncelle" />
+        <PirlantaDetayContainer isAdd={false} pirlantaItemData={resultData} />
+      </DefaultLayout>
+    );
+  }
+  return notFound();
+};
+
+export default PirlantaGuncelle;

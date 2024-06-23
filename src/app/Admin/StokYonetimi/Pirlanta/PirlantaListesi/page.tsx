@@ -1,5 +1,8 @@
 "use client";
-import { GetProductDatatableService } from "@/Services/Product.Services";
+import {
+  DeleteProductService,
+  GetProductDatatableService,
+} from "@/Services/Product.Services";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
@@ -7,6 +10,7 @@ import { ProductResponseType } from "@/types/responseTypes";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Column } from "react-table";
+import { toast } from "react-toastify";
 
 interface Diamond {
   code?: string;
@@ -24,6 +28,8 @@ interface Diamond {
   height?: string;
   sertifikaNo?: string;
   paraportFiyatı?: string;
+  duzenle?: React.ReactNode;
+  sil?: React.ReactNode;
 }
 
 const columns: Column<Diamond>[] = [
@@ -87,6 +93,14 @@ const columns: Column<Diamond>[] = [
     Header: "ParaportFiyatı",
     accessor: "paraportFiyatı",
   },
+  {
+    Header: "Duzenle",
+    accessor: "duzenle",
+  },
+  {
+    Header: "Sil",
+    accessor: "sil",
+  },
 ];
 
 export default function PirlantaListesi() {
@@ -117,7 +131,39 @@ export default function PirlantaListesi() {
     return item?.product_certificate?.sertifika;
   }, []);
 
-  useEffect(() => {
+  const duzenleButton = useCallback((item: any) => {
+    return (
+      <Link
+        className="btn rounded-md bg-yellow-600 p-4 text-center text-white"
+        href={`/Admin/StokYonetimi/Pirlanta/PirlantaEkle/${item.pk}`}
+      >
+        Güncelle
+      </Link>
+    );
+  }, []);
+
+  const silButton = useCallback(async (item: any) => {
+    const id = item.pk as Number;
+    return (
+      <div
+        onClick={async () => {
+          const result = await DeleteProductService({ id });
+          if (result.result) {
+            toast.success("Ürün Silindi", { position: "top-right" });
+            updateData();
+          } else {
+            toast.error(result.message || "Hata", { position: "top-right" });
+            return;
+          }
+        }}
+        className="btn cursor-pointer rounded-md bg-danger p-3 text-center text-white"
+      >
+        Sil
+      </div>
+    );
+  }, []);
+
+  const updateData = useCallback(() => {
     setActiveData(null);
     GetProductDatatableService({
       order_by: null,
@@ -142,6 +188,8 @@ export default function PirlantaListesi() {
             symmetry: item?.product_certificate?.symmetry,
             paraportFiyatı: undefined,
             height: item?.product_certificate?.height,
+            duzenle: duzenleButton(item),
+            sil: silButton(item),
           };
         });
         setActiveData(dataOneResult);
@@ -155,7 +203,11 @@ export default function PirlantaListesi() {
         setActiveData(resp.message || "Hata");
       }
     });
-  }, [activePage, sertificateUrl]);
+  }, []);
+
+  useEffect(() => {
+    updateData();
+  }, [activePage, sertificateUrl, updateData]);
 
   return (
     <DefaultLayout>

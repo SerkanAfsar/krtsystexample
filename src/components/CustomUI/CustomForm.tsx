@@ -5,12 +5,16 @@ import { FormSectionType } from "@/types/formTypes";
 import SectionFormItem from "./SectionFormItem";
 import { toast } from "react-toastify";
 import { ResponseResult } from "@/types/responseTypes";
-import { useRouter } from "next/navigation";
-import { SelectOptionsType } from "@/app/Admin/StokYonetimi/Pirlanta/PirlantaEkle/page";
+import { useParams, useRouter } from "next/navigation";
+
+type SelectOptionsType = {
+  valueVal: string;
+  titleVal: string;
+  extraValue?: string;
+};
 
 type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   sections?: FormSectionType[];
-  formItemType: any;
   setData: any;
   setActiveStep?: any;
   data?: any;
@@ -21,6 +25,8 @@ type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   productCode?: string | null;
   redirectUrl?: string;
   extraOptions?: SelectOptionsType[] | null;
+  isAdd: boolean;
+  resultCallBack?: any;
 };
 
 const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
@@ -31,7 +37,6 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       activeStep,
       setActiveStep,
       setData,
-      formItemType,
       data,
       stepCount,
       serviceFunction,
@@ -39,6 +44,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       productCode,
       redirectUrl,
       extraOptions,
+      resultCallBack,
       ...rest
     },
     ref,
@@ -50,24 +56,27 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       setValue,
       setError,
       formState: { errors },
-    } = useForm<typeof formItemType>({
+    } = useForm<any>({
       defaultValues: data,
     });
+    const { id } = useParams();
     const router = useRouter();
 
     React.useEffect(() => {
-      const subscription = watch((value: typeof formItemType) => {
-        setData(value);
+      const subscription = watch((value: any) => {
+        const returnResult = resultCallBack && resultCallBack(value);
+        setData({ ...value, ...returnResult });
       });
       return () => subscription.unsubscribe();
-    }, [watch, setData]);
+    }, [watch, setData, resultCallBack]);
 
-    const onSubmit: SubmitHandler<typeof formItemType> = async (values) => {
-      setData((prev: typeof formItemType) => ({ ...prev, values }));
+    const onSubmit: SubmitHandler<any> = async (values) => {
+      setData((prev: any) => ({ ...prev, values }));
       setActiveStep((prev: number) => (prev < stepCount - 1 ? prev + 1 : prev));
 
       if (activeStep == stepCount - 1 && serviceFunction && filteredData) {
         const result: ResponseResult = await serviceFunction({
+          id: id ?? null,
           data: filteredData,
         });
 
