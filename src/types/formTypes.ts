@@ -55,6 +55,7 @@ export type ISadeType = {
   hasGrami?: string;
   aciklama?: string;
   girisTarihi?: string;
+  total_cost?: number;
   cost_currency?: string;
   duzenle?: React.ReactNode;
   sil?: React.ReactNode;

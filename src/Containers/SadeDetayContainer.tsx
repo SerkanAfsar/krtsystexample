@@ -10,7 +10,7 @@ import CustomForm from "@/components/CustomUI/CustomForm";
 import { ISadeType } from "@/types/formTypes";
 import { ResponseResult } from "@/types/responseTypes";
 import { AddSadeSections } from "@/utils/MockData";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function SadeDetayContainer({
   sadeItemData,
@@ -25,7 +25,6 @@ export default function SadeDetayContainer({
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
   const [data, setData] = useState<ISadeType>(sadeItem);
   const [hasGram, setHasgram] = useState<string | undefined>(undefined);
-  const [total_cost, setTotalCost] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     if (data.type) {
@@ -104,6 +103,7 @@ export default function SadeDetayContainer({
     (acc, next) => {
       const elems = next.elements.reduce((acc2, next2) => {
         const name = next2.name as keyof ISadeType;
+
         if (name == "hasGrami") {
           return { ...acc2, [name]: hasGram };
         } else {
@@ -120,20 +120,25 @@ export default function SadeDetayContainer({
       type: "Simple",
       cost_currency: data.cost_currency,
       code: sadeCode,
-      total_cost,
+      total_cost: 2000,
       image,
     },
   );
 
-  useEffect(() => {
-    if (data.hasGrami && data.iscilik) {
-      const totalCost =
-        Number(data.hasGrami) * Number(process.env.NEXT_PUBLIC_HAS_KURU) +
-        Number(data.iscilik);
-      setTotalCost(Number(totalCost.toFixed(2)));
-    }
-  }, [data.hasGrami, data.iscilik]);
+  // const updateData = useCallback((value: any) => {
+  //   console.log("value is", value);
+  //   if (value.hasGrami && value.iscilik) {
+  //     const totalCost =
+  //       Number(value.hasGrami) * Number(process.env.NEXT_PUBLIC_HAS_KURU) +
+  //       Number(value.iscilik);
 
+  //     return {
+  //       total_cost: totalCost,
+  //     };
+  //   }
+  // }, []);
+
+  console.log("data is ", data);
   useEffect(() => {
     if (data.resim) {
       getBase64(data.resim);
@@ -150,6 +155,7 @@ export default function SadeDetayContainer({
       stepCount={1}
       productCode={sadeCode}
       isAdd={isAdd}
+      // resultCallBack={updateData}
       serviceFunction={isAdd ? AddProductService : UpdateProductService}
       filteredData={newData}
       redirectUrl="/Admin/StokYonetimi/Sade/SadeStokListesi"
