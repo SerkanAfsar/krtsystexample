@@ -26,3 +26,5 @@ export default async function SadeDetay({
     return notFound();
   }
 }
+
+export const dynamic = "force-dynamic";

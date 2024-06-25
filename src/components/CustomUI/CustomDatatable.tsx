@@ -142,13 +142,13 @@ const CustomDatatable = ({
           {page.map((row, key) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()} key={key}>
+              <tr {...row.getRowProps()} key={`tr-${key}`}>
                 {row.cells.map((cell, key) => {
                   return (
                     <td
                       className="!align-middle text-sm font-thin "
                       {...cell.getCellProps()}
-                      key={key}
+                      key={`cell-${key}`}
                     >
                       {cell.render("Cell")}
                     </td>

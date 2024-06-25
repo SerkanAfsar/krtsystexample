@@ -45,6 +45,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       redirectUrl,
       extraOptions,
       resultCallBack,
+      isAdd,
       ...rest
     },
     ref,
@@ -131,6 +132,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
               setError={setError}
               productCode={productCode}
               extraOptions={extraOptions}
+              isAdd={isAdd}
             />
           );
         })}

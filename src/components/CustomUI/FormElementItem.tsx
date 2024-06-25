@@ -20,6 +20,7 @@ export default function FormElementItem({
   errors,
   setError,
   extraOptions,
+  isAdd,
 }: {
   item: ElementType;
   register: any;
@@ -28,6 +29,7 @@ export default function FormElementItem({
   setValue: any;
   setError: any;
   extraOptions?: SelectOptionsType[] | null;
+  isAdd: boolean;
 }) {
   const firstCondition =
     (data &&
@@ -68,6 +70,7 @@ export default function FormElementItem({
           })}
           value={item.isCurrency ? formatter.format(val) : val}
           err={err}
+          key={item.name}
           outerClass={cn(
             item?.span && `col-span-${item.span.toString()}`,
             item.colStart && `col-start-${item.colStart}`,
@@ -85,6 +88,7 @@ export default function FormElementItem({
       });
       return (
         <CustomButtonGroups
+          key={item.name}
           title={item.title}
           checkBoxList={item.checkBoxList || ["DATA YOK"]}
           setValue={setValue}
@@ -105,6 +109,7 @@ export default function FormElementItem({
             required:
               !isDisabled && item.required ? item.requiredMessage : false,
           })}
+          key={item.name}
           item={item}
           setValue={setValue}
           err={err}
@@ -120,6 +125,7 @@ export default function FormElementItem({
             required:
               !isDisabled && item.required ? item.requiredMessage : false,
           })}
+          key={item.name}
           item={item}
           extraOptions={extraOptions}
           err={err}
@@ -133,8 +139,11 @@ export default function FormElementItem({
         <CustomFileSelect
           {...register(item.name, {
             required:
-              !isDisabled && item.required ? item.requiredMessage : false,
+              isAdd && !isDisabled && item.required
+                ? item.requiredMessage
+                : false,
           })}
+          key={item.name}
           item={item}
           err={err}
           outerClass={cn(

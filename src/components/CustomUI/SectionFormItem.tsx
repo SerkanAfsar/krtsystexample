@@ -13,6 +13,7 @@ export default function SectionFormItem({
   errors,
   productCode,
   extraOptions,
+  isAdd,
 }: {
   section: FormSectionType;
   data: any;
@@ -20,6 +21,7 @@ export default function SectionFormItem({
   setValue: any;
   errors: any;
   setError: any;
+  isAdd: boolean;
   productCode?: string | null;
   extraOptions?: SelectOptionsType[] | null;
 }) {
@@ -51,6 +53,7 @@ export default function SectionFormItem({
               item={item}
               data={data}
               setError={setError}
+              isAdd={isAdd}
             />
           ))}
         </div>
@@ -75,6 +78,7 @@ export default function SectionFormItem({
                   data={data}
                   setError={setError}
                   extraOptions={extraOptions}
+                  isAdd={isAdd}
                 />
               ))}
             </div>

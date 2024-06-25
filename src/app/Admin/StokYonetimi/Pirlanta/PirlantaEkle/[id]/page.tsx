@@ -31,3 +31,5 @@ const PirlantaGuncelle = async ({ params }: { params: { id: string } }) => {
 };
 
 export default PirlantaGuncelle;
+
+export const dynamic = "force-dynamic";

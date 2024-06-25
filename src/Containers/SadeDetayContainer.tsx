@@ -22,9 +22,8 @@ export default function SadeDetayContainer({
   const sadeItem: ISadeType = sadeItemData ?? {};
   const [sadeCode, setSadeCode] = useState<string | null>(null);
   const [activeStep, setActiveStep] = useState<number>(0);
-  const [image, setImage] = useState<string | ArrayBuffer | null>(null);
+  const [image, setImage] = useState<string | ArrayBuffer | undefined>();
   const [data, setData] = useState<ISadeType>(sadeItem);
-  const [hasGram, setHasgram] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     if (data.type) {
@@ -54,45 +53,16 @@ export default function SadeDetayContainer({
     }
   }, [data.type, isAdd, sadeItemData?.type, sadeItemData?.code]);
 
-  useEffect(() => {
-    if (data.ayar && data.gram) {
-      let newVal: number;
-      switch (data.ayar) {
-        case "18":
-        case "750": {
-          newVal = (18 / 24) * parseFloat(data.gram);
-          setData((prev) => ({ ...prev, hasGrami: newVal.toFixed(2) }));
-          setHasgram(newVal.toFixed(2));
-          break;
-        }
-        case "14":
-        case "585": {
-          newVal = (14 / 24) * parseFloat(data.gram);
-          setData((prev) => ({ ...prev, hasGrami: newVal.toFixed(2) }));
-          setHasgram(newVal.toFixed(2));
-          break;
-        }
-
-        case "8": {
-          newVal = (8 / 24) * parseFloat(data.gram);
-          setData((prev) => ({ ...prev, hasGrami: newVal.toFixed(2) }));
-          setHasgram(newVal.toFixed(2));
-          break;
-        }
-      }
-    }
-  }, [data.ayar, data.gram]);
-
   const getBase64 = (file: any): any => {
     if (file && file[0]) {
       var reader = new FileReader();
       reader.readAsDataURL(file[0]);
       reader.onload = function () {
-        setImage(reader.result);
+        setImage(reader.result ?? undefined);
       };
       reader.onerror = function (error) {
-        console.log("Error: ", error);
-        setImage(null);
+        console.log("Base 64 Error: ", error);
+        setImage(undefined);
       };
     }
   };
@@ -104,12 +74,8 @@ export default function SadeDetayContainer({
       const elems = next.elements.reduce((acc2, next2) => {
         const name = next2.name as keyof ISadeType;
 
-        if (name == "hasGrami") {
-          return { ...acc2, [name]: hasGram };
-        } else {
-          if (data[name] && name != "resim") {
-            return { ...acc2, [name]: data[name] };
-          }
+        if (data[name] && name != "resim") {
+          return { ...acc2, [name]: data[name] };
         }
 
         return { ...acc2 };
@@ -120,25 +86,56 @@ export default function SadeDetayContainer({
       type: "Simple",
       cost_currency: data.cost_currency,
       code: sadeCode,
-      total_cost: 2000,
+      total_cost: Number(data.total_cost),
       image,
     },
   );
 
-  // const updateData = useCallback((value: any) => {
-  //   console.log("value is", value);
-  //   if (value.hasGrami && value.iscilik) {
-  //     const totalCost =
-  //       Number(value.hasGrami) * Number(process.env.NEXT_PUBLIC_HAS_KURU) +
-  //       Number(value.iscilik);
+  const hasGramHesapla = useCallback((value: any) => {
+    if (value.ayar && value.gram) {
+      switch (value.ayar) {
+        case "18":
+        case "750": {
+          const result = (18 / 24) * parseFloat(value.gram);
+          return result.toFixed(2);
+        }
+        case "14":
+        case "585": {
+          const result = (14 / 24) * parseFloat(value.gram);
+          return result.toFixed(2);
+        }
+        case "8": {
+          const result = (8 / 24) * parseFloat(value.gram);
+          return result.toFixed(2);
+        }
+      }
+    }
+  }, []);
 
-  //     return {
-  //       total_cost: totalCost,
-  //     };
-  //   }
-  // }, []);
+  const totalCoastHesapla = useCallback(
+    ({ hasGrami, iscilik }: { hasGrami?: string; iscilik: number }) => {
+      if (hasGrami && iscilik) {
+        const totalCost =
+          Number(hasGrami) * Number(process.env.NEXT_PUBLIC_HAS_KURU) +
+          Number(iscilik);
 
-  console.log("data is ", data);
+        return totalCost.toFixed(2);
+      }
+    },
+    [],
+  );
+
+  const updateData = useCallback(
+    (value: any) => {
+      const hasGrami = hasGramHesapla(value);
+      return {
+        hasGrami,
+        total_cost: totalCoastHesapla({ hasGrami, iscilik: value.iscilik }),
+      };
+    },
+    [hasGramHesapla, totalCoastHesapla],
+  );
+
   useEffect(() => {
     if (data.resim) {
       getBase64(data.resim);
@@ -155,7 +152,7 @@ export default function SadeDetayContainer({
       stepCount={1}
       productCode={sadeCode}
       isAdd={isAdd}
-      // resultCallBack={updateData}
+      resultCallBack={updateData}
       serviceFunction={isAdd ? AddProductService : UpdateProductService}
       filteredData={newData}
       redirectUrl="/Admin/StokYonetimi/Sade/SadeStokListesi"

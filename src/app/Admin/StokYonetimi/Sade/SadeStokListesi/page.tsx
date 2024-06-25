@@ -75,14 +75,15 @@ export default function SadeStokListesi() {
       if (resp.result) {
         const dataOneResult: any = resp.payload.results.map((item) => {
           return {
-            resim: item.image ? (
+            resim: (
               <Image
                 src={item.image}
-                alt="Atilla Karat"
+                key={item.pk}
+                alt={item.pk}
                 width={150}
                 height={80}
               />
-            ) : null,
+            ),
             modelKodu: `${SadeModelTurleri.find((a) => a.titleVal == item.properties.modelTuru)?.extraValue}${item?.properties?.modelKodu}`,
             modelTuru: item?.properties?.modelTuru,
             sadeKodu: item?.code,
@@ -111,7 +112,7 @@ export default function SadeStokListesi() {
         setActiveData(resp.message || "Hata");
       }
     });
-  }, []);
+  }, [activePage]);
 
   const duzenleButton = useCallback((item: any) => {
     return (
@@ -175,5 +176,3 @@ export default function SadeStokListesi() {
     </DefaultLayout>
   );
 }
-
-export const dynamic = "force-dynamic";
