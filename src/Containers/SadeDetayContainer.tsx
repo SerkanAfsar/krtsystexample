@@ -6,6 +6,7 @@ import {
 } from "@/Services/Product.Services";
 
 import CustomForm from "@/components/CustomUI/CustomForm";
+import useSadeCode from "@/hooks/useSadeCode";
 
 import { ISadeType } from "@/types/formTypes";
 import { ResponseResult } from "@/types/responseTypes";
@@ -20,38 +21,20 @@ export default function SadeDetayContainer({
   isAdd: boolean;
 }) {
   const sadeItem: ISadeType = sadeItemData ?? {};
-  const [sadeCode, setSadeCode] = useState<string | null>(null);
   const [activeStep, setActiveStep] = useState<number>(0);
   const [image, setImage] = useState<string | ArrayBuffer | undefined>();
   const [data, setData] = useState<ISadeType>(sadeItem);
 
+  const { sadeCode } = useSadeCode({
+    type: data.type,
+    isAdd,
+    sadeDataItemCode: sadeItemData?.code,
+    sadeDataItemType: sadeItemData?.type,
+  });
+
   useEffect(() => {
-    if (data.type) {
-      if (isAdd || (sadeItemData?.type && data.type != sadeItemData?.type)) {
-        GetSadeCodeByTypeService({ type: data.type == "Stok" ? "L" : "B" })
-          .then((resp: ResponseResult) => {
-            const siraNo = resp.payload["next_order"] as number;
-            const newCode =
-              data.type == "Stok"
-                ? `L${siraNo.toString()}`
-                : `B${siraNo.toString()}`;
-            setSadeCode(newCode);
-            setData((prev) => ({ ...prev, sadeKodu: newCode }));
-          })
-          .catch((err) => {
-            setSadeCode(err.message);
-          });
-      } else {
-        setSadeCode(sadeItemData?.code || null);
-        setData((prev: ISadeType) => ({
-          ...prev,
-          sadeKodu: sadeItemData?.code,
-        }));
-      }
-    } else {
-      setSadeCode(null);
-    }
-  }, [data.type, isAdd, sadeItemData?.type, sadeItemData?.code]);
+    setData((prev: any) => ({ ...prev, sadeKodu: sadeCode }));
+  }, [sadeCode]);
 
   const getBase64 = (file: any): any => {
     if (file && file[0]) {
@@ -73,11 +56,9 @@ export default function SadeDetayContainer({
     (acc, next) => {
       const elems = next.elements.reduce((acc2, next2) => {
         const name = next2.name as keyof ISadeType;
-
         if (data[name] && name != "resim") {
           return { ...acc2, [name]: data[name] };
         }
-
         return { ...acc2 };
       }, {});
       return { ...acc, [next.keyString]: elems };

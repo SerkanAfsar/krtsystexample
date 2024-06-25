@@ -62,6 +62,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
     });
     const { id } = useParams();
     const router = useRouter();
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
     React.useEffect(() => {
       const subscription = watch((value: any) => {
@@ -76,6 +77,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       setActiveStep((prev: number) => (prev < stepCount - 1 ? prev + 1 : prev));
 
       if (activeStep == stepCount - 1 && serviceFunction && filteredData) {
+        setIsLoading(true);
         const result: ResponseResult = await serviceFunction({
           id: id ?? null,
           data: filteredData,
@@ -83,10 +85,12 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
 
         if (result.result) {
           toast.success("Ekleme Başarılı", { position: "top-right" });
+          setIsLoading(false);
           if (redirectUrl) {
             return router.push(redirectUrl);
           }
         } else {
+          setIsLoading(false);
           Object.entries(result.payload).map(([key, value], index) => {
             setTimeout(() => {
               const res = value as string[];
@@ -148,10 +152,15 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
             </button>
           )}
           <button
+            disabled={isLoading}
             type="submit"
             className="flex w-full justify-center rounded  bg-primary p-3 font-medium text-gray hover:bg-opacity-90 md:w-auto"
           >
-            {activeStep == stepCount - 1 ? "Kaydet" : "İleri"}
+            {activeStep == stepCount - 1
+              ? isLoading
+                ? "Kaydediliyor..."
+                : "Kaydet"
+              : "İleri"}
           </button>
         </div>
       </form>
