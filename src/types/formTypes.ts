@@ -1,5 +1,15 @@
 import { ElementType } from "./inputTypes";
 
+export type IRenkliTasType = {
+  menstrual_status?: string;
+  renkliTas?: string;
+  carat?: number;
+  renk?: string;
+  kesim?: string;
+  mensei?: string;
+  treatment?: string;
+};
+
 export type IDiamondType = {
   menstrual_status?: string;
   carat?: number;

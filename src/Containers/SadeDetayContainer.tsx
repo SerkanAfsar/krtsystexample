@@ -1,7 +1,6 @@
 "use client";
 import {
   AddProductService,
-  GetSadeCodeByTypeService,
   UpdateProductService,
 } from "@/Services/Product.Services";
 
@@ -9,7 +8,6 @@ import CustomForm from "@/components/CustomUI/CustomForm";
 import useSadeCode from "@/hooks/useSadeCode";
 
 import { ISadeType } from "@/types/formTypes";
-import { ResponseResult } from "@/types/responseTypes";
 import { AddSadeSections } from "@/utils/MockData";
 import { useCallback, useEffect, useState } from "react";
 
