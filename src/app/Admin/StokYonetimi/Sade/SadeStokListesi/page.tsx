@@ -153,6 +153,23 @@ export default function SadeStokListesi() {
     updateData();
   }, [activePage, updateData]);
 
+  if (activeData == "Hata") {
+    return (
+      <DefaultLayout>
+        <Breadcrumb pageName="Sade Stok Listesi" />
+        <div className="flex h-full w-full items-center justify-center">
+          Hata.
+        </div>
+      </DefaultLayout>
+    );
+  }
+  if (activeData == "Hata") {
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        Hata.
+      </div>
+    );
+  }
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Sade Stok Listesi" />
@@ -164,10 +181,6 @@ export default function SadeStokListesi() {
           activePage={activePage}
           setActivePage={setActivePage}
         />
-      ) : activeData == "Hata" ? (
-        <div className="flex h-full w-full items-center justify-center">
-          Hata.
-        </div>
       ) : (
         <div className="flex h-full w-full items-center justify-center">
           Yükleniyor...
