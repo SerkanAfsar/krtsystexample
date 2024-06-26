@@ -484,8 +484,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <SidebarLinkGroup
                               activeCondition={
-                                pathname === "/Sade" ||
-                                pathname.includes("Sade")
+                                pathname === "/RenkliTas" ||
+                                pathname.includes("RenkliTas")
                               }
                             >
                               {(handleClick, open) => {
