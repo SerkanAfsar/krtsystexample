@@ -14,6 +14,7 @@ import {
   GetNextOrderFromSingleDiamondService,
   UpdateProductService,
 } from "@/Services/Product.Services";
+import usePirlantaCode, { PirlantaCodeItemType } from "@/hooks/usePirlantaCode";
 
 const PirlantaDetayContainer = ({
   pirlantaItemData,
@@ -24,10 +25,6 @@ const PirlantaDetayContainer = ({
 }) => {
   const diamondItem: AddDiamondType = pirlantaItemData ?? {};
   const [data, setData] = useState<AddDiamondType>(diamondItem);
-  const [diamondCode, setDiamondCode] = useState<string | null>(null);
-  const [extraOptions, setExtraOptions] = useState<SelectOptionsType[] | null>(
-    null,
-  );
   const [activeStep, setActiveStep] = useState<number>(0);
 
   const resultCallBack = useCallback((value: any) => {
@@ -40,120 +37,20 @@ const PirlantaDetayContainer = ({
     };
   }, []);
 
-  const returnSameResult = (
-    promiseFunc: Promise<ResponseResult>,
-    code: string,
-  ) => {
-    return promiseFunc
-      .then((resp: ResponseResult) => {
-        if (resp.result) {
-          const siraNo = resp.payload["next_order"] as number;
-          setDiamondCode(`${code}-${siraNo}`);
-        } else {
-          setDiamondCode("Hata");
-        }
-      })
-      .catch((err) => {
-        setDiamondCode(err);
-      });
+  const item: PirlantaCodeItemType = {
+    data_boy: data.boy,
+    data_frommixedItem: data.frommixedItem,
+    data_fromsingleormixed: data.fromsingleormixed,
+    data_kesim: data.kesim,
+    data_menstrual_status: data.menstrual_status,
+    isAdd: isAdd,
+    pirlandaData_Code: pirlantaItemData?.code,
+    pirlantaData_Boy: pirlantaItemData?.boy,
+    pirlantaData_frommixedItem: pirlantaItemData?.fromsingleormixed,
+    pirlantaData_fromsingleormixed: pirlantaItemData?.fromsingleormixed,
+    pirlantaData_Kesim: pirlantaItemData?.kesim,
   };
-
-  useEffect(() => {
-    let timeFunc: any;
-
-    const condition =
-      isAdd ||
-      (pirlantaItemData?.kesim && data.kesim != pirlantaItemData.kesim) ||
-      (pirlantaItemData?.boy && pirlantaItemData.boy != data.boy) ||
-      (pirlantaItemData?.fromsingleormixed &&
-        pirlantaItemData.fromsingleormixed != data.fromsingleormixed) ||
-      (pirlantaItemData?.frommixedItem &&
-        pirlantaItemData.frommixedItem != data.frommixedItem);
-
-    if (data.kesim && data.boy) {
-      if (condition) {
-        timeFunc = setTimeout(() => {
-          const code = generateDiamondCode({
-            kesimKodu: data.kesim,
-            boyKodu: data.boy,
-          });
-
-          if (data.menstrual_status == "Sertifikasız") {
-            returnSameResult(
-              GetNextOrderForMixedDiamondService({ type: "Diamond", code }),
-              code,
-            );
-          } else {
-            if (data.fromsingleormixed == "From Single") {
-              returnSameResult(
-                GetNextOrderFromSingleDiamondService({
-                  from_mixed: false,
-                  code,
-                }),
-                code,
-              );
-            } else {
-              if (data.frommixedItem) {
-                returnSameResult(
-                  GetNextOrderFromSingleDiamondService({
-                    from_mixed: true,
-                    code: `${code}-${data.frommixedItem}`,
-                  }),
-                  `${code}-${data.frommixedItem}`,
-                );
-              } else {
-                setDiamondCode("");
-              }
-            }
-          }
-        }, 500);
-      } else {
-        setDiamondCode(pirlantaItemData?.code || null);
-      }
-    } else {
-      setDiamondCode("");
-    }
-    return () => {
-      clearTimeout(timeFunc);
-    };
-  }, [
-    data.kesim,
-    data.boy,
-    data.menstrual_status,
-    data.fromsingleormixed,
-    data.frommixedItem,
-    pirlantaItemData?.boy,
-    pirlantaItemData?.kesim,
-    pirlantaItemData?.code,
-    pirlantaItemData?.frommixedItem,
-    pirlantaItemData?.fromsingleormixed,
-    isAdd,
-  ]);
-
-  useEffect(() => {
-    if (data.fromsingleormixed == "From Mixed") {
-      const code = generateDiamondCode({
-        kesimKodu: data.kesim,
-        boyKodu: data.boy,
-      });
-      GetListMixedProductsCodeDiamondService({ code })
-        .then((resp: ResponseResult) => {
-          if (resp.result) {
-            const respData = resp.payload as string[];
-            const sekoData: SelectOptionsType[] = respData.map((item) => ({
-              titleVal: item,
-              valueVal: item,
-            }));
-            setExtraOptions(sekoData);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      setExtraOptions(null);
-    }
-  }, [data.fromsingleormixed, data.kesim, data.boy]);
+  const { diamondCode, extraOptions } = usePirlantaCode({ item });
 
   const newData: AddProductType = AddStoneSections.reduce(
     (acc, next) => {
