@@ -1,30 +1,42 @@
 "use server";
+
 import { cookies } from "next/headers";
+type headersType = {
+  "Content-Type": string;
+  Authorization?: string;
+};
 export const BaseService = async ({
   url,
   method,
-  body,
+  bodyData,
+  hasToken,
 }: {
   url: string;
   method: string;
-  body: object | null;
+  bodyData: any;
+  hasToken: boolean;
 }): Promise<any> => {
   try {
     const cookieStore = cookies();
-    const jwt = cookieStore.get("jwt") || null;
+    const jwt = cookieStore.get("jwt")?.value || null;
+
+    const headers: headersType = {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${jwt}`,
+    };
+    if (!hasToken) {
+      delete headers.Authorization;
+    }
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
       method: method || "GET",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        // Authorization: `Bearer ${jwt}`,
-      },
-      body: body ? JSON.stringify(body) : null,
+      headers: headers,
+      body: bodyData ? JSON.stringify(bodyData) : null,
     });
+
     const result = await response.json();
     return result;
   } catch (err: unknown) {
-    console.log("hata is ", err);
     let errMessage;
     if (typeof err === "string") {
       errMessage = err.toUpperCase();

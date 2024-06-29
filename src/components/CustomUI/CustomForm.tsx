@@ -1,28 +1,33 @@
 "use client";
-import { ElementType } from "@/types/inputTypes";
 import * as React from "react";
-import CustomInput from "./CustomInput";
-import CustomSelect from "./CustomSelect";
-import { cn } from "@/utils";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FormSectionType } from "@/types/formTypes";
-import CustomDatePicker from "./CustomDatePicker";
-import CustomButtonGroups from "./CustomButtonGroups";
+import SectionFormItem from "./SectionFormItem";
+import { toast } from "react-toastify";
+import { ResponseResult } from "@/types/responseTypes";
+import { useParams, useRouter } from "next/navigation";
+
+export type SelectOptionsType = {
+  valueVal: string;
+  titleVal: string;
+  extraValue?: string;
+};
 
 type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   sections?: FormSectionType[];
-  formItemType: any;
   setData: any;
   setActiveStep?: any;
   data?: any;
   activeStep: number;
   stepCount: number;
+  serviceFunction?: any | null;
+  filteredData?: any | null;
+  productCode?: string | null;
+  redirectUrl?: string;
+  extraOptions?: SelectOptionsType[] | null;
+  isAdd: boolean;
+  resultCallBack?: any;
 };
-
-const formatter = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-});
 
 const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
   (
@@ -32,9 +37,15 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       activeStep,
       setActiveStep,
       setData,
-      formItemType,
       data,
       stepCount,
+      serviceFunction,
+      filteredData,
+      productCode,
+      redirectUrl,
+      extraOptions,
+      resultCallBack,
+      isAdd,
       ...rest
     },
     ref,
@@ -44,114 +55,59 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       handleSubmit,
       watch,
       setValue,
+      setError,
       formState: { errors },
-    } = useForm<typeof formItemType>({
+    } = useForm<any>({
       defaultValues: data,
     });
+    const { id } = useParams();
+    const router = useRouter();
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
     React.useEffect(() => {
-      const subscription = watch((value: typeof formItemType) => {
-        setData(value);
+      const subscription = watch((value: any) => {
+        const returnResult = resultCallBack && resultCallBack(value);
+        setData({ ...value, ...returnResult });
       });
       return () => subscription.unsubscribe();
-    }, [watch, setData]);
+    }, [watch, setData, resultCallBack]);
 
-    const retunItem: any = ({
-      title,
-      placeholder,
-      options,
-      type,
-      required,
-      name,
-      disabled,
-      relativeTo,
-      checkBoxList,
-      ...rest
-    }: ElementType) => {
-      const isDisabled = data && relativeTo ? !data[relativeTo] : disabled;
-      const val = (data && data[name]) || null;
-      switch (type) {
-        case "text":
-        default: {
-          return (
-            <CustomInput
-              {...register(name, {
-                required:
-                  !isDisabled && required ? rest.requiredMessage : false,
-              })}
-              value={rest.isCurrency ? formatter.format(val) : val}
-              title={title}
-              placeholder={placeholder ?? undefined}
-              err={errors[name]?.message?.toString() ?? null}
-              outerClass={cn(rest?.span && `col-span-${rest.span.toString()}`)}
-              disabled={isDisabled}
-              {...rest}
-            />
-          );
-        }
-        case "customButtonGroup": {
-          register(name, {
-            required,
+    const onSubmit: SubmitHandler<any> = async (values) => {
+      setData((prev: any) => ({ ...prev, values }));
+      setActiveStep((prev: number) => (prev < stepCount - 1 ? prev + 1 : prev));
+
+      if (activeStep == stepCount - 1 && serviceFunction && filteredData) {
+        setIsLoading(true);
+        const result: ResponseResult = await serviceFunction({
+          id: id ?? null,
+          data: filteredData,
+        });
+
+        if (result.result) {
+          toast.success("Ekleme Başarılı", { position: "top-right" });
+          setIsLoading(false);
+          if (redirectUrl) {
+            return router.push(redirectUrl);
+          }
+        } else {
+          setIsLoading(false);
+          Object.entries(result.payload).map(([key, value], index) => {
+            setTimeout(() => {
+              const res = value as string[];
+              toast.error(
+                `${key.toUpperCase()} ${res[0].toLocaleUpperCase()}`,
+                { position: "top-right" },
+              );
+            }, 200 * index);
           });
-          return (
-            <CustomButtonGroups
-              title={title}
-              checkBoxList={checkBoxList || ["DATA YOK"]}
-              setValue={setValue}
-              outerClass={cn(rest.span && `col-span-${rest.span.toString()}`)}
-              register={register}
-              name={name}
-              value={val}
-              {...rest}
-            />
-          );
-        }
-        case "datepicker": {
-          return (
-            <CustomDatePicker
-              {...register(name, {
-                required:
-                  !isDisabled && required ? rest.requiredMessage : false,
-              })}
-              title={title}
-              err={errors[name]?.message?.toString() ?? null}
-              outerClass={cn(rest.span && `col-span-${rest.span.toString()}`)}
-              disabled={isDisabled}
-              {...rest}
-            />
-          );
-        }
-        case "select": {
-          return (
-            <CustomSelect
-              {...register(name, {
-                required:
-                  !isDisabled && required ? rest.requiredMessage : false,
-              })}
-              options={options ?? null}
-              title={title}
-              err={errors[name]?.message?.toString() ?? null}
-              outerClass={cn(rest.span && `col-span-${rest.span.toString()}`)}
-              disabled={isDisabled}
-              {...rest}
-            />
-          );
+          return;
         }
       }
-    };
-
-    const onSubmit: SubmitHandler<typeof formItemType> = (values) => {
-      setData((prev: typeof formItemType) => ({ ...prev, values }));
-      setActiveStep((prev: number) => (prev < stepCount - 1 ? prev + 1 : prev));
     };
 
     const setPrev = () => {
       setActiveStep((prev: number) => (prev != 0 ? prev - 1 : 0));
     };
-
-    // const setNext = () => {
-    //   setActiveStep((prev: number) => (prev != stepCount ? prev + 1 : prev));
-    // };
 
     return (
       <form
@@ -160,34 +116,30 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
         {...rest}
         ref={ref}
       >
-        {sections?.map((section, index) => (
-          <div
-            key={index}
-            className="mb-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
-          >
-            <div className="border-b border-stroke pb-4  dark:border-strokedark">
-              <h3 className="p-4 text-lg font-medium text-black dark:text-white">
-                {section?.sectionTitle}
-              </h3>
-              <hr />
-
-              <div
-                className={cn(
-                  `grid grid-cols-4 gap-6 p-4`,
-                  section?.colsLenght
-                    ? `grid-cols-${section.colsLenght.toString()}`
-                    : "grid-cols-3",
-                )}
-              >
-                {section?.elements.map((item, index) => (
-                  <React.Fragment key={item.name}>
-                    {retunItem(item)}
-                  </React.Fragment>
-                ))}
-              </div>
-            </div>
-          </div>
-        ))}
+        {sections?.map((section, index) => {
+          const isUnvisible =
+            section.visibleRelativeColumn &&
+            data[section.visibleRelativeColumn] !=
+              section.visibleRelativeToValue;
+          if (isUnvisible) {
+            delete filteredData[section.keyString];
+            return null;
+          }
+          return (
+            <SectionFormItem
+              data={data}
+              setValue={setValue}
+              errors={errors}
+              register={register}
+              section={section}
+              key={section.sectionTitle}
+              setError={setError}
+              productCode={productCode}
+              extraOptions={extraOptions}
+              isAdd={isAdd}
+            />
+          );
+        })}
 
         <div className="flex w-full items-end justify-end">
           {activeStep > 0 && (
@@ -200,10 +152,15 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
             </button>
           )}
           <button
+            disabled={isLoading}
             type="submit"
             className="flex w-full justify-center rounded  bg-primary p-3 font-medium text-gray hover:bg-opacity-90 md:w-auto"
           >
-            {activeStep == stepCount - 1 ? "Kaydet" : "İleri"}
+            {activeStep == stepCount - 1
+              ? isLoading
+                ? "Kaydediliyor..."
+                : "Kaydet"
+              : "İleri"}
           </button>
         </div>
       </form>

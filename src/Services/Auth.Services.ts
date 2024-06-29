@@ -9,8 +9,9 @@ export const LoginService = async ({
 }): Promise<LoginResultType> => {
   const result = await BaseService({
     url: "user/login/",
-    body: data,
+    bodyData: data,
     method: "Post",
+    hasToken: false,
   });
   return result as LoginResultType;
 };

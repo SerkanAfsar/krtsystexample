@@ -4,38 +4,42 @@ import { useEffect } from "react";
 import { ClassValue } from "clsx";
 import React from "react";
 import { cn } from "@/utils";
+import { ElementType } from "@/types/inputTypes";
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   outerClass?: ClassValue | null;
   err?: string | null;
+  setValue: any;
+} & {
+  item: ElementType;
 };
 
 const CustomDatePicker = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
+      item,
       className,
-      onChange,
+      onChange: deneme,
       onBlur,
       name,
       outerClass,
-      title,
-      placeholder,
       err,
-      type = "text",
+      setValue,
       ...rest
     },
     ref,
   ) => {
     const id = React.useId();
     useEffect(() => {
-      // Init flatpickr
-
-      if (rest.disabled == false) {
+      if (!rest.disabled) {
         flatpickr(".form-datepicker", {
           mode: "single",
           static: true,
           monthSelectorType: "static",
-          dateFormat: "M j, Y",
+          onChange: (selectedDates, dateStr, instance) => {
+            setValue(name, dateStr);
+          },
+
           prevArrow:
             '<svg className="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M5.4 10.8l1.4-1.4-4-4 4-4L5.4 0 0 5.4z" /></svg>',
           nextArrow:
@@ -47,11 +51,12 @@ const CustomDatePicker = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className={cn("w-full", outerClass && outerClass)}>
         <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-          {title}
+          {item.title}
         </label>
         <div className="relative">
           <input
             ref={ref}
+            type="text"
             className={cn(
               "form-datepicker w-full rounded border-[1.5px] border-stone-400 bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary",
               className,
@@ -62,7 +67,9 @@ const CustomDatePicker = React.forwardRef<HTMLInputElement, InputProps>(
             data-class="flatpickr-right"
             id={id}
             name={name}
-            onChange={onChange}
+            onChange={(e) => {
+              alert("test");
+            }}
             onBlur={onBlur}
             {...rest}
           />

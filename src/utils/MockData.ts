@@ -1,371 +1,555 @@
 import { FormSectionType } from "@/types/formTypes";
-import { ElementType } from "@/types/inputTypes";
+import { CustomOptionType } from "@/types/inputTypes";
 
-export const AddStoneFields: Array<ElementType> = [
+export const AddSadeSections: Array<FormSectionType> = [
   {
-    name: "karat",
-    type: "text",
-    title: "Karat",
-    placeholder: "Karat Değerini Giriniz...",
-    required: true,
-    requiredMessage: "Karat Değeri Boş Bırakılamaz",
-  },
-  {
-    name: "renk",
-    type: "select",
-    title: "Renk",
-    placeholder: "Renk Değerini Giriniz...",
-    required: true,
-    requiredMessage: "Renk Değeri Boş Bırakılamaz",
-    options: [
+    colsLenght: "12",
+    sectionTitle: "Sade Bilgileri",
+    groupNumber: 0,
+    keyString: "properties",
+    elements: [
       {
-        titleVal: "D",
-        valueVal: "D",
+        name: "type",
+        type: "customButtonGroup",
+        title: "Tip",
+        checkBoxList: ["Stok", "Sipariş"],
+        required: true,
+        requiredMessage: "Karat Değeri Boş Bırakılamaz",
+        checkBoxSetValueItem: "type",
+        span: 12,
       },
       {
-        titleVal: "E",
-        valueVal: "E",
+        name: "resim",
+        type: "file",
+        title: "Ürün Görseli",
+        placeholder: "Sade Ürün Görseli Seçiniz...",
+        required: true,
+        requiredMessage: "Sade Ürün Görseli Seçiniz",
+        relativeTo: "type",
+        span: 3,
+        rowSpan: 5,
+        showPicture: true,
+        pictureExtraText: "PNG,JPG (MAX 3MB)",
       },
-      {
-        titleVal: "F",
-        valueVal: "F",
-      },
-      {
-        titleVal: "G",
-        valueVal: "G",
-      },
-      {
-        titleVal: "H",
-        valueVal: "H",
-      },
-      {
-        titleVal: "I",
-        valueVal: "I",
-      },
-      {
-        titleVal: "J",
-        valueVal: "J",
-      },
-      {
-        titleVal: "K",
-        valueVal: "K",
-      },
-      {
-        titleVal: "L",
-        valueVal: "L",
-      },
-      {
-        titleVal: "M",
-        valueVal: "M",
-      },
-      {
-        titleVal: "N",
-        valueVal: "N",
-      },
-      {
-        titleVal: "O",
-        valueVal: "O",
-      },
-      {
-        titleVal: "P",
-        valueVal: "P",
-      },
-      {
-        titleVal: "Q",
-        valueVal: "Q",
-      },
-      {
-        titleVal: "R",
-        valueVal: "R",
-      },
-      {
-        titleVal: "S",
-        valueVal: "S",
-      },
-      {
-        titleVal: "T",
-        valueVal: "T",
-      },
-      {
-        titleVal: "U",
-        valueVal: "U",
-      },
-      {
-        titleVal: "V",
-        valueVal: "V",
-      },
-      {
-        titleVal: "W",
-        valueVal: "W",
-      },
-      {
-        titleVal: "X",
-        valueVal: "X",
-      },
-      {
-        titleVal: "Y",
-        valueVal: "Y",
-      },
-      {
-        titleVal: "Z",
-        valueVal: "Z",
-      },
-    ],
-  },
-  {
-    name: "berraklik",
-    type: "select",
-    title: "Berraklık",
-    placeholder: "Berraklık Değerini Giriniz...",
-    requiredMessage: "Berraklık Değeri Boş Bırakılamaz",
-    required: true,
-    options: [
-      {
-        titleVal: "FL",
-        valueVal: "FL",
-      },
-      {
-        titleVal: "IF",
-        valueVal: "IF",
-      },
-      {
-        titleVal: "VVS1",
-        valueVal: "VVS1",
-      },
-      {
-        titleVal: "VVS2",
-        valueVal: "VVS2",
-      },
-      {
-        titleVal: "VS1",
-        valueVal: "VS1",
-      },
-      {
-        titleVal: "VS2",
-        valueVal: "VS2",
-      },
-      {
-        titleVal: "SI1",
-        valueVal: "SI1",
-      },
-      {
-        titleVal: "SI2",
-        valueVal: "SI2",
-      },
-      {
-        titleVal: "I1",
-        valueVal: "I1",
-      },
-      {
-        titleVal: "I2",
-        valueVal: "I2",
-      },
-      {
-        titleVal: "I3",
-        valueVal: "I3",
-      },
-    ],
-  },
-  {
-    name: "kesim",
-    type: "select",
-    title: "Kesim",
-    placeholder: "Kesim Değerini Giriniz...",
-    required: true,
-    requiredMessage: "Kesim Değerini Boş Bırakılamaz",
-    options: [
-      {
-        titleVal: "ROUND",
-        valueVal: "ROUND",
-      },
-      {
-        titleVal: "HEART",
-        valueVal: "HEART",
-      },
-      {
-        titleVal: "PEAR",
-        valueVal: "PEAR",
-      },
-      {
-        titleVal: "MARQUISE",
-        valueVal: "MARQUISE",
-      },
-      {
-        titleVal: "OVAL",
-        valueVal: "OVAL",
-      },
-      {
-        titleVal: "BAGET",
-        valueVal: "BAGET",
-      },
-      {
-        titleVal: "TRAPEZ",
-        valueVal: "TRAPEZ",
-      },
-      {
-        titleVal: "TRIANGLE",
-        valueVal: "TRIANGLE",
-      },
-      {
-        titleVal: "PRENSES",
-        valueVal: "PRENSES",
-      },
-      {
-        titleVal: "RADIANT",
-        valueVal: "RADIANT",
-      },
-      {
-        titleVal: "EMERALD",
-        valueVal: "EMERALD",
-      },
-      {
-        titleVal: "CUSHION",
-        valueVal: "CUSHION",
-      },
-    ],
-  },
-];
 
-export const AddSadeFields: Array<ElementType> = [
-  {
-    name: "sadeKodu",
-    type: "text",
-    title: "Sade Kodu",
-    placeholder: "Sade Kodunu Giriniz...",
-    required: true,
-    requiredMessage: "Karat Kodu Boş Bırakılamaz",
-  },
-  {
-    name: "altinRengi",
-    type: "select",
-    title: "Altın Rengi",
-    placeholder: "Altın Rengini Giriniz...",
-    required: true,
-    requiredMessage: "Altın Rengi Boş Bırakılamaz",
-    options: [
       {
-        titleVal: "W - Beyaz",
-        valueVal: "W - Beyaz",
+        name: "sadeKodu",
+        type: "text",
+        title: "Sade Kodu",
+        disabled: true,
+        placeholder: "Sade Kodu Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Sade Kodu Değeri Boş Bırakılamaz",
+        span: 3,
       },
       {
-        titleVal: "G - Yeşil",
-        valueVal: "G - Yeşil",
+        name: "modelTuru",
+        type: "select",
+        title: "Model Türü",
+        placeholder: "Model Türü Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Model Türü Değeri Boş Bırakılamaz",
+        relativeTo: "type",
+        span: 3,
+        options: [
+          {
+            titleVal: "Alyans",
+            valueVal: "Alyans",
+            extraValue: "ALY",
+          },
+          {
+            titleVal: "Bileklik",
+            valueVal: "Bileklik",
+            extraValue: "BL",
+          },
+          {
+            titleVal: "Kelepçe",
+            valueVal: "Kelepçe",
+            extraValue: "BNG",
+          },
+          {
+            titleVal: "Broş",
+            valueVal: "Broş",
+            extraValue: "BRS",
+          },
+          {
+            titleVal: "Kol Düğmesi",
+            valueVal: "Kol Düğmesi",
+            extraValue: "CF",
+          },
+          {
+            titleVal: "Küpe",
+            valueVal: "Küpe",
+            extraValue: "E",
+          },
+          {
+            titleVal: "Anturaj Küpe",
+            valueVal: "Anturaj Küpe",
+            extraValue: "EA",
+          },
+          {
+            titleVal: "Küpe Arkalığı",
+            valueVal: "Küpe Arkalığı",
+            extraValue: "EK",
+          },
+          {
+            titleVal: "Tektaş Küpe",
+            valueVal: "Tektaş Küpe",
+            extraValue: "ES",
+          },
+          {
+            titleVal: "Bilezik",
+            valueVal: "Bilezik",
+            extraValue: "FBR",
+          },
+          {
+            titleVal: "Kilit",
+            valueVal: "Kilit",
+            extraValue: "KLT",
+          },
+          {
+            titleVal: "Erkek Yüzüğü",
+            valueVal: "Erkek Yüzüğü",
+            extraValue: "MR",
+          },
+          {
+            titleVal: "Gerdanlık",
+            valueVal: "Gerdanlık",
+            extraValue: "NEC",
+          },
+          {
+            titleVal: "Zincirli Kolye",
+            valueVal: "Zincirli Kolye",
+            extraValue: "NZ",
+          },
+          {
+            titleVal: "Kolye Ucu",
+            valueVal: "Kolye Ucu",
+            extraValue: "P",
+          },
+          {
+            titleVal: "Anturaj Kolye Ucu",
+            valueVal: "Anturaj Kolye Ucu",
+            extraValue: "PA",
+          },
+          {
+            titleVal: "Tektaş Kolye ucu",
+            valueVal: "Tektaş Kolye ucu",
+            extraValue: "PS",
+          },
+          {
+            titleVal: "Anturaj Yüzük",
+            valueVal: "Anturaj Yüzük",
+            extraValue: "RA",
+          },
+          {
+            titleVal: "Genel Fantazi Yüzük",
+            valueVal: "Genel Fantazi Yüzük",
+            extraValue: "RF",
+          },
+          {
+            titleVal: "Tektaş Yüzük",
+            valueVal: "Tektaş Yüzük",
+            extraValue: "RS",
+          },
+          {
+            titleVal: "Tamtur Yüzük",
+            valueVal: "Tamtur Yüzük",
+            extraValue: "RTT",
+          },
+          {
+            titleVal: "Zincirler",
+            valueVal: "Zincirler",
+            extraValue: "RULO",
+          },
+          {
+            titleVal: "Rozet",
+            valueVal: "Rozet",
+            extraValue: "RZ",
+          },
+
+          {
+            titleVal: "Takım Bileklik",
+            valueVal: "Takım Bileklik",
+            extraValue: "TKB",
+          },
+          {
+            titleVal: "Takım Küpe",
+            valueVal: "Takım Küpe",
+            extraValue: "TKY",
+          },
+          {
+            titleVal: "Takım Kolye",
+            valueVal: "Takım Kolye",
+            extraValue: "TKP",
+          },
+          {
+            titleVal: "Takım Yüzük",
+            valueVal: "Takım Yüzük",
+            extraValue: "TKR",
+          },
+          {
+            titleVal: "Tespih",
+            valueVal: "Tespih",
+            extraValue: "TS",
+          },
+          {
+            titleVal: "Beş Taş Yüzük",
+            valueVal: "Beş Taş Yüzük",
+            extraValue: "WR",
+          },
+
+          {
+            titleVal: "Zincir",
+            valueVal: "Zincir",
+            extraValue: "ZN",
+          },
+        ],
       },
       {
-        titleVal: "R - Rose",
-        valueVal: "R - Rose",
+        name: "modelKodu",
+        type: "text",
+        title: "Model Kodunu Giriniz",
+        placeholder: "Model Kodu Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Model Kodu Değeri Boş Bırakılamaz",
+        relativeTo: "type",
+        span: 3,
+        extraValidations: {
+          maxLength: {
+            value: 4,
+            message: "Model Kodu 4 Haneden Oluşmalıdır ",
+          },
+          minLength: {
+            value: 4,
+            message: "Model Kodu 4 Haneden Oluşmalıdır",
+          },
+        },
       },
       {
-        titleVal: "GW - Yeşil Beyaz",
-        valueVal: "GW - Yeşil Beyaz",
+        name: "atolye",
+        type: "select",
+        title: "Atölye Seçiniz",
+        placeholder: "Atölye Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Atölye Değeri Boş Bırakılamaz",
+        relativeTo: "type",
+        span: 3,
+        options: [
+          {
+            titleVal: "APEL IS",
+            valueVal: "APEL IS",
+            extraValue: "65",
+          },
+          {
+            titleVal: "ARMAN GULLUK",
+            valueVal: "ARMAN GULLUK",
+            extraValue: "9",
+          },
+          {
+            titleVal: "ASLIN MOUNTİNG",
+            valueVal: "ASLIN MOUNTİNG",
+            extraValue: "128",
+          },
+          {
+            titleVal: "BULENT ATOLYE",
+            valueVal: "BULENT ATOLYE",
+            extraValue: "23",
+          },
+          {
+            titleVal: "BURAK CIL SADEKAR",
+            valueVal: "BURAK CIL SADEKAR",
+            extraValue: "58",
+          },
+          {
+            titleVal: "BURAK SEPIKLI",
+            valueVal: "BURAK SEPIKLI",
+            extraValue: "51",
+          },
+          {
+            titleVal: "DOGAN ATOLYE",
+            valueVal: "DOGAN ATOLYE",
+            extraValue: "24",
+          },
+          {
+            titleVal: "GARO ELMAS SADEKAR",
+            valueVal: "GARO ELMAS SADEKAR",
+            extraValue: "119",
+          },
+          {
+            titleVal: "INCICI KAHRAMAN",
+            valueVal: "INCICI KAHRAMAN",
+            extraValue: "75",
+          },
+          {
+            titleVal: "JULIANO",
+            valueVal: "JULIANO",
+            extraValue: "29",
+          },
+          {
+            titleVal: "MAHMUT USTA ATOLYECI",
+            valueVal: "MAHMUT USTA ATOLYECI",
+            extraValue: "127",
+          },
+          {
+            titleVal: "MEHMET PEYKERİMEH",
+            valueVal: "MEHMET PEYKERİMEH",
+            extraValue: "55",
+          },
+          {
+            titleVal: "MURAT ALEN",
+            valueVal: "MURAT ALEN",
+            extraValue: "80",
+          },
+          {
+            titleVal: "NURHAN",
+            valueVal: "NURHAN",
+            extraValue: "18",
+          },
+          {
+            titleVal: "RIMAS KENAN",
+            valueVal: "RIMAS KENAN",
+            extraValue: "28",
+          },
+          {
+            titleVal: "SADE IS",
+            valueVal: "SADE IS",
+            extraValue: "64",
+          },
+          {
+            titleVal: "SADEKAR TAYFUN",
+            valueVal: "SADEKAR TAYFUN",
+            extraValue: "22",
+          },
+          {
+            titleVal: "SAFE",
+            valueVal: "SAFE",
+            extraValue: "72",
+          },
+          {
+            titleVal: "SAHIN ATOLYE",
+            valueVal: "SAHIN ATOLYE",
+            extraValue: "46",
+          },
+          {
+            titleVal: "SAHIN PERSONEL",
+            valueVal: "SAHIN PERSONEL",
+            extraValue: "129",
+          },
+          {
+            titleVal: "SANOR",
+            valueVal: "SANOR",
+            extraValue: "44",
+          },
+          {
+            titleVal: "SAVAS ULUK",
+            valueVal: "SAVAS ULUK",
+            extraValue: "95",
+          },
+          {
+            titleVal: "SUAT RAMADAN",
+            valueVal: "SUAT RAMADAN",
+            extraValue: "102",
+          },
+          {
+            titleVal: "SUEL",
+            valueVal: "SUEL",
+            extraValue: "68",
+          },
+          {
+            titleVal: "YALCIN SAMANOGLU",
+            valueVal: "YALCIN SAMANOGLU",
+            extraValue: "6",
+          },
+          {
+            titleVal: "YANY KILITCI",
+            valueVal: "YANY KILITCI",
+            extraValue: "117",
+          },
+          {
+            titleVal: "YETKIN HERMAN",
+            valueVal: "YETKIN HERMAN",
+            extraValue: "131",
+          },
+        ],
       },
       {
-        titleVal: "WR - Beyaz Rose",
-        valueVal: "WR - Beyaz Rose",
+        name: "iscilik",
+        type: "number",
+        title: "İşçilik",
+        placeholder: "İşçilik Değerini Giriniz...",
+        required: true,
+        requiredMessage: "İşçilik Değeri Boş Bırakılamaz",
+        relativeTo: "type",
+        span: 2,
       },
       {
-        titleVal: "GR - Yeşil Rose",
-        valueVal: "GR - Yeşil Rose",
+        name: "cost_currency",
+        type: "select",
+        title: "Birim",
+        placeholder: "Birim Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Birim Değeri Boş Bırakılamaz",
+        relativeTo: "type",
+        options: [
+          { titleVal: "HAS", valueVal: "HAS" },
+          { titleVal: "USD", valueVal: "USD" },
+        ],
+        span: 1,
       },
       {
-        titleVal: "WGR - Çok Renkli",
-        valueVal: "WGR - Çok Renkli",
+        name: "altinRengi",
+        type: "select",
+        title: "Altın Rengi",
+        placeholder: "Altın Rengi Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Altın Rengi Değeri Boş Bırakılamaz",
+        relativeTo: "type",
+        span: 3,
+        options: [
+          {
+            titleVal: "Beyaz",
+            valueVal: "Beyaz",
+            extraValue: "W",
+          },
+          {
+            titleVal: "Yeşil",
+            valueVal: "Yeşil",
+            extraValue: "G",
+          },
+          {
+            titleVal: "Rose",
+            valueVal: "Rose",
+            extraValue: "R",
+          },
+          {
+            titleVal: "Yeşil Beyaz",
+            valueVal: "Yeşil Beyaz",
+            extraValue: "GW",
+          },
+          {
+            titleVal: "Beyaz Rose",
+            valueVal: "Beyaz Rose",
+            extraValue: "WR",
+          },
+          {
+            titleVal: "Yeşil Rose",
+            valueVal: "Yeşil Rose",
+            extraValue: "GR",
+          },
+          {
+            titleVal: "Çok Renkli",
+            valueVal: "Çok Renkli",
+            extraValue: "WGR",
+          },
+        ],
+      },
+      {
+        name: "gram",
+        type: "number",
+        title: "Gram",
+        placeholder: "Gram Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Gram Değeri Boş Bırakılamaz",
+        relativeTo: "type",
+        span: 3,
+      },
+      {
+        name: "ayar",
+        type: "select",
+        title: "Ayar",
+        placeholder: "Ayar Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Ayar Değeri Boş Bırakılamaz",
+        relativeTo: "type",
+        span: 3,
+        options: [
+          { titleVal: "18", valueVal: "18" },
+          { titleVal: "14", valueVal: "14" },
+          { titleVal: "8", valueVal: "8" },
+          { titleVal: "750", valueVal: "750" },
+          { titleVal: "585", valueVal: "585" },
+        ],
+      },
+      {
+        name: "hasGrami",
+        type: "text",
+        title: "Has Gramı",
+        placeholder: "Has Gramı Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Has Gramı Değeri Boş Bırakılamaz",
+        disabled: true,
+        span: 3,
+      },
+      {
+        name: "aciklama",
+        type: "text",
+        title: "Açıklama",
+        placeholder: "Açıklama Değerini Giriniz...",
+        required: false,
+        requiredMessage: "Açıklama Değeri Boş Bırakılamaz",
+        relativeTo: "type",
+        span: 3,
+        rowSpan: 2,
+        colStart: "4",
+        colEnd: "10",
+      },
+      {
+        name: "girisTarihi",
+        type: "datepicker",
+        title: "Giriş Tarihi",
+        placeholder: "Giriş Tarihi Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Giriş Tarihi Değeri Boş Bırakılamaz",
+        relativeTo: "type",
+        span: 3,
       },
     ],
-  },
-  {
-    name: "altinAyari",
-    type: "select",
-    title: "Altın Ayarı",
-    placeholder: "Altın Ayarını Giriniz...",
-    required: true,
-    requiredMessage: "Altın Ayarı Boş Bırakılamaz",
-    options: [
-      {
-        titleVal: "24K",
-        valueVal: "24K",
-      },
-      {
-        titleVal: "22K",
-        valueVal: "22K",
-      },
-      {
-        titleVal: "21K",
-        valueVal: "21K",
-      },
-      {
-        titleVal: "20K",
-        valueVal: "20K",
-      },
-      {
-        titleVal: "18K",
-        valueVal: "18K",
-      },
-      {
-        titleVal: "18K",
-        valueVal: "18K",
-      },
-    ],
-  },
-  {
-    name: "sadeGrami",
-    type: "text",
-    title: "Sade Gramı",
-    placeholder: "Sade Gramını Giriniz...",
-    required: true,
-    requiredMessage: "Sade Gramı Boş Bırakılamaz",
-  },
-  {
-    name: "hasGrami",
-    type: "text",
-    title: "Has Gramı",
-    placeholder: "Has Gramını Giriniz...",
-    required: true,
-    requiredMessage: "Has Gramı Boş Bırakılamaz",
-  },
-  {
-    name: "mensei",
-    type: "select",
-    title: "Menşei",
-    placeholder: "Menşei Giriniz...",
-    required: true,
-    requiredMessage: "Menşei Boş Bırakılamaz",
-    options: [
-      {
-        titleVal: "D-Yerli",
-        valueVal: "D-Yerli",
-      },
-      {
-        titleVal: "F-Yabancı",
-        valueVal: "F-Yabancı",
-      },
-    ],
-  },
-  {
-    name: "toplamIscilik",
-    type: "text",
-    title: "Toplam İşçilik ($)",
-    placeholder: "Toplam İşçilik Giriniz...",
-    required: true,
-    requiredMessage: "Toplam İşçilik Boş Bırakılamaz",
   },
 ];
 
 export const AddStoneSections: Array<FormSectionType> = [
   {
-    colsLenght: 4,
+    colsLenght: "8",
     sectionTitle: "Pırlanta Bilgileri",
     groupNumber: 0,
-    elements: [
+    keyString: "properties",
+    extraElementRelativeTo: "menstrual_status",
+    extraElementVisibleRelative: "Sertifikalı",
+    extraElements: [
       {
-        name: "tip",
+        name: "fromsingleormixed",
         type: "customButtonGroup",
         title: "Tip",
-        checkBoxList: ["TEK TAŞ", "MIX"],
+        checkBoxList: ["From Single", "From Mixed"],
         required: true,
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
-        checkBoxSetValueItem: "tip",
+        checkBoxSetValueItem: "fromsingleormixed",
         span: 4,
+        value: "From Single",
+      },
+      {
+        name: "frommixedItem",
+        type: "select",
+        title: "Mixed Grubu",
+        required: true,
+        requiredMessage: "Kesim Değerini Boş Bırakılamaz",
+        relativeTo: "fromsingleormixed",
+        visibleRelative: "From Mixed",
+        isExtra: true,
+        span: 4,
+      },
+    ],
+    elements: [
+      {
+        name: "menstrual_status",
+        type: "customButtonGroup",
+
+        checkBoxList: ["Sertifikalı", "Sertifikasız"],
+        required: true,
+        requiredMessage: "Karat Değeri Boş Bırakılamaz",
+        checkBoxSetValueItem: "menstrual_status",
+        span: 8,
       },
       {
         name: "kesim",
@@ -374,66 +558,81 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Kesim Değerini Giriniz...",
         required: true,
         requiredMessage: "Kesim Değerini Boş Bırakılamaz",
-        relativeTo: "tip",
+        relativeTo: "menstrual_status",
         options: [
           {
             titleVal: "ROUND",
             valueVal: "ROUND",
+            extraValue: "BR",
           },
           {
             titleVal: "HEART",
             valueVal: "HEART",
+            extraValue: "HS",
           },
           {
             titleVal: "PEAR",
             valueVal: "PEAR",
+            extraValue: "PS",
           },
           {
             titleVal: "MARQUISE",
             valueVal: "MARQUISE",
+            extraValue: "MQ",
           },
           {
             titleVal: "OVAL",
             valueVal: "OVAL",
+            extraValue: "OV",
           },
           {
             titleVal: "BAGET",
             valueVal: "BAGET",
+            extraValue: "BG",
           },
           {
             titleVal: "TRAPEZ",
             valueVal: "TRAPEZ",
+            extraValue: "TP",
           },
           {
             titleVal: "TRIANGLE",
             valueVal: "TRIANGLE",
+            extraValue: "TR",
           },
           {
             titleVal: "PRENSES",
             valueVal: "PRENSES",
+            extraValue: "PR",
           },
           {
             titleVal: "RADIANT",
             valueVal: "RADIANT",
+            extraValue: "RD",
           },
           {
             titleVal: "EMERALD",
             valueVal: "EMERALD",
+            extraValue: "EM",
           },
           {
             titleVal: "CUSHION",
             valueVal: "CUSHION",
+            extraValue: "CS",
           },
         ],
+        span: 2,
       },
       {
-        name: "karat",
-        type: "text",
+        name: "carat",
+        type: "number",
         title: "Karat",
         placeholder: "Karat Değerini Giriniz...",
         required: true,
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
-        relativeTo: "tip",
+        relativeTo: "menstrual_status",
+        span: 2,
+        simgeturu: "caratType",
       },
       {
         name: "renk",
@@ -479,8 +678,171 @@ export const AddStoneSections: Array<FormSectionType> = [
             titleVal: "L",
             valueVal: "L",
           },
+          {
+            titleVal: "M",
+            valueVal: "M",
+          },
+          {
+            titleVal: "N",
+            valueVal: "N",
+          },
+          {
+            titleVal: "O",
+            valueVal: "O",
+          },
+          {
+            titleVal: "P",
+            valueVal: "P",
+          },
+          {
+            titleVal: "Q",
+            valueVal: "Q",
+          },
+          {
+            titleVal: "R",
+            valueVal: "R",
+          },
+          {
+            titleVal: "S",
+            valueVal: "S",
+          },
+          {
+            titleVal: "T",
+            valueVal: "T",
+          },
+          {
+            titleVal: "U",
+            valueVal: "U",
+          },
+          {
+            titleVal: "V",
+            valueVal: "V",
+          },
+          {
+            titleVal: "W",
+            valueVal: "W",
+          },
+          {
+            titleVal: "X",
+            valueVal: "X",
+          },
+          {
+            titleVal: "Y",
+            valueVal: "Y",
+          },
+          {
+            titleVal: "Z",
+            valueVal: "Z",
+          },
         ],
-        relativeTo: "tip",
+        relativeTo: "menstrual_status",
+        span: 2,
+        spesificRelatedItem: "Sertifikasız",
+      },
+      {
+        name: "renk2",
+        type: "select",
+        title: "",
+        placeholder: "Renk Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Renk Değeri Boş Bırakılamaz",
+        span: 1,
+        options: [
+          {
+            titleVal: "D",
+            valueVal: "D",
+          },
+          {
+            titleVal: "E",
+            valueVal: "E",
+          },
+          {
+            titleVal: "F",
+            valueVal: "F",
+          },
+          {
+            titleVal: "G",
+            valueVal: "G",
+          },
+          {
+            titleVal: "H",
+            valueVal: "H",
+          },
+          {
+            titleVal: "I",
+            valueVal: "I",
+          },
+          {
+            titleVal: "J",
+            valueVal: "J",
+          },
+          {
+            titleVal: "K",
+            valueVal: "K",
+          },
+          {
+            titleVal: "L",
+            valueVal: "L",
+          },
+          {
+            titleVal: "M",
+            valueVal: "M",
+          },
+          {
+            titleVal: "N",
+            valueVal: "N",
+          },
+          {
+            titleVal: "O",
+            valueVal: "O",
+          },
+          {
+            titleVal: "P",
+            valueVal: "P",
+          },
+          {
+            titleVal: "Q",
+            valueVal: "Q",
+          },
+          {
+            titleVal: "R",
+            valueVal: "R",
+          },
+          {
+            titleVal: "S",
+            valueVal: "S",
+          },
+          {
+            titleVal: "T",
+            valueVal: "T",
+          },
+          {
+            titleVal: "U",
+            valueVal: "U",
+          },
+          {
+            titleVal: "V",
+            valueVal: "V",
+          },
+          {
+            titleVal: "W",
+            valueVal: "W",
+          },
+          {
+            titleVal: "X",
+            valueVal: "X",
+          },
+          {
+            titleVal: "Y",
+            valueVal: "Y",
+          },
+          {
+            titleVal: "Z",
+            valueVal: "Z",
+          },
+        ],
+        relativeTo: "menstrual_status",
+        visibleRelative: "Sertifikasız",
       },
       {
         name: "berraklik",
@@ -489,7 +851,8 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Berraklık Değerini Giriniz...",
         requiredMessage: "Berraklık Değeri Boş Bırakılamaz",
         required: true,
-        relativeTo: "tip",
+        relativeTo: "menstrual_status",
+        span: 2,
         options: [
           {
             titleVal: "FL",
@@ -536,7 +899,66 @@ export const AddStoneSections: Array<FormSectionType> = [
             valueVal: "I3",
           },
         ],
+        spesificRelatedItem: "Sertifikasız",
       },
+      {
+        name: "berraklik2",
+        type: "select",
+        title: "",
+        placeholder: "Berraklık Değerini Giriniz...",
+        requiredMessage: "Berraklık Değeri Boş Bırakılamaz",
+        required: true,
+        relativeTo: "menstrual_status",
+        span: 1,
+        options: [
+          {
+            titleVal: "FL",
+            valueVal: "FL",
+          },
+          {
+            titleVal: "IF",
+            valueVal: "IF",
+          },
+          {
+            titleVal: "VVS1",
+            valueVal: "VVS1",
+          },
+          {
+            titleVal: "VVS2",
+            valueVal: "VVS2",
+          },
+          {
+            titleVal: "VS1",
+            valueVal: "VS1",
+          },
+          {
+            titleVal: "VS2",
+            valueVal: "VS2",
+          },
+          {
+            titleVal: "SI1",
+            valueVal: "SI1",
+          },
+          {
+            titleVal: "SI2",
+            valueVal: "SI2",
+          },
+          {
+            titleVal: "I1",
+            valueVal: "I1",
+          },
+          {
+            titleVal: "I2",
+            valueVal: "I2",
+          },
+          {
+            titleVal: "I3",
+            valueVal: "I3",
+          },
+        ],
+        visibleRelative: "Sertifikasız",
+      },
+
       {
         name: "elek",
         type: "select",
@@ -544,7 +966,8 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Elek Değerini Giriniz...",
         required: true,
         requiredMessage: "Elek Değeri Boş Bırakılamaz",
-        relativeTo: "tip",
+        relativeTo: "menstrual_status",
+        span: 2,
         options: [
           {
             titleVal: "60",
@@ -664,10 +1087,11 @@ export const AddStoneSections: Array<FormSectionType> = [
         name: "boy",
         type: "select",
         title: "Boy",
+        span: 2,
         placeholder: "Boy Değerini Giriniz...",
         required: true,
         requiredMessage: "Boy Değeri Boş Bırakılamaz",
-        relativeTo: "tip",
+        relativeTo: "menstrual_status",
         options: [
           {
             titleVal: "00",
@@ -755,22 +1179,37 @@ export const AddStoneSections: Array<FormSectionType> = [
           },
         ],
       },
+
       {
         name: "aciklama",
         type: "text",
         title: "Açıklama",
         placeholder: "Açıklama Değerini Giriniz...",
-        relativeTo: "tip",
+        relativeTo: "menstrual_status",
         required: false,
         requiredMessage: "Açıklama Değeri Boş Bırakılamaz",
-        span: 2,
+        span: 4,
       },
+      // {
+      //   name: "sertifikaResim",
+      //   type: "file",
+      //   title: "Sertifika",
+      //   placeholder: "Sertifika Resim Seçiniz...",
+      //   required: true,
+      //   requiredMessage: "Sertifika Resmi Seçiniz",
+      //   relativeTo: "menstrual_status",
+      //   span: 4,
+      //   visibleRelative: "Sertifikalı",
+      // },
     ],
   },
   {
-    colsLenght: 12,
+    visibleRelativeColumn: "menstrual_status",
+    colsLenght: "12",
+    visibleRelativeToValue: "Sertifikalı",
     sectionTitle: "Sertifika Bilgileri",
     groupNumber: 1,
+    keyString: "product_certificate",
     elements: [
       {
         name: "sertifika",
@@ -935,11 +1374,15 @@ export const AddStoneSections: Array<FormSectionType> = [
             titleVal: "STRONG",
             valueVal: "STRONG",
           },
+          {
+            titleVal: "SLIGHT",
+            valueVal: "SLIGHT",
+          },
         ],
       },
       {
         name: "min",
-        type: "text",
+        type: "number",
         title: "Min",
         placeholder: "Min  Değerini Giriniz...",
         required: true,
@@ -950,7 +1393,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "max",
-        type: "text",
+        type: "number",
         title: "Max",
         placeholder: "Max Değerini Giriniz...",
         required: true,
@@ -961,7 +1404,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "height",
-        type: "text",
+        type: "number",
         title: "Height",
         placeholder: "Height Değerini Giriniz...",
         required: true,
@@ -972,7 +1415,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "table",
-        type: "text",
+        type: "number",
         title: "Table",
         placeholder: "Table Değerini Giriniz...",
         required: true,
@@ -984,7 +1427,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "totalDepth",
-        type: "text",
+        type: "number",
         title: "Total Depth",
         placeholder: "Total Depth Değerini Giriniz...",
         required: true,
@@ -996,7 +1439,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "girdle",
-        type: "text",
+        type: "number",
         title: "Girdle",
         placeholder: "Girdle Değerini Giriniz...",
         required: true,
@@ -1008,17 +1451,19 @@ export const AddStoneSections: Array<FormSectionType> = [
     ],
   },
   {
-    colsLenght: 4,
+    colsLenght: "4",
     sectionTitle: "Pırlanta Fiyat Bilgileri",
     groupNumber: 1,
+    keyString: "product_cost",
     elements: [
       {
-        name: "satinAlmaTarihi",
+        name: "buy_date",
         type: "datepicker",
         title: "Satin Alma Tarihi",
         placeholder: "Satın Alma Tarihi Değerini Giriniz...",
         required: true,
         requiredMessage: "Satın Alma Tarihi Değerini Boş Bırakılamaz",
+        span: 1,
       },
       {
         name: "rapaportPrice",
@@ -1028,18 +1473,24 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
         disabled: true,
-
         rightIcon: "$",
         value: "2500",
         isCurrency: true,
+        span: 1,
+        // relativeTo: "menstrual_status",
+        // visibleRelative: "Sertifikalı",
       },
       {
         name: "iskonto",
-        type: "text",
+        type: "number",
         title: "İskonto",
         placeholder: "İskonto...",
         required: true,
         requiredMessage: "İskonto Boş Bırakılamaz",
+        span: 1,
+        rightIcon: "$",
+        // relativeTo: "menstrual_status",
+        // visibleRelative: "Sertifikalı",
       },
       {
         name: "pricePerCarat",
@@ -1049,9 +1500,634 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: false,
         requiredMessage: "İskonto Boş Bırakılamaz",
         disabled: true,
-
         isCurrency: true,
         rightIcon: "$",
+        span: 1,
+      },
+      {
+        name: "total_cost",
+        type: "text",
+        title: "Toplam Fiyat",
+        placeholder: "Toplam Fiyat...",
+        required: false,
+        requiredMessage: "Toplam Fiyat Bırakılamaz",
+        disabled: true,
+        isCurrency: true,
+        rightIcon: "$",
+        colStart: "4",
+        colEnd: "5",
+        span: 1,
+      },
+    ],
+  },
+];
+
+export const SadeModelTurleri: CustomOptionType[] = [
+  {
+    titleVal: "Alyans",
+    valueVal: "Alyans",
+    extraValue: "ALY",
+  },
+  {
+    titleVal: "Bileklik",
+    valueVal: "Bileklik",
+    extraValue: "BL",
+  },
+  {
+    titleVal: "Kelepçe",
+    valueVal: "Kelepçe",
+    extraValue: "BNG",
+  },
+  {
+    titleVal: "Broş",
+    valueVal: "Broş",
+    extraValue: "BRS",
+  },
+  {
+    titleVal: "Kol Düğmesi",
+    valueVal: "Kol Düğmesi",
+    extraValue: "CF",
+  },
+  {
+    titleVal: "Küpe",
+    valueVal: "Küpe",
+    extraValue: "E",
+  },
+  {
+    titleVal: "Anturaj Küpe",
+    valueVal: "Anturaj Küpe",
+    extraValue: "EA",
+  },
+  {
+    titleVal: "Küpe Arkalığı",
+    valueVal: "Küpe Arkalığı",
+    extraValue: "EK",
+  },
+  {
+    titleVal: "Tektaş Küpe",
+    valueVal: "Tektaş Küpe",
+    extraValue: "ES",
+  },
+  {
+    titleVal: "Bilezik",
+    valueVal: "Bilezik",
+    extraValue: "FBR",
+  },
+  {
+    titleVal: "Kilit",
+    valueVal: "Kilit",
+    extraValue: "KLT",
+  },
+  {
+    titleVal: "Erkek Yüzüğü",
+    valueVal: "Erkek Yüzüğü",
+    extraValue: "MR",
+  },
+  {
+    titleVal: "Gerdanlık",
+    valueVal: "Gerdanlık",
+    extraValue: "NEC",
+  },
+  {
+    titleVal: "Zincirli Kolye",
+    valueVal: "Zincirli Kolye",
+    extraValue: "NZ",
+  },
+  {
+    titleVal: "Kolye Ucu",
+    valueVal: "Kolye Ucu",
+    extraValue: "P",
+  },
+  {
+    titleVal: "Anturaj Kolye Ucu",
+    valueVal: "Anturaj Kolye Ucu",
+    extraValue: "PA",
+  },
+  {
+    titleVal: "Tektaş Kolye ucu",
+    valueVal: "Tektaş Kolye ucu",
+    extraValue: "PS",
+  },
+  {
+    titleVal: "Anturaj Yüzük",
+    valueVal: "Anturaj Yüzük",
+    extraValue: "RA",
+  },
+  {
+    titleVal: "Genel Fantazi Yüzük",
+    valueVal: "Genel Fantazi Yüzük",
+    extraValue: "RF",
+  },
+  {
+    titleVal: "Tektaş Yüzük",
+    valueVal: "Tektaş Yüzük",
+    extraValue: "RS",
+  },
+  {
+    titleVal: "Tamtur Yüzük",
+    valueVal: "Tamtur Yüzük",
+    extraValue: "RTT",
+  },
+  {
+    titleVal: "Zincirler",
+    valueVal: "Zincirler",
+    extraValue: "RULO",
+  },
+  {
+    titleVal: "Rozet",
+    valueVal: "Rozet",
+    extraValue: "RZ",
+  },
+
+  {
+    titleVal: "Takım Bileklik",
+    valueVal: "Takım Bileklik",
+    extraValue: "TKB",
+  },
+  {
+    titleVal: "Takım Küpe",
+    valueVal: "Takım Küpe",
+    extraValue: "TKY",
+  },
+  {
+    titleVal: "Takım Kolye",
+    valueVal: "Takım Kolye",
+    extraValue: "TKP",
+  },
+  {
+    titleVal: "Takım Yüzük",
+    valueVal: "Takım Yüzük",
+    extraValue: "TKR",
+  },
+  {
+    titleVal: "Tespih",
+    valueVal: "Tespih",
+    extraValue: "TS",
+  },
+  {
+    titleVal: "Beş Taş Yüzük",
+    valueVal: "Beş Taş Yüzük",
+    extraValue: "WR",
+  },
+
+  {
+    titleVal: "Zincir",
+    valueVal: "Zincir",
+    extraValue: "ZN",
+  },
+];
+
+export const AddRenkliTasSections: Array<FormSectionType> = [
+  {
+    colsLenght: "8",
+    sectionTitle: "Renkli Taş Bilgileri",
+    groupNumber: 0,
+    keyString: "properties",
+    elements: [
+      {
+        name: "menstrual_status",
+        type: "customButtonGroup",
+        checkBoxList: ["Sertifikalı", "Sertifikasız"],
+        required: true,
+        requiredMessage: "Karat Değeri Boş Bırakılamaz",
+        checkBoxSetValueItem: "menstrual_status",
+        span: 8,
+      },
+      {
+        name: "renkliTas",
+        type: "select",
+        title: "Renkli Taş",
+        placeholder: "Renkli Taş Seçiniz...",
+        required: true,
+        requiredMessage: "Renkli Taş Boş Bırakılamaz",
+        relativeTo: "menstrual_status",
+        span: 2,
+        options: [
+          {
+            titleVal: "Ruby",
+            valueVal: "Ruby",
+            extraValue: "RB",
+          },
+          {
+            titleVal: "Emerald",
+            valueVal: "Emerald",
+            extraValue: "EM",
+          },
+          {
+            titleVal: "Sapphire",
+            valueVal: "Sapphire",
+            extraValue: "SP",
+          },
+          {
+            titleVal: "Alexandrite",
+            valueVal: "Alexandrite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Amazonite",
+            valueVal: "Amazonite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Amber",
+            valueVal: "Amber",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Amethyst",
+            valueVal: "Amethyst",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Apatite",
+            valueVal: "Apatite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Aquamarine",
+            valueVal: "Aquamarine",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Benitoite",
+            valueVal: "Benitoite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Bloodstone",
+            valueVal: "Bloodstone",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Carnelian",
+            valueVal: "Carnelian",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Chrysoberyl",
+            valueVal: "Chrysoberyl",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Chrysoprase",
+            valueVal: "Chrysoprase",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Citrine",
+            valueVal: "Citrine",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Clinohumite",
+            valueVal: "Clinohumite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Diopside",
+            valueVal: "Diopside",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Fluorite",
+            valueVal: "Fluorite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Garnet",
+            valueVal: "Garnet",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Heliodor",
+            valueVal: "Heliodor",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Hematite",
+            valueVal: "Hematite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Howlite",
+            valueVal: "Howlite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Iolite",
+            valueVal: "Iolite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Jade",
+            valueVal: "Jade",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Jet",
+            valueVal: "Jet",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Kunzite",
+            valueVal: "Kunzite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Kyanite",
+            valueVal: "Kyanite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Labradorite",
+            valueVal: "Labradorite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Lapis Lazuli",
+            valueVal: "Lapis Lazuli",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Larimar",
+            valueVal: "Larimar",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Malachite",
+            valueVal: "Malachite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Moonstone",
+            valueVal: "Moonstone",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Morganite",
+            valueVal: "Morganite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Obsidian",
+            valueVal: "Obsidian",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Onyx",
+            valueVal: "Onyx",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Opal",
+            valueVal: "Opal",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Peridot",
+            valueVal: "Peridot",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Pietersite",
+            valueVal: "Pietersite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Prehnite",
+            valueVal: "Prehnite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Rhodochrosite",
+            valueVal: "Rhodochrosite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Rhodolite",
+            valueVal: "Rhodolite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Serpentine",
+            valueVal: "Serpentine",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Smoky Quartz",
+            valueVal: "Smoky Quartz",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Sodalite",
+            valueVal: "Sodalite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Spessartite",
+            valueVal: "Spessartite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Spinel",
+            valueVal: "Spinel",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Sugilite",
+            valueVal: "Sugilite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Sunstone",
+            valueVal: "Sunstone",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Tanzanite",
+            valueVal: "Tanzanite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Tigers Eye",
+            valueVal: "Tigers Eye",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Topaz",
+            valueVal: "Topaz",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Tourmaline",
+            valueVal: "Tourmaline",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Tremolite",
+            valueVal: "Tremolite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Turquoise",
+            valueVal: "Turquoise",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Uvarovite",
+            valueVal: "Uvarovite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Variscite",
+            valueVal: "Variscite",
+            extraValue: "YD",
+          },
+          {
+            titleVal: "Zoisite",
+            valueVal: "Zoisite",
+            extraValue: "YD",
+          },
+        ],
+      },
+      {
+        name: "carat",
+        type: "number",
+        title: "Karat",
+        placeholder: "Karat Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Karat Değeri Boş Bırakılamaz",
+        relativeTo: "menstrual_status",
+        span: 2,
+        // simgeturu: "caratType",
+      },
+      {
+        name: "renk",
+        type: "select",
+        title: "Renk",
+        placeholder: "Renk Seçiniz...",
+        required: true,
+        requiredMessage: "Renk Boş Bırakılamaz",
+        relativeTo: "menstrual_status",
+        span: 2,
+        options: [
+          {
+            titleVal: "Ruby",
+            valueVal: "Ruby",
+          },
+          {
+            titleVal: "Emerald",
+            valueVal: "Emerald",
+          },
+          {
+            titleVal: "Sapphire",
+            valueVal: "Sapphire",
+          },
+        ],
+      },
+      {
+        name: "kesim",
+        type: "select",
+        title: "Kesim",
+        placeholder: "Kesim Değerini Giriniz...",
+        required: true,
+        requiredMessage: "Kesim Değerini Boş Bırakılamaz",
+        relativeTo: "menstrual_status",
+        span: 2,
+        options: [
+          {
+            titleVal: "ROUND",
+            valueVal: "ROUND",
+          },
+          {
+            titleVal: "HEART",
+            valueVal: "HEART",
+          },
+          {
+            titleVal: "PEAR",
+            valueVal: "PEAR",
+          },
+          {
+            titleVal: "MARQUISE",
+            valueVal: "MARQUISE",
+          },
+          {
+            titleVal: "OVAL",
+            valueVal: "OVAL",
+          },
+          {
+            titleVal: "BAGET",
+            valueVal: "BAGET",
+          },
+          {
+            titleVal: "TRAPEZ",
+            valueVal: "TRAPEZ",
+          },
+          {
+            titleVal: "TRIANGLE",
+            valueVal: "TRIANGLE",
+          },
+          {
+            titleVal: "PRENSES",
+            valueVal: "PRENSES",
+          },
+          {
+            titleVal: "RADIANT",
+            valueVal: "RADIANT",
+          },
+          {
+            titleVal: "EMERALD",
+            valueVal: "EMERALD",
+          },
+          {
+            titleVal: "CUSHION",
+            valueVal: "CUSHION",
+          },
+          {
+            titleVal: "CABOCHON",
+            valueVal: "CABOCHON",
+          },
+        ],
+      },
+      {
+        name: "mensei",
+        type: "select",
+        title: "Menşei",
+        placeholder: "Menşei Seçiniz...",
+        required: false,
+        requiredMessage: "Menşei Boş Bırakılamaz",
+        relativeTo: "menstrual_status",
+        span: 2,
+        options: [
+          {
+            titleVal: "Menşei1",
+            valueVal: "Menşei1",
+          },
+          {
+            titleVal: "Menşei2",
+            valueVal: "Menşei2",
+          },
+        ],
+      },
+      {
+        name: "treatment",
+        type: "select",
+        title: "Treatment",
+        placeholder: "Treatment Seçiniz...",
+        required: false,
+        requiredMessage: "Treatment Boş Bırakılamaz",
+        relativeTo: "menstrual_status",
+        span: 2,
+        options: [
+          {
+            titleVal: "HEATED",
+            valueVal: "HEATED",
+          },
+          {
+            titleVal: "NOT HEATED",
+            valueVal: "NOT HEATED",
+          },
+        ],
       },
     ],
   },
