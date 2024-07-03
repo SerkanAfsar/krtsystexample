@@ -8,6 +8,12 @@ export type IRenkliTasType = {
   kesim?: string;
   mensei?: string;
   treatment?: string;
+  aciklama?: string;
+  fromsingleormixed?: string;
+  frommixedItem?: string;
+  total_cost?: number;
+  duzenle?: React.ReactNode;
+  sil?: React.ReactNode;
 };
 
 export type IDiamondType = {

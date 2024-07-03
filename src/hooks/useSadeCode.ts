@@ -1,4 +1,5 @@
 import { GetSadeCodeByTypeService } from "@/Services/Product.Services";
+import { GetNextOrderType, NextOrderType } from "@/types/inputTypes";
 import { ResponseResult } from "@/types/responseTypes";
 import { useState, useEffect } from "react";
 export default function useSadeCode({
@@ -7,18 +8,19 @@ export default function useSadeCode({
   sadeDataItemType,
   sadeDataItemCode,
 }: {
-  type: string | undefined;
+  type?: string | null;
   isAdd: boolean;
-  sadeDataItemType: string | undefined;
-  sadeDataItemCode: string | undefined;
+  sadeDataItemType?: string | null;
+  sadeDataItemCode?: string | null;
 }) {
   const [sadeCode, setSadeCode] = useState<string | null>(null);
   useEffect(() => {
     if (type) {
       if (isAdd || (sadeDataItemType && type != sadeDataItemType)) {
         GetSadeCodeByTypeService({ type: type == "Stok" ? "L" : "B" })
-          .then((resp: ResponseResult) => {
-            const siraNo = resp.payload["next_order"] as number;
+          .then((resp: ResponseResult<NextOrderType>) => {
+            const data = resp.data as NextOrderType;
+            const siraNo = data.next_order;
             const newCode =
               type == "Stok"
                 ? `L${siraNo.toString()}`

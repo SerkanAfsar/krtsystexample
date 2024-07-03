@@ -11,10 +11,14 @@ type HtmlDivProps = React.HtmlHTMLAttributes<HTMLDivElement> & {
   register: UseFormRegister<any>;
   name: string;
   value: string;
+  disabled: boolean;
 };
 
 const CustomButtonGroups = React.forwardRef<HTMLDivElement, HtmlDivProps>(
-  ({ checkBoxList, setValue, value, outerClass, name, ...rest }, ref) => {
+  (
+    { checkBoxList, setValue, value, outerClass, name, disabled, ...rest },
+    ref,
+  ) => {
     const [selected, setSelected] = React.useState<string>(value);
 
     React.useEffect(() => {
@@ -24,7 +28,13 @@ const CustomButtonGroups = React.forwardRef<HTMLDivElement, HtmlDivProps>(
     }, [selected, setValue, name]);
 
     return (
-      <div className={cn("flex w-full flex-col ", outerClass)}>
+      <div
+        className={cn(
+          "flex w-full flex-col",
+          outerClass,
+          disabled && "pointer-events-none",
+        )}
+      >
         <label className="mb-3 block h-5 text-sm font-medium text-black dark:text-white">
           {rest.title && rest.title}
         </label>

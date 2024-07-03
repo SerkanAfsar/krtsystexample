@@ -5,12 +5,13 @@ import {
 } from "@/Services/Product.Services";
 import { SelectOptionsType } from "@/components/CustomUI/CustomForm";
 import { ResponseResult } from "@/types/responseTypes";
+import { GetNextOrderType } from "@/types/types";
 import { generateDiamondCode } from "@/utils";
 import { useState, useEffect } from "react";
 
 export type PirlantaCodeItemType = {
   data_kesim?: string;
-  data_boy?: string;
+  data_boy?: string | number;
   data_menstrual_status?: string;
   data_fromsingleormixed?: string;
   data_frommixedItem?: string;
@@ -44,17 +45,14 @@ export default function usePirlantaCode({
     null,
   );
 
-  const returnSameResult = (
-    promiseFunc: Promise<ResponseResult>,
-    code: string,
-  ) => {
+  const returnSameResult = (promiseFunc: Promise<any>, code: string) => {
     return promiseFunc
-      .then((resp: ResponseResult) => {
-        if (resp.result) {
-          const siraNo = resp.payload["next_order"] as number;
-          setDiamondCode(`${code}-${siraNo}`);
+      .then((resp: ResponseResult<GetNextOrderType>) => {
+        if (resp.success) {
+          const data = resp.data as GetNextOrderType;
+          setDiamondCode(`${code}-${data.next_order}`);
         } else {
-          setDiamondCode("Hata");
+          setDiamondCode(resp.error ? resp.error[0] : "Hata");
         }
       })
       .catch((err) => {
@@ -79,7 +77,7 @@ export default function usePirlantaCode({
         timeFunc = setTimeout(() => {
           const code = generateDiamondCode({
             kesimKodu: data_kesim,
-            boyKodu: data_boy,
+            boyKodu: data_boy as string,
           });
 
           if (data_menstrual_status == "Sertifikasız") {
@@ -93,6 +91,7 @@ export default function usePirlantaCode({
                 GetNextOrderFromSingleDiamondService({
                   from_mixed: false,
                   code,
+                  type: "Diamond",
                 }),
                 code,
               );
@@ -102,6 +101,7 @@ export default function usePirlantaCode({
                   GetNextOrderFromSingleDiamondService({
                     from_mixed: true,
                     code: `${code}-${data_frommixedItem}`,
+                    type: "Diamond",
                   }),
                   `${code}-${data_frommixedItem}`,
                 );
@@ -135,15 +135,15 @@ export default function usePirlantaCode({
   ]);
 
   useEffect(() => {
-    if (data_frommixedItem == "From Mixed") {
+    if (data_fromsingleormixed == "From Mixed") {
       const code = generateDiamondCode({
         kesimKodu: data_kesim,
-        boyKodu: data_boy,
+        boyKodu: data_boy as string,
       });
-      GetListMixedProductsCodeDiamondService({ code })
-        .then((resp: ResponseResult) => {
-          if (resp.result) {
-            const respData = resp.payload as string[];
+      GetListMixedProductsCodeDiamondService({ code, type: "Diamond" })
+        .then((resp: ResponseResult<string[]>) => {
+          if (resp.success) {
+            const respData = resp.data as string[];
             const sekoData: SelectOptionsType[] = respData.map((item) => ({
               titleVal: item,
               valueVal: item,
@@ -157,7 +157,7 @@ export default function usePirlantaCode({
     } else {
       setExtraOptions(null);
     }
-  }, [data_fromsingleormixed, data_kesim, data_boy, data_frommixedItem]);
+  }, [data_fromsingleormixed, data_kesim, data_boy]);
 
   return {
     diamondCode,

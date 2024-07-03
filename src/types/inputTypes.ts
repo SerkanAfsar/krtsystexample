@@ -36,6 +36,7 @@ export type ElementType = {
   pictureExtraText?: string;
   isExtra?: boolean;
   extraValidations?: object;
+  isCodeRelated?: boolean;
 };
 
 export type CustomOptionType = {
@@ -52,4 +53,8 @@ export type LoginType = {
 export type GetNextOrderType = {
   type: string;
   code: string;
+};
+
+export type NextOrderType = {
+  next_order: number;
 };

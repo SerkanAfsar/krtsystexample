@@ -4,14 +4,10 @@ import CustomForm, {
 } from "@/components/CustomUI/CustomForm";
 import { AddStoneSections } from "@/utils/MockData";
 import { AddDiamondType } from "@/types/formTypes";
-import { useCallback, useEffect, useState } from "react";
-import { generateDiamondCode } from "@/utils";
-import { AddProductType, ResponseResult } from "@/types/responseTypes";
+import { useCallback, useState } from "react";
+
 import {
   AddProductService,
-  GetListMixedProductsCodeDiamondService,
-  GetNextOrderForMixedDiamondService,
-  GetNextOrderFromSingleDiamondService,
   UpdateProductService,
 } from "@/Services/Product.Services";
 import usePirlantaCode, { PirlantaCodeItemType } from "@/hooks/usePirlantaCode";
@@ -20,7 +16,7 @@ const PirlantaDetayContainer = ({
   pirlantaItemData,
   isAdd,
 }: {
-  pirlantaItemData: (AddDiamondType & { code: string }) | null;
+  pirlantaItemData: (AddDiamondType & { code?: string }) | null;
   isAdd: boolean;
 }) => {
   const diamondItem: AddDiamondType = pirlantaItemData ?? {};
@@ -44,15 +40,12 @@ const PirlantaDetayContainer = ({
     data_kesim: data.kesim,
     data_menstrual_status: data.menstrual_status,
     isAdd: isAdd,
-    pirlandaData_Code: pirlantaItemData?.code,
-    pirlantaData_Boy: pirlantaItemData?.boy,
-    pirlantaData_frommixedItem: pirlantaItemData?.fromsingleormixed,
-    pirlantaData_fromsingleormixed: pirlantaItemData?.fromsingleormixed,
-    pirlantaData_Kesim: pirlantaItemData?.kesim,
   };
   const { diamondCode, extraOptions } = usePirlantaCode({ item });
 
-  const newData: AddProductType = AddStoneSections.reduce(
+  const pruductCode = isAdd ? diamondCode : pirlantaItemData?.code;
+
+  const newData: AddDiamondType = AddStoneSections.reduce(
     (acc, next) => {
       const totalElems = [...next.elements, ...(next.extraElements ?? [])];
       const elems = totalElems.reduce((acc2, next2) => {
@@ -73,7 +66,7 @@ const PirlantaDetayContainer = ({
       total_cost: data.total_cost,
       type: "Diamond",
       buy_date: data.buy_date,
-      code: diamondCode,
+      code: pruductCode,
     },
   );
 
@@ -88,7 +81,7 @@ const PirlantaDetayContainer = ({
       stepCount={2}
       serviceFunction={isAdd ? AddProductService : UpdateProductService}
       filteredData={newData}
-      productCode={diamondCode}
+      productCode={pruductCode}
       extraOptions={extraOptions}
       resultCallBack={resultCallBack}
       redirectUrl="/Admin/StokYonetimi/Pirlanta/PirlantaListesi"

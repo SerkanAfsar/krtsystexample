@@ -78,12 +78,12 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
 
       if (activeStep == stepCount - 1 && serviceFunction && filteredData) {
         setIsLoading(true);
-        const result: ResponseResult = await serviceFunction({
+        const result: ResponseResult<any> = await serviceFunction({
           id: id ?? null,
           data: filteredData,
         });
 
-        if (result.result) {
+        if (result.success) {
           toast.success("Ekleme Başarılı", { position: "top-right" });
           setIsLoading(false);
           if (redirectUrl) {
@@ -91,16 +91,15 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
           }
         } else {
           setIsLoading(false);
-          Object.entries(result.payload).map(([key, value], index) => {
-            setTimeout(() => {
-              const res = value as string[];
-              toast.error(
-                `${key.toUpperCase()} ${res[0].toLocaleUpperCase()}`,
-                { position: "top-right" },
-              );
-            }, 200 * index);
-          });
-          return;
+          if (Array.isArray(result.error)) {
+            result.error?.map((err, index) => {
+              setTimeout(() => {
+                toast.error(err, { position: "top-right" });
+              }, 100 * index);
+            });
+            return;
+          }
+          return toast.error(result.error, { position: "top-right" });
         }
       }
     };

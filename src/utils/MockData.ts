@@ -1,5 +1,6 @@
 import { FormSectionType } from "@/types/formTypes";
 import { CustomOptionType } from "@/types/inputTypes";
+import { RenkliTasListesiData } from ".";
 
 export const AddSadeSections: Array<FormSectionType> = [
   {
@@ -16,6 +17,7 @@ export const AddSadeSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
         checkBoxSetValueItem: "type",
+        isCodeRelated: true,
         span: 12,
       },
       {
@@ -527,6 +529,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         checkBoxSetValueItem: "fromsingleormixed",
         span: 4,
         value: "From Single",
+        isCodeRelated: true,
       },
       {
         name: "frommixedItem",
@@ -537,6 +540,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         relativeTo: "fromsingleormixed",
         visibleRelative: "From Mixed",
         isExtra: true,
+        isCodeRelated: true,
         span: 4,
       },
     ],
@@ -550,6 +554,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
         checkBoxSetValueItem: "menstrual_status",
         span: 8,
+        isCodeRelated: true,
       },
       {
         name: "kesim",
@@ -559,6 +564,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Kesim Değerini Boş Bırakılamaz",
         relativeTo: "menstrual_status",
+        isCodeRelated: true,
         options: [
           {
             titleVal: "ROUND",
@@ -1088,6 +1094,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         type: "select",
         title: "Boy",
         span: 2,
+        isCodeRelated: true,
         placeholder: "Boy Değerini Giriniz...",
         required: true,
         requiredMessage: "Boy Değeri Boş Bırakılamaz",
@@ -1683,9 +1690,38 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
     sectionTitle: "Renkli Taş Bilgileri",
     groupNumber: 0,
     keyString: "properties",
+    extraElementRelativeTo: "menstrual_status",
+    extraElementVisibleRelative: "Sertifikalı",
+    extraElements: [
+      {
+        name: "fromsingleormixed",
+        type: "customButtonGroup",
+        isCodeRelated: true,
+        title: "Tip",
+        checkBoxList: ["From Single", "From Mixed"],
+        required: true,
+        requiredMessage: "Karat Değeri Boş Bırakılamaz",
+        checkBoxSetValueItem: "fromsingleormixed",
+        span: 4,
+        value: "From Single",
+      },
+      {
+        name: "frommixedItem",
+        type: "select",
+        title: "Mixed Grubu",
+        isCodeRelated: true,
+        required: true,
+        requiredMessage: "Kesim Değerini Boş Bırakılamaz",
+        relativeTo: "fromsingleormixed",
+        visibleRelative: "From Mixed",
+        isExtra: true,
+        span: 4,
+      },
+    ],
     elements: [
       {
         name: "menstrual_status",
+        isCodeRelated: true,
         type: "customButtonGroup",
         checkBoxList: ["Sertifikalı", "Sertifikasız"],
         required: true,
@@ -1696,299 +1732,14 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
       {
         name: "renkliTas",
         type: "select",
+        isCodeRelated: true,
         title: "Renkli Taş",
         placeholder: "Renkli Taş Seçiniz...",
         required: true,
         requiredMessage: "Renkli Taş Boş Bırakılamaz",
         relativeTo: "menstrual_status",
         span: 2,
-        options: [
-          {
-            titleVal: "Ruby",
-            valueVal: "Ruby",
-            extraValue: "RB",
-          },
-          {
-            titleVal: "Emerald",
-            valueVal: "Emerald",
-            extraValue: "EM",
-          },
-          {
-            titleVal: "Sapphire",
-            valueVal: "Sapphire",
-            extraValue: "SP",
-          },
-          {
-            titleVal: "Alexandrite",
-            valueVal: "Alexandrite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Amazonite",
-            valueVal: "Amazonite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Amber",
-            valueVal: "Amber",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Amethyst",
-            valueVal: "Amethyst",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Apatite",
-            valueVal: "Apatite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Aquamarine",
-            valueVal: "Aquamarine",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Benitoite",
-            valueVal: "Benitoite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Bloodstone",
-            valueVal: "Bloodstone",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Carnelian",
-            valueVal: "Carnelian",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Chrysoberyl",
-            valueVal: "Chrysoberyl",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Chrysoprase",
-            valueVal: "Chrysoprase",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Citrine",
-            valueVal: "Citrine",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Clinohumite",
-            valueVal: "Clinohumite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Diopside",
-            valueVal: "Diopside",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Fluorite",
-            valueVal: "Fluorite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Garnet",
-            valueVal: "Garnet",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Heliodor",
-            valueVal: "Heliodor",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Hematite",
-            valueVal: "Hematite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Howlite",
-            valueVal: "Howlite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Iolite",
-            valueVal: "Iolite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Jade",
-            valueVal: "Jade",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Jet",
-            valueVal: "Jet",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Kunzite",
-            valueVal: "Kunzite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Kyanite",
-            valueVal: "Kyanite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Labradorite",
-            valueVal: "Labradorite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Lapis Lazuli",
-            valueVal: "Lapis Lazuli",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Larimar",
-            valueVal: "Larimar",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Malachite",
-            valueVal: "Malachite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Moonstone",
-            valueVal: "Moonstone",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Morganite",
-            valueVal: "Morganite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Obsidian",
-            valueVal: "Obsidian",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Onyx",
-            valueVal: "Onyx",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Opal",
-            valueVal: "Opal",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Peridot",
-            valueVal: "Peridot",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Pietersite",
-            valueVal: "Pietersite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Prehnite",
-            valueVal: "Prehnite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Rhodochrosite",
-            valueVal: "Rhodochrosite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Rhodolite",
-            valueVal: "Rhodolite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Serpentine",
-            valueVal: "Serpentine",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Smoky Quartz",
-            valueVal: "Smoky Quartz",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Sodalite",
-            valueVal: "Sodalite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Spessartite",
-            valueVal: "Spessartite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Spinel",
-            valueVal: "Spinel",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Sugilite",
-            valueVal: "Sugilite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Sunstone",
-            valueVal: "Sunstone",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Tanzanite",
-            valueVal: "Tanzanite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Tigers Eye",
-            valueVal: "Tigers Eye",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Topaz",
-            valueVal: "Topaz",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Tourmaline",
-            valueVal: "Tourmaline",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Tremolite",
-            valueVal: "Tremolite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Turquoise",
-            valueVal: "Turquoise",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Uvarovite",
-            valueVal: "Uvarovite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Variscite",
-            valueVal: "Variscite",
-            extraValue: "YD",
-          },
-          {
-            titleVal: "Zoisite",
-            valueVal: "Zoisite",
-            extraValue: "YD",
-          },
-        ],
+        options: RenkliTasListesiData,
       },
       {
         name: "carat",

@@ -78,7 +78,7 @@ export default function FormElementItem({
             item.rowSpan && `row-span-${item.rowSpan}`,
           )}
           item={item}
-          disabled={isDisabled}
+          disabled={(!isAdd && item.isCodeRelated) || isDisabled}
         />
       );
     }
@@ -96,6 +96,7 @@ export default function FormElementItem({
           register={register}
           name={item.name}
           value={val}
+          disabled={(!isAdd && item.isCodeRelated) || isDisabled}
         />
       );
     }
@@ -114,7 +115,7 @@ export default function FormElementItem({
           setValue={setValue}
           err={err}
           outerClass={cn(item.span && `col-span-${item.span.toString()}`)}
-          disabled={isDisabled}
+          disabled={(!isAdd && item.isCodeRelated) || isDisabled}
         />
       );
     }
@@ -130,7 +131,7 @@ export default function FormElementItem({
           extraOptions={extraOptions}
           err={err}
           outerClass={cn(item.span && `col-span-${colSpan}`)}
-          disabled={isDisabled}
+          disabled={(!isAdd && item.isCodeRelated) || isDisabled}
         />
       );
     }
@@ -150,7 +151,7 @@ export default function FormElementItem({
             item.span && `col-span-${colSpan}`,
             item.rowSpan && `row-span-${item.rowSpan}`,
           )}
-          disabled={isDisabled}
+          disabled={(!isAdd && item.isCodeRelated) || isDisabled}
           setError={setError}
         />
       );

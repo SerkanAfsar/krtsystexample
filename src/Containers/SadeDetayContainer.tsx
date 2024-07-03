@@ -6,8 +6,8 @@ import {
 
 import CustomForm from "@/components/CustomUI/CustomForm";
 import useSadeCode from "@/hooks/useSadeCode";
-
 import { ISadeType } from "@/types/formTypes";
+import { ProductType } from "@/types/types";
 import { AddSadeSections } from "@/utils/MockData";
 import { useCallback, useEffect, useState } from "react";
 
@@ -15,7 +15,7 @@ export default function SadeDetayContainer({
   sadeItemData,
   isAdd,
 }: {
-  sadeItemData: (ISadeType & { code?: string }) | null;
+  sadeItemData: (ISadeType & { code?: string | null }) | null;
   isAdd: boolean;
 }) {
   const sadeItem: ISadeType = sadeItemData ?? {};
@@ -48,7 +48,7 @@ export default function SadeDetayContainer({
     }
   };
 
-  const newData: ISadeType = AddSadeSections.filter(
+  const newData: ProductType = AddSadeSections.filter(
     (a) => a.groupNumber == 0,
   ).reduce(
     (acc, next) => {

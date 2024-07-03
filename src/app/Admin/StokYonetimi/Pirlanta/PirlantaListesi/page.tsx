@@ -6,7 +6,9 @@ import {
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import { ProductResponseType } from "@/types/responseTypes";
+import { ResponseResult } from "@/types/responseTypes";
+import { ProductListType, ProductType } from "@/types/types";
+
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Column } from "react-table";
@@ -148,11 +150,11 @@ export default function PirlantaListesi() {
       <div
         onClick={async () => {
           const result = await DeleteProductService({ id });
-          if (result.result) {
+          if (result.success) {
             toast.success("Ürün Silindi", { position: "top-right" });
             updateData();
           } else {
-            toast.error(result.message || "Hata", { position: "top-right" });
+            toast.error(result.error || "Hata", { position: "top-right" });
             return;
           }
         }}
@@ -169,12 +171,13 @@ export default function PirlantaListesi() {
       order_by: null,
       page: activePage,
       type: "Diamond",
-    }).then((resp: ProductResponseType) => {
-      if (resp.result) {
-        const dataOneResult: Diamond[] = resp.payload.results.map((item) => {
+    }).then((resp: ResponseResult<ProductListType>) => {
+      const data = resp.data as ProductListType;
+      if (resp.success) {
+        const dataOneResult: any = data.results.map((item) => {
           return {
             berraklik: item?.properties?.berraklik,
-            carat: item?.properties.carat,
+            carat: item?.properties?.carat,
             code: item?.code,
             fluorescence: item?.product_certificate?.fluorescence,
             kesim: item?.properties?.kesim,
@@ -195,12 +198,11 @@ export default function PirlantaListesi() {
         setActiveData(dataOneResult);
         setTotalPageCount(
           Math.ceil(
-            resp.payload.count /
-              Number(process.env.NEXT_PUBLIC_DATATABLE_ITEM_COUNT),
+            data.count / Number(process.env.NEXT_PUBLIC_DATATABLE_ITEM_COUNT),
           ),
         );
       } else {
-        setActiveData(resp.message || "Hata");
+        setActiveData((resp.error && resp.error[0]) || "Hata");
       }
     });
   }, []);

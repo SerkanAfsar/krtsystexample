@@ -7,7 +7,8 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { ISadeType } from "@/types/formTypes";
-import { ProductResponseType } from "@/types/responseTypes";
+import { ResponseResult } from "@/types/responseTypes";
+import { ProductListType, ProductType } from "@/types/types";
 import { SadeModelTurleri } from "@/utils/MockData";
 import Image from "next/image";
 import Link from "next/link";
@@ -71,24 +72,25 @@ export default function SadeStokListesi() {
       order_by: null,
       page: activePage,
       type: "Simple",
-    }).then((resp: ProductResponseType) => {
-      if (resp.result) {
-        const dataOneResult: any = resp.payload.results.map((item) => {
+    }).then((resp: ResponseResult<ProductListType>) => {
+      if (resp.success) {
+        const data = resp.data as ProductListType;
+        const dataOneResult: any = data.results.map((item) => {
           return {
             resim: (
               <Image
-                src={item.image}
+                src={item.image as string}
                 key={item.pk}
-                alt={item.pk}
+                alt={`${item.pk as number}`}
                 width={150}
                 height={80}
               />
             ),
-            modelKodu: `${SadeModelTurleri.find((a) => a.titleVal == item.properties.modelTuru)?.extraValue}${item?.properties?.modelKodu}`,
+            modelKodu: `${SadeModelTurleri.find((a) => a.titleVal == item?.properties?.modelTuru)?.extraValue}${item?.properties?.modelKodu}`,
             modelTuru: item?.properties?.modelTuru,
             sadeKodu: item?.code,
             ayar: item?.properties?.ayar
-              ? `${item?.properties?.ayar}${item.properties.ayar.length == 2 ? `K` : ""}`
+              ? `${item?.properties?.ayar}${item.properties?.ayar?.toString().length == 2 ? `K` : ""}`
               : undefined,
             gram: item?.properties?.gram
               ? `${item?.properties?.gram} gr`
@@ -104,12 +106,11 @@ export default function SadeStokListesi() {
         setActiveData(dataOneResult);
         setTotalPageCount(
           Math.ceil(
-            resp.payload.count /
-              Number(process.env.NEXT_PUBLIC_DATATABLE_ITEM_COUNT),
+            data.count / Number(process.env.NEXT_PUBLIC_DATATABLE_ITEM_COUNT),
           ),
         );
       } else {
-        setActiveData(resp.message || "Hata");
+        setActiveData((resp.error && resp.error[0]) || "Hata");
       }
     });
   }, [activePage]);
@@ -132,11 +133,13 @@ export default function SadeStokListesi() {
         <div
           onClick={async () => {
             const result = await DeleteProductService({ id });
-            if (result.result) {
+            if (result.success) {
               toast.success("Ürün Silindi", { position: "top-right" });
               updateData();
             } else {
-              toast.error(result.message || "Hata", { position: "top-right" });
+              toast.error((result.error && result.error[0]) || "Hata", {
+                position: "top-right",
+              });
               return;
             }
           }}
@@ -163,13 +166,7 @@ export default function SadeStokListesi() {
       </DefaultLayout>
     );
   }
-  if (activeData == "Hata") {
-    return (
-      <div className="flex h-full w-full items-center justify-center">
-        Hata.
-      </div>
-    );
-  }
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Sade Stok Listesi" />
