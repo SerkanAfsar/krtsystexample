@@ -1,4 +1,4 @@
-import { ElementType } from "@/types/inputTypes";
+import { ElementType } from "../../../types/inputTypes";
 import CustomInput from "./CustomInput";
 import CustomButtonGroups from "./CustomButtonGroups";
 import CustomDatePicker from "./CustomDatePicker";
@@ -21,6 +21,7 @@ export default function FormElementItem({
   setError,
   extraOptions,
   isAdd,
+  ...rest
 }: {
   item: ElementType;
   register: any;
@@ -28,6 +29,7 @@ export default function FormElementItem({
   errors: any;
   setValue: any;
   setError: any;
+
   extraOptions?: SelectOptionsType[] | null;
   isAdd: boolean;
 }) {
@@ -56,6 +58,11 @@ export default function FormElementItem({
       ? "1"
       : item.span;
 
+  const showIconRelativeTo =
+    item.relativeTo &&
+    item.showIconRelativeTo &&
+    item.showIconRelativeTo == data[item.relativeTo];
+
   const err = errors[item.name]?.message?.toString() ?? null;
 
   switch (item.type) {
@@ -77,6 +84,7 @@ export default function FormElementItem({
             item.colEnd && `col-end-${item.colEnd}`,
             item.rowSpan && `row-span-${item.rowSpan}`,
           )}
+          showIcon={showIconRelativeTo}
           item={item}
           disabled={(!isAdd && item.isCodeRelated) || isDisabled}
         />
@@ -132,6 +140,8 @@ export default function FormElementItem({
           err={err}
           outerClass={cn(item.span && `col-span-${colSpan}`)}
           disabled={(!isAdd && item.isCodeRelated) || isDisabled}
+          staticOptions={item.staticOptions}
+          showIcon={showIconRelativeTo}
         />
       );
     }

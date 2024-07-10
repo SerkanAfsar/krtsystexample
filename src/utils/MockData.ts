@@ -1,6 +1,12 @@
-import { FormSectionType } from "@/types/formTypes";
-import { CustomOptionType } from "@/types/inputTypes";
-import { RenkliTasListesiData } from ".";
+import { FormSectionType } from "../../types/formTypes";
+import { CustomOptionType } from "../../types/inputTypes";
+import {
+  AtolyeListesi,
+  PirlantaBoyKodlari,
+  RenkliTasListesiData,
+  RenkliTasRenkListesi,
+} from ".";
+import { MenseiList } from "./Mensei";
 
 export const AddSadeSections: Array<FormSectionType> = [
   {
@@ -237,143 +243,7 @@ export const AddSadeSections: Array<FormSectionType> = [
         requiredMessage: "Atölye Değeri Boş Bırakılamaz",
         relativeTo: "type",
         span: 3,
-        options: [
-          {
-            titleVal: "APEL IS",
-            valueVal: "APEL IS",
-            extraValue: "65",
-          },
-          {
-            titleVal: "ARMAN GULLUK",
-            valueVal: "ARMAN GULLUK",
-            extraValue: "9",
-          },
-          {
-            titleVal: "ASLIN MOUNTİNG",
-            valueVal: "ASLIN MOUNTİNG",
-            extraValue: "128",
-          },
-          {
-            titleVal: "BULENT ATOLYE",
-            valueVal: "BULENT ATOLYE",
-            extraValue: "23",
-          },
-          {
-            titleVal: "BURAK CIL SADEKAR",
-            valueVal: "BURAK CIL SADEKAR",
-            extraValue: "58",
-          },
-          {
-            titleVal: "BURAK SEPIKLI",
-            valueVal: "BURAK SEPIKLI",
-            extraValue: "51",
-          },
-          {
-            titleVal: "DOGAN ATOLYE",
-            valueVal: "DOGAN ATOLYE",
-            extraValue: "24",
-          },
-          {
-            titleVal: "GARO ELMAS SADEKAR",
-            valueVal: "GARO ELMAS SADEKAR",
-            extraValue: "119",
-          },
-          {
-            titleVal: "INCICI KAHRAMAN",
-            valueVal: "INCICI KAHRAMAN",
-            extraValue: "75",
-          },
-          {
-            titleVal: "JULIANO",
-            valueVal: "JULIANO",
-            extraValue: "29",
-          },
-          {
-            titleVal: "MAHMUT USTA ATOLYECI",
-            valueVal: "MAHMUT USTA ATOLYECI",
-            extraValue: "127",
-          },
-          {
-            titleVal: "MEHMET PEYKERİMEH",
-            valueVal: "MEHMET PEYKERİMEH",
-            extraValue: "55",
-          },
-          {
-            titleVal: "MURAT ALEN",
-            valueVal: "MURAT ALEN",
-            extraValue: "80",
-          },
-          {
-            titleVal: "NURHAN",
-            valueVal: "NURHAN",
-            extraValue: "18",
-          },
-          {
-            titleVal: "RIMAS KENAN",
-            valueVal: "RIMAS KENAN",
-            extraValue: "28",
-          },
-          {
-            titleVal: "SADE IS",
-            valueVal: "SADE IS",
-            extraValue: "64",
-          },
-          {
-            titleVal: "SADEKAR TAYFUN",
-            valueVal: "SADEKAR TAYFUN",
-            extraValue: "22",
-          },
-          {
-            titleVal: "SAFE",
-            valueVal: "SAFE",
-            extraValue: "72",
-          },
-          {
-            titleVal: "SAHIN ATOLYE",
-            valueVal: "SAHIN ATOLYE",
-            extraValue: "46",
-          },
-          {
-            titleVal: "SAHIN PERSONEL",
-            valueVal: "SAHIN PERSONEL",
-            extraValue: "129",
-          },
-          {
-            titleVal: "SANOR",
-            valueVal: "SANOR",
-            extraValue: "44",
-          },
-          {
-            titleVal: "SAVAS ULUK",
-            valueVal: "SAVAS ULUK",
-            extraValue: "95",
-          },
-          {
-            titleVal: "SUAT RAMADAN",
-            valueVal: "SUAT RAMADAN",
-            extraValue: "102",
-          },
-          {
-            titleVal: "SUEL",
-            valueVal: "SUEL",
-            extraValue: "68",
-          },
-          {
-            titleVal: "YALCIN SAMANOGLU",
-            valueVal: "YALCIN SAMANOGLU",
-            extraValue: "6",
-          },
-          {
-            titleVal: "YANY KILITCI",
-            valueVal: "YANY KILITCI",
-            extraValue: "117",
-          },
-          {
-            titleVal: "YETKIN HERMAN",
-            valueVal: "YETKIN HERMAN",
-            extraValue: "131",
-          },
-        ],
+        options: AtolyeListesi,
       },
       {
         name: "iscilik",
@@ -548,7 +418,6 @@ export const AddStoneSections: Array<FormSectionType> = [
       {
         name: "menstrual_status",
         type: "customButtonGroup",
-
         checkBoxList: ["Sertifikalı", "Sertifikasız"],
         required: true,
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
@@ -639,6 +508,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         relativeTo: "menstrual_status",
         span: 2,
         simgeturu: "caratType",
+        showIconRelativeTo: "Sertifikalı",
       },
       {
         name: "renk",
@@ -973,6 +843,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Elek Değeri Boş Bırakılamaz",
         relativeTo: "menstrual_status",
+        visibleRelative: "Sertifikasız",
         span: 2,
         options: [
           {
@@ -1099,92 +970,8 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Boy Değeri Boş Bırakılamaz",
         relativeTo: "menstrual_status",
-        options: [
-          {
-            titleVal: "00",
-            valueVal: "00",
-          },
-          {
-            titleVal: "0.01-0.03",
-            valueVal: "0.01-0.03",
-          },
-          {
-            titleVal: "0.03-0.07",
-            valueVal: "0.03-0.07",
-          },
-          {
-            titleVal: "0.08-0.13",
-            valueVal: "0.08-0.13",
-          },
-          {
-            titleVal: "0.13-0.17",
-            valueVal: "0.13-0.17",
-          },
-          {
-            titleVal: "0.18-0.23",
-            valueVal: "0.18-0.23",
-          },
-          {
-            titleVal: "0.23-0.29",
-            valueVal: "0.23-0.29",
-          },
-          {
-            titleVal: "0.30-0.39",
-            valueVal: "0.30-0.39",
-          },
-          {
-            titleVal: "0.40-0.49",
-            valueVal: "0.40-0.49",
-          },
-          {
-            titleVal: "0.50-0.59",
-            valueVal: "0.50-0.59",
-          },
-          {
-            titleVal: "0.60-0.69",
-            valueVal: "0.60-0.69",
-          },
-          {
-            titleVal: "0.70-0.79",
-            valueVal: "0.70-0.79",
-          },
-          {
-            titleVal: "0.80-0.89",
-            valueVal: "0.80-0.89",
-          },
-          {
-            titleVal: "0.90-0.99",
-            valueVal: "0.90-0.99",
-          },
-          {
-            titleVal: "1.00-1.49",
-            valueVal: "1.00-1.49",
-          },
-          {
-            titleVal: "1.50-1.99",
-            valueVal: "1.00-1.49",
-          },
-          {
-            titleVal: "2.00-2.99",
-            valueVal: "2.00-2.99",
-          },
-          {
-            titleVal: "3.00-3.99",
-            valueVal: "3.00-3.99",
-          },
-          {
-            titleVal: "4.00-4.99",
-            valueVal: "4.00-4.99",
-          },
-          {
-            titleVal: "5.00-5.99",
-            valueVal: "5.00-5.99",
-          },
-          {
-            titleVal: "6+",
-            valueVal: "6+",
-          },
-        ],
+        showIconRelativeTo: "Sertifikasız",
+        options: PirlantaBoyKodlari,
       },
 
       {
@@ -1761,20 +1548,7 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
         requiredMessage: "Renk Boş Bırakılamaz",
         relativeTo: "menstrual_status",
         span: 2,
-        options: [
-          {
-            titleVal: "Ruby",
-            valueVal: "Ruby",
-          },
-          {
-            titleVal: "Emerald",
-            valueVal: "Emerald",
-          },
-          {
-            titleVal: "Sapphire",
-            valueVal: "Sapphire",
-          },
-        ],
+        options: RenkliTasRenkListesi,
       },
       {
         name: "kesim",
@@ -1849,16 +1623,17 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
         requiredMessage: "Menşei Boş Bırakılamaz",
         relativeTo: "menstrual_status",
         span: 2,
-        options: [
-          {
-            titleVal: "Menşei1",
-            valueVal: "Menşei1",
-          },
-          {
-            titleVal: "Menşei2",
-            valueVal: "Menşei2",
-          },
-        ],
+        staticOptions: MenseiList,
+        // options: [
+        //   {
+        //     titleVal: "Menşei1",
+        //     valueVal: "Menşei1",
+        //   },
+        //   {
+        //     titleVal: "Menşei2",
+        //     valueVal: "Menşei2",
+        //   },
+        // ],
       },
       {
         name: "treatment",

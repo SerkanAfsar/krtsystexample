@@ -3,7 +3,7 @@ import CustomForm, {
   SelectOptionsType,
 } from "@/components/CustomUI/CustomForm";
 import { AddStoneSections } from "@/utils/MockData";
-import { AddDiamondType } from "@/types/formTypes";
+import { AddDiamondType } from "../../types/formTypes";
 import { useCallback, useState } from "react";
 
 import {
@@ -11,6 +11,7 @@ import {
   UpdateProductService,
 } from "@/Services/Product.Services";
 import usePirlantaCode, { PirlantaCodeItemType } from "@/hooks/usePirlantaCode";
+import { caratType } from "@/utils";
 
 const PirlantaDetayContainer = ({
   pirlantaItemData,
@@ -40,6 +41,7 @@ const PirlantaDetayContainer = ({
     data_kesim: data.kesim,
     data_menstrual_status: data.menstrual_status,
     isAdd: isAdd,
+    data_carat: data.carat,
   };
   const { diamondCode, extraOptions } = usePirlantaCode({ item });
 

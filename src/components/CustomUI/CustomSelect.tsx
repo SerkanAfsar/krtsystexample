@@ -1,6 +1,6 @@
 "use client";
 
-import { ElementType } from "@/types/inputTypes";
+import { ElementType } from "../../../types/inputTypes";
 import { cn, selectKesimValue } from "@/utils";
 import { ClassValue } from "clsx";
 import React, { useId, useState } from "react";
@@ -10,6 +10,8 @@ type SelectElementProps = React.InputHTMLAttributes<HTMLSelectElement> & {
   err?: string | null;
   outerClass?: ClassValue | null;
   extraOptions?: SelectOptionsType[];
+  staticOptions?: any;
+  showIcon?: boolean;
 } & { item: ElementType };
 
 const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
@@ -23,6 +25,8 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
       name,
       extraOptions,
       outerClass,
+      staticOptions,
+      showIcon = true,
       ...rest
     },
     ref,
@@ -72,15 +76,17 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
               >
                 {item.title} Seçiniz
               </option>
-              {options?.map((item2, index) => (
-                <option
-                  key={index}
-                  value={item2.valueVal}
-                  className="text-body dark:text-bodydark"
-                >
-                  {item2.titleVal}
-                </option>
-              ))}
+              {staticOptions
+                ? staticOptions()
+                : options?.map((item2, index) => (
+                    <option
+                      key={index}
+                      value={item2.valueVal}
+                      className="text-body dark:text-bodydark"
+                    >
+                      {item2.titleVal}
+                    </option>
+                  ))}
             </select>
 
             <span className="absolute right-4 top-1/2 z-10 -translate-y-1/2">
@@ -103,11 +109,14 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
             </span>
           </div>
 
-          {options && options[0]?.extraValue && selectedExtraValue && (
-            <div className="flex h-full  items-center justify-center rounded-sm bg-primary px-2 py-3 text-white">
-              {selectedExtraValue}
-            </div>
-          )}
+          {options &&
+            options[0]?.extraValue &&
+            selectedExtraValue &&
+            showIcon && (
+              <div className="flex h-full  items-center justify-center rounded-sm bg-primary px-2 py-3 text-white">
+                {selectedExtraValue}
+              </div>
+            )}
         </div>
 
         {err && (

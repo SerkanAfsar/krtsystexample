@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { ClassValue } from "clsx";
 import React from "react";
 import { cn } from "@/utils";
-import { ElementType } from "@/types/inputTypes";
+import { ElementType } from "../../../types/inputTypes";
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   outerClass?: ClassValue | null;

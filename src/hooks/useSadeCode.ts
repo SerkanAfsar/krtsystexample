@@ -1,6 +1,6 @@
 import { GetSadeCodeByTypeService } from "@/Services/Product.Services";
-import { GetNextOrderType, NextOrderType } from "@/types/inputTypes";
-import { ResponseResult } from "@/types/responseTypes";
+import { GetNextOrderType, NextOrderType } from "../../types/inputTypes";
+import { ResponseResult } from "../../types/responseTypes";
 import { useState, useEffect } from "react";
 export default function useSadeCode({
   type,

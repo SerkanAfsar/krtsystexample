@@ -1,4 +1,4 @@
-import { FormSectionType } from "@/types/formTypes";
+import { FormSectionType } from "../../../types/formTypes";
 import FormElementItem from "./FormElementItem";
 import { ClassValue } from "clsx";
 import { cn } from "@/utils";
@@ -13,7 +13,9 @@ export default function SectionFormItem({
   errors,
   productCode,
   extraOptions,
+
   isAdd,
+  ...rest
 }: {
   section: FormSectionType;
   data: any;
@@ -44,18 +46,20 @@ export default function SectionFormItem({
               : "grid-cols-12",
           )}
         >
-          {section?.elements.map((item, index) => (
-            <FormElementItem
-              register={register}
-              setValue={setValue}
-              errors={errors}
-              key={item.name}
-              item={item}
-              data={data}
-              setError={setError}
-              isAdd={isAdd}
-            />
-          ))}
+          {section?.elements.map((item, index) => {
+            return (
+              <FormElementItem
+                register={register}
+                setValue={setValue}
+                errors={errors}
+                key={item.name}
+                item={item}
+                data={data}
+                setError={setError}
+                isAdd={isAdd}
+              />
+            );
+          })}
         </div>
         {section.extraElementRelativeTo &&
           data[section.extraElementRelativeTo] ==

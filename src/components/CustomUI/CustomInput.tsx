@@ -1,5 +1,5 @@
 "use client";
-import { ElementType } from "@/types/inputTypes";
+import { ElementType } from "../../../types/inputTypes";
 import { caratType, cn } from "@/utils";
 import { ClassValue } from "clsx";
 import * as React from "react";
@@ -11,11 +11,23 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   outerClass?: ClassValue | null;
   icon?: React.ReactNode;
   className?: ClassValue | null;
+  showIcon?: boolean;
 };
 
 const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
   (
-    { item, className, onChange, onBlur, name, icon, outerClass, err, ...rest },
+    {
+      item,
+      className,
+      showIcon = true,
+      onChange,
+      onBlur,
+      name,
+      icon,
+      outerClass,
+      err,
+      ...rest
+    },
     ref,
   ) => {
     const id = React.useId();
@@ -57,7 +69,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
             )}
             {icon && icon}
           </div>
-          {item.simgeturu == "caratType" && value && (
+          {item.simgeturu == "caratType" && value && showIcon && (
             <div className="flex h-full  items-center justify-center rounded-sm bg-primary px-2 py-3 text-white">
               {caratType(parseFloat(value))}
             </div>

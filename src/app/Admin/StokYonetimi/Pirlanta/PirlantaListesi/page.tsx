@@ -6,8 +6,8 @@ import {
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import { ResponseResult } from "@/types/responseTypes";
-import { ProductListType, ProductType } from "@/types/types";
+import { ResponseResult } from "../../../../../../types/responseTypes";
+import { ProductListType, ProductType } from "../../../../../../types/types";
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";

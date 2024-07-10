@@ -1,9 +1,9 @@
 "use server";
 import { cookies } from "next/headers";
-import { LoginType } from "@/types/inputTypes";
+import { LoginType } from "../../types/inputTypes";
 import { LoginService } from "@/Services/Auth.Services";
 import { redirect } from "next/navigation";
-import { AuthType } from "@/types/types";
+import { AuthType } from "../../types/types";
 
 export const loginServer = async (data: LoginType) => {
   const result = await LoginService({ data });

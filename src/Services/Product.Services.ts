@@ -1,7 +1,7 @@
-import { ResponseResult } from "@/types/responseTypes";
+import { ResponseResult } from "../../types/responseTypes";
 import { BaseService } from ".";
-import { GetNextOrderType, NextOrderType } from "@/types/inputTypes";
-import { ProductListType, ProductType } from "@/types/types";
+import { GetNextOrderType, NextOrderType } from "../../types/inputTypes";
+import { ProductListType, ProductType } from "../../types/types";
 
 export const GetProductService = async ({
   id,

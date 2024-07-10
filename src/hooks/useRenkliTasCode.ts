@@ -4,8 +4,8 @@ import {
   GetNextOrderFromSingleDiamondService,
 } from "@/Services/Product.Services";
 import { SelectOptionsType } from "@/components/CustomUI/CustomForm";
-import { ResponseResult } from "@/types/responseTypes";
-import { GetNextOrderType } from "@/types/types";
+import { ResponseResult } from "../../types/responseTypes";
+import { GetNextOrderType } from "../../types/types";
 
 import { useState, useEffect } from "react";
 

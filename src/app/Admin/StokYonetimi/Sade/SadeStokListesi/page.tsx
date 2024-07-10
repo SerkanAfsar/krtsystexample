@@ -6,15 +6,16 @@ import {
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import { ISadeType } from "@/types/formTypes";
-import { ResponseResult } from "@/types/responseTypes";
-import { ProductListType, ProductType } from "@/types/types";
+import { ISadeType } from "../../../../../../types/formTypes";
+import { ResponseResult } from "../../../../../../types/responseTypes";
+import { ProductListType, ProductType } from "../../../../../../types/types";
 import { SadeModelTurleri } from "@/utils/MockData";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Column } from "react-table";
 import { toast } from "react-toastify";
+import { LightgalleryItem } from "react-lightgallery";
 
 const columns: Column<ISadeType>[] = [
   {
@@ -78,13 +79,13 @@ export default function SadeStokListesi() {
         const dataOneResult: any = data.results.map((item) => {
           return {
             resim: (
-              <Image
-                src={item.image as string}
-                key={item.pk}
-                alt={`${item.pk as number}`}
-                width={150}
-                height={80}
-              />
+              <LightgalleryItem key={item.pk} src={item.image as string}>
+                <img
+                  src={item.image as string}
+                  style={{ width: "auto", cursor: "pointer", height: "40px" }}
+                  alt={item.code as string}
+                />
+              </LightgalleryItem>
             ),
             modelKodu: `${SadeModelTurleri.find((a) => a.titleVal == item?.properties?.modelTuru)?.extraValue}${item?.properties?.modelKodu}`,
             modelTuru: item?.properties?.modelTuru,

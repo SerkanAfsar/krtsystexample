@@ -6,16 +6,20 @@ import {
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import { IRenkliTasType, ISadeType } from "@/types/formTypes";
-import { ResponseResult } from "@/types/responseTypes";
-import { ProductListType, ProductType } from "@/types/types";
+import { IRenkliTasType, ISadeType } from "../../../../../../types/formTypes";
+import { ResponseResult } from "../../../../../../types/responseTypes";
+import { ProductListType, ProductType } from "../../../../../../types/types";
 import { RenkliTasListesiData } from "@/utils";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Column } from "react-table";
 import { toast } from "react-toastify";
 
-const columns: Column<IRenkliTasType>[] = [
+const columns: Column<IRenkliTasType & { code: string }>[] = [
+  {
+    Header: "Renkli Taş Kodu",
+    accessor: "code",
+  },
   {
     Header: "Renkli Taş",
     accessor: "renkliTas",
@@ -68,7 +72,8 @@ export default function RenkliTasStokListesi() {
         const data = resp.data as ProductListType;
         const dataOneResult: any = data.results.map((item) => {
           return {
-            renkliTas: `${item?.properties?.renkliTas}-${RenkliTasListesiData.find((a) => a.titleVal == item?.properties?.renkliTas)?.extraValue}`,
+            code: item.code,
+            renkliTas: `${item?.properties?.renkliTas}`,
             carat: item?.properties?.carat,
             renk: item?.properties?.renk,
             kesim: item?.properties?.kesim,

@@ -6,7 +6,7 @@ import {
 
 import CustomForm from "@/components/CustomUI/CustomForm";
 import useRenkliTasCode from "@/hooks/useRenkliTasCode";
-import { IRenkliTasType } from "@/types/formTypes";
+import { IRenkliTasType } from "../../types/formTypes";
 import { RenkliTasListesiData } from "@/utils";
 import { AddRenkliTasSections } from "@/utils/MockData";
 import { useState } from "react";
@@ -25,12 +25,9 @@ export default function RenkliTasDetayContainer({
   const { renkliTasCode, extraOptions } = useRenkliTasCode({
     data_frommixedItem: data.frommixedItem ?? null,
     item_frommixedItem: renkliTasItemData?.fromsingleormixed ?? null,
-
     isAdd: isAdd,
-
     data_fromsingleormixed: data.fromsingleormixed ?? null,
     item_fromsingleormixed: renkliTasItemData?.fromsingleormixed ?? null,
-
     productCode: renkliTasItemData?.code,
     data_menstrual_status: data.menstrual_status,
     dataRenkliTasCode: RenkliTasListesiData.find(

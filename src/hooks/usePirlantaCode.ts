@@ -4,8 +4,8 @@ import {
   GetNextOrderFromSingleDiamondService,
 } from "@/Services/Product.Services";
 import { SelectOptionsType } from "@/components/CustomUI/CustomForm";
-import { ResponseResult } from "@/types/responseTypes";
-import { GetNextOrderType } from "@/types/types";
+import { ResponseResult } from "../../types/responseTypes";
+import { GetNextOrderType } from "../../types/types";
 import { generateDiamondCode } from "@/utils";
 import { useState, useEffect } from "react";
 
@@ -20,6 +20,7 @@ export type PirlantaCodeItemType = {
   pirlandaData_Code?: string;
   pirlantaData_frommixedItem?: string;
   pirlantaData_fromsingleormixed?: string;
+  data_carat?: number;
   isAdd: boolean;
 };
 
@@ -30,12 +31,8 @@ export default function usePirlantaCode({
     data_fromsingleormixed,
     data_kesim,
     data_menstrual_status,
+    data_carat,
     isAdd,
-    pirlandaData_Code,
-    pirlantaData_Boy,
-    pirlantaData_Kesim,
-    pirlantaData_frommixedItem,
-    pirlantaData_fromsingleormixed,
   },
 }: {
   item: PirlantaCodeItemType;
@@ -63,59 +60,62 @@ export default function usePirlantaCode({
   useEffect(() => {
     let timeFunc: any;
 
-    const condition =
-      isAdd ||
-      (pirlantaData_Kesim && data_kesim != pirlantaData_Kesim) ||
-      (pirlantaData_Boy && pirlantaData_Boy != data_boy) ||
-      (pirlantaData_fromsingleormixed &&
-        pirlantaData_fromsingleormixed != data_fromsingleormixed) ||
-      (pirlantaData_frommixedItem &&
-        pirlantaData_frommixedItem != data_frommixedItem);
+    const condition = isAdd;
 
-    if (data_kesim && data_boy) {
-      if (condition) {
-        timeFunc = setTimeout(() => {
-          const code = generateDiamondCode({
-            kesimKodu: data_kesim,
-            boyKodu: data_boy as string,
-          });
+    // if (data_kesim && data_boy) {
 
-          if (data_menstrual_status == "Sertifikasız") {
+    // } else {
+    //   setDiamondCode("");
+    // }
+
+    if (condition) {
+      timeFunc = setTimeout(() => {
+        if (data_menstrual_status == "Sertifikasız") {
+          if (data_boy && data_kesim) {
+            const code = generateDiamondCode({
+              kesimKodu: data_kesim,
+              boyKodu: data_boy as string,
+            });
             returnSameResult(
               GetNextOrderForMixedDiamondService({ type: "Diamond", code }),
               code,
             );
           } else {
-            if (data_fromsingleormixed == "From Single") {
+            setDiamondCode(null);
+          }
+        } else {
+          const code = generateDiamondCode({
+            kesimKodu: data_kesim,
+            caratValue: data_carat,
+          });
+
+          if (data_fromsingleormixed == "From Single") {
+            returnSameResult(
+              GetNextOrderFromSingleDiamondService({
+                from_mixed: false,
+                code,
+                type: "Diamond",
+              }),
+              code,
+            );
+          } else {
+            if (data_frommixedItem) {
               returnSameResult(
                 GetNextOrderFromSingleDiamondService({
-                  from_mixed: false,
-                  code,
+                  from_mixed: true,
+                  code: `${code}-${data_frommixedItem}`,
                   type: "Diamond",
                 }),
-                code,
+                `${code}-${data_frommixedItem}`,
               );
             } else {
-              if (data_frommixedItem) {
-                returnSameResult(
-                  GetNextOrderFromSingleDiamondService({
-                    from_mixed: true,
-                    code: `${code}-${data_frommixedItem}`,
-                    type: "Diamond",
-                  }),
-                  `${code}-${data_frommixedItem}`,
-                );
-              } else {
-                setDiamondCode("");
-              }
+              setDiamondCode("");
             }
           }
-        }, 500);
-      } else {
-        setDiamondCode(pirlandaData_Code || null);
-      }
+        }
+      }, 500);
     } else {
-      setDiamondCode("");
+      setDiamondCode(null);
     }
     return () => {
       clearTimeout(timeFunc);
@@ -126,11 +126,7 @@ export default function usePirlantaCode({
     data_menstrual_status,
     data_fromsingleormixed,
     data_frommixedItem,
-    pirlantaData_Boy,
-    pirlantaData_Kesim,
-    pirlandaData_Code,
-    pirlantaData_frommixedItem,
-    pirlantaData_fromsingleormixed,
+    data_carat,
     isAdd,
   ]);
 

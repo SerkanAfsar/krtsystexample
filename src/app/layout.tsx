@@ -10,6 +10,8 @@ import React, { useEffect, useState } from "react";
 import Loader from "@/components/common/Loader";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "lightgallery.js/dist/css/lightgallery.css";
+import { LightgalleryProvider } from "react-lightgallery";
 
 export default function RootLayout({
   children,
@@ -26,9 +28,16 @@ export default function RootLayout({
   return (
     <html lang="tr">
       <body suppressHydrationWarning={true}>
-        <div className="dark:bg-boxdark-2 dark:text-bodydark">
-          {loading ? <Loader /> : children}
-        </div>
+        <LightgalleryProvider
+          lightgallerySettings={{
+            thumbnail: false,
+            controls: false,
+          }}
+        >
+          <div className="dark:bg-boxdark-2 dark:text-bodydark">
+            {loading ? <Loader /> : children}
+          </div>
+        </LightgalleryProvider>
         <ToastContainer />
       </body>
     </html>

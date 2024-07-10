@@ -1,4 +1,4 @@
-import { ElementType } from "@/types/inputTypes";
+import { ElementType } from "../../../types/inputTypes";
 import React, { useState } from "react";
 import { ClassValue } from "clsx";
 import { cn } from "@/utils";

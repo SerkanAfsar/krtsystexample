@@ -37,6 +37,8 @@ export type ElementType = {
   isExtra?: boolean;
   extraValidations?: object;
   isCodeRelated?: boolean;
+  staticOptions?: any;
+  showIconRelativeTo?: string;
 };
 
 export type CustomOptionType = {
