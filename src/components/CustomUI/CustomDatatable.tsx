@@ -16,12 +16,14 @@ const CustomDatatable = ({
   totalPageCount,
   activePage,
   setActivePage,
+  className,
 }: {
   dataOne: any;
   columns: any;
   totalPageCount: number;
   activePage: number;
   setActivePage: any;
+  className?: any;
 }) => {
   const data = dataOne;
 
@@ -60,7 +62,12 @@ const CustomDatatable = ({
     .map((item, index) => index);
 
   return (
-    <section className="data-table-common data-table-two overflow-auto rounded-sm border border-stroke bg-white py-4 shadow-default dark:border-strokedark dark:bg-boxdark">
+    <section
+      className={cn(
+        "data-table-common data-table-two overflow-auto rounded-sm border border-stroke bg-white py-4 shadow-default dark:border-strokedark dark:bg-boxdark",
+        className && className,
+      )}
+    >
       <div className="flex w-full justify-between  px-8 pb-4 ">
         <div className="w-100">
           <input

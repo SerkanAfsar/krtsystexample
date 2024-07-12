@@ -1,3 +1,5 @@
+import { Column } from "react-table";
+
 export type ProductType = {
   pk?: number;
   code?: string | null;
@@ -31,3 +33,34 @@ export type AuthType = {
     email: string;
   };
 };
+
+interface IData {
+  kesim: string;
+  carat: string;
+  berraklik: string;
+  renk: string;
+  adet: string;
+  maliyet: string;
+}
+export const ModalHeaders: Column<IData>[] = [
+  {
+    Header: "Kesim",
+    accessor: "kesim",
+  },
+  {
+    Header: "Karat",
+    accessor: "carat",
+  },
+  {
+    Header: "Renk",
+    accessor: "renk",
+  },
+  {
+    Header: "Adet",
+    accessor: "adet",
+  },
+  {
+    Header: "Maliyet",
+    accessor: "maliyet",
+  },
+];
