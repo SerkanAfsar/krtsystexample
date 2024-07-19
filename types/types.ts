@@ -35,14 +35,38 @@ export type AuthType = {
 };
 
 interface IData {
+  sec: string;
   kesim: string;
   carat: string;
   berraklik: string;
   renk: string;
   adet: string;
+  kullanilanKarat: string;
   maliyet: string;
 }
+
+interface ISadeData {
+  sec: string;
+  maden: string;
+  renk: string;
+  gram: string;
+  has: string;
+  model: string;
+  maliyet: string;
+}
+
+export const ModalSadeHeaders: Column<ISadeData>[] = [
+  { Header: "Seç", accessor: "sec" },
+  { Header: "Maden", accessor: "maden" },
+  { Header: "Renk", accessor: "renk" },
+  { Header: "Gram", accessor: "gram" },
+  { Header: "Has", accessor: "has" },
+  { Header: "Model", accessor: "model" },
+  { Header: "Maliyet", accessor: "maliyet" },
+];
+
 export const ModalHeaders: Column<IData>[] = [
+  { Header: "Seç", accessor: "sec" },
   {
     Header: "Kesim",
     accessor: "kesim",
@@ -58,6 +82,10 @@ export const ModalHeaders: Column<IData>[] = [
   {
     Header: "Adet",
     accessor: "adet",
+  },
+  {
+    Header: "Kullanılan Karat",
+    accessor: "kullanilanKarat",
   },
   {
     Header: "Maliyet",

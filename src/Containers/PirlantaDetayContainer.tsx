@@ -10,8 +10,10 @@ import {
   AddProductService,
   UpdateProductService,
 } from "@/Services/Product.Services";
-import usePirlantaCode, { PirlantaCodeItemType } from "@/hooks/usePirlantaCode";
-import { caratType } from "@/utils";
+
+import usePirlantaCode, {
+  PirlantaCodeItemType,
+} from "@/hooks/CodeHooks/usePirlantaCode";
 
 const PirlantaDetayContainer = ({
   pirlantaItemData,

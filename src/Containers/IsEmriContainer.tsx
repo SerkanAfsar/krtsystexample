@@ -1,17 +1,19 @@
 import UrunGruplariModul, {
   UrunGruplariModulType,
 } from "@/components/IsEmirleri/UrunGruplariModul";
-import { ModalHeaders, ModalPirlantaDataHeader } from "../../types/types";
-import usePirlanModalData from "@/hooks/usePirlantaModalData";
-import useRenkliTasModalData from "@/hooks/useRenkliTasModalData";
+import { ModalHeaders, ModalSadeHeaders } from "../../types/types";
+
+import usePirlantaModalData from "@/hooks/ModalDataHooks/usePirlantaModalData";
+import useRenkliTasModalData from "@/hooks/ModalDataHooks/useRenkliTasModalData";
+import useSadeModalData from "@/hooks/ModalDataHooks/useSadeModalData";
 
 const UrunGruplari: UrunGruplariModulType[] = [
   {
     buttonText: "Sade Ekle ",
     headerColumns: ["Maden", "Renk", "Gram", "Has", "Model", "Maliyet"],
     title: "Sade",
-    // modalHeaderColumns: ModalPirlantaDataHeader,
-    // tableFunction: usePirlanModalData,
+    modalHeaderColumns: ModalSadeHeaders,
+    tableFunction: useSadeModalData,
   },
   {
     buttonText: "Renkli Taş Ekle",
@@ -25,7 +27,7 @@ const UrunGruplari: UrunGruplariModulType[] = [
     headerColumns: ["Kesim", "Karat", "Berraklık", "Renk", "Adet", "Maliyet"],
     title: "Pırlanta ",
     modalHeaderColumns: ModalHeaders,
-    tableFunction: usePirlanModalData,
+    tableFunction: usePirlantaModalData,
   },
 ];
 

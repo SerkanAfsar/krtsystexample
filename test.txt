@@ -14,3 +14,27 @@
  https://www.gia.edu/report-check?reportno=34243243242432 gia ise bu
 
  https://my.hrdantwerp.com/ hrd 
+
+
+
+ Mixed urun sectiyse onun icinde kac caratlik kullanacak onu vermeli
+
+
+ Cost iscilik maliyeti
+
+
+ Adam grup seçip ordan kime yollayacagini secebilecek tek id verebilirsin abi
+
+
+ sade = has gramı * altın kuru
+
+ renkli taşa maliyet ekle.
+
+ pırlantada toplam fiyat
+
+ sadeye adet girmicek. Renkli taş ve pırlantaya adet giricek (modal da)
+
+ Renkli taş ve pırlantada sertifikalı ise adet=1. 
+
+ Sertifikasız ise adet istediğin kadar koyulabilinir.
+

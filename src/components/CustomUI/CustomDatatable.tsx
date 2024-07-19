@@ -107,8 +107,8 @@ const CustomDatatable = ({
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                   key={key}
                 >
-                  <div className="flex  items-center">
-                    <span> {column.render("Header")}</span>
+                  <div className="flex items-center">
+                    <span>{column.render("Header")}</span>
 
                     <div className="ml-2 inline-flex flex-col space-y-[2px]">
                       <span className="inline-block">

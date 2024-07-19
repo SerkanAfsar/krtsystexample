@@ -285,6 +285,18 @@ const config: Config = {
       },
 
       keyframes: {
+        modalEffect: {
+          "0%": {
+            top: "-20px",
+            marginTop: "-20px",
+            opacity: "0",
+          },
+          "100%": {
+            top: "0px",
+            marginTop: "0px",
+            opacity: "1",
+          },
+        },
         linspin: {
           "100%": { transform: "rotate(360deg)" },
         },
@@ -330,6 +342,7 @@ const config: Config = {
         },
       },
       animation: {
+        modalAnimation: "modalEffect 0.4s easeInOut",
         linspin: "linspin 1568.2353ms linear infinite",
         easespin: "easespin 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both",
         "left-spin":

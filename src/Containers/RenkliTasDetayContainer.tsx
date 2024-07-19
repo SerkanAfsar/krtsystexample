@@ -5,7 +5,7 @@ import {
 } from "@/Services/Product.Services";
 
 import CustomForm from "@/components/CustomUI/CustomForm";
-import useRenkliTasCode from "@/hooks/useRenkliTasCode";
+import useRenkliTasCode from "@/hooks/CodeHooks/useRenkliTasCode";
 import { IRenkliTasType } from "../../types/formTypes";
 import { RenkliTasListesiData } from "@/utils";
 import { AddRenkliTasSections } from "@/utils/MockData";

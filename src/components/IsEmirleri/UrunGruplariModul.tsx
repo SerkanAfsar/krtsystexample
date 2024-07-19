@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import IsEmirleriModal from "./IsEmirleriModal";
+import { cn } from "@/utils";
 
 export type UrunGruplariModulType = {
   title: string;
@@ -12,7 +13,7 @@ export type UrunGruplariModulType = {
 };
 
 export type SeciliUrunType = {
-  [key: string]: { value: string | number };
+  [key: string]: string;
 };
 
 export default function UrunGruplariModul({
@@ -43,22 +44,47 @@ export default function UrunGruplariModul({
             {buttonText}
           </button>
         </div>
-        <div className="flex items-center justify-between gap-2 bg-gray p-2 text-left text-black">
+        <div
+          className={cn(
+            "grid gap-2 bg-gray p-2 text-left text-black",
+            `grid-cols-${headerColumns.length}`,
+          )}
+        >
           {headerColumns.map((key, index) => (
             <b key={index}>{key}</b>
           ))}
         </div>
-        <div className="flex flex-col gap-6 ">
-          <div className="border-b-1 block w-full  border-red">Deneme</div>
+        <div className="flex flex-col">
+          {selectedValues.map((item, index) => (
+            <>
+              <div
+                key={index}
+                className={cn(
+                  "grid gap-2  p-2 text-left text-black",
+                  `grid-cols-${headerColumns.length}`,
+                  "border-b-2 border-black",
+                )}
+              >
+                {Object.values(item).map((prop, key) => {
+                  if (key != 0) {
+                    return <div key={key}>{prop}</div>;
+                  }
+                })}
+              </div>
+            </>
+          ))}
         </div>
       </section>
-      <IsEmirleriModal
-        modalOpen={modalOpen}
-        setModalOpen={setModalOpen}
-        tableFunction={tableFunction}
-        modalHeaderColumns={modalHeaderColumns}
-        title={buttonText}
-      />
+      {modalOpen && (
+        <IsEmirleriModal
+          setModalOpen={setModalOpen}
+          tableFunction={tableFunction}
+          modalHeaderColumns={modalHeaderColumns}
+          title={buttonText}
+          setSelectedValues={setSelectedValues}
+          selectedValues={selectedValues}
+        />
+      )}
     </>
   );
 }
