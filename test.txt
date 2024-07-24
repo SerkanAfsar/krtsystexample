@@ -38,3 +38,6 @@
 
  Sertifikasız ise adet istediğin kadar koyulabilinir.
 
+
+ ürün kodları ekle seçim ekrarnına madeni kaldır
+

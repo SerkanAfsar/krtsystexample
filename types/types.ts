@@ -43,9 +43,11 @@ interface IData {
   adet: string;
   kullanilanKarat: string;
   maliyet: string;
+  code?: string;
 }
 
 interface ISadeData {
+  code?: string;
   sec: string;
   maden: string;
   renk: string;
@@ -55,18 +57,23 @@ interface ISadeData {
   maliyet: string;
 }
 
-export const ModalSadeHeaders: Column<ISadeData>[] = [
-  { Header: "Seç", accessor: "sec" },
-  { Header: "Maden", accessor: "maden" },
-  { Header: "Renk", accessor: "renk" },
-  { Header: "Gram", accessor: "gram" },
-  { Header: "Has", accessor: "has" },
-  { Header: "Model", accessor: "model" },
-  { Header: "Maliyet", accessor: "maliyet" },
-];
+export const ModalSadeHeaders: (Column<ISadeData> & { isHidden?: boolean })[] =
+  [
+    { Header: "Seç", accessor: "sec" },
+    { Header: "Ürün Kodu", accessor: "code" },
+    { Header: "Renk", accessor: "renk" },
+    { Header: "Gram", accessor: "gram" },
+    { Header: "Has", accessor: "has" },
+    { Header: "Model", accessor: "model" },
+    { Header: "Maliyet", accessor: "maliyet" },
+  ];
 
-export const ModalHeaders: Column<IData>[] = [
+export const ModalHeaders: (Column<IData> & { isHidden?: boolean })[] = [
   { Header: "Seç", accessor: "sec" },
+  {
+    Header: "Ürün Kodu",
+    accessor: "code",
+  },
   {
     Header: "Kesim",
     accessor: "kesim",
@@ -86,6 +93,7 @@ export const ModalHeaders: Column<IData>[] = [
   {
     Header: "Kullanılan Karat",
     accessor: "kullanilanKarat",
+    isHidden: true,
   },
   {
     Header: "Maliyet",

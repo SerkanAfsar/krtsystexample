@@ -5,6 +5,7 @@ import { ResponseResult } from "../../../types/responseTypes";
 import { ProductListType } from "../../../types/types";
 import React, { useState, useCallback, useEffect } from "react";
 import { SeciliUrunType } from "@/components/IsEmirleri/UrunGruplariModul";
+import { formatToCurrency } from "@/utils";
 export default function useSadeModalData({
   setSelectedValues,
   selectedValues,
@@ -13,7 +14,7 @@ export default function useSadeModalData({
   selectedValues: SeciliUrunType[];
 }) {
   const [activePage, setActivePage] = useState<number>(1);
-  const [activeData, setActiveData] = useState<any | string | null>(null);
+  const [activeData, setActiveData] = useState<any>([]);
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
 
   const handleCheck = (
@@ -23,15 +24,26 @@ export default function useSadeModalData({
     const target = e.target as HTMLInputElement;
 
     if (target.checked) {
-      const { maden, renk, gram, has, model } = properties;
+      const {
+        code,
+        altinRengi: renk,
+        gram,
+        hasGrami: has,
+        modelTuru: model,
+        maliyet,
+      } = properties;
+
       const item: SeciliUrunType = {
         pk: target.name,
-        maden,
+        code,
         renk,
         gram,
         has,
         model,
+        maliyet: `${formatToCurrency(maliyet)} $`,
+        maliyetPrice: maliyet,
       };
+
       setSelectedValues((prev: SeciliUrunType[]) => [...prev, item]);
     } else {
       setSelectedValues((prev: SeciliUrunType[]) =>
@@ -55,21 +67,31 @@ export default function useSadeModalData({
               (a) => (a.pk as string) == (item.pk as unknown),
             ) > -1;
 
-          console.log(item);
+          const maliyet =
+            Number(item?.properties?.hasGrami || 0) *
+            Number(process.env.NEXT_PUBLIC_ALTIN_KURU);
+
           return {
             sec: (
               <input
                 type="checkbox"
                 defaultChecked={condition}
                 name={item?.pk?.toString()}
-                onChange={(e) => handleCheck(e, item.properties as any)}
+                onChange={(e) =>
+                  handleCheck(e, {
+                    ...item.properties,
+                    code: item.code,
+                    maliyet,
+                  })
+                }
               />
             ),
-            maden: item?.properties?.maden,
+            code: item.code,
             renk: item?.properties?.altinRengi,
             gram: item?.properties?.gram,
             has: item?.properties?.hasGrami,
             model: item?.properties?.modelTuru,
+            maliyet: `${maliyet} $`,
           };
         });
         setActiveData(dataOneResult);

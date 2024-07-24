@@ -1,28 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import IsEmirleriModal from "./IsEmirleriModal";
 import { cn } from "@/utils";
+
+import {
+  ProductItemsType,
+  WorkOrderProductType,
+} from "@/Containers/IsEmriContainer";
 
 export type UrunGruplariModulType = {
   title: string;
   buttonText: string;
-  headerColumns: string[];
+  headerColumns: { title: string; accessor: string }[];
   tableFunction?: any;
   modalHeaderColumns?: any;
 };
 
 export type SeciliUrunType = {
-  [key: string]: string;
+  [key: string]: string | number;
 };
 
 export default function UrunGruplariModul({
   item: { title, buttonText, headerColumns, tableFunction, modalHeaderColumns },
+  setValues,
 }: {
   item: UrunGruplariModulType;
+  setValues?: any;
 }) {
   const [selectedValues, setSelectedValues] = useState<SeciliUrunType[]>([]);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const items: WorkOrderProductType[] = selectedValues.map((item) => ({
+      product_id: Number(item.pk),
+      quantity: item.adet ? Number(item.adet) : null,
+      used_carat: item.used_carat ? Number(item.used_carat) : null,
+      price: item.maliyetPrice ? Number(item.maliyetPrice) : null,
+    }));
+
+    setValues((prev: ProductItemsType[]) => {
+      const indexNo = prev.findIndex((a) => a.title == title);
+      if (indexNo > -1) {
+        const updatedObject = { ...prev[indexNo], products: items };
+        const newData = [...prev];
+        newData[indexNo] = updatedObject;
+        return [...newData];
+      }
+    });
+  }, [selectedValues, setValues, title]);
 
   return (
     <>
@@ -51,29 +77,31 @@ export default function UrunGruplariModul({
           )}
         >
           {headerColumns.map((key, index) => (
-            <b key={index}>{key}</b>
+            <b key={index}>{key.title}</b>
           ))}
         </div>
         <div className="flex flex-col">
           {selectedValues.map((item, index) => (
-            <>
-              <div
-                key={index}
-                className={cn(
-                  "grid gap-2  p-2 text-left text-black",
-                  `grid-cols-${headerColumns.length}`,
-                  "border-b-2 border-black",
-                )}
-              >
-                {Object.values(item).map((prop, key) => {
-                  if (key != 0) {
-                    return <div key={key}>{prop}</div>;
-                  }
-                })}
-              </div>
-            </>
+            <div
+              key={index}
+              className={cn(
+                "grid gap-2  p-2 text-left text-black",
+                `grid-cols-${headerColumns.length}`,
+                "border-b-2 border-black",
+              )}
+            >
+              {Object.entries(item).map(([key, value], index) => {
+                if (
+                  index != 0 &&
+                  headerColumns.findIndex((a) => a.accessor == key) > -1
+                ) {
+                  return <div key={index}>{value}</div>;
+                }
+              })}
+            </div>
           ))}
         </div>
+        <div className="self-end"></div>
       </section>
       {modalOpen && (
         <IsEmirleriModal

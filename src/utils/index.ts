@@ -246,11 +246,11 @@ export const generateDiamondCode = ({
       options: PirlantaKesimKodlari,
     });
   }
-  console.log(code);
+
   if (boyKodu) {
     code += boyType(boyKodu);
   }
-  console.log(code);
+
   if (caratValue) {
     code += caratType(caratValue);
   }
@@ -1080,3 +1080,10 @@ export const AtolyeListesi: CustomOptionType[] = [
     extraValue: "286",
   },
 ];
+
+export const formatToCurrency = (currency: number) => {
+  if (currency) {
+    return currency.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+  }
+  return 0;
+};

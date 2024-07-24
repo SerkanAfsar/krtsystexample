@@ -1,11 +1,9 @@
 "use client";
 
 import CustomDatatable from "../CustomUI/CustomDatatable";
-import { SeciliUrunType } from "./UrunGruplariModul";
 
 export default function IsEmirleriModal({
   title,
-
   setModalOpen,
   modalHeaderColumns,
   tableFunction,
@@ -13,7 +11,6 @@ export default function IsEmirleriModal({
   selectedValues,
 }: {
   title: string;
-
   modalHeaderColumns: any;
   setModalOpen: React.Dispatch<boolean>;
   setSelectedValues: any;
