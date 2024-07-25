@@ -7,6 +7,7 @@ import React, { useState, useCallback, useEffect, useRef } from "react";
 import { SeciliUrunType } from "@/components/IsEmirleri/UrunGruplariModul";
 import { formatToCurrency } from "@/utils";
 import { CustomProps } from "./useRenkliTasModalData";
+import { GetWorkOrderProductListModalService } from "@/Services/WorkOrder.Services";
 
 export default function usePirlantaModalData({
   setSelectedValues,
@@ -78,6 +79,11 @@ export default function usePirlantaModalData({
     const condition = selectedItem != null;
     const { adet, used_carat } = selectedItem || {};
 
+    const firstMaliyet =
+      item.menstrual_status == "Mixed"
+        ? Number(item.product_cost?.pricePerCarat)
+        : Number(item.total_cost);
+
     return {
       sec: (
         <input
@@ -89,7 +95,7 @@ export default function usePirlantaModalData({
               e,
               {
                 ...item.properties,
-                maliyet: Number(item.total_cost),
+                maliyet: Number(firstMaliyet),
                 code: item.code,
               },
               index,
@@ -143,23 +149,23 @@ export default function usePirlantaModalData({
       ),
       maliyet: (
         <span
-          aria-label={item.total_cost?.toString()}
+          aria-label={firstMaliyet?.toString()}
           ref={(el) => {
             if (el) {
               spanMaliyetRefs.current[index] = el;
             }
           }}
         >
-          {`${formatToCurrency(Number(item.total_cost))} $`}
+          {item.menstrual_status != "Mixed"
+            ? `${formatToCurrency(firstMaliyet)} $`
+            : ""}
         </span>
       ),
     };
   };
 
   const updateData = useCallback(() => {
-    GetProductDatatableService({
-      order_by: null,
-      page: activePage,
+    GetWorkOrderProductListModalService({
       type: "Diamond",
     }).then((resp: ResponseResult<ProductListType>) => {
       const data = resp.data as ProductListType;
@@ -216,7 +222,10 @@ const CustomHtmlValue = React.forwardRef<HTMLInputElement, CustomProps>(
           const spanRef = spanMaliyetRefs.current[indexNo];
           let maliyet = Number(spanRef.ariaLabel);
           if (name == "used_carat") {
-            maliyet = value ? Number(maliyet / Number(value)) : maliyet;
+            maliyet =
+              value && item.menstrual_status == "Mixed"
+                ? Number(maliyet * Number(value))
+                : maliyet;
             spanRef.textContent = `${formatToCurrency(maliyet)} $`;
           }
 
@@ -229,7 +238,16 @@ const CustomHtmlValue = React.forwardRef<HTMLInputElement, CustomProps>(
         }
         return [...prev];
       });
-    }, [value, item.pk, name, setSelectedValues, spanMaliyetRefs, indexNo]);
+    }, [
+      value,
+      indexNo,
+      item.menstrual_status,
+      item.pk,
+      name,
+      setSelectedValues,
+      item.properties?.carat,
+      spanMaliyetRefs,
+    ]);
     return (
       <input
         type="number"

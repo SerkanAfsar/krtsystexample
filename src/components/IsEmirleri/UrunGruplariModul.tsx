@@ -3,11 +3,10 @@
 import { useEffect, useState } from "react";
 import IsEmirleriModal from "./IsEmirleriModal";
 import { cn } from "@/utils";
-
 import {
   ProductItemsType,
   WorkOrderProductType,
-} from "@/Containers/IsEmriContainer";
+} from "../../../types/WorkOrder.types";
 
 export type UrunGruplariModulType = {
   title: string;

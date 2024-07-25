@@ -9,6 +9,14 @@ import useRenkliTasModalData from "@/hooks/ModalDataHooks/useRenkliTasModalData"
 import useSadeModalData from "@/hooks/ModalDataHooks/useSadeModalData";
 import { useState } from "react";
 import { formatToCurrency } from "@/utils";
+import {
+  AddWorOrderType,
+  ProductItemsType,
+  WorkOrderProductType,
+} from "../../types/WorkOrder.types";
+
+import { AddWorkOrderService } from "@/Services/WorkOrder.Services";
+import { toast } from "react-toastify";
 
 const UrunGruplari: UrunGruplariModulType[] = [
   {
@@ -60,20 +68,8 @@ const UrunGruplari: UrunGruplariModulType[] = [
   },
 ];
 
-export type WorkOrderProductType = {
-  product_id: number;
-  quantity: number | null;
-  used_carat: number | null;
-  price: number | null;
-};
-
-export type ProductItemsType = {
-  title: string;
-  products: WorkOrderProductType[];
-};
-
 export default function IsEmriContainer() {
-  const [description, setDescription] = useState<string>();
+  const [description, setDescription] = useState<string>("");
   const [values, setValues] = useState<ProductItemsType[]>(
     UrunGruplari.map((item) => {
       return {
@@ -90,6 +86,19 @@ export default function IsEmriContainer() {
   const totalPrice = lastItems.reduce<number>((acc, next) => {
     return next.price ? acc + next.price : acc;
   }, 0);
+
+  const lastData: AddWorOrderType = {
+    description,
+    workorder_products: lastItems,
+  };
+
+  const addWorkOrder = async () => {
+    const result: any = await AddWorkOrderService({ data: lastData });
+    if (result?.success) {
+    } else {
+      toast.error(result[0], { position: "top-right" });
+    }
+  };
 
   return (
     <div className="mb-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -129,6 +138,7 @@ export default function IsEmriContainer() {
         <div className="flex items-center justify-end p-3">
           <button
             type="button"
+            onClick={async () => await addWorkOrder()}
             className="w-60 rounded-md bg-primary px-2 py-3 text-center text-white"
           >
             İLERİ

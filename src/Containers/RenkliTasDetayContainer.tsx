@@ -9,7 +9,7 @@ import useRenkliTasCode from "@/hooks/CodeHooks/useRenkliTasCode";
 import { IRenkliTasType } from "../../types/formTypes";
 import { RenkliTasListesiData } from "@/utils";
 import { AddRenkliTasSections } from "@/utils/MockData";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 export default function RenkliTasDetayContainer({
   renkliTasItemData,
@@ -21,6 +21,16 @@ export default function RenkliTasDetayContainer({
   const renkliTasItem: IRenkliTasType = renkliTasItemData ?? {};
   const [activeStep, setActiveStep] = useState<number>(0);
   const [data, setData] = useState<IRenkliTasType>(renkliTasItem);
+
+  const resultCallBack = useCallback((value: any) => {
+    const carat = Number(value?.carat || 0);
+    const newResult = value.total_cost / carat;
+
+    return {
+      pricePerCarat: newResult,
+      total_cost: value.total_cost,
+    };
+  }, []);
 
   const { renkliTasCode, extraOptions } = useRenkliTasCode({
     data_frommixedItem: data.frommixedItem ?? null,
@@ -58,8 +68,12 @@ export default function RenkliTasDetayContainer({
       menstrual_status:
         data.menstrual_status == "Sertifikalı" ? "Single" : "Mixed",
       type: "ColoredStone",
+      total_cost: data.total_cost,
       code: renkliTasCode,
-      total_cost: 3000,
+      product_cost: {
+        total_cost: data.total_cost,
+        pricePerCarat: data?.pricePerCarat ?? null,
+      },
     },
   );
 
@@ -73,7 +87,7 @@ export default function RenkliTasDetayContainer({
       stepCount={1}
       productCode={renkliTasCode}
       isAdd={isAdd}
-      //   resultCallBack={updateData}
+      resultCallBack={resultCallBack}
       serviceFunction={isAdd ? AddProductService : UpdateProductService}
       filteredData={newData}
       extraOptions={extraOptions}

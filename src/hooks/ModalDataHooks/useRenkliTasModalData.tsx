@@ -3,10 +3,11 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
 
 import { GetProductDatatableService } from "@/Services/Product.Services";
-import { ProductListType } from "../../../types/types";
+import { ProductListType, ProductType } from "../../../types/types";
 import { ResponseResult } from "../../../types/responseTypes";
 import { SeciliUrunType } from "@/components/IsEmirleri/UrunGruplariModul";
 import { formatToCurrency } from "@/utils";
+import { GetWorkOrderProductListModalService } from "@/Services/WorkOrder.Services";
 
 export default function useRenkliTasModalData({
   setSelectedValues,
@@ -68,13 +69,9 @@ export default function useRenkliTasModalData({
     }
   };
 
-  const hardCodedPrice = 2000;
-
   const updateData = useCallback(() => {
     setActiveData(null);
-    GetProductDatatableService({
-      order_by: null,
-      page: activePage,
+    GetWorkOrderProductListModalService({
       type: "ColoredStone",
     }).then((resp: ResponseResult<ProductListType>) => {
       if (resp.success) {
@@ -85,6 +82,10 @@ export default function useRenkliTasModalData({
           );
           const condition = selectedItem != null;
           const { adet, used_carat } = selectedItem || {};
+          const firstMaliyet =
+            item.menstrual_status == "Mixed"
+              ? Number(item.product_cost?.pricePerCarat)
+              : Number(item.total_cost);
           return {
             sec: (
               <input
@@ -97,7 +98,7 @@ export default function useRenkliTasModalData({
                     {
                       ...item.properties,
                       code: item.code,
-                      maliyet: Number(hardCodedPrice),
+                      maliyet: firstMaliyet,
                     },
                     index,
                   )
@@ -150,14 +151,16 @@ export default function useRenkliTasModalData({
             ),
             maliyet: (
               <span
-                aria-label={hardCodedPrice.toString()}
+                aria-label={firstMaliyet.toString()}
                 ref={(el) => {
                   if (el) {
                     spanMaliyetRefs.current[index] = el;
                   }
                 }}
               >
-                {`${formatToCurrency(Number(hardCodedPrice))} $`}
+                {item.menstrual_status != "Mixed"
+                  ? `${formatToCurrency(firstMaliyet)} $`
+                  : ""}
               </span>
             ),
           };
@@ -188,7 +191,7 @@ export default function useRenkliTasModalData({
 
 export type CustomProps = React.HTMLAttributes<HTMLInputElement> & {
   setSelectedValues: any;
-  item: any;
+  item: ProductType;
   inputAdetRefs: any;
   spanMaliyetRefs: any;
   indexNo: number;
@@ -222,7 +225,10 @@ const CustomHtmlValue = React.forwardRef<HTMLInputElement, CustomProps>(
           const spanRef = spanMaliyetRefs.current[indexNo];
           let maliyet = Number(spanRef.ariaLabel);
           if (name == "used_carat") {
-            maliyet = value ? Number(maliyet / Number(value)) : maliyet;
+            maliyet =
+              value && item.menstrual_status == "Mixed"
+                ? Number(maliyet * Number(value))
+                : maliyet;
             spanRef.textContent = `${formatToCurrency(maliyet)} $`;
           }
 

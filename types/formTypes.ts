@@ -10,6 +10,7 @@ export type IRenkliTasType = {
   treatment?: string;
   aciklama?: string;
   fromsingleormixed?: string;
+  pricePerCarat?: number;
   frommixedItem?: string;
   total_cost?: number;
   duzenle?: React.ReactNode;

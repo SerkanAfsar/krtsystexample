@@ -6,6 +6,7 @@ import { ProductListType } from "../../../types/types";
 import React, { useState, useCallback, useEffect } from "react";
 import { SeciliUrunType } from "@/components/IsEmirleri/UrunGruplariModul";
 import { formatToCurrency } from "@/utils";
+import { GetWorkOrderProductListModalService } from "@/Services/WorkOrder.Services";
 export default function useSadeModalData({
   setSelectedValues,
   selectedValues,
@@ -54,9 +55,7 @@ export default function useSadeModalData({
 
   const updateData = useCallback(() => {
     setActiveData(null);
-    GetProductDatatableService({
-      order_by: null,
-      page: activePage,
+    GetWorkOrderProductListModalService({
       type: "Simple",
     }).then((resp: ResponseResult<ProductListType>) => {
       if (resp.success) {

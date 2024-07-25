@@ -99,7 +99,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
             });
             return;
           }
-          return toast.error(result.error, { position: "top-right" });
+          return toast.error(result?.error, { position: "top-right" });
         }
       }
     };
