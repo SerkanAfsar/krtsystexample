@@ -1,6 +1,7 @@
 "use client";
 
 import CustomDatatable from "../CustomUI/CustomDatatable";
+import { IoMdCloseCircle } from "react-icons/io";
 
 export default function IsEmirleriModal({
   title,
@@ -26,9 +27,14 @@ export default function IsEmirleriModal({
   return (
     <div className="fixed inset-0 z-999 flex h-full w-full items-center justify-center bg-black bg-opacity-80">
       <div className="flex h-[90%] w-9/12 animate-modalAnimation flex-col items-center justify-start gap-3 rounded-lg bg-white p-3">
-        <h3 onClick={() => setModalOpen(false)} className="text-lg font-bold">
-          {title}
-        </h3>
+        <div className="flex w-full items-center justify-center">
+          <h3 className="ml-auto text-lg font-bold">{title}</h3>
+          <IoMdCloseCircle
+            className="ml-auto mr-4 cursor-pointer"
+            size={30}
+            onClick={() => setModalOpen(false)}
+          />
+        </div>
         {activeData ? (
           <CustomDatatable
             className={"block shadow-none"}

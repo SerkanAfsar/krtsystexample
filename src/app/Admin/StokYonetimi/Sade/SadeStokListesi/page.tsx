@@ -10,7 +10,7 @@ import { ISadeType } from "../../../../../../types/formTypes";
 import { ResponseResult } from "../../../../../../types/responseTypes";
 import { ProductListType, ProductType } from "../../../../../../types/types";
 import { SadeModelTurleri } from "@/utils/MockData";
-import Image from "next/image";
+
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Column } from "react-table";

@@ -14,3 +14,58 @@ export type AddWorOrderType = {
   description: string;
   workorder_products: any[];
 };
+
+export type WorkOrderAtolyeType = {
+  work_order: number;
+  from_person: number;
+  to_person: number;
+  from_group: number;
+  to_group: number;
+  wastage: number;
+  output_gram: number;
+  cost: number;
+  description: string;
+};
+
+export type WorkOrderTeamGroupType = {
+  id: number;
+  name: string;
+};
+
+export type WorkOrderPeopleList = {
+  id: number;
+  username: string;
+  email: string;
+};
+
+export type WorkOrderType = {
+  id: number;
+  total_product_cost: string;
+  image: string;
+  description: string;
+  is_active: boolean;
+  status: string;
+  user: any;
+  created_at: string;
+  last_process_date: any;
+};
+
+export type WorkOrderLogType = {
+  id: number;
+  work_order: number;
+  created_at: string;
+  updated_at: string;
+  from_person: string;
+  to_person: string;
+  from_group: string;
+  to_group: string;
+  wastage: number | null;
+  output_gram: number;
+  cost: number;
+  description: string | null;
+};
+
+export type WorkOrderListType = {
+  total_labor_cost: number | null;
+  logs: WorkOrderLogType[] | null;
+};

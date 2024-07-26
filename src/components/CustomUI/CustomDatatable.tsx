@@ -17,6 +17,7 @@ const CustomDatatable = ({
   activePage,
   setActivePage,
   className,
+  hasOrder = true,
 }: {
   dataOne: any;
   columns: any;
@@ -24,6 +25,7 @@ const CustomDatatable = ({
   activePage: number;
   setActivePage: any;
   className?: any;
+  hasOrder?: boolean;
 }) => {
   const data = dataOne;
 
@@ -169,13 +171,17 @@ const CustomDatatable = ({
 
       <div className="flex justify-between border-t border-stroke px-8 pt-5 dark:border-strokedark">
         <p className="font-medium">
-          Gösterim {pageIndex + 1} - {totalPageCount} Sayfa
+          Gösterim {activePage} - {totalPageCount} Sayfa
         </p>
         <div className="flex">
           <button
             className="flex cursor-pointer items-center justify-center rounded-md p-1 px-2 hover:bg-primary hover:text-whiter"
-            onClick={() => previousPage()}
-            disabled={!canPreviousPage}
+            onClick={() =>
+              setActivePage((prev: number) => {
+                return prev > 1 ? prev - 1 : prev;
+              })
+            }
+            disabled={activePage == 1}
           >
             <svg
               className="fill-current"
@@ -214,7 +220,7 @@ const CustomDatatable = ({
               nextPage();
               setActivePage((prev: number) => prev + 1);
             }}
-            disabled={!canNextPage}
+            disabled={activePage == totalPageCount}
           >
             <svg
               className="fill-current"

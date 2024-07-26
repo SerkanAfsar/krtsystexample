@@ -145,7 +145,7 @@ export default function useRenkliTasModalData({
                   condition={condition}
                 />
                 <span className="text-md font-bold">
-                  &nbsp;/&nbsp;{item?.properties?.carat}
+                  &nbsp;/&nbsp;{item?.properties?.remaining_carat}
                 </span>
               </div>
             ),

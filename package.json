@@ -11,6 +11,7 @@
   "dependencies": {
     "apexcharts": "^3.45.2",
     "clsx": "^2.1.1",
+    "date-fns": "^3.6.0",
     "dropzone": "^6.0.0-beta.2",
     "flatpickr": "^4.6.13",
     "jsvectormap": "^1.5.3",

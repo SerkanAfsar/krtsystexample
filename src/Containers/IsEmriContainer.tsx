@@ -17,6 +17,7 @@ import {
 
 import { AddWorkOrderService } from "@/Services/WorkOrder.Services";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const UrunGruplari: UrunGruplariModulType[] = [
   {
@@ -69,6 +70,7 @@ const UrunGruplari: UrunGruplariModulType[] = [
 ];
 
 export default function IsEmriContainer() {
+  const router = useRouter();
   const [description, setDescription] = useState<string>("");
   const [values, setValues] = useState<ProductItemsType[]>(
     UrunGruplari.map((item) => {
@@ -94,7 +96,10 @@ export default function IsEmriContainer() {
 
   const addWorkOrder = async () => {
     const result: any = await AddWorkOrderService({ data: lastData });
+
     if (result?.success) {
+      toast.success("Üretim İş Emri Eklendi", { position: "top-right" });
+      return router.push(`/Admin/IsEmirleri/UretimBaslatma/${result.data.id}`);
     } else {
       toast.error(result[0], { position: "top-right" });
     }
@@ -118,9 +123,7 @@ export default function IsEmriContainer() {
         <div className="flex items-center justify-end p-3">
           <h2 className="mb-2 mr-4 h-full self-end text-xl font-bold">
             Toplam Fiyat{" "}
-            {totalPrice && (
-              <span className="text-red">{`${formatToCurrency(totalPrice)} $`}</span>
-            )}
+            <span className="text-red">{`${formatToCurrency(totalPrice)} $`}</span>
           </h2>
           <div className="flex w-1/2 flex-col items-start gap-2">
             <label className="font-bold text-black">
