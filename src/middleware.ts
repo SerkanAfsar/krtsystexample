@@ -6,8 +6,7 @@ import { validateToken } from "./utils";
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest, response: NextResponse) {
   const jwtCookie = request.cookies.get("jwt")?.value;
-
-  if (!jwtCookie || !validateToken(jwtCookie)) {
+  if (!jwtCookie || (jwtCookie && !validateToken(jwtCookie))) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 }

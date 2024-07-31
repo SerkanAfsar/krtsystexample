@@ -11,7 +11,7 @@ import { format } from "date-fns/format";
 
 export default async function IsEmirDetayLoglari({ id }: { id: number }) {
   const result = await GetWorkOrderLogsByWorkOrderId({ id });
-  if (!result.success) {
+  if (!result?.success) {
     return (
       <div className="mb-1 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="border-b border-stroke dark:border-strokedark">

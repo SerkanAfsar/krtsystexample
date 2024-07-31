@@ -14,6 +14,10 @@ import {
 import usePirlantaCode, {
   PirlantaCodeItemType,
 } from "@/hooks/CodeHooks/usePirlantaCode";
+import {
+  AddProductApiService,
+  UpdateProductApiService,
+} from "@/ApiServices/Products.ApiService";
 
 const PirlantaDetayContainer = ({
   pirlantaItemData,
@@ -83,7 +87,7 @@ const PirlantaDetayContainer = ({
       sections={AddStoneSections.filter((a) => a.groupNumber == activeStep)}
       data={data}
       stepCount={2}
-      serviceFunction={isAdd ? AddProductService : UpdateProductService}
+      serviceFunction={isAdd ? AddProductApiService : UpdateProductApiService}
       filteredData={newData}
       productCode={pruductCode}
       extraOptions={extraOptions}

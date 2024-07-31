@@ -16,4 +16,5 @@ export type ResponseResult<T> = {
   data?: T | null | string | number | any[];
   error?: string[] | null;
   statusCode: number;
+  detail?: string | null;
 };

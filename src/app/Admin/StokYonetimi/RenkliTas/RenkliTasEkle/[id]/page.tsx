@@ -12,7 +12,7 @@ export default async function RenkliTaskGuncelle({
   params: { id: string };
 }) {
   const result = await GetProductService({ id: Number(params.id) });
-  if (result.success) {
+  if (result?.success) {
     const data = result.data as ProductType;
     const properties = data.properties;
     delete data.properties;
@@ -29,3 +29,5 @@ export default async function RenkliTaskGuncelle({
   }
   return notFound();
 }
+
+export const dynamic = "force-dynamic";

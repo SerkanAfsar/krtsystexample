@@ -168,8 +168,8 @@ export default function usePirlantaModalData({
     GetWorkOrderProductListModalService({
       type: "Diamond",
     }).then((resp: ResponseResult<ProductListType>) => {
-      const data = resp.data as ProductListType;
-      if (resp.success) {
+      if (resp?.success) {
+        const data = resp.data as ProductListType;
         const dataResult: any = data.results.map((item, index) => {
           return ResultObject({ item: item, index: index });
         });

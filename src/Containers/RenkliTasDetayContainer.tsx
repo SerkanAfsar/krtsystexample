@@ -10,6 +10,10 @@ import { IRenkliTasType } from "../../types/formTypes";
 import { RenkliTasListesiData } from "@/utils";
 import { AddRenkliTasSections } from "@/utils/MockData";
 import { useState, useCallback } from "react";
+import {
+  AddProductApiService,
+  UpdateProductApiService,
+} from "@/ApiServices/Products.ApiService";
 
 export default function RenkliTasDetayContainer({
   renkliTasItemData,
@@ -88,7 +92,7 @@ export default function RenkliTasDetayContainer({
       productCode={renkliTasCode}
       isAdd={isAdd}
       resultCallBack={resultCallBack}
-      serviceFunction={isAdd ? AddProductService : UpdateProductService}
+      serviceFunction={isAdd ? AddProductApiService : UpdateProductApiService}
       filteredData={newData}
       extraOptions={extraOptions}
       redirectUrl="/Admin/StokYonetimi/RenkliTas/RenkliTasListesi"

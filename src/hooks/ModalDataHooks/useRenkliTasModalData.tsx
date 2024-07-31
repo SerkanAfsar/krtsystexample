@@ -74,7 +74,7 @@ export default function useRenkliTasModalData({
     GetWorkOrderProductListModalService({
       type: "ColoredStone",
     }).then((resp: ResponseResult<ProductListType>) => {
-      if (resp.success) {
+      if (resp?.success) {
         const data = resp.data as ProductListType;
         const dataOneResult: any = data.results.map((item, index) => {
           const selectedItem = selectedValues.find(

@@ -3,6 +3,8 @@ import { twMerge } from "tailwind-merge";
 import { jwtDecode } from "jwt-decode";
 
 import { CustomOptionType } from "../../types/inputTypes";
+import { ResponseResult } from "../../types/responseTypes";
+import { toast } from "react-toastify";
 
 export const cn = (...args: ClassValue[]) => {
   return twMerge(clsx(args));
@@ -1086,4 +1088,24 @@ export const formatToCurrency = (currency: number) => {
     return currency.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
   }
   return 0;
+};
+
+export const ApiServiceResult = ({
+  result,
+  message,
+  callBack,
+}: {
+  result: ResponseResult<any>;
+  message: string;
+  callBack?: any;
+}) => {
+  if (result?.success) {
+    toast.success(message, { position: "top-right" });
+    callBack && callBack();
+  } else {
+    const err = result.error ? result.error[0] : result?.detail || "Hata";
+    return toast.error(err, {
+      position: "top-right",
+    });
+  }
 };

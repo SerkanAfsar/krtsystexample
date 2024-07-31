@@ -58,7 +58,7 @@ export default function useSadeModalData({
     GetWorkOrderProductListModalService({
       type: "Simple",
     }).then((resp: ResponseResult<ProductListType>) => {
-      if (resp.success) {
+      if (resp?.success) {
         const data = resp.data as ProductListType;
         const dataOneResult: any = data.results.map((item) => {
           const condition =

@@ -6,8 +6,6 @@ import "dropzone/dist/dropzone.css";
 import "@/css/satoshi.css";
 import "@/css/simple-datatables.css";
 import "@/css/style.css";
-import React, { useEffect, useState } from "react";
-import Loader from "@/components/common/Loader";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "lightgallery.js/dist/css/lightgallery.css";
@@ -18,13 +16,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
-  }, []);
-
   return (
     <html lang="tr">
       <body suppressHydrationWarning={true}>
@@ -34,9 +25,7 @@ export default function RootLayout({
             controls: false,
           }}
         >
-          <div className="dark:bg-boxdark-2 dark:text-bodydark">
-            {loading ? <Loader /> : children}
-          </div>
+          <div className="dark:bg-boxdark-2 dark:text-bodydark">{children}</div>
         </LightgalleryProvider>
         <ToastContainer />
       </body>

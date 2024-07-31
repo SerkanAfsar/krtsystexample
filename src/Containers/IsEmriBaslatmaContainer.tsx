@@ -62,7 +62,7 @@ export default function IsEmriBaslatmaContainer({
     const newData: WorkOrderAtolyeType = { ...data, work_order: Number(id) };
 
     const result = await AddWorkOrderLogService({ data: newData });
-    if (result.success) {
+    if (result?.success) {
       return toast.success("Eklendi", { position: "top-right" });
     } else {
       return toast.error(result.error ? result.error[0] : "Hata", {

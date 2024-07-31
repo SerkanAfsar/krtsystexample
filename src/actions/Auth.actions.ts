@@ -8,7 +8,7 @@ import { AuthType } from "../../types/types";
 export const loginServer = async (data: LoginType) => {
   const result = await LoginService({ data });
 
-  if (result.success) {
+  if (result?.success) {
     const data = result.data as AuthType;
     await cookies().set({
       name: "jwt",
