@@ -41,3 +41,15 @@
 
  ürün kodları ekle seçim ekrarnına madeni kaldır
 
+ ---> Mücevher kodu client side
+
+--->  Sertifika kaldır
+
+----> İşlemi kaldır. Çıkış giriş backend den gelicek (string olarak gelicek)
+
+---> Workorder finish endpoint eklenicek
+
+
+ anil@atillakarat.com
+ hakan@atillakarat.com
+ kamil@atillakarat.com
