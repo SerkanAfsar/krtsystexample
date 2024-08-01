@@ -24,7 +24,6 @@ export default function IsEmriBaslatmaContainer({
     register,
     formState: { errors },
     watch,
-    setValue,
     handleSubmit,
   } = useForm<WorkOrderAtolyeType>({});
 
@@ -33,7 +32,7 @@ export default function IsEmriBaslatmaContainer({
   const [teslimAlanList, setTeslimAlanList] = useState<CustomOptionType[]>([]);
 
   useEffect(() => {
-    const subscription = watch((value, { name, type }) => {
+    const subscription = watch((value, { name }) => {
       if (name && (name == "from_group" || "to_group")) {
         GetWorkOrderPeopleByGroups({ group_ids: [Number(value[name])] })
           .then((resp: WorkOrderPeopleList[]) => {
@@ -60,7 +59,6 @@ export default function IsEmriBaslatmaContainer({
 
   const onSubmit: SubmitHandler<WorkOrderAtolyeType> = async (data) => {
     const newData: WorkOrderAtolyeType = { ...data, work_order: Number(id) };
-
     const result = await AddWorkOrderLogService({ data: newData });
     if (result?.success) {
       return toast.success("Eklendi", { position: "top-right" });

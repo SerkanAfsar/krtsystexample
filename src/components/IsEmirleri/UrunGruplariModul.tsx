@@ -85,9 +85,9 @@ export default function UrunGruplariModul({
             <div
               key={index}
               className={cn(
-                "grid gap-2  p-2 text-left text-black",
+                "mx-2 mt-1 grid gap-2 text-left text-black",
                 `grid-cols-${headerColumns.length}`,
-                "border-b-2 border-black",
+                "border-b-[1px] border-graydark py-1",
               )}
             >
               {Object.entries(item).map(([key, value], index) => {
