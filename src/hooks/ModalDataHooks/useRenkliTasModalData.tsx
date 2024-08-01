@@ -8,6 +8,7 @@ import { ResponseResult } from "../../../types/responseTypes";
 import { SeciliUrunType } from "@/components/IsEmirleri/UrunGruplariModul";
 import { formatToCurrency } from "@/utils";
 import { GetWorkOrderProductListModalService } from "@/Services/WorkOrder.Services";
+import CustomModalInput from "@/components/CustomModalInput";
 
 export default function useRenkliTasModalData({
   setSelectedValues,
@@ -111,7 +112,7 @@ export default function useRenkliTasModalData({
             renk: item?.properties?.renk,
             kesim: item?.properties?.kesim,
             adet: (
-              <CustomHtmlValue
+              <CustomModalInput
                 name="adet"
                 ref={(el) => {
                   if (el) {
@@ -129,7 +130,7 @@ export default function useRenkliTasModalData({
             ),
             kullanilanKarat: item.menstrual_status == "Mixed" && (
               <div className="flex items-center justify-start gap-1">
-                <CustomHtmlValue
+                <CustomModalInput
                   name="used_carat"
                   ref={(el) => {
                     if (el) {
@@ -188,74 +189,3 @@ export default function useRenkliTasModalData({
     totalPageCount,
   };
 }
-
-export type CustomProps = React.HTMLAttributes<HTMLInputElement> & {
-  setSelectedValues: any;
-  item: ProductType;
-  inputAdetRefs: any;
-  spanMaliyetRefs: any;
-  indexNo: number;
-  val: string;
-  name: string;
-  condition: boolean;
-};
-
-const CustomHtmlValue = React.forwardRef<HTMLInputElement, CustomProps>(
-  (
-    {
-      setSelectedValues,
-      item,
-      inputAdetRefs,
-      spanMaliyetRefs,
-      name,
-      indexNo,
-      val,
-      condition,
-      ...rest
-    },
-    ref,
-  ) => {
-    const [value, setValue] = useState<string>(val);
-
-    useEffect(() => {
-      setSelectedValues((prev: SeciliUrunType[]) => {
-        const index = prev.findIndex((a) => a.pk == Number(item.pk));
-
-        if (index > -1) {
-          const spanRef = spanMaliyetRefs.current[indexNo];
-          let maliyet = Number(spanRef.ariaLabel);
-          if (name == "used_carat") {
-            maliyet =
-              value && item.menstrual_status == "Mixed"
-                ? Number(maliyet * Number(value))
-                : maliyet;
-            spanRef.textContent = `${formatToCurrency(maliyet)} $`;
-          }
-
-          prev[index] = {
-            ...prev[index],
-            [name]: value,
-            maliyet: `${formatToCurrency(maliyet)} $`,
-            maliyetPrice: maliyet,
-          };
-        }
-        return [...prev];
-      });
-    }, [value, item.pk, name, setSelectedValues, spanMaliyetRefs, indexNo]);
-    return (
-      <input
-        type="number"
-        name={`${name}_${item.pk}`}
-        ref={ref}
-        disabled={!condition}
-        className="block w-20 border border-primary px-2 py-1"
-        onChange={(e) => {
-          setValue(e.target.value);
-        }}
-        value={value}
-        {...rest}
-      />
-    );
-  },
-);
-CustomHtmlValue.displayName = "CustomHtmlValue";

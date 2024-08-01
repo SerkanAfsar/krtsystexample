@@ -1,8 +1,4 @@
 "use client";
-import {
-  AddProductService,
-  UpdateProductService,
-} from "@/Services/Product.Services";
 
 import CustomForm from "@/components/CustomUI/CustomForm";
 import useRenkliTasCode from "@/hooks/CodeHooks/useRenkliTasCode";

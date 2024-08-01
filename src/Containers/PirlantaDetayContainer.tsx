@@ -1,15 +1,8 @@
 "use client";
-import CustomForm, {
-  SelectOptionsType,
-} from "@/components/CustomUI/CustomForm";
+import CustomForm from "@/components/CustomUI/CustomForm";
 import { AddStoneSections } from "@/utils/MockData";
 import { AddDiamondType } from "../../types/formTypes";
 import { useCallback, useState } from "react";
-
-import {
-  AddProductService,
-  UpdateProductService,
-} from "@/Services/Product.Services";
 
 import usePirlantaCode, {
   PirlantaCodeItemType,
