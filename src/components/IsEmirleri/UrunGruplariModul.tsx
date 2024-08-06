@@ -37,6 +37,9 @@ export default function UrunGruplariModul({
       quantity: item.adet ? Number(item.adet) : null,
       used_carat: item.used_carat ? Number(item.used_carat) : null,
       price: item.maliyetPrice ? Number(item.maliyetPrice) : null,
+      type: item.type ? String(item.type) : undefined,
+      ayar: item.ayar ? String(item.ayar) : null,
+      modelTuru: item.modelTuru ? String(item.modelTuru) : null,
     }));
 
     setValues((prev: ProductItemsType[]) => {
@@ -58,7 +61,7 @@ export default function UrunGruplariModul({
             e.stopPropagation();
           }
         }}
-        className="mb-3 flex w-full flex-col gap-3"
+        className="mb-3 flex w-full flex-col gap-2"
       >
         <div className="flex w-full items-center justify-between">
           <b>{title}</b>

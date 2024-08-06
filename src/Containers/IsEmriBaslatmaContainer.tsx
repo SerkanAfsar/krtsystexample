@@ -4,6 +4,7 @@ import {
   WorkOrderAtolyeType,
   WorkOrderPeopleList,
   WorkOrderTeamGroupType,
+  WorkOrderType,
 } from "../../types/WorkOrder.types";
 import CustomSelect from "@/components/CustomUI/CustomSelect";
 import { CustomOptionType } from "../../types/inputTypes";
@@ -13,23 +14,67 @@ import {
   GetWorkOrderPeopleByGroups,
 } from "@/Services/WorkOrder.Services";
 import CustomInput from "@/components/CustomUI/CustomInput";
-import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
+import { useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 export default function IsEmriBaslatmaContainer({
   workOrderGroups,
+  workOrder,
 }: {
+  workOrder: WorkOrderType;
   workOrderGroups: WorkOrderTeamGroupType[];
 }) {
+  // const   isUpdate = false,
+  const { id } = useParams();
+  const searchParams = useSearchParams();
+  const isFirst =
+    searchParams.get("isFirst") && Boolean(searchParams.get("isFirst"));
+
+  const [teslimEdenList, setTeslimEdenList] = useState<CustomOptionType[]>([]);
+  const [teslimAlanList, setTeslimAlanList] = useState<CustomOptionType[]>([]);
+
+  const newGroupData: CustomOptionType[] = workOrderGroups.map((item) => ({
+    titleVal: item.name,
+    valueVal: item.id.toString(),
+  }));
+
   const {
     register,
     formState: { errors },
     watch,
+    setValue,
     handleSubmit,
-  } = useForm<WorkOrderAtolyeType>({});
+  } = useForm<WorkOrderAtolyeType>({
+    defaultValues: {
+      from_group:
+        workOrderGroups.find((a) => a.name == workOrder.group)?.id || undefined,
+    },
+  });
 
-  const { id } = useParams();
-  const [teslimEdenList, setTeslimEdenList] = useState<CustomOptionType[]>([]);
-  const [teslimAlanList, setTeslimAlanList] = useState<CustomOptionType[]>([]);
+  useEffect(() => {
+    if (!isFirst) {
+      const grpId = workOrderGroups.find((a) => a.name == workOrder.group)?.id;
+      GetWorkOrderPeopleByGroups({ group_ids: [Number(grpId)] })
+        .then((resp: WorkOrderPeopleList[]) => {
+          const data = resp.map((item) => ({
+            titleVal: item.username,
+            valueVal: item.id.toString(),
+          }));
+          return data;
+        })
+        .then((data) => {
+          setTeslimEdenList(data);
+          const fromPerson = data.find(
+            (a) => a.titleVal == workOrder.user,
+          )?.valueVal;
+
+          setValue("from_person", fromPerson ? Number(fromPerson) : 0);
+        })
+        .catch((err) => {
+          console.log("err is ", err);
+        });
+    }
+  }, [isFirst, workOrder.group, workOrderGroups, setValue, workOrder.user]);
 
   useEffect(() => {
     const subscription = watch((value, { name }) => {
@@ -69,11 +114,6 @@ export default function IsEmriBaslatmaContainer({
     }
   };
 
-  const newGroupData: CustomOptionType[] = workOrderGroups.map((item) => ({
-    titleVal: item.name,
-    valueVal: item.id.toString(),
-  }));
-
   return (
     <div className="mb-1 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="border-b border-stroke dark:border-strokedark">
@@ -96,6 +136,7 @@ export default function IsEmriBaslatmaContainer({
                 required: true,
                 options: newGroupData,
               }}
+              disabled={!isFirst ? true : false}
               err={errors.from_group?.message}
               {...register("from_group", {
                 required: "Çıkış Atölye Seçiniz",
@@ -110,6 +151,7 @@ export default function IsEmriBaslatmaContainer({
                 required: true,
                 options: teslimEdenList,
               }}
+              disabled={!isFirst ? true : false}
               err={errors.from_person?.message}
               {...register("from_person", {
                 required: "Teslim Eden Personel Seçiniz",

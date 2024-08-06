@@ -1,11 +1,13 @@
 "use client";
-
-import { GetProductDatatableService } from "@/Services/Product.Services";
 import { ResponseResult } from "../../../types/responseTypes";
 import { ProductListType } from "../../../types/types";
 import React, { useState, useCallback, useEffect } from "react";
 import { SeciliUrunType } from "@/components/IsEmirleri/UrunGruplariModul";
-import { formatToCurrency } from "@/utils";
+import {
+  formatToCurrency,
+  SadeAltinKarsiliklari,
+  SadeModelTurleriData,
+} from "@/utils";
 import { GetWorkOrderProductListModalService } from "@/Services/WorkOrder.Services";
 export default function useSadeModalData({
   setSelectedValues,
@@ -31,7 +33,9 @@ export default function useSadeModalData({
         gram,
         hasGrami: has,
         modelTuru: model,
+        ayar,
         maliyet,
+        modelTuru,
       } = properties;
 
       const item: SeciliUrunType = {
@@ -42,6 +46,12 @@ export default function useSadeModalData({
         has,
         model,
         maliyet: `${formatToCurrency(maliyet)} $`,
+        type: "Sade",
+        modelTuru:
+          SadeModelTurleriData.find(
+            (a) => a.titleVal == modelTuru,
+          )?.extraValue?.substring(0, 1) || "Not Exists",
+        ayar: SadeAltinKarsiliklari(ayar),
         maliyetPrice: maliyet,
       };
 
@@ -60,6 +70,7 @@ export default function useSadeModalData({
     }).then((resp: ResponseResult<ProductListType>) => {
       if (resp?.success) {
         const data = resp.data as ProductListType;
+
         const dataOneResult: any = data.results.map((item) => {
           const condition =
             selectedValues.findIndex(
@@ -90,7 +101,7 @@ export default function useSadeModalData({
             gram: item?.properties?.gram,
             has: item?.properties?.hasGrami,
             model: item?.properties?.modelTuru,
-            maliyet: `${maliyet} $`,
+            maliyet: `${formatToCurrency(maliyet)} $`,
           };
         });
         setActiveData(dataOneResult);

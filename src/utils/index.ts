@@ -655,6 +655,161 @@ export const RenkliTasListesiData: CustomOptionType[] = [
   },
 ];
 
+export const SadeModelTurleriData: CustomOptionType[] = [
+  {
+    titleVal: "Alyans",
+    valueVal: "Alyans",
+    extraValue: "ALY",
+  },
+  {
+    titleVal: "Bileklik",
+    valueVal: "Bileklik",
+    extraValue: "BL",
+  },
+  {
+    titleVal: "Kelepçe",
+    valueVal: "Kelepçe",
+    extraValue: "BNG",
+  },
+  {
+    titleVal: "Broş",
+    valueVal: "Broş",
+    extraValue: "BRS",
+  },
+  {
+    titleVal: "Kol Düğmesi",
+    valueVal: "Kol Düğmesi",
+    extraValue: "CF",
+  },
+  {
+    titleVal: "Küpe",
+    valueVal: "Küpe",
+    extraValue: "E",
+  },
+  {
+    titleVal: "Anturaj Küpe",
+    valueVal: "Anturaj Küpe",
+    extraValue: "EA",
+  },
+  {
+    titleVal: "Küpe Arkalığı",
+    valueVal: "Küpe Arkalığı",
+    extraValue: "EK",
+  },
+  {
+    titleVal: "Tektaş Küpe",
+    valueVal: "Tektaş Küpe",
+    extraValue: "ES",
+  },
+  {
+    titleVal: "Bilezik",
+    valueVal: "Bilezik",
+    extraValue: "FBR",
+  },
+  {
+    titleVal: "Kilit",
+    valueVal: "Kilit",
+    extraValue: "KLT",
+  },
+  {
+    titleVal: "Erkek Yüzüğü",
+    valueVal: "Erkek Yüzüğü",
+    extraValue: "MR",
+  },
+  {
+    titleVal: "Gerdanlık",
+    valueVal: "Gerdanlık",
+    extraValue: "NEC",
+  },
+  {
+    titleVal: "Zincirli Kolye",
+    valueVal: "Zincirli Kolye",
+    extraValue: "NZ",
+  },
+  {
+    titleVal: "Kolye Ucu",
+    valueVal: "Kolye Ucu",
+    extraValue: "P",
+  },
+  {
+    titleVal: "Anturaj Kolye Ucu",
+    valueVal: "Anturaj Kolye Ucu",
+    extraValue: "PA",
+  },
+  {
+    titleVal: "Tektaş Kolye ucu",
+    valueVal: "Tektaş Kolye ucu",
+    extraValue: "PS",
+  },
+  {
+    titleVal: "Anturaj Yüzük",
+    valueVal: "Anturaj Yüzük",
+    extraValue: "RA",
+  },
+  {
+    titleVal: "Genel Fantazi Yüzük",
+    valueVal: "Genel Fantazi Yüzük",
+    extraValue: "RF",
+  },
+  {
+    titleVal: "Tektaş Yüzük",
+    valueVal: "Tektaş Yüzük",
+    extraValue: "RS",
+  },
+  {
+    titleVal: "Tamtur Yüzük",
+    valueVal: "Tamtur Yüzük",
+    extraValue: "RTT",
+  },
+  {
+    titleVal: "Zincirler",
+    valueVal: "Zincirler",
+    extraValue: "RULO",
+  },
+  {
+    titleVal: "Rozet",
+    valueVal: "Rozet",
+    extraValue: "RZ",
+  },
+
+  {
+    titleVal: "Takım Bileklik",
+    valueVal: "Takım Bileklik",
+    extraValue: "TKB",
+  },
+  {
+    titleVal: "Takım Küpe",
+    valueVal: "Takım Küpe",
+    extraValue: "TKY",
+  },
+  {
+    titleVal: "Takım Kolye",
+    valueVal: "Takım Kolye",
+    extraValue: "TKP",
+  },
+  {
+    titleVal: "Takım Yüzük",
+    valueVal: "Takım Yüzük",
+    extraValue: "TKR",
+  },
+  {
+    titleVal: "Tespih",
+    valueVal: "Tespih",
+    extraValue: "TS",
+  },
+  {
+    titleVal: "Beş Taş Yüzük",
+    valueVal: "Beş Taş Yüzük",
+    extraValue: "WR",
+  },
+
+  {
+    titleVal: "Zincir",
+    valueVal: "Zincir",
+    extraValue: "ZN",
+  },
+];
+
 export const AtolyeListesi: CustomOptionType[] = [
   {
     titleVal: "HERMAN (ASKER)",
@@ -1090,6 +1245,10 @@ export const formatToCurrency = (currency: number) => {
   return 0;
 };
 
+export const hasDecimal = (val: number): boolean => {
+  return val - Math.floor(val) !== 0;
+};
+
 export const ApiServiceResult = ({
   result,
   message,
@@ -1107,5 +1266,22 @@ export const ApiServiceResult = ({
     return toast.error(err, {
       position: "top-right",
     });
+  }
+};
+
+export const SadeAltinKarsiliklari = (ayar: string): string => {
+  switch (ayar) {
+    case "18":
+    case "750": {
+      return "18";
+    }
+    case "14":
+    case "585": {
+      return "14";
+    }
+    default:
+    case "8": {
+      return "08";
+    }
   }
 };

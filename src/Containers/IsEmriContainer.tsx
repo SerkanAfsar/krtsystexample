@@ -7,7 +7,7 @@ import { ModalHeaders, ModalSadeHeaders } from "../../types/types";
 import usePirlantaModalData from "@/hooks/ModalDataHooks/usePirlantaModalData";
 import useRenkliTasModalData from "@/hooks/ModalDataHooks/useRenkliTasModalData";
 import useSadeModalData from "@/hooks/ModalDataHooks/useSadeModalData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatToCurrency } from "@/utils";
 import {
   AddWorOrderType,
@@ -22,7 +22,6 @@ import { useRouter } from "next/navigation";
 const UrunGruplari: UrunGruplariModulType[] = [
   {
     buttonText: "Sade Ekle ",
-
     headerColumns: [
       { title: "Ürün Kodu", accessor: "code" },
       { title: "Renk", accessor: "renk" },
@@ -37,7 +36,6 @@ const UrunGruplari: UrunGruplariModulType[] = [
   },
   {
     buttonText: "Renkli Taş Ekle",
-
     headerColumns: [
       { title: "Ürün Kodu", accessor: "code" },
       { title: "Kesim", accessor: "kesim" },
@@ -47,13 +45,12 @@ const UrunGruplari: UrunGruplariModulType[] = [
       { title: "Adet", accessor: "adet" },
       { title: "Maliyet", accessor: "maliyet" },
     ],
-    title: "Renkli Taş ",
+    title: "Renkli Taş",
     modalHeaderColumns: ModalHeaders,
     tableFunction: useRenkliTasModalData,
   },
   {
     buttonText: "Pırlanta Ekle",
-
     headerColumns: [
       { title: "Ürün Kodu", accessor: "code" },
       { title: "Kesim", accessor: "kesim" },
@@ -63,7 +60,7 @@ const UrunGruplari: UrunGruplariModulType[] = [
       { title: "Adet", accessor: "adet" },
       { title: "Maliyet", accessor: "maliyet" },
     ],
-    title: "Pırlanta ",
+    title: "Pırlanta",
     modalHeaderColumns: ModalHeaders,
     tableFunction: usePirlantaModalData,
   },
@@ -72,6 +69,7 @@ const UrunGruplari: UrunGruplariModulType[] = [
 export default function IsEmriContainer() {
   const router = useRouter();
   const [description, setDescription] = useState<string>("");
+  const [isEmriCode, setIsEmriCode] = useState<string>("");
   const [values, setValues] = useState<ProductItemsType[]>(
     UrunGruplari.map((item) => {
       return {
@@ -80,6 +78,47 @@ export default function IsEmriContainer() {
       };
     }),
   );
+
+  useEffect(() => {
+    const pirlantaArr = values.find((a) => a.title == "Pırlanta")?.products;
+    const renkliTasArr = values.find((a) => a.title == "Renkli Taş")?.products;
+    const sadeArr = values.find((a) => a.title == "Sade")?.products;
+    let code = "";
+    if (pirlantaArr && pirlantaArr?.length > 0 && renkliTasArr?.length == 0) {
+      code = "D";
+    }
+    if (
+      pirlantaArr &&
+      pirlantaArr.length > 0 &&
+      renkliTasArr &&
+      renkliTasArr.length > 0
+    ) {
+      code = "M";
+    }
+    if (
+      pirlantaArr &&
+      pirlantaArr.length == 0 &&
+      renkliTasArr &&
+      renkliTasArr.length > 0
+    ) {
+      code = "M";
+    }
+    if (
+      pirlantaArr &&
+      pirlantaArr.length == 0 &&
+      renkliTasArr &&
+      renkliTasArr.length == 1
+    ) {
+      const item = renkliTasArr[0]?.type;
+      code = `${item}`;
+    }
+    if (sadeArr && sadeArr.length > 0) {
+      const item = sadeArr[0];
+      code += item?.ayar;
+      code += item?.modelTuru;
+    }
+    setIsEmriCode(code);
+  }, [values]);
 
   const lastItems = values.reduce<WorkOrderProductType[]>((acc, next) => {
     return [...acc, ...next.products];
@@ -99,7 +138,9 @@ export default function IsEmriContainer() {
 
     if (result?.success) {
       toast.success("Üretim İş Emri Eklendi", { position: "top-right" });
-      return router.push(`/Admin/IsEmirleri/UretimBaslatma/${result.data.id}`);
+      return router.push(
+        `/Admin/IsEmirleri/UretimBaslatma/${result.data.id}?isFirst=true`,
+      );
     } else {
       toast.error(result[0], { position: "top-right" });
     }
@@ -112,7 +153,7 @@ export default function IsEmriContainer() {
           <h3 className="p-4 text-lg font-medium text-black dark:text-white">
             İş Emri Bilgileri
           </h3>
-          <b className="mr-4 text-black"></b>
+          <b className="mr-4 text-black">Ürün Kodu : {isEmriCode}</b>
         </div>
         <hr />
         <div className="flex w-full flex-col gap-16 p-3">
@@ -131,6 +172,11 @@ export default function IsEmriContainer() {
             </label>
             <input
               type="text"
+              onKeyDown={async (e) => {
+                if (e.keyCode == 13) {
+                  await addWorkOrder();
+                }
+              }}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className=" w-full rounded-md border border-x-graydark px-3 py-2 text-black"

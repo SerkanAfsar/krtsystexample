@@ -8,7 +8,7 @@ import { MdBorderColor } from "react-icons/md";
 import React, { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
+
 import SidebarLinkGroup from "./SidebarLinkGroup";
 
 interface SidebarProps {
@@ -76,13 +76,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           href="/Admin/Dashboard"
           className="block w-full text-center text-3xl text-white "
         >
-          {/* <Image
-            width={176}
-            height={32}
-            src={"/images/logo/logo.svg"}
-            alt="Logo"
-            priority
-          /> */}
           ATİLLA KARAT
         </Link>
 
@@ -200,259 +193,253 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         }`}
                       >
                         <ul className="mb-3 mt-4 flex flex-col gap-2.5 pl-3">
-                          <li>
-                            <SidebarLinkGroup
-                              activeCondition={
-                                pathname === "/Pirlanta" ||
-                                pathname.includes("Pirlanta")
-                              }
-                            >
-                              {(handleClick, open) => {
-                                return (
-                                  <React.Fragment>
-                                    <Link
-                                      href="/"
-                                      className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                                        (pathname === "/stone" ||
-                                          pathname.includes("Pirlanta")) &&
-                                        "bg-graydark dark:bg-meta-4"
+                          <SidebarLinkGroup
+                            activeCondition={
+                              pathname === "/Pirlanta" ||
+                              pathname.includes("Pirlanta")
+                            }
+                          >
+                            {(handleClick, open) => {
+                              return (
+                                <React.Fragment>
+                                  <Link
+                                    href="/"
+                                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                                      (pathname === "/stone" ||
+                                        pathname.includes("Pirlanta")) &&
+                                      "bg-graydark dark:bg-meta-4"
+                                    }`}
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      sidebarExpanded
+                                        ? handleClick()
+                                        : setSidebarExpanded(true);
+                                    }}
+                                  >
+                                    <IoDiamond />
+                                    Pırlanta
+                                    <svg
+                                      className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                                        open && "rotate-180"
                                       }`}
-                                      onClick={(e) => {
-                                        e.preventDefault();
-                                        sidebarExpanded
-                                          ? handleClick()
-                                          : setSidebarExpanded(true);
-                                      }}
+                                      width="20"
+                                      height="20"
+                                      viewBox="0 0 20 20"
+                                      fill="none"
+                                      xmlns="http://www.w3.org/2000/svg"
                                     >
-                                      <IoDiamond />
-                                      Pırlanta
-                                      <svg
-                                        className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
-                                          open && "rotate-180"
-                                        }`}
-                                        width="20"
-                                        height="20"
-                                        viewBox="0 0 20 20"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          fillRule="evenodd"
-                                          clipRule="evenodd"
-                                          d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
-                                          fill=""
-                                        />
-                                      </svg>
-                                    </Link>
-                                    {/* <!-- Dropdown Menu Start --> */}
-                                    <div
-                                      className={`translate transform overflow-hidden ${
-                                        !open && "hidden"
-                                      }`}
-                                    >
-                                      <ul className="mb-3 mt-4 flex flex-col gap-2.5 pl-6">
-                                        <li>
-                                          <Link
-                                            href="/Admin/StokYonetimi/Pirlanta/PirlantaEkle"
-                                            className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                              pathname ===
-                                                "/Admin/StokYonetimi/Pirlanta/PirlantaEkle" &&
-                                              "text-white"
-                                            }`}
-                                          >
-                                            Pırlanta Ekle
-                                          </Link>
-                                        </li>
+                                      <path
+                                        fillRule="evenodd"
+                                        clipRule="evenodd"
+                                        d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+                                        fill=""
+                                      />
+                                    </svg>
+                                  </Link>
+                                  {/* <!-- Dropdown Menu Start --> */}
+                                  <div
+                                    className={`translate transform overflow-hidden ${
+                                      !open && "hidden"
+                                    }`}
+                                  >
+                                    <ul className="mb-3 mt-4 flex flex-col gap-2.5 pl-6">
+                                      <li>
+                                        <Link
+                                          href="/Admin/StokYonetimi/Pirlanta/PirlantaEkle"
+                                          className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                            pathname ===
+                                              "/Admin/StokYonetimi/Pirlanta/PirlantaEkle" &&
+                                            "text-white"
+                                          }`}
+                                        >
+                                          Pırlanta Ekle
+                                        </Link>
+                                      </li>
 
-                                        <li>
-                                          <Link
-                                            href="/Admin/StokYonetimi/Pirlanta/PirlantaListesi"
-                                            className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                              pathname ===
-                                                "/Admin/StokYonetimi/Pirlanta/PirlantaListesi" &&
-                                              "text-white"
-                                            } `}
-                                          >
-                                            Pırlanta Stok Listesi
-                                          </Link>
-                                        </li>
-                                      </ul>
-                                    </div>
-                                    {/* <!-- Dropdown Menu End --> */}
-                                  </React.Fragment>
-                                );
-                              }}
-                            </SidebarLinkGroup>
-                          </li>
+                                      <li>
+                                        <Link
+                                          href="/Admin/StokYonetimi/Pirlanta/PirlantaListesi"
+                                          className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                            pathname ===
+                                              "/Admin/StokYonetimi/Pirlanta/PirlantaListesi" &&
+                                            "text-white"
+                                          } `}
+                                        >
+                                          Pırlanta Stok Listesi
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                  {/* <!-- Dropdown Menu End --> */}
+                                </React.Fragment>
+                              );
+                            }}
+                          </SidebarLinkGroup>
 
-                          <li>
-                            <SidebarLinkGroup
-                              activeCondition={
-                                pathname === "/Sade" ||
-                                pathname.includes("Sade")
-                              }
-                            >
-                              {(handleClick, open) => {
-                                return (
-                                  <React.Fragment>
-                                    <Link
-                                      href="/"
-                                      className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                                        (pathname === "/Sade" ||
-                                          pathname.includes("Sade")) &&
-                                        "bg-graydark dark:bg-meta-4"
+                          <SidebarLinkGroup
+                            activeCondition={
+                              pathname === "/Sade" || pathname.includes("Sade")
+                            }
+                          >
+                            {(handleClick, open) => {
+                              return (
+                                <React.Fragment>
+                                  <Link
+                                    href="/"
+                                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                                      (pathname === "/Sade" ||
+                                        pathname.includes("Sade")) &&
+                                      "bg-graydark dark:bg-meta-4"
+                                    }`}
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      sidebarExpanded
+                                        ? handleClick()
+                                        : setSidebarExpanded(true);
+                                    }}
+                                  >
+                                    <FaRing />
+                                    Sade
+                                    <svg
+                                      className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                                        open && "rotate-180"
                                       }`}
-                                      onClick={(e) => {
-                                        e.preventDefault();
-                                        sidebarExpanded
-                                          ? handleClick()
-                                          : setSidebarExpanded(true);
-                                      }}
+                                      width="20"
+                                      height="20"
+                                      viewBox="0 0 20 20"
+                                      fill="none"
+                                      xmlns="http://www.w3.org/2000/svg"
                                     >
-                                      <FaRing />
-                                      Sade
-                                      <svg
-                                        className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
-                                          open && "rotate-180"
-                                        }`}
-                                        width="20"
-                                        height="20"
-                                        viewBox="0 0 20 20"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          fillRule="evenodd"
-                                          clipRule="evenodd"
-                                          d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
-                                          fill=""
-                                        />
-                                      </svg>
-                                    </Link>
-                                    {/* <!-- Dropdown Menu Start --> */}
-                                    <div
-                                      className={`translate transform overflow-hidden ${
-                                        !open && "hidden"
-                                      }`}
-                                    >
-                                      <ul className="mb-3 mt-4 flex flex-col gap-2.5 pl-6">
-                                        <li>
-                                          <Link
-                                            href="/Admin/StokYonetimi/Sade/SadeEkle"
-                                            className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                              pathname ===
-                                                "/Admin/StokYonetimi/Sade/SadeEkle" &&
-                                              "text-white"
-                                            }`}
-                                          >
-                                            Sade Ekle
-                                          </Link>
-                                        </li>
+                                      <path
+                                        fillRule="evenodd"
+                                        clipRule="evenodd"
+                                        d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+                                        fill=""
+                                      />
+                                    </svg>
+                                  </Link>
+                                  {/* <!-- Dropdown Menu Start --> */}
+                                  <div
+                                    className={`translate transform overflow-hidden ${
+                                      !open && "hidden"
+                                    }`}
+                                  >
+                                    <ul className="mb-3 mt-4 flex flex-col gap-2.5 pl-6">
+                                      <li>
+                                        <Link
+                                          href="/Admin/StokYonetimi/Sade/SadeEkle"
+                                          className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                            pathname ===
+                                              "/Admin/StokYonetimi/Sade/SadeEkle" &&
+                                            "text-white"
+                                          }`}
+                                        >
+                                          Sade Ekle
+                                        </Link>
+                                      </li>
 
-                                        <li>
-                                          <Link
-                                            href="/Admin/StokYonetimi/Sade/SadeStokListesi"
-                                            className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                              pathname ===
-                                                "/Admin/StokYonetimi/Sade/SadeStokListesi" &&
-                                              "text-white"
-                                            } `}
-                                          >
-                                            Sade Stok Listesi
-                                          </Link>
-                                        </li>
-                                      </ul>
-                                    </div>
-                                    {/* <!-- Dropdown Menu End --> */}
-                                  </React.Fragment>
-                                );
-                              }}
-                            </SidebarLinkGroup>
-                          </li>
-                          <li>
-                            <SidebarLinkGroup
-                              activeCondition={
-                                pathname === "/RenkliTas" ||
-                                pathname.includes("RenkliTas")
-                              }
-                            >
-                              {(handleClick, open) => {
-                                return (
-                                  <React.Fragment>
-                                    <Link
-                                      href="/"
-                                      className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                                        (pathname === "/RenkliTas" ||
-                                          pathname.includes("RenkliTas")) &&
-                                        "bg-graydark dark:bg-meta-4"
-                                      }`}
-                                      onClick={(e) => {
-                                        e.preventDefault();
-                                        sidebarExpanded
-                                          ? handleClick()
-                                          : setSidebarExpanded(true);
-                                      }}
-                                    >
-                                      <GiStonePile />
-                                      Renkli Taş
-                                      <svg
-                                        className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
-                                          open && "rotate-180"
-                                        }`}
-                                        width="20"
-                                        height="20"
-                                        viewBox="0 0 20 20"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          fillRule="evenodd"
-                                          clipRule="evenodd"
-                                          d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
-                                          fill=""
-                                        />
-                                      </svg>
-                                    </Link>
-                                    {/* <!-- Dropdown Menu Start --> */}
-                                    <div
-                                      className={`translate transform overflow-hidden ${
-                                        !open && "hidden"
-                                      }`}
-                                    >
-                                      <ul className="mb-3 mt-4 flex flex-col gap-2.5 pl-6">
-                                        <li>
-                                          <Link
-                                            href="/Admin/StokYonetimi/RenkliTas/RenkliTasEkle"
-                                            className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                              pathname ===
-                                                "/Admin/StokYonetimi/RenkliTas/RenkliTasEkle" &&
-                                              "text-white"
-                                            }`}
-                                          >
-                                            Renkli Taş Ekle
-                                          </Link>
-                                        </li>
+                                      <li>
+                                        <Link
+                                          href="/Admin/StokYonetimi/Sade/SadeStokListesi"
+                                          className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                            pathname ===
+                                              "/Admin/StokYonetimi/Sade/SadeStokListesi" &&
+                                            "text-white"
+                                          } `}
+                                        >
+                                          Sade Stok Listesi
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                  {/* <!-- Dropdown Menu End --> */}
+                                </React.Fragment>
+                              );
+                            }}
+                          </SidebarLinkGroup>
 
-                                        <li>
-                                          <Link
-                                            href="/Admin/StokYonetimi/RenkliTas/RenkliTasListesi"
-                                            className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                              pathname ===
-                                                "/Admin/StokYonetimi/RenkliTas/RenkliTasListesi" &&
-                                              "text-white"
-                                            } `}
-                                          >
-                                            Renkli Taş Stok Listesi
-                                          </Link>
-                                        </li>
-                                      </ul>
-                                    </div>
-                                    {/* <!-- Dropdown Menu End --> */}
-                                  </React.Fragment>
-                                );
-                              }}
-                            </SidebarLinkGroup>
-                          </li>
+                          <SidebarLinkGroup
+                            activeCondition={
+                              pathname === "/RenkliTas" ||
+                              pathname.includes("RenkliTas")
+                            }
+                          >
+                            {(handleClick, open) => {
+                              return (
+                                <React.Fragment>
+                                  <Link
+                                    href="/"
+                                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                                      (pathname === "/RenkliTas" ||
+                                        pathname.includes("RenkliTas")) &&
+                                      "bg-graydark dark:bg-meta-4"
+                                    }`}
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      sidebarExpanded
+                                        ? handleClick()
+                                        : setSidebarExpanded(true);
+                                    }}
+                                  >
+                                    <GiStonePile />
+                                    Renkli Taş
+                                    <svg
+                                      className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                                        open && "rotate-180"
+                                      }`}
+                                      width="20"
+                                      height="20"
+                                      viewBox="0 0 20 20"
+                                      fill="none"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        fillRule="evenodd"
+                                        clipRule="evenodd"
+                                        d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+                                        fill=""
+                                      />
+                                    </svg>
+                                  </Link>
+                                  {/* <!-- Dropdown Menu Start --> */}
+                                  <div
+                                    className={`translate transform overflow-hidden ${
+                                      !open && "hidden"
+                                    }`}
+                                  >
+                                    <ul className="mb-3 mt-4 flex flex-col gap-2.5 pl-6">
+                                      <li>
+                                        <Link
+                                          href="/Admin/StokYonetimi/RenkliTas/RenkliTasEkle"
+                                          className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                            pathname ===
+                                              "/Admin/StokYonetimi/RenkliTas/RenkliTasEkle" &&
+                                            "text-white"
+                                          }`}
+                                        >
+                                          Renkli Taş Ekle
+                                        </Link>
+                                      </li>
+
+                                      <li>
+                                        <Link
+                                          href="/Admin/StokYonetimi/RenkliTas/RenkliTasListesi"
+                                          className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                            pathname ===
+                                              "/Admin/StokYonetimi/RenkliTas/RenkliTasListesi" &&
+                                            "text-white"
+                                          } `}
+                                        >
+                                          Renkli Taş Stok Listesi
+                                        </Link>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                  {/* <!-- Dropdown Menu End --> */}
+                                </React.Fragment>
+                              );
+                            }}
+                          </SidebarLinkGroup>
                         </ul>
                       </div>
                       {/* <!-- Dropdown Menu End --> */}
@@ -552,36 +539,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
             </ul>
           </div>
-
-          {/* <div>
-            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
-              ÜRETİM & MAĞAZA
-            </h3>
-            <ul className="mb-6 flex flex-col gap-1.5">
-              <li>
-                <Link
-                  href="/"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("calendar1") &&
-                    "bg-graydark dark:bg-meta-4"
-                  }`}
-                >
-                  <FaScrewdriverWrench /> Üretim Yönetimi
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("calendar1") &&
-                    "bg-graydark dark:bg-meta-4"
-                  }`}
-                >
-                  <FaShop /> Mağaza Yönetimi
-                </Link>
-              </li>
-            </ul>
-          </div> */}
         </nav>
       </div>
     </aside>

@@ -43,4 +43,22 @@
 
 
 
+--> Üretim bitir de confirm çıkıcak
+
+--> Üretim sekmesi admin ise bitir çıkıcak (jwt kontrol) 
+
+--> Pırlanta + Renkli Taş=Multimix / Birden Fazla Renk Barındıran
+
+--> Renkli Taş sadece bir tane seçerse kodu olucak birden fazla seçerse Multimix / Birden Fazla Renk Barındıran
+
+--> İki pırlanta seçerse d kalmaya devam edicek
+
+https://docs.google.com/spreadsheets/d/155zFdqi4GDtwpvCoWj9kDKb0qTwzgap5/edit?gid=629087872#gid=629087872
+
+
+---> Mustafadan iş emri status endpointleri istediğin
+---> Mücevher kodu eksikleri tamamla
+---> admin kullanıcı iş emrini bitir endpointi iste mustafadan ve uygula (üretim müdürü olduğunda bitir buttonu hep gözükücek)
+
+
 

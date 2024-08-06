@@ -2,11 +2,10 @@
 
 import React, { useState, useCallback, useEffect, useRef } from "react";
 
-import { GetProductDatatableService } from "@/Services/Product.Services";
-import { ProductListType, ProductType } from "../../../types/types";
+import { ProductListType } from "../../../types/types";
 import { ResponseResult } from "../../../types/responseTypes";
 import { SeciliUrunType } from "@/components/IsEmirleri/UrunGruplariModul";
-import { formatToCurrency } from "@/utils";
+import { formatToCurrency, hasDecimal, RenkliTasListesiData } from "@/utils";
 import { GetWorkOrderProductListModalService } from "@/Services/WorkOrder.Services";
 import CustomModalInput from "@/components/CustomModalInput";
 
@@ -32,7 +31,8 @@ export default function useRenkliTasModalData({
   ) => {
     const target = e.target as HTMLInputElement;
 
-    const { kesim, carat, berraklik, renk, code, adet, maliyet } = properties;
+    const { kesim, carat, berraklik, renkliTas, renk, code, adet, maliyet } =
+      properties;
     const item: SeciliUrunType = {
       pk: target.name,
       code,
@@ -41,6 +41,7 @@ export default function useRenkliTasModalData({
       berraklik,
       renk,
       adet,
+      type: renkliTas.toString().substring(0, 1),
       maliyet: `${formatToCurrency(maliyet)} $`,
       maliyetPrice: maliyet,
     };
@@ -77,6 +78,7 @@ export default function useRenkliTasModalData({
     }).then((resp: ResponseResult<ProductListType>) => {
       if (resp?.success) {
         const data = resp.data as ProductListType;
+
         const dataOneResult: any = data.results.map((item, index) => {
           const selectedItem = selectedValues.find(
             (a) => (a.pk as string) == (item.pk as unknown),
@@ -146,7 +148,10 @@ export default function useRenkliTasModalData({
                   condition={condition}
                 />
                 <span className="text-md font-bold">
-                  &nbsp;/&nbsp;{item?.properties?.remaining_carat}
+                  &nbsp;/&nbsp;
+                  {hasDecimal(Number(item?.properties?.remaining_carat))
+                    ? Number(item?.properties?.remaining_carat).toFixed(2)
+                    : item?.properties?.remaining_carat}
                 </span>
               </div>
             ),

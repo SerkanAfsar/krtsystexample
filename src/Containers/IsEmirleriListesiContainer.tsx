@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { GetWorkOrdersList } from "@/Services/WorkOrder.Services";
 import { formatToCurrency } from "@/utils";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
+import Link from "next/link";
 
 const columns: Column<
   WorkOrderType & {
@@ -14,6 +15,8 @@ const columns: Column<
     cikis: string;
     giris: string;
     islem: string;
+    detay: React.ReactNode;
+    sil: React.ReactNode;
   }
 >[] = [
   {
@@ -24,20 +27,9 @@ const columns: Column<
     Header: "Mücevher Kodu",
     accessor: "mucevherKodu",
   },
+
   {
-    Header: "Sertifika",
-    accessor: "sertifika",
-  },
-  {
-    Header: "Çıkış",
-    accessor: "cikis",
-  },
-  {
-    Header: "Giriş",
-    accessor: "giris",
-  },
-  {
-    Header: "İşlem",
+    Header: "Son İşlem",
     accessor: "islem",
   },
   {
@@ -52,6 +44,14 @@ const columns: Column<
     Header: "Durum",
     accessor: "status",
   },
+  {
+    Header: "Detay",
+    accessor: "detay",
+  },
+  {
+    Header: "Sil",
+    accessor: "sil",
+  },
 ];
 
 export default function IsEmirleriListesiContainer() {
@@ -60,6 +60,17 @@ export default function IsEmirleriListesiContainer() {
     [],
   );
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
+
+  const detayBtn = useCallback((id: number) => {
+    return (
+      <Link
+        className="btn rounded-md bg-yellow-600 p-4 text-center text-white"
+        href={`/Admin/IsEmirleri/UretimBaslatma/${id}`}
+      >
+        Detay
+      </Link>
+    );
+  }, []);
 
   const updateData = useCallback(() => {
     setActiveData(null);
@@ -75,9 +86,7 @@ export default function IsEmirleriListesiContainer() {
         return {
           isEmriKodu: "",
           mucevherKodu: "",
-          sertifika: "",
-          cikis: "",
-          giris: "",
+          islem: item?.exit,
           last_process_date: new Date(
             item.last_process_date || null,
           ).toLocaleDateString(),
@@ -85,6 +94,7 @@ export default function IsEmirleriListesiContainer() {
             Number(item.total_product_cost),
           )} $`,
           status: item.status,
+          detay: detayBtn(item?.id as number),
         };
       });
       setActiveData(dataOneResult);
