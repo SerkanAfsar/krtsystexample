@@ -89,6 +89,7 @@ export const GetWorkOrderPeopleByGroups = async ({
     bodyData: { group_ids },
     method: "POST",
     hasToken: true,
+    isResponseList: true,
   });
 
   return result as WorkOrderPeopleList[];

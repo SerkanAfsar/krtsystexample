@@ -17,6 +17,7 @@ import CustomInput from "@/components/CustomUI/CustomInput";
 import { toast } from "react-toastify";
 import { useSearchParams } from "next/navigation";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 export default function IsEmriBaslatmaContainer({
   workOrderGroups,
   workOrder,
@@ -24,7 +25,7 @@ export default function IsEmriBaslatmaContainer({
   workOrder: WorkOrderType;
   workOrderGroups: WorkOrderTeamGroupType[];
 }) {
-  // const   isUpdate = false,
+  const router = useRouter();
   const { id } = useParams();
   const searchParams = useSearchParams();
   const isFirst =
@@ -106,7 +107,8 @@ export default function IsEmriBaslatmaContainer({
     const newData: WorkOrderAtolyeType = { ...data, work_order: Number(id) };
     const result = await AddWorkOrderLogService({ data: newData });
     if (result?.success) {
-      return toast.success("Eklendi", { position: "top-right" });
+      toast.success("Eklendi", { position: "top-right" });
+      return router.push("/Admin/IsEmirleri/UretimIsEmirleriListesi");
     } else {
       return toast.error(result.error ? result.error[0] : "Hata", {
         position: "top-right",

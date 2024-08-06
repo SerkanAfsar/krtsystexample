@@ -2,11 +2,11 @@ import {
   DeleteProductService,
   UpdateProductService,
 } from "@/Services/Product.Services";
-import { NextApiRequest } from "next";
+
 import { NextRequest } from "next/server";
 
 export async function DELETE(
-  req: NextApiRequest,
+  req: NextRequest,
   { params }: { params: { id: number } },
 ) {
   const { id } = params;

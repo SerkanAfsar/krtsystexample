@@ -10,12 +10,14 @@ export const BaseService = async ({
   method,
   bodyData,
   hasToken,
+  isResponseList = false,
 }: {
   url: string;
   method: string;
   bodyData: any;
   hasToken: boolean;
-}): Promise<ResponseResult<any>> => {
+  isResponseList?: boolean;
+}): Promise<ResponseResult<any> | any> => {
   try {
     const cookieStore = cookies();
     const jwt = cookieStore.get("jwt")?.value || null;
@@ -39,9 +41,14 @@ export const BaseService = async ({
     });
 
     const result = await response.json();
-    return result as ResponseResult<any>;
+    if (isResponseList) {
+      return result;
+    } else {
+      return result as ResponseResult<any>;
+    }
   } catch (err: unknown) {
     let errMessage;
+    console.log(err);
     if (typeof err === "string") {
       errMessage = err.toUpperCase();
     } else if (err instanceof Error) {
