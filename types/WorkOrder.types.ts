@@ -3,6 +3,9 @@ export type WorkOrderProductType = {
   quantity: number | null;
   used_carat: number | null;
   price: number | null;
+  type?: string | null;
+  ayar?: string | null;
+  modelTuru?: string | null;
 };
 
 export type ProductItemsType = {
@@ -45,9 +48,11 @@ export type WorkOrderType = {
   description: string;
   is_active: boolean;
   status: string;
-  user: any;
+  user: string;
   created_at: string;
   last_process_date: any;
+  exit?: string;
+  group?: string;
 };
 
 export type WorkOrderLogType = {

@@ -7,7 +7,6 @@ import {
   useGlobalFilter,
   useFilters,
   usePagination,
-  Column,
 } from "react-table";
 
 const CustomDatatable = ({

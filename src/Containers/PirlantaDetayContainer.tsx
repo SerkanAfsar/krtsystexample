@@ -1,19 +1,16 @@
 "use client";
-import CustomForm, {
-  SelectOptionsType,
-} from "@/components/CustomUI/CustomForm";
+import CustomForm from "@/components/CustomUI/CustomForm";
 import { AddStoneSections } from "@/utils/MockData";
 import { AddDiamondType } from "../../types/formTypes";
 import { useCallback, useState } from "react";
 
-import {
-  AddProductService,
-  UpdateProductService,
-} from "@/Services/Product.Services";
-
 import usePirlantaCode, {
   PirlantaCodeItemType,
 } from "@/hooks/CodeHooks/usePirlantaCode";
+import {
+  AddProductApiService,
+  UpdateProductApiService,
+} from "@/ApiServices/Products.ApiService";
 
 const PirlantaDetayContainer = ({
   pirlantaItemData,
@@ -83,7 +80,7 @@ const PirlantaDetayContainer = ({
       sections={AddStoneSections.filter((a) => a.groupNumber == activeStep)}
       data={data}
       stepCount={2}
-      serviceFunction={isAdd ? AddProductService : UpdateProductService}
+      serviceFunction={isAdd ? AddProductApiService : UpdateProductApiService}
       filteredData={newData}
       productCode={pruductCode}
       extraOptions={extraOptions}

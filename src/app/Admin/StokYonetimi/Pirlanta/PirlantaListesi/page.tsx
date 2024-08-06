@@ -1,18 +1,16 @@
 "use client";
-import {
-  DeleteProductService,
-  GetProductDatatableService,
-} from "@/Services/Product.Services";
+import { GetProductDatatableService } from "@/Services/Product.Services";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { ResponseResult } from "../../../../../../types/responseTypes";
-import { ProductListType, ProductType } from "../../../../../../types/types";
+import { ProductListType } from "../../../../../../types/types";
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Column } from "react-table";
-import { toast } from "react-toastify";
+
+import { DeleteProductApiService } from "@/ApiServices/Products.ApiService";
 
 interface Diamond {
   code?: string;
@@ -145,18 +143,11 @@ export default function PirlantaListesi() {
   }, []);
 
   const silButton = useCallback(async (item: any) => {
-    const id = item.pk as Number;
+    const id = item.pk as number;
     return (
       <div
         onClick={async () => {
-          const result = await DeleteProductService({ id });
-          if (result.success) {
-            toast.success("Ürün Silindi", { position: "top-right" });
-            updateData();
-          } else {
-            toast.error(result.error || "Hata", { position: "top-right" });
-            return;
-          }
+          await DeleteProductApiService({ id, callBack: updateData });
         }}
         className="btn cursor-pointer rounded-md bg-danger p-3 text-center text-white"
       >
@@ -172,8 +163,8 @@ export default function PirlantaListesi() {
       page: activePage,
       type: "Diamond",
     }).then((resp: ResponseResult<ProductListType>) => {
-      const data = resp.data as ProductListType;
-      if (resp.success) {
+      if (resp?.success) {
+        const data = resp.data as ProductListType;
         const dataOneResult: any = data.results.map((item) => {
           return {
             berraklik: item?.properties?.berraklik,

@@ -6,7 +6,7 @@ import { ProductListType, ProductType } from "../../types/types";
 export const GetProductService = async ({
   id,
 }: {
-  id: Number;
+  id: number;
 }): Promise<ResponseResult<ProductType>> => {
   const result = await BaseService({
     url: `product/${id.toString()}`,
@@ -44,20 +44,22 @@ export const UpdateProductService = async ({
     method: "PUT",
     hasToken: true,
   });
+
   return result as ResponseResult<ProductType>;
 };
 
 export const DeleteProductService = async ({
   id,
 }: {
-  id: Number;
+  id: number;
 }): Promise<ResponseResult<ProductType>> => {
   const result = await BaseService({
-    url: `product/${id.toString()}/`,
+    url: `product/${id}/`,
     bodyData: null,
     method: "DELETE",
     hasToken: true,
   });
+
   return result as ResponseResult<ProductType>;
 };
 

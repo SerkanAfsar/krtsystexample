@@ -4,7 +4,6 @@ import {
   AddWorOrderType,
   WorkOrderAtolyeType,
   WorkOrderListType,
-  WorkOrderLogType,
   WorkOrderPeopleList,
   WorkOrderTeamGroupType,
   WorkOrderType,
@@ -63,6 +62,21 @@ export const GetWorkOrderGroupTypes = async ({
   });
 
   return result as ResponseResult<WorkOrderTeamGroupType>;
+};
+
+export const GetWorkOrderById = async ({
+  id,
+}: {
+  id: number;
+}): Promise<ResponseResult<WorkOrderType>> => {
+  const result = await BaseService({
+    url: `product/work-order/${id}/`,
+    bodyData: null,
+    method: "GET",
+    hasToken: true,
+  });
+
+  return result as ResponseResult<WorkOrderType>;
 };
 
 export const GetWorkOrderPeopleByGroups = async ({

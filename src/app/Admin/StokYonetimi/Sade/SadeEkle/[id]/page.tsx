@@ -11,7 +11,7 @@ export default async function SadeDetay({
   params: { id: string };
 }) {
   const result = await GetProductService({ id: Number(params.id) });
-  if (result.success) {
+  if (result?.success) {
     const data = result.data as ProductType;
     const props = data.properties;
     delete data.properties;

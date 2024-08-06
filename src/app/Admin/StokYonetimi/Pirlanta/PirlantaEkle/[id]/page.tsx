@@ -8,7 +8,7 @@ import { notFound } from "next/navigation";
 
 const PirlantaGuncelle = async ({ params }: { params: { id: string } }) => {
   const result = await GetProductService({ id: Number(params.id) });
-  if (result.success) {
+  if (result?.success) {
     const data = result.data as ProductType;
     const properties = data.properties;
     const product_certificate = data.product_certificate;

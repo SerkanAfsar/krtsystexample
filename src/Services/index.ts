@@ -1,9 +1,9 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { ResponseResult } from "../../types/responseTypes";
 type headersType = {
-  "Content-Type": string;
-  Authorization?: string;
+  [key: string]: string;
 };
 export const BaseService = async ({
   url,
@@ -15,17 +15,21 @@ export const BaseService = async ({
   method: string;
   bodyData: any;
   hasToken: boolean;
-}): Promise<any> => {
+}): Promise<ResponseResult<any>> => {
   try {
     const cookieStore = cookies();
     const jwt = cookieStore.get("jwt")?.value || null;
 
     const headers: headersType = {
       "Content-Type": "application/json; charset=utf-8",
-      Authorization: `Bearer ${jwt}`,
+      RequestTypeTest: "baserequest",
     };
+
+    if (jwt) {
+      headers.Authorization = `Bearer ${jwt}`;
+    }
     if (!hasToken) {
-      delete headers.Authorization;
+      delete headers?.Authorization;
     }
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
@@ -35,7 +39,7 @@ export const BaseService = async ({
     });
 
     const result = await response.json();
-    return result;
+    return result as ResponseResult<any>;
   } catch (err: unknown) {
     let errMessage;
     if (typeof err === "string") {
@@ -43,9 +47,12 @@ export const BaseService = async ({
     } else if (err instanceof Error) {
       errMessage = err.message;
     }
+
     return {
-      error: errMessage,
-      statusCode: "500",
+      statusCode: 500,
+      data: null,
+      error: errMessage ? [errMessage] : null,
+      success: false,
     };
   }
 };

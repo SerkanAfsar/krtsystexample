@@ -3,8 +3,7 @@ import * as React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FormSectionType } from "../../../types/formTypes";
 import SectionFormItem from "./SectionFormItem";
-import { toast } from "react-toastify";
-import { ResponseResult } from "../../../types/responseTypes";
+
 import { useParams, useRouter } from "next/navigation";
 
 export type SelectOptionsType = {
@@ -56,13 +55,13 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       watch,
       setValue,
       setError,
-      formState: { errors },
+
+      formState: { errors, isSubmitting },
     } = useForm<any>({
       defaultValues: data,
     });
     const { id } = useParams();
     const router = useRouter();
-    const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
     React.useEffect(() => {
       const subscription = watch((value: any) => {
@@ -77,30 +76,15 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       setActiveStep((prev: number) => (prev < stepCount - 1 ? prev + 1 : prev));
 
       if (activeStep == stepCount - 1 && serviceFunction && filteredData) {
-        setIsLoading(true);
-        const result: ResponseResult<any> = await serviceFunction({
+        await serviceFunction({
           id: id ?? null,
           data: filteredData,
+          callBack: () => {
+            if (redirectUrl) {
+              return router.push(redirectUrl);
+            }
+          },
         });
-
-        if (result.success) {
-          toast.success("Ekleme Başarılı", { position: "top-right" });
-          setIsLoading(false);
-          if (redirectUrl) {
-            return router.push(redirectUrl);
-          }
-        } else {
-          setIsLoading(false);
-          if (Array.isArray(result.error)) {
-            result.error?.map((err, index) => {
-              setTimeout(() => {
-                toast.error(err, { position: "top-right" });
-              }, 100 * index);
-            });
-            return;
-          }
-          return toast.error(result?.error, { position: "top-right" });
-        }
       }
     };
 
@@ -152,12 +136,12 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
             </button>
           )}
           <button
-            disabled={isLoading}
+            disabled={isSubmitting}
             type="submit"
             className="flex w-full justify-center rounded  bg-primary p-3 font-medium text-gray hover:bg-opacity-90 md:w-auto"
           >
             {activeStep == stepCount - 1
-              ? isLoading
+              ? isSubmitting
                 ? "Kaydediliyor..."
                 : "Kaydet"
               : "İleri"}

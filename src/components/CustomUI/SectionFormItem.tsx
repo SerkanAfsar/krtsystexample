@@ -1,8 +1,8 @@
 import { FormSectionType } from "../../../types/formTypes";
-import FormElementItem from "./FormElementItem";
-import { ClassValue } from "clsx";
+
 import { cn } from "@/utils";
 import { SelectOptionsType } from "./CustomForm";
+import FormElementItem from "./FormElementItem";
 
 export default function SectionFormItem({
   section,

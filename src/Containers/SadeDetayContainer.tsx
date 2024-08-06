@@ -1,8 +1,4 @@
 "use client";
-import {
-  AddProductService,
-  UpdateProductService,
-} from "@/Services/Product.Services";
 
 import CustomForm from "@/components/CustomUI/CustomForm";
 import useSadeCode from "@/hooks/CodeHooks/useSadeCode";
@@ -10,6 +6,10 @@ import { ISadeType } from "../../types/formTypes";
 import { ProductType } from "../../types/types";
 import { AddSadeSections } from "@/utils/MockData";
 import { useCallback, useEffect, useState } from "react";
+import {
+  AddProductApiService,
+  UpdateProductApiService,
+} from "@/ApiServices/Products.ApiService";
 
 export default function SadeDetayContainer({
   sadeItemData,
@@ -132,7 +132,7 @@ export default function SadeDetayContainer({
       productCode={sadeCode}
       isAdd={isAdd}
       resultCallBack={updateData}
-      serviceFunction={isAdd ? AddProductService : UpdateProductService}
+      serviceFunction={isAdd ? AddProductApiService : UpdateProductApiService}
       filteredData={newData}
       redirectUrl="/Admin/StokYonetimi/Sade/SadeStokListesi"
     />

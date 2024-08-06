@@ -46,7 +46,7 @@ export default function usePirlantaCode({
   const returnSameResult = (promiseFunc: Promise<any>, code: string) => {
     return promiseFunc
       .then((resp: ResponseResult<GetNextOrderType>) => {
-        if (resp.success) {
+        if (resp?.success) {
           const data = resp.data as GetNextOrderType;
           setDiamondCode(`${code}-${data.next_order}`);
         } else {
@@ -139,7 +139,7 @@ export default function usePirlantaCode({
       });
       GetListMixedProductsCodeDiamondService({ code, type: "Diamond" })
         .then((resp: ResponseResult<string[]>) => {
-          if (resp.success) {
+          if (resp?.success) {
             const respData = resp.data as string[];
             const sekoData: SelectOptionsType[] = respData.map((item) => ({
               titleVal: item,

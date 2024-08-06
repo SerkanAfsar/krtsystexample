@@ -38,7 +38,7 @@ export default function useRenkliTasCode({
   const returnSameResult = (promiseFunc: Promise<any>, code: string) => {
     return promiseFunc
       .then((resp: ResponseResult<GetNextOrderType>) => {
-        if (resp.success) {
+        if (resp?.success) {
           const data = resp.data as GetNextOrderType;
           setRenkliTasCode(`${code}-${data.next_order}`);
         } else {
@@ -119,7 +119,7 @@ export default function useRenkliTasCode({
         type: "ColoredStone",
       })
         .then((resp: ResponseResult<string[]>) => {
-          if (resp.success) {
+          if (resp?.success) {
             const respData = resp.data as string[];
             const sekoData: SelectOptionsType[] = respData.map((item) => ({
               titleVal: item,
