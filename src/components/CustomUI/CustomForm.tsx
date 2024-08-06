@@ -3,8 +3,7 @@ import * as React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FormSectionType } from "../../../types/formTypes";
 import SectionFormItem from "./SectionFormItem";
-import { toast } from "react-toastify";
-import { ResponseResult } from "../../../types/responseTypes";
+
 import { useParams, useRouter } from "next/navigation";
 
 export type SelectOptionsType = {

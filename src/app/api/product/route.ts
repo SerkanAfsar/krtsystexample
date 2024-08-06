@@ -1,5 +1,4 @@
 import { AddProductService } from "@/Services/Product.Services";
-import { NextApiRequest } from "next";
 import { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {

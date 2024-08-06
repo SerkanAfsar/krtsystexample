@@ -1,5 +1,5 @@
 "use client";
-import { FaBox, FaRegGem } from "react-icons/fa6";
+
 import { FaHome, FaRing } from "react-icons/fa";
 import { IoDiamond } from "react-icons/io5";
 import { GiStonePile } from "react-icons/gi";

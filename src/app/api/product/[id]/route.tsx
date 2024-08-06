@@ -1,7 +1,5 @@
-import { UpdateProductApiService } from "@/ApiServices/Products.ApiService";
 import {
   DeleteProductService,
-  GetProductService,
   UpdateProductService,
 } from "@/Services/Product.Services";
 import { NextApiRequest } from "next";

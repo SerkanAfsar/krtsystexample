@@ -1,11 +1,7 @@
 import { GetWorkOrderLogsByWorkOrderId } from "@/Services/WorkOrder.Services";
-import { formatDate } from "date-fns";
 
 import React from "react";
-import {
-  WorkOrderListType,
-  WorkOrderLogType,
-} from "../../../types/WorkOrder.types";
+import { WorkOrderListType } from "../../../types/WorkOrder.types";
 import { formatToCurrency } from "@/utils";
 import { format } from "date-fns/format";
 

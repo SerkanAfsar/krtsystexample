@@ -1,20 +1,17 @@
 "use client";
-import {
-  DeleteProductService,
-  GetProductDatatableService,
-} from "@/Services/Product.Services";
+import { GetProductDatatableService } from "@/Services/Product.Services";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { ISadeType } from "../../../../../../types/formTypes";
 import { ResponseResult } from "../../../../../../types/responseTypes";
-import { ProductListType, ProductType } from "../../../../../../types/types";
+import { ProductListType } from "../../../../../../types/types";
 import { SadeModelTurleri } from "@/utils/MockData";
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Column } from "react-table";
-import { toast } from "react-toastify";
+
 import { LightgalleryItem } from "react-lightgallery";
 import { DeleteProductApiService } from "@/ApiServices/Products.ApiService";
 
