@@ -32,6 +32,12 @@ export type AuthType = {
   user: {
     email: string;
   };
+  user_groups: UserGroupsType[];
+};
+
+export type UserGroupsType = {
+  id: number;
+  name: string;
 };
 
 interface IData {

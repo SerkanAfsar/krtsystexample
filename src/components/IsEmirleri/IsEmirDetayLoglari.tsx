@@ -28,7 +28,7 @@ export default async function IsEmirDetayLoglari({ id }: { id: number }) {
   }
   const data = result.data as WorkOrderListType;
   return (
-    <div className="mb-1 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div className="mb-1 mt-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="border-b border-stroke dark:border-strokedark">
         <div className="flex w-full items-center justify-between p-4 text-lg font-medium text-black dark:text-white">
           <span> Üretim Bilgileri</span>

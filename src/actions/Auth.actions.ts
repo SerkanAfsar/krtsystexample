@@ -7,15 +7,24 @@ import { AuthType } from "../../types/types";
 
 export const loginServer = async (data: LoginType) => {
   const result = await LoginService({ data });
+  const cookieStore = cookies();
 
   if (result?.success) {
     const data = result.data as AuthType;
-    await cookies().set({
+    await cookieStore.set({
       name: "jwt",
       value: data.token,
       sameSite: true,
       expires: new Date().setFullYear(new Date().getFullYear() + 1),
     });
+
+    await cookieStore.set({
+      name: "user_groups",
+      value: JSON.stringify(data.user_groups),
+      sameSite: true,
+      expires: new Date().setFullYear(new Date().getFullYear() + 1),
+    });
+
     return redirect("/Admin/Dashboard");
   }
   const errString: string = result.error

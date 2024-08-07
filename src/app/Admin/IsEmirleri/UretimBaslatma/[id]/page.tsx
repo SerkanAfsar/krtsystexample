@@ -1,6 +1,7 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import IsEmriBaslatmaContainer from "@/Containers/IsEmriBaslatmaContainer";
+import { cookies } from "next/headers";
 import {
   GetWorkOrderById,
   GetWorkOrderGroupTypes,
@@ -13,8 +14,15 @@ import {
 import IsEmirDetayLoglari from "@/components/IsEmirleri/IsEmirDetayLoglari";
 import { notFound } from "next/navigation";
 import { ResponseResult } from "../../../../../../types/responseTypes";
+import { UserGroupsType } from "../../../../../../types/types";
 
 export default async function UretimBaslatma({ params }: { params: Params }) {
+  const cookieStore = cookies();
+  const userGroups: UserGroupsType[] = JSON.parse(
+    cookieStore.get("user_groups")?.value || "",
+  );
+  const isAdmin = userGroups.some((a) => a.name == "üretim_müdürü");
+
   if (!params?.id || isNaN(params?.id)) {
     return notFound();
   }
@@ -40,6 +48,7 @@ export default async function UretimBaslatma({ params }: { params: Params }) {
     <DefaultLayout>
       <Breadcrumb pageName="Üretim İş Emri Başlatma " />
       <IsEmriBaslatmaContainer
+        isAdmin={isAdmin}
         workOrder={workOrderResult.data as WorkOrderType}
         workOrderGroups={(groups?.data as WorkOrderTeamGroupType[]) || []}
       />

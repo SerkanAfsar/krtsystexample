@@ -18,10 +18,14 @@ import { toast } from "react-toastify";
 import { useSearchParams } from "next/navigation";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { cn } from "@/utils";
+
 export default function IsEmriBaslatmaContainer({
   workOrderGroups,
   workOrder,
+  isAdmin,
 }: {
+  isAdmin: boolean;
   workOrder: WorkOrderType;
   workOrderGroups: WorkOrderTeamGroupType[];
 }) {
@@ -117,7 +121,7 @@ export default function IsEmriBaslatmaContainer({
   };
 
   return (
-    <div className="mb-1 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div className="mb-1 rounded-sm border border-stroke bg-white pb-5 shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="border-b border-stroke dark:border-strokedark">
         <div className="flex w-full items-center justify-between">
           <h3 className="p-4 text-lg font-medium text-black dark:text-white">
@@ -229,12 +233,28 @@ export default function IsEmriBaslatmaContainer({
               err={errors.cost?.message}
             />
 
-            <button className="col-start-3 col-end-4 mt-10 rounded-md border border-primary bg-white p-3 text-black">
+            <button
+              className={cn(
+                " mt-5 rounded-md border border-primary bg-white p-3 text-black",
+                isAdmin ? "col-start-2 col-end-3" : "col-start-3 col-end-4",
+              )}
+            >
               İPTAL
             </button>
-            <button className="col-start-4 col-end-5 mt-10 rounded-md bg-primary p-3 text-white">
+            <button
+              className={cn(
+                "mt-5 rounded-md bg-primary p-3 text-white",
+                isAdmin ? "col-start-3 col-end-4 " : "col-start-4 col-end-5",
+              )}
+            >
               GÖNDER
             </button>
+
+            {isAdmin && (
+              <button className="col-start-4 col-end-5 mt-5 rounded-md bg-primary p-3 text-white">
+                BİTİR
+              </button>
+            )}
           </div>
         </form>
       </div>
