@@ -55,8 +55,7 @@ export default function usePirlantaModalData({
         inputKaratRefs.current[index].value = "";
         inputKaratRefs.current[index].disabled = true;
       }
-      spanMaliyetRefs.current[index].textContent =
-        `${formatToCurrency(maliyet)} $`;
+      spanMaliyetRefs.current[index].textContent = "";
 
       setSelectedValues((prev: SeciliUrunType[]) =>
         prev.filter((a) => a.pk != target.name),
