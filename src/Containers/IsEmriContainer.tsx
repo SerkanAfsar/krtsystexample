@@ -13,16 +13,11 @@ import {
   AddWorOrderType,
   ProductItemsType,
   WorkOrderProductType,
-  WorkOrderQueueType,
 } from "../../types/WorkOrder.types";
 
-import {
-  AddWorkOrderService,
-  GetNextOrderWorkOrderCode,
-} from "@/Services/WorkOrder.Services";
+import { AddWorkOrderService } from "@/Services/WorkOrder.Services";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { ResponseResult } from "../../types/responseTypes";
 import { WorkOrderQueueApiService } from "@/ApiServices/WorkOrders.ApiService";
 
 const UrunGruplari: UrunGruplariModulType[] = [

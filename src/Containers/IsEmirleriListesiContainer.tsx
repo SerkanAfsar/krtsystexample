@@ -6,7 +6,7 @@ import { GetWorkOrdersList } from "@/Services/WorkOrder.Services";
 import { formatToCurrency } from "@/utils";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import Link from "next/link";
-import { ResponseResult } from "../../types/responseTypes";
+
 import { useRouter } from "next/navigation";
 import { DeleteWorkOrderApiService } from "@/ApiServices/WorkOrders.ApiService";
 
