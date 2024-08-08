@@ -35,7 +35,7 @@ export default function UrunGruplariModul({
     const items: WorkOrderProductType[] = selectedValues.map((item) => ({
       product_id: Number(item.pk),
       quantity: item.adet ? Number(item.adet) : null,
-      used_carat: item.used_carat ? Number(item.used_carat) : null,
+      used_carat: item.used_carat ? Number(item.used_carat) : 0,
       price: item.maliyetPrice ? Number(item.maliyetPrice) : null,
       type: item.type ? String(item.type) : undefined,
       ayar: item.ayar ? String(item.ayar) : null,

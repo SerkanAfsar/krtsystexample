@@ -7,17 +7,23 @@ import { ModalHeaders, ModalSadeHeaders } from "../../types/types";
 import usePirlantaModalData from "@/hooks/ModalDataHooks/usePirlantaModalData";
 import useRenkliTasModalData from "@/hooks/ModalDataHooks/useRenkliTasModalData";
 import useSadeModalData from "@/hooks/ModalDataHooks/useSadeModalData";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { formatToCurrency } from "@/utils";
 import {
   AddWorOrderType,
   ProductItemsType,
   WorkOrderProductType,
+  WorkOrderQueueType,
 } from "../../types/WorkOrder.types";
 
-import { AddWorkOrderService } from "@/Services/WorkOrder.Services";
+import {
+  AddWorkOrderService,
+  GetNextOrderWorkOrderCode,
+} from "@/Services/WorkOrder.Services";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { ResponseResult } from "../../types/responseTypes";
+import { WorkOrderQueueApiService } from "@/ApiServices/WorkOrders.ApiService";
 
 const UrunGruplari: UrunGruplariModulType[] = [
   {
@@ -79,7 +85,7 @@ export default function IsEmriContainer() {
     }),
   );
 
-  useEffect(() => {
+  const resultCode = useMemo(() => {
     const pirlantaArr = values.find((a) => a.title == "Pırlanta")?.products;
     const renkliTasArr = values.find((a) => a.title == "Renkli Taş")?.products;
     const sadeArr = values.find((a) => a.title == "Sade")?.products;
@@ -117,8 +123,18 @@ export default function IsEmriContainer() {
       code += item?.ayar;
       code += item?.modelTuru;
     }
-    setIsEmriCode(code);
+    return code;
   }, [values]);
+
+  useEffect(() => {
+    const process = async () => {
+      const result = await WorkOrderQueueApiService({ code: resultCode });
+      setIsEmriCode(`${resultCode}-${result}`);
+    };
+    if (resultCode) {
+      process();
+    }
+  }, [resultCode]);
 
   const lastItems = values.reduce<WorkOrderProductType[]>((acc, next) => {
     return [...acc, ...next.products];
@@ -161,7 +177,7 @@ export default function IsEmriContainer() {
             <UrunGruplariModul setValues={setValues} item={item} key={index} />
           ))}
         </div>
-        <div className="flex w-1/2 flex-col items-end self-end p-3">
+        <div className="flex w-full flex-col items-end self-end p-3">
           <h2 className="h-full self-end text-xl">
             Toplam Fiyat :{" "}
             <span className="font-bold text-[red] underline">{`${formatToCurrency(totalPrice)} $`}</span>
@@ -170,17 +186,13 @@ export default function IsEmriContainer() {
             <label className="font-bold text-black">
               Üretim Açıklaması Giriniz
             </label>
-            <input
-              type="text"
-              onKeyDown={async (e) => {
-                if (e.keyCode == 13) {
-                  await addWorkOrder();
-                }
-              }}
+            <textarea
+              cols={10}
+              rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className=" w-full rounded-md border border-x-graydark px-3 py-2 text-black"
-              placeholder="Ürün Açıklaması Giriniz..."
+              className=" w-full rounded-md border border-[#ccc] px-3 py-2 text-black"
+              placeholder="Üretim Açıklaması Giriniz..."
             />
           </div>
         </div>

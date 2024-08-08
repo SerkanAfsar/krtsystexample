@@ -14,6 +14,7 @@ import { Column } from "react-table";
 
 import { LightgalleryItem } from "react-lightgallery";
 import { DeleteProductApiService } from "@/ApiServices/Products.ApiService";
+import Image from "next/image";
 
 const columns: Column<ISadeType>[] = [
   {
@@ -78,8 +79,10 @@ export default function SadeStokListesi() {
           return {
             resim: (
               <LightgalleryItem key={item.pk} src={item.image as string}>
-                <img
+                <Image
                   src={item.image as string}
+                  width={40}
+                  height={40}
                   style={{ width: "auto", cursor: "pointer", height: "40px" }}
                   alt={item.code as string}
                 />
@@ -89,7 +92,7 @@ export default function SadeStokListesi() {
             modelTuru: item?.properties?.modelTuru,
             sadeKodu: item?.code,
             ayar: item?.properties?.ayar
-              ? `${item?.properties?.ayar}${item.properties?.ayar?.toString().length == 2 ? `K` : ""}`
+              ? `${item?.properties?.ayar}K`
               : undefined,
             gram: item?.properties?.gram
               ? `${item?.properties?.gram} gr`

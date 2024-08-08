@@ -44,6 +44,7 @@ export type ISertifikaType = {
   table?: string;
   totalDepth?: string;
   girdle?: string;
+  sertifikaDosyasi?: File;
 };
 
 export type IPirlantaPricingType = {

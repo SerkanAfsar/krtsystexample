@@ -6,6 +6,9 @@ import { GetWorkOrdersList } from "@/Services/WorkOrder.Services";
 import { formatToCurrency } from "@/utils";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import Link from "next/link";
+import { ResponseResult } from "../../types/responseTypes";
+import { useRouter } from "next/navigation";
+import { DeleteWorkOrderApiService } from "@/ApiServices/WorkOrders.ApiService";
 
 const columns: Column<
   WorkOrderType & {
@@ -55,6 +58,7 @@ const columns: Column<
 ];
 
 export default function IsEmirleriListesiContainer() {
+  const router = useRouter();
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<WorkOrderType[] | string | null>(
     [],
@@ -72,6 +76,25 @@ export default function IsEmirleriListesiContainer() {
     );
   }, []);
 
+  const silBtn = useCallback((id: number) => {
+    return (
+      <button
+        type="button"
+        onClick={async () =>
+          DeleteWorkOrderApiService({
+            id,
+            callBack: () => {
+              updateData();
+            },
+          })
+        }
+        className="btn rounded-md bg-red px-6 py-4 text-center text-white"
+      >
+        Sil
+      </button>
+    );
+  }, []);
+
   const updateData = useCallback(() => {
     setActiveData(null);
     GetWorkOrdersList({
@@ -84,7 +107,7 @@ export default function IsEmirleriListesiContainer() {
       const data = resp.results as WorkOrderType[];
       const dataOneResult: any = data.map((item) => {
         return {
-          isEmriKodu: "",
+          isEmriKodu: item.id,
           mucevherKodu: "",
           islem: item?.exit,
           last_process_date: new Date(
@@ -95,6 +118,7 @@ export default function IsEmirleriListesiContainer() {
           )} $`,
           status: item.status,
           detay: detayBtn(item?.id as number),
+          sil: silBtn(item?.id as number),
         };
       });
       setActiveData(dataOneResult);

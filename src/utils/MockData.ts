@@ -688,7 +688,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         type: "select",
         title: "Elek",
         placeholder: "Elek Değerini Giriniz...",
-        required: true,
+        required: false,
         requiredMessage: "Elek Değeri Boş Bırakılamaz",
         relativeTo: "menstrual_status",
         visibleRelative: "Sertifikasız",
@@ -876,6 +876,7 @@ export const AddStoneSections: Array<FormSectionType> = [
           },
         ],
       },
+
       {
         name: "sertifikaNo",
         type: "text",
@@ -1087,6 +1088,17 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         relativeTo: "sertifika",
         requiredMessage: "Girdle Değeri Boş Bırakılamaz",
+        disabled: true,
+        span: 4,
+      },
+      {
+        name: "sertifikaDosyasi",
+        type: "file",
+        relativeTo: "sertifika",
+        title: "Sertifika Dosyası",
+        placeholder: "Sertifika Dosyası Seçiniz...",
+        required: false,
+        requiredMessage: "Sertifika No Değeri Boş Bırakılamaz",
         disabled: true,
         span: 4,
       },
@@ -1472,16 +1484,6 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
         relativeTo: "menstrual_status",
         span: 2,
         staticOptions: MenseiList,
-        // options: [
-        //   {
-        //     titleVal: "Menşei1",
-        //     valueVal: "Menşei1",
-        //   },
-        //   {
-        //     titleVal: "Menşei2",
-        //     valueVal: "Menşei2",
-        //   },
-        // ],
       },
       {
         name: "treatment",

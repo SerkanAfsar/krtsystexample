@@ -10,3 +10,5 @@ export default function UretimIsEmirleriListesi() {
     </DefaultLayout>
   );
 }
+
+export const dynamic = "force-dynamic";

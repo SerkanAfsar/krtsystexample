@@ -51,7 +51,7 @@ const PirlantaDetayContainer = ({
       const totalElems = [...next.elements, ...(next.extraElements ?? [])];
       const elems = totalElems.reduce((acc2, next2) => {
         const name = next2.name as keyof AddDiamondType;
-        if (data[name]) {
+        if (data[name] && name != "sertifikaDosyasi") {
           return {
             ...acc2,
             [name]: next2.type == "number" ? Number(data[name]) : data[name],

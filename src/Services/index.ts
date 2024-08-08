@@ -1,7 +1,8 @@
 "use server";
-
+import { serialize } from "object-to-formdata";
 import { cookies } from "next/headers";
 import { ResponseResult } from "../../types/responseTypes";
+
 type headersType = {
   [key: string]: string;
 };
@@ -11,20 +12,23 @@ export const BaseService = async ({
   bodyData,
   hasToken,
   isResponseList = false,
+  isFormData = false,
 }: {
   url: string;
   method: string;
   bodyData: any;
   hasToken: boolean;
   isResponseList?: boolean;
+  isFormData?: boolean;
 }): Promise<ResponseResult<any> | any> => {
   try {
     const cookieStore = cookies();
     const jwt = cookieStore.get("jwt")?.value || null;
 
     const headers: headersType = {
-      "Content-Type": "application/json; charset=utf-8",
-      RequestTypeTest: "baserequest",
+      "Content-Type": !isFormData
+        ? "application/json; charset=utf-8"
+        : "multipart/form-data",
     };
 
     if (jwt) {
@@ -37,7 +41,7 @@ export const BaseService = async ({
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
       method: method || "GET",
       headers: headers,
-      body: bodyData ? JSON.stringify(bodyData) : null,
+      body: isFormData ? bodyData : bodyData ? JSON.stringify(bodyData) : null,
     });
 
     const result = await response.json();
@@ -48,7 +52,7 @@ export const BaseService = async ({
     }
   } catch (err: unknown) {
     let errMessage;
-    console.log(err);
+
     if (typeof err === "string") {
       errMessage = err.toUpperCase();
     } else if (err instanceof Error) {

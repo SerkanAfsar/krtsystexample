@@ -2,12 +2,17 @@ export const MenseiList = () => {
   return (
     <>
       <option value="Türkiye">Türkiye</option>
-      <option value="ABD Virgin Adaları">ABD Virgin Adaları</option>
-      <option value="Almanya">Almanya</option>
-      <option value="Amerika Birleşik Devletleri">
-        Amerika Birleşik Devletleri
-      </option>
-      <option value="Andorra">Andorra</option>
+
+      <option value="ABD">ABD</option>
+      <option value="Belçika">Belçika</option>
+      <option value="Dubai">Dubai</option>
+      <option value="Hindistan">Hindistan</option>
+      <option value="Hong kong">Hong kong</option>
+      <option value="İngiltere">İngiltere</option>
+      <option value="İtalya">İtalya</option>
+      <option value="Panama">Panama</option>
+      <option value="Taiwan">Taiwan</option>
+      {/* <option value="Andorra">Andorra</option>
       <option value="Antigua ve Barbuda">Antigua ve Barbuda</option>
       <option value="Arjantin">Arjantin</option>
       <option value="Arnavutluk">Arnavutluk</option>
@@ -134,7 +139,7 @@ export const MenseiList = () => {
       <option value="Venezuela">Venezuela</option>
       <option value="Vietnam">Vietnam</option>
       <option value="Yeni Zelanda">Yeni Zelanda</option>
-      <option value="Yunanistan">Yunanistan</option>
+      <option value="Yunanistan">Yunanistan</option> */}
     </>
   );
 };

@@ -11,6 +11,7 @@ type CustomFileSelectProps = React.InputHTMLAttributes<HTMLInputElement> & {
   outerClass?: ClassValue | null;
   className?: ClassValue | null;
   setError: any;
+  addedImage: string | null;
 };
 const CustomFileSelect = React.forwardRef<
   HTMLInputElement,
@@ -26,11 +27,13 @@ const CustomFileSelect = React.forwardRef<
       outerClass,
       err,
       setError,
+      addedImage,
       ...rest
     },
     ref,
   ) => {
-    const [image, setImage] = useState<string | null>(null);
+    const [image, setImage] = useState<string | null>(addedImage);
+
     return (
       <div className={cn(outerClass && outerClass, err && "border-red")}>
         <label className="mb-3 block text-sm font-medium text-black dark:text-white">

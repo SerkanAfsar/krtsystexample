@@ -5,6 +5,7 @@ import {
   WorkOrderAtolyeType,
   WorkOrderListType,
   WorkOrderPeopleList,
+  WorkOrderQueueType,
   WorkOrderTeamGroupType,
   WorkOrderType,
 } from "../../types/WorkOrder.types";
@@ -147,4 +148,34 @@ export const GetWorkOrderLogsByWorkOrderId = async ({
   });
 
   return result as ResponseResult<WorkOrderListType>;
+};
+
+export const DeleteWorkOrderById = async ({
+  work_order_id,
+}: {
+  work_order_id: number;
+}): Promise<ResponseResult<string>> => {
+  const result = await BaseService({
+    url: "product/cancel-work-order/",
+    bodyData: { work_order_id },
+    method: "POST",
+    hasToken: true,
+  });
+
+  return result as ResponseResult<string>;
+};
+
+export const GetNextOrderWorkOrderCode = async ({
+  code,
+}: {
+  code: string;
+}): Promise<ResponseResult<WorkOrderQueueType>> => {
+  const result = await BaseService({
+    url: "product/product-gem-next-order/",
+    bodyData: code,
+    method: "POST",
+    hasToken: true,
+  });
+
+  return result as ResponseResult<WorkOrderQueueType>;
 };

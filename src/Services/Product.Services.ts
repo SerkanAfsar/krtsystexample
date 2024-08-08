@@ -27,6 +27,7 @@ export const AddProductService = async ({
     bodyData: data,
     method: "POST",
     hasToken: true,
+    isFormData: false,
   });
   return result as ResponseResult<ProductType>;
 };

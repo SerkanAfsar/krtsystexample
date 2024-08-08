@@ -1262,7 +1262,12 @@ export const ApiServiceResult = ({
     toast.success(message, { position: "top-right" });
     callBack && callBack();
   } else {
-    const err = result.error ? result.error[0] : result?.detail || "Hata";
+    const err =
+      result.error && Array.isArray(result.error)
+        ? result.error[0]
+        : result.error
+          ? result.error
+          : result?.detail || "Hata";
     return toast.error(err, {
       position: "top-right",
     });

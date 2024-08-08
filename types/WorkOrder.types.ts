@@ -74,3 +74,7 @@ export type WorkOrderListType = {
   total_labor_cost: number | null;
   logs: WorkOrderLogType[] | null;
 };
+
+export type WorkOrderQueueType = {
+  next_order: string;
+};

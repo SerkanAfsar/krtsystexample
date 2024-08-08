@@ -29,7 +29,6 @@ export default function FormElementItem({
   errors: any;
   setValue: any;
   setError: any;
-
   extraOptions?: SelectOptionsType[] | null;
   isAdd: boolean;
 }) {
@@ -157,6 +156,7 @@ export default function FormElementItem({
           key={item.name}
           item={item}
           err={err}
+          addedImage={data?.image}
           outerClass={cn(
             item.span && `col-span-${colSpan}`,
             item.rowSpan && `row-span-${item.rowSpan}`,
