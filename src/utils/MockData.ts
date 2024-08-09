@@ -682,6 +682,19 @@ export const AddStoneSections: Array<FormSectionType> = [
         ],
         visibleRelative: "Sertifikasız",
       },
+      {
+        name: "mensei",
+        type: "select",
+        title: "Menşei",
+        span: 2,
+
+        placeholder: "Menşei Değerini Seçiniz...",
+        required: true,
+        requiredMessage: "Menşei Değeri Boş Bırakılamaz",
+        relativeTo: "menstrual_status",
+        // showIconRelativeTo: "Sertifikasız",
+        staticOptions: MenseiList,
+      },
 
       {
         name: "elek",
@@ -808,6 +821,7 @@ export const AddStoneSections: Array<FormSectionType> = [
           },
         ],
       },
+
       {
         name: "boy",
         type: "select",

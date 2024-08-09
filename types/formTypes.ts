@@ -25,6 +25,7 @@ export type IDiamondType = {
   kesim?: string;
   elek?: string;
   boy?: string;
+  mensei?: string;
   aciklama?: string;
   fromsingleormixed?: string;
   frommixedItem?: string;
