@@ -145,6 +145,14 @@ export default function IsEmriContainer() {
   };
 
   const addWorkOrder = async () => {
+    const condition = lastData.workorder_products.some(
+      (a: WorkOrderProductType) => a.type == "Sade",
+    );
+    if (!condition) {
+      return toast.error("Üretimde En Az 1 Adet Sade Seçilmesi zorunludur!", {
+        position: "top-right",
+      });
+    }
     const result: any = await AddWorkOrderService({ data: lastData });
 
     if (result?.success) {
