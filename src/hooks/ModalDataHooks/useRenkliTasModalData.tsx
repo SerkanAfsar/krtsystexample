@@ -40,7 +40,7 @@ export default function useRenkliTasModalData({
       carat,
       berraklik,
       renk,
-      adet,
+      adet: 1,
       type: renkliTas.toString().substring(0, 1),
       maliyet: `${formatToCurrency(maliyet)} $`,
       maliyetPrice: maliyet,
@@ -48,6 +48,7 @@ export default function useRenkliTasModalData({
 
     if (target.checked) {
       inputAdetRefs.current[index].disabled = false;
+      inputAdetRefs.current[index].value = "1";
       if (inputKaratRefs.current[index]) {
         inputKaratRefs.current[index].disabled = false;
       }
