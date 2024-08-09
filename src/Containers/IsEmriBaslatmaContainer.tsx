@@ -17,7 +17,7 @@ import CustomInput from "@/components/CustomUI/CustomInput";
 import { toast } from "react-toastify";
 import { useSearchParams } from "next/navigation";
 import { useParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+
 import { cn } from "@/utils";
 
 export default function IsEmriBaslatmaContainer({
@@ -29,7 +29,6 @@ export default function IsEmriBaslatmaContainer({
   workOrder: WorkOrderType;
   workOrderGroups: WorkOrderTeamGroupType[];
 }) {
-  const router = useRouter();
   const { id } = useParams();
   const searchParams = useSearchParams();
   const isFirst =
@@ -111,8 +110,7 @@ export default function IsEmriBaslatmaContainer({
     const newData: WorkOrderAtolyeType = { ...data, work_order: Number(id) };
     const result = await AddWorkOrderLogService({ data: newData });
     if (result?.success) {
-      toast.success("Eklendi", { position: "top-right" });
-      return router.push("/Admin/IsEmirleri/UretimIsEmirleriListesi");
+      toast.success("Üretim Bilgileri Güncellendi", { position: "top-right" });
     } else {
       return toast.error(result.error ? result.error[0] : "Hata", {
         position: "top-right",
@@ -236,6 +234,7 @@ export default function IsEmriBaslatmaContainer({
             />
 
             <button
+              type="button"
               className={cn(
                 " mt-5 rounded-md border border-primary bg-white p-3 text-black",
                 isAdmin ? "col-start-2 col-end-3" : "col-start-3 col-end-4",
@@ -253,7 +252,10 @@ export default function IsEmriBaslatmaContainer({
             </button>
 
             {isAdmin && (
-              <button className="col-start-4 col-end-5 mt-5 rounded-md bg-primary p-3 text-white">
+              <button
+                type="button"
+                className="col-start-4  col-end-5 mt-5 rounded-md bg-primary p-3 text-white"
+              >
                 BİTİR
               </button>
             )}

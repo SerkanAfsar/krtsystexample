@@ -21,7 +21,7 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
       className,
       err,
       onChange: selectChange,
-      onBlur,
+
       name,
       extraOptions,
       outerClass,

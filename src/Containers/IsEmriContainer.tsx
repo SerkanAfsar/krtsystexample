@@ -182,7 +182,7 @@ export default function IsEmriContainer() {
         </div>
         <div className="flex w-full flex-col items-end self-end p-3">
           <h2 className="h-full self-end text-xl">
-            Toplam Fiyat :{" "}
+            Toplam Malzeme Maliyeti :{" "}
             <span className="font-bold text-[red] underline">{`${formatToCurrency(totalPrice)} $`}</span>
           </h2>
           <div className="flex w-full flex-col items-start gap-2">
