@@ -35,6 +35,57 @@ const CustomDatePicker = React.forwardRef<HTMLInputElement, InputProps>(
         flatpickr(".form-datepicker", {
           mode: "single",
           static: true,
+          shorthandCurrentMonth: true,
+          locale: {
+            firstDayOfWeek: 1,
+            weekdays: {
+              longhand: [
+                "Pazar",
+                "Pazartesi",
+                "Salı",
+                "Çarşamba",
+                "Perşembe",
+                "Cuma",
+                "Cumartesi",
+              ],
+              shorthand: ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"],
+            },
+            months: {
+              longhand: [
+                "Ocak",
+                "Şubat",
+                "Mart",
+                "Nisan",
+                "Mayıs",
+                "Haziran",
+                "Temmuz",
+                "Ağustos",
+                "Eylül",
+                "Ekim",
+                "Kasım",
+                "Aralık",
+              ],
+              shorthand: [
+                "Oca",
+                "Şub",
+                "Mar",
+                "Nis",
+                "May",
+                "Haz",
+                "Tem",
+                "Ağu",
+                "Eyl",
+                "Eki",
+                "Kas",
+                "Ara",
+              ],
+            },
+            today: "Bugün",
+            clear: "Temizle",
+          },
+
+          defaultDate: "today",
+
           monthSelectorType: "static",
           onChange: (selectedDates, dateStr, instance) => {
             setValue(name, dateStr);
