@@ -63,12 +63,6 @@ export default function usePirlantaCode({
 
     const condition = isAdd;
 
-    // if (data_kesim && data_boy) {
-
-    // } else {
-    //   setDiamondCode("");
-    // }
-
     if (condition) {
       timeFunc = setTimeout(() => {
         if (data_menstrual_status == "Sertifikasız") {
@@ -91,6 +85,9 @@ export default function usePirlantaCode({
           });
 
           if (data_fromsingleormixed == "From Single") {
+            if (!data_kesim || !data_carat) {
+              return;
+            }
             returnSameResult(
               GetNextOrderFromSingleDiamondService({
                 from_mixed: false,
