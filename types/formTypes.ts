@@ -12,6 +12,7 @@ export type IRenkliTasType = {
   fromsingleormixed?: string;
   pricePerCarat?: number;
   frommixedItem?: string;
+  sertifikaDosyasi?: File;
   total_cost?: number;
   duzenle?: React.ReactNode;
   sil?: React.ReactNode;
