@@ -87,6 +87,14 @@ export default function SadeDetayContainer({
           const result = (8 / 24) * parseFloat(value.gram);
           return result.toFixed(2);
         }
+        case "22": {
+          const result = (22 / 24) * parseFloat(value.gram);
+          return result.toFixed(2);
+        }
+        case "24": {
+          const result = (24 / 24) * parseFloat(value.gram);
+          return result.toFixed(2);
+        }
       }
     }
   }, []);

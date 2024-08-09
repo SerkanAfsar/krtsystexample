@@ -189,6 +189,8 @@ export const AddSadeSections: Array<FormSectionType> = [
           { titleVal: "8", valueVal: "8" },
           { titleVal: "750", valueVal: "750" },
           { titleVal: "585", valueVal: "585" },
+          { titleVal: "22", valueVal: "22" },
+          { titleVal: "24", valueVal: "24" },
         ],
       },
       {

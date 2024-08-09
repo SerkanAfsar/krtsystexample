@@ -211,6 +211,7 @@ export default function IsEmriBaslatmaContainer({
                 type: "number",
                 placeholder: "Çıkış Gramı",
               }}
+              step=".001"
               err={errors.output_gram?.message}
               {...register("output_gram", {
                 required: "Çıkış Gramını Giriniz",
@@ -230,6 +231,7 @@ export default function IsEmriBaslatmaContainer({
                 required: "İşçilik Giriniz",
                 valueAsNumber: true,
               })}
+              step=".01"
               err={errors.cost?.message}
             />
 
