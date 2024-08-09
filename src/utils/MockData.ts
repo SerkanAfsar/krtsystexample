@@ -1555,7 +1555,6 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
       {
         name: "sertifikaDosyasi",
         type: "file",
-        relativeTo: "sertifika",
         title: "Sertifika Dosyası",
         placeholder: "Sertifika Dosyası Seçiniz...",
         required: false,

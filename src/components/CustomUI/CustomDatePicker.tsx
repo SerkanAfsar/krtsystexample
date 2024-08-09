@@ -80,8 +80,8 @@ const CustomDatePicker = React.forwardRef<HTMLInputElement, InputProps>(
                 "Ara",
               ],
             },
-            today: "Bugün",
-            clear: "Temizle",
+            // today: "Bugün",
+            // clear: "Temizle",
           },
 
           defaultDate: "today",
