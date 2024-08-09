@@ -458,6 +458,10 @@ export const AddStoneSections: Array<FormSectionType> = [
             titleVal: "Z",
             valueVal: "Z",
           },
+          {
+            titleVal: "BLACK",
+            valueVal: "BLACK",
+          },
         ],
         relativeTo: "menstrual_status",
         span: 2,
@@ -563,6 +567,10 @@ export const AddStoneSections: Array<FormSectionType> = [
           {
             titleVal: "Z",
             valueVal: "Z",
+          },
+          {
+            titleVal: "BLACK",
+            valueVal: "BLACK",
           },
         ],
         relativeTo: "menstrual_status",
