@@ -179,3 +179,18 @@ export const GetNextOrderWorkOrderCode = async ({
 
   return result as ResponseResult<WorkOrderQueueType>;
 };
+
+export const FinishWorkOrderById = async ({
+  work_order_id,
+}: {
+  work_order_id: number;
+}): Promise<ResponseResult<string>> => {
+  const result = await BaseService({
+    url: "product/finish-work-order/",
+    bodyData: { work_order_id },
+    method: "POST",
+    hasToken: true,
+  });
+
+  return result as ResponseResult<string>;
+};

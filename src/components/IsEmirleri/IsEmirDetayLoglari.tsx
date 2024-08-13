@@ -27,6 +27,11 @@ export default async function IsEmirDetayLoglari({ id }: { id: number }) {
     );
   }
   const data = result.data as WorkOrderListType;
+
+  const newData = data.logs?.sort((a, b) => {
+    return Number(a.id) - Number(b.id);
+  });
+
   return (
     <div className="mb-1 mt-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="border-b border-stroke dark:border-strokedark">
@@ -53,7 +58,7 @@ export default async function IsEmirDetayLoglari({ id }: { id: number }) {
           <div className="text-center">İşçilik Maliyeti</div>
         </div>
 
-        {data.logs?.map((item, index) => (
+        {newData?.map((item, index) => (
           <div
             key={index}
             className="grid grid-cols-10 items-center gap-3 border-l-[1px] border-r-[1px] border-t-[1px] border-[#e5e9ed] p-3 font-medium  capitalize  text-black last:border-b-[1px]"

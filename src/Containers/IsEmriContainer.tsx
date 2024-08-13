@@ -142,6 +142,7 @@ export default function IsEmriContainer() {
   const lastData: AddWorOrderType = {
     description,
     workorder_products: lastItems,
+    product_temp_code: isEmriCode,
   };
 
   const addWorkOrder = async () => {

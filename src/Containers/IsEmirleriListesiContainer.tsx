@@ -108,7 +108,7 @@ export default function IsEmirleriListesiContainer() {
       const dataOneResult: any = data.map((item) => {
         return {
           isEmriKodu: item.id,
-          mucevherKodu: "",
+          mucevherKodu: item?.product_temp_code,
           islem: item?.exit,
           last_process_date: new Date(
             item.last_process_date || null,
@@ -117,6 +117,7 @@ export default function IsEmirleriListesiContainer() {
             Number(item.total_product_cost),
           )} $`,
           status: item.status,
+
           detay: detayBtn(item?.id as number),
           sil: silBtn(item?.id as number),
         };

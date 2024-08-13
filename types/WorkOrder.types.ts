@@ -16,6 +16,7 @@ export type ProductItemsType = {
 export type AddWorOrderType = {
   description: string;
   workorder_products: any[];
+  product_temp_code: string;
 };
 
 export type WorkOrderAtolyeType = {
@@ -53,6 +54,7 @@ export type WorkOrderType = {
   last_process_date: any;
   exit?: string;
   group?: string;
+  product_temp_code?: string;
 };
 
 export type WorkOrderLogType = {

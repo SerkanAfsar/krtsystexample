@@ -15,27 +15,32 @@ import {
 } from "@/Services/WorkOrder.Services";
 import CustomInput from "@/components/CustomUI/CustomInput";
 import { toast } from "react-toastify";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useParams } from "next/navigation";
 
 import { cn } from "@/utils";
+import { FinishWorkOrderApiService } from "@/ApiServices/WorkOrders.ApiService";
 
 export default function IsEmriBaslatmaContainer({
   workOrderGroups,
   workOrder,
   isAdmin,
+  userId,
 }: {
+  userId: number;
   isAdmin: boolean;
   workOrder: WorkOrderType;
   workOrderGroups: WorkOrderTeamGroupType[];
 }) {
   const { id } = useParams();
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const isFirst =
-    searchParams.get("isFirst") && Boolean(searchParams.get("isFirst"));
-
   const [teslimEdenList, setTeslimEdenList] = useState<CustomOptionType[]>([]);
   const [teslimAlanList, setTeslimAlanList] = useState<CustomOptionType[]>([]);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+
+  const isFirst =
+    searchParams.get("isFirst") && Boolean(searchParams.get("isFirst"));
 
   const newGroupData: CustomOptionType[] = workOrderGroups.map((item) => ({
     titleVal: item.name,
@@ -56,7 +61,7 @@ export default function IsEmriBaslatmaContainer({
   });
 
   useEffect(() => {
-    if (!isFirst) {
+    if (!isFirst && !isSubmitted) {
       const grpId = workOrderGroups.find((a) => a.name == workOrder.group)?.id;
       GetWorkOrderPeopleByGroups({ group_ids: [Number(grpId)] })
         .then((resp: WorkOrderPeopleList[]) => {
@@ -78,7 +83,14 @@ export default function IsEmriBaslatmaContainer({
           console.log("err is ", err);
         });
     }
-  }, [isFirst, workOrder.group, workOrderGroups, setValue, workOrder.user]);
+  }, [
+    isFirst,
+    workOrder.group,
+    workOrderGroups,
+    setValue,
+    workOrder.user,
+    isSubmitted,
+  ]);
 
   useEffect(() => {
     const subscription = watch((value, { name }) => {
@@ -102,15 +114,26 @@ export default function IsEmriBaslatmaContainer({
             console.log("err is ", err);
           });
       }
+      if (name && name == "from_person") {
+        if (value.from_person == userId && value.to_person) {
+          setIsSubmitted(true);
+        }
+      }
     });
     return () => subscription.unsubscribe();
   }, [watch]);
+
+  const handleFinish = async () => {
+    await FinishWorkOrderApiService({ id: Number(id), callBack: () => {} });
+  };
 
   const onSubmit: SubmitHandler<WorkOrderAtolyeType> = async (data) => {
     const newData: WorkOrderAtolyeType = { ...data, work_order: Number(id) };
     const result = await AddWorkOrderLogService({ data: newData });
     if (result?.success) {
       toast.success("Üretim Bilgileri Güncellendi", { position: "top-right" });
+      setIsSubmitted(true);
+      return router.refresh();
     } else {
       return toast.error(result.error ? result.error[0] : "Hata", {
         position: "top-right",
@@ -125,7 +148,10 @@ export default function IsEmriBaslatmaContainer({
           <h3 className="p-4 text-lg font-medium text-black dark:text-white">
             Atölye Bilgileri
           </h3>
-          <b className="mr-4 text-black"></b>
+          <div className="flex items-center justify-center gap-3">
+            <span>İş Emri Kodu:</span>
+            <b className="mr-4 text-black">{workOrder?.product_temp_code}</b>
+          </div>
         </div>
       </div>
       <hr />
@@ -140,7 +166,7 @@ export default function IsEmriBaslatmaContainer({
                 required: true,
                 options: newGroupData,
               }}
-              disabled={!isFirst ? true : false}
+              disabled={!isFirst || isSubmitted ? true : false}
               err={errors.from_group?.message}
               {...register("from_group", {
                 required: "Çıkış Atölye Seçiniz",
@@ -155,7 +181,7 @@ export default function IsEmriBaslatmaContainer({
                 required: true,
                 options: teslimEdenList,
               }}
-              disabled={!isFirst ? true : false}
+              disabled={!isFirst || isSubmitted ? true : false}
               err={errors.from_person?.message}
               {...register("from_person", {
                 required: "Teslim Eden Personel Seçiniz",
@@ -170,6 +196,7 @@ export default function IsEmriBaslatmaContainer({
                 required: true,
                 options: newGroupData,
               }}
+              disabled={isSubmitted}
               err={errors.to_group?.message}
               {...register("to_group", {
                 required: "Giriş Atölye Seçiniz",
@@ -184,6 +211,7 @@ export default function IsEmriBaslatmaContainer({
                 required: true,
                 options: teslimAlanList,
               }}
+              disabled={isSubmitted}
               err={errors.to_person?.message}
               {...register("to_person", {
                 required: "Teslim Alan Personel Seçiniz",
@@ -197,6 +225,7 @@ export default function IsEmriBaslatmaContainer({
                 required: false,
                 type: "text",
               }}
+              disabled={isSubmitted}
               {...register("description", {
                 required: false,
               })}
@@ -209,6 +238,7 @@ export default function IsEmriBaslatmaContainer({
                 type: "number",
                 placeholder: "Çıkış Gramı",
               }}
+              disabled={isSubmitted}
               step=".001"
               err={errors.output_gram?.message}
               {...register("output_gram", {
@@ -230,6 +260,7 @@ export default function IsEmriBaslatmaContainer({
                 valueAsNumber: true,
               })}
               step=".01"
+              disabled={isSubmitted}
               err={errors.cost?.message}
             />
 
@@ -239,6 +270,7 @@ export default function IsEmriBaslatmaContainer({
                 " mt-5 rounded-md border border-primary bg-white p-3 text-black",
                 isAdmin ? "col-start-2 col-end-3" : "col-start-3 col-end-4",
               )}
+              disabled={isSubmitted}
             >
               İPTAL
             </button>
@@ -247,6 +279,7 @@ export default function IsEmriBaslatmaContainer({
                 "mt-5 rounded-md bg-primary p-3 text-white",
                 isAdmin ? "col-start-3 col-end-4 " : "col-start-4 col-end-5",
               )}
+              disabled={isSubmitted}
             >
               GÖNDER
             </button>
@@ -254,6 +287,7 @@ export default function IsEmriBaslatmaContainer({
             {isAdmin && (
               <button
                 type="button"
+                onClick={async () => await handleFinish()}
                 className="col-start-4  col-end-5 mt-5 rounded-md bg-primary p-3 text-white"
               >
                 BİTİR

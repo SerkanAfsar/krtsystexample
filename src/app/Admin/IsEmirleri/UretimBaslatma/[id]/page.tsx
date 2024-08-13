@@ -15,13 +15,16 @@ import IsEmirDetayLoglari from "@/components/IsEmirleri/IsEmirDetayLoglari";
 import { notFound } from "next/navigation";
 import { ResponseResult } from "../../../../../../types/responseTypes";
 import { UserGroupsType } from "../../../../../../types/types";
+import { getLoggedUserId } from "@/utils/ServerActions.utils";
 
 export default async function UretimBaslatma({ params }: { params: Params }) {
   const cookieStore = cookies();
   const userGroups: UserGroupsType[] = JSON.parse(
     cookieStore.get("user_groups")?.value || "",
   );
-  const isAdmin = userGroups.some((a) => a.name == "üretim_müdürü");
+
+  const userId = await getLoggedUserId();
+  const isAdmin = userGroups.some((a) => a.name == "Üretim Müdürü");
 
   if (!params?.id || isNaN(params?.id)) {
     return notFound();
@@ -32,6 +35,7 @@ export default async function UretimBaslatma({ params }: { params: Params }) {
       id: params.id,
     },
   );
+
   if (workOrderResult.statusCode == 404) {
     return notFound();
   }
@@ -48,6 +52,7 @@ export default async function UretimBaslatma({ params }: { params: Params }) {
     <DefaultLayout>
       <Breadcrumb pageName="Üretim İş Emri Başlatma " />
       <IsEmriBaslatmaContainer
+        userId={userId}
         isAdmin={isAdmin}
         workOrder={workOrderResult.data as WorkOrderType}
         workOrderGroups={(groups?.data as WorkOrderTeamGroupType[]) || []}

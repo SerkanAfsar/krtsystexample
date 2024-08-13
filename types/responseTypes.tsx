@@ -14,7 +14,7 @@ export type LoginResultType = {
 export type ResponseResult<T> = {
   success?: boolean;
   data?: T | null | string | number | any[];
-  error?: string[] | null;
+  error?: string[] | null | string;
   statusCode: number;
   detail?: string | null;
 };
