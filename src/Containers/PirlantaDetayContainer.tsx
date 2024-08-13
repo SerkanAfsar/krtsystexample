@@ -71,6 +71,11 @@ const PirlantaDetayContainer = ({
     },
   );
 
+  const sectionLenght: number =
+    data.menstrual_status == "Sertifikalı"
+      ? AddStoneSections.length
+      : AddStoneSections.length - 1;
+
   return (
     <CustomForm
       isAdd={isAdd}
@@ -79,7 +84,7 @@ const PirlantaDetayContainer = ({
       setActiveStep={setActiveStep}
       sections={AddStoneSections.filter((a) => a.groupNumber == activeStep)}
       data={data}
-      stepCount={2}
+      stepCount={sectionLenght}
       serviceFunction={isAdd ? AddProductApiService : UpdateProductApiService}
       filteredData={newData}
       productCode={pruductCode}

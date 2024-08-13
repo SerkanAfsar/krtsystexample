@@ -48,9 +48,7 @@ export default function RenkliTasDetayContainer({
     )?.extraValue,
   });
 
-  const newData: IRenkliTasType = AddRenkliTasSections.filter(
-    (a) => a.groupNumber == 0,
-  ).reduce(
+  const newData: IRenkliTasType = AddRenkliTasSections.reduce(
     (acc, next) => {
       const elems = next.elements.reduce((acc2, next2) => {
         const name = next2.name as keyof IRenkliTasType;
@@ -77,6 +75,11 @@ export default function RenkliTasDetayContainer({
     },
   );
 
+  const sectionLenght: number =
+    data.menstrual_status == "Sertifikalı"
+      ? AddRenkliTasSections.length
+      : AddRenkliTasSections.length - 1;
+
   return (
     <CustomForm
       setData={setData}
@@ -84,7 +87,7 @@ export default function RenkliTasDetayContainer({
       setActiveStep={setActiveStep}
       sections={AddRenkliTasSections.filter((a) => a.groupNumber == activeStep)}
       data={data}
-      stepCount={1}
+      stepCount={sectionLenght}
       productCode={renkliTasCode}
       isAdd={isAdd}
       resultCallBack={resultCallBack}
