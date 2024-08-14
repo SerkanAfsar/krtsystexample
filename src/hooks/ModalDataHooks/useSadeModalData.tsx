@@ -34,7 +34,7 @@ export default function useSadeModalData({
         hasGrami: has,
         modelTuru: model,
         ayar,
-        maliyet,
+        firstPrice,
         modelTuru,
       } = properties;
 
@@ -45,14 +45,14 @@ export default function useSadeModalData({
         gram,
         has,
         model,
-        maliyet: `${formatToCurrency(maliyet)} $`,
+        maliyet: `${formatToCurrency(firstPrice)} $`,
+        firstPrice,
         type: "Sade",
         modelTuru:
           SadeModelTurleriData.find(
             (a) => a.titleVal == modelTuru,
           )?.extraValue?.substring(0, 1) || "Not Exists",
         ayar: SadeAltinKarsiliklari(ayar),
-        maliyetPrice: maliyet,
       };
 
       setSelectedValues((prev: SeciliUrunType[]) => [...prev, item]);
@@ -91,7 +91,7 @@ export default function useSadeModalData({
                   handleCheck(e, {
                     ...item.properties,
                     code: item.code,
-                    maliyet,
+                    firstPrice: maliyet,
                   })
                 }
               />

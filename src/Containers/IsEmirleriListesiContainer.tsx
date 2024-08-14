@@ -5,10 +5,9 @@ import { useCallback, useEffect, useState } from "react";
 import { GetWorkOrdersList } from "@/Services/WorkOrder.Services";
 import { formatToCurrency } from "@/utils";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
-import Link from "next/link";
-
 import { useRouter } from "next/navigation";
 import { DeleteWorkOrderApiService } from "@/ApiServices/WorkOrders.ApiService";
+import { FaPencil, FaTrash } from "react-icons/fa6";
 
 const columns: Column<
   WorkOrderType & {
@@ -18,8 +17,7 @@ const columns: Column<
     cikis: string;
     giris: string;
     islem: string;
-    detay: React.ReactNode;
-    sil: React.ReactNode;
+    islemler: React.ReactNode;
   }
 >[] = [
   {
@@ -48,12 +46,8 @@ const columns: Column<
     accessor: "status",
   },
   {
-    Header: "Detay",
-    accessor: "detay",
-  },
-  {
-    Header: "Sil",
-    accessor: "sil",
+    Header: "İşlemler",
+    accessor: "islemler",
   },
 ];
 
@@ -64,36 +58,6 @@ export default function IsEmirleriListesiContainer() {
     [],
   );
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
-
-  const detayBtn = useCallback((id: number) => {
-    return (
-      <Link
-        className="btn rounded-md bg-yellow-600 p-4 text-center text-white"
-        href={`/Admin/IsEmirleri/UretimBaslatma/${id}`}
-      >
-        Detay
-      </Link>
-    );
-  }, []);
-
-  const silBtn = useCallback((id: number) => {
-    return (
-      <button
-        type="button"
-        onClick={async () =>
-          DeleteWorkOrderApiService({
-            id,
-            callBack: () => {
-              updateData();
-            },
-          })
-        }
-        className="btn rounded-md bg-red px-6 py-4 text-center text-white"
-      >
-        Sil
-      </button>
-    );
-  }, []);
 
   const updateData = useCallback(() => {
     setActiveData(null);
@@ -108,7 +72,7 @@ export default function IsEmirleriListesiContainer() {
       const dataOneResult: any = data.map((item) => {
         return {
           isEmriKodu: item.id,
-          mucevherKodu: item?.product_temp_code,
+          mucevherKodu: item?.product_temp_code || "Oluşmadı",
           islem: item?.exit,
           last_process_date: new Date(
             item.last_process_date || null,
@@ -118,8 +82,7 @@ export default function IsEmirleriListesiContainer() {
           )} $`,
           status: item.status,
 
-          detay: detayBtn(item?.id as number),
-          sil: silBtn(item?.id as number),
+          islemler: islemlerArea({ id: item.id as number }),
         };
       });
       setActiveData(dataOneResult);
@@ -130,6 +93,33 @@ export default function IsEmirleriListesiContainer() {
       );
     });
   }, [activePage]);
+
+  const islemlerArea = useCallback(
+    ({ id }: { id: number }) => {
+      return (
+        <div className="flex items-center justify-start  gap-6">
+          <FaPencil
+            className="cursor-pointer"
+            onClick={() =>
+              router.push(`/Admin/IsEmirleri/UretimBaslatma/${id}`)
+            }
+          />
+          <FaTrash
+            className="cursor-pointer"
+            onClick={async () => {
+              await DeleteWorkOrderApiService({
+                id,
+                callBack: () => {
+                  updateData();
+                },
+              });
+            }}
+          />
+        </div>
+      );
+    },
+    [router, updateData],
+  );
 
   useEffect(() => {
     updateData();

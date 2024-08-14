@@ -1,3 +1,4 @@
+import { SeciliUrunType } from "@/components/IsEmirleri/UrunGruplariModul";
 import { ProductType } from "./types";
 
 export type CustomProps = React.HTMLAttributes<HTMLInputElement> & {

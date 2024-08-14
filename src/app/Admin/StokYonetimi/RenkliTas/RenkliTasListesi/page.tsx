@@ -6,10 +6,12 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { IRenkliTasType } from "../../../../../../types/formTypes";
 import { ResponseResult } from "../../../../../../types/responseTypes";
 import { ProductListType } from "../../../../../../types/types";
-import Link from "next/link";
+
 import { useCallback, useEffect, useState } from "react";
 import { Column } from "react-table";
 import { DeleteProductApiService } from "@/ApiServices/Products.ApiService";
+import { FaPencil, FaTrash } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
 
 const columns: Column<IRenkliTasType & { code: string }>[] = [
   {
@@ -41,16 +43,13 @@ const columns: Column<IRenkliTasType & { code: string }>[] = [
     accessor: "treatment",
   },
   {
-    Header: "Düzenle",
-    accessor: "duzenle",
-  },
-  {
-    Header: "Sil",
-    accessor: "sil",
+    Header: "İşlemler",
+    accessor: "islemler",
   },
 ];
 
 export default function RenkliTasStokListesi() {
+  const router = useRouter();
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<
     IRenkliTasType[] | string | null
@@ -75,8 +74,7 @@ export default function RenkliTasStokListesi() {
             kesim: item?.properties?.kesim,
             mensei: item?.properties?.mensei,
             treatment: item?.properties?.treatment,
-            duzenle: duzenleButton(item),
-            sil: silButton(item),
+            islemler: islemlerArea({ id: item.pk as number }),
           };
         });
         setActiveData(dataOneResult);
@@ -91,32 +89,26 @@ export default function RenkliTasStokListesi() {
     });
   }, [activePage]);
 
-  const duzenleButton = useCallback((item: any) => {
-    return (
-      <Link
-        className="btn rounded-md bg-yellow-600 p-3 text-white"
-        href={`/Admin/StokYonetimi/RenkliTas/RenkliTasEkle/${item.pk}`}
-      >
-        Güncelle
-      </Link>
-    );
-  }, []);
-
-  const silButton = useCallback(
-    async (item: any) => {
-      const id = item.pk as number;
+  const islemlerArea = useCallback(
+    ({ id }: { id: number }) => {
       return (
-        <div
-          onClick={async () => {
-            await DeleteProductApiService({ id, callBack: updateData });
-          }}
-          className="btn cursor-pointer rounded-md bg-danger p-3 text-center text-white"
-        >
-          Sil
+        <div className="flex items-center justify-start  gap-6">
+          <FaPencil
+            className="cursor-pointer"
+            onClick={() =>
+              router.push(`/Admin/StokYonetimi/RenkliTas/RenkliTasEkle/${id}`)
+            }
+          />
+          <FaTrash
+            className="cursor-pointer"
+            onClick={async () => {
+              await DeleteProductApiService({ id, callBack: updateData });
+            }}
+          />
         </div>
       );
     },
-    [updateData],
+    [router, updateData],
   );
 
   useEffect(() => {

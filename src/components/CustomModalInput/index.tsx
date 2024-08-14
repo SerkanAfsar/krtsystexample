@@ -9,7 +9,6 @@ const CustomModalInput = React.forwardRef<HTMLInputElement, CustomProps>(
     {
       setSelectedValues,
       item,
-
       spanMaliyetRefs,
       name,
       indexNo,
@@ -28,11 +27,13 @@ const CustomModalInput = React.forwardRef<HTMLInputElement, CustomProps>(
         if (index > -1) {
           const spanRef = spanMaliyetRefs.current[indexNo];
           let maliyet = Number(spanRef.ariaLabel);
+
           if (name == "used_carat") {
             maliyet =
               value && item.menstrual_status == "Mixed"
                 ? Number(maliyet * Number(value))
                 : maliyet;
+
             spanRef.textContent = `${formatToCurrency(maliyet)} $`;
           }
 
@@ -40,7 +41,7 @@ const CustomModalInput = React.forwardRef<HTMLInputElement, CustomProps>(
             ...prev[index],
             [name]: value,
             maliyet: `${formatToCurrency(maliyet)} $`,
-            maliyetPrice: maliyet,
+            firstPrice: maliyet,
           };
         }
         return [...prev];

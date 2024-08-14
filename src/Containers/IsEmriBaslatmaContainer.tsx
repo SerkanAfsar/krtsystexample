@@ -149,7 +149,7 @@ export default function IsEmriBaslatmaContainer({
             Atölye Bilgileri
           </h3>
           <div className="flex items-center justify-center gap-3">
-            <span>İş Emri Kodu:</span>
+            <span>Mücevher Kodu:</span>
             <b className="mr-4 text-black">{workOrder?.product_temp_code}</b>
           </div>
         </div>

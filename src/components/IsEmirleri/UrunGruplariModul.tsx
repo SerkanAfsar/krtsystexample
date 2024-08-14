@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import IsEmirleriModal from "./IsEmirleriModal";
-import { cn } from "@/utils";
+import { cn, formatToCurrency } from "@/utils";
+import { FaPencil } from "react-icons/fa6";
+import { FaTrash } from "react-icons/fa6";
 
 import {
   ProductItemsType,
@@ -36,7 +38,11 @@ export default function UrunGruplariModul({
       product_id: Number(item.pk),
       quantity: item.adet ? Number(item.adet) : null,
       used_carat: item.used_carat ? Number(item.used_carat) : 0,
-      price: item.maliyetPrice ? Number(item.maliyetPrice) : null,
+      name: item.name ? item.name : null,
+      price:
+        item.firstPrice && item.type != "Sade" && item.used_carat
+          ? Number(item.firstPrice) * (item.used_carat as number)
+          : Number(item.firstPrice),
       type: item.type ? String(item.type) : undefined,
       ayar: item.ayar ? String(item.ayar) : null,
       modelTuru: item.modelTuru ? String(item.modelTuru) : null,
@@ -52,6 +58,8 @@ export default function UrunGruplariModul({
       }
     });
   }, [selectedValues, setValues, title]);
+
+  console.log(selectedValues);
 
   return (
     <>
@@ -90,6 +98,7 @@ export default function UrunGruplariModul({
               className={cn(
                 "mx-2 mt-1 grid gap-2 text-left text-black",
                 `grid-cols-${headerColumns.length}`,
+                "items-center",
                 "border-b-[1px] border-graydark py-1",
               )}
             >
@@ -98,9 +107,84 @@ export default function UrunGruplariModul({
                   index != 0 &&
                   headerColumns.findIndex((a) => a.accessor == key) > -1
                 ) {
-                  return <div key={index}>{value}</div>;
+                  if (key == "carat") {
+                    if (item.menstrual_status == "Sertifikalı") {
+                      return <div key={index}>{item.carat}</div>;
+                    } else {
+                      return (
+                        <input
+                          min="1"
+                          key={index}
+                          className="ml-[-10px] h-8 w-16 rounded-sm border border-black pl-3 text-center"
+                          type="number"
+                          value={item.used_carat}
+                          onChange={(e) => {
+                            const selectedIndexNo = selectedValues.findIndex(
+                              (a) => a.pk == item.pk,
+                            );
+                            const newItems = selectedValues;
+                            const changedItem = newItems[selectedIndexNo];
+
+                            const newMaliyet =
+                              Number(e.target.value) *
+                              Number(changedItem["firstPrice"]);
+
+                            changedItem["used_carat"] = e.target.value;
+                            changedItem["maliyet"] =
+                              `${formatToCurrency(newMaliyet)} $`;
+
+                            setSelectedValues((prev) => [
+                              ...prev.slice(0, selectedIndexNo),
+                              changedItem,
+                              ...prev.slice(
+                                selectedIndexNo + 1,
+                                newItems.length,
+                              ),
+                            ]);
+                          }}
+                        />
+                      );
+                    }
+                  } else if (key == "adet") {
+                    return (
+                      <input
+                        min="1"
+                        key={index}
+                        className="p ml-[-12px] h-8 w-16 rounded-sm border border-black pl-3 text-center"
+                        type="number"
+                        value={item.adet}
+                        onChange={(e) => {
+                          const selectedIndexNo = selectedValues.findIndex(
+                            (a) => a.pk == item.pk,
+                          );
+                          const newItems = selectedValues;
+                          const changedItem = newItems[selectedIndexNo];
+                          changedItem["adet"] = e.target.value;
+
+                          setSelectedValues((prev) => [
+                            ...prev.slice(0, selectedIndexNo),
+                            changedItem,
+                            ...prev.slice(selectedIndexNo + 1, newItems.length),
+                          ]);
+                        }}
+                      />
+                    );
+                  } else {
+                    return <div key={index}>{value}</div>;
+                  }
                 }
               })}
+              <div className="flex items-center justify-start gap-4">
+                <FaPencil className="cursor-pointer" />
+                <FaTrash
+                  className="cursor-pointer dark:text-white"
+                  onClick={(e) => {
+                    setSelectedValues((prev: SeciliUrunType[]) =>
+                      prev.filter((a) => a.pk != item.pk),
+                    );
+                  }}
+                />
+              </div>
             </div>
           ))}
         </div>

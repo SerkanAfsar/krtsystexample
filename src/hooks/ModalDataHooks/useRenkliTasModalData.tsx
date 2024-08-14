@@ -31,19 +31,29 @@ export default function useRenkliTasModalData({
   ) => {
     const target = e.target as HTMLInputElement;
 
-    const { kesim, carat, berraklik, renkliTas, renk, code, adet, maliyet } =
-      properties;
+    const {
+      kesim,
+      carat,
+      berraklik,
+      renkliTas,
+      menstrual_status,
+      renk,
+      code,
+      firstPrice,
+    } = properties;
     const item: SeciliUrunType = {
       pk: target.name,
       code,
+      name: renkliTas,
       kesim,
       carat,
       berraklik,
       renk,
       adet: 1,
       type: renkliTas.toString().substring(0, 1),
-      maliyet: `${formatToCurrency(maliyet)} $`,
-      maliyetPrice: maliyet,
+      maliyet: `${formatToCurrency(firstPrice)} $`,
+      firstPrice,
+      menstrual_status,
     };
 
     if (target.checked) {
@@ -82,6 +92,7 @@ export default function useRenkliTasModalData({
           const selectedItem = selectedValues.find(
             (a) => (a.pk as string) == (item.pk as unknown),
           );
+
           const condition = selectedItem != null;
           const { adet, used_carat } = selectedItem || {};
           const firstMaliyet =
@@ -100,7 +111,7 @@ export default function useRenkliTasModalData({
                     {
                       ...item.properties,
                       code: item.code,
-                      maliyet: firstMaliyet,
+                      firstPrice: Number(firstMaliyet),
                     },
                     index,
                   )

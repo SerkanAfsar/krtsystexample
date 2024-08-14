@@ -9,6 +9,9 @@ import { ProductListType } from "../../../../../../types/types";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Column } from "react-table";
+import { FaPencil } from "react-icons/fa6";
+import { FaTrash } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
 
 import { DeleteProductApiService } from "@/ApiServices/Products.ApiService";
 
@@ -28,8 +31,7 @@ interface Diamond {
   height?: string;
   sertifikaNo?: string;
   paraportFiyatı?: string;
-  duzenle?: React.ReactNode;
-  sil?: React.ReactNode;
+  islemler?: React.ReactNode;
 }
 
 const columns: Column<Diamond>[] = [
@@ -90,20 +92,17 @@ const columns: Column<Diamond>[] = [
     accessor: "sertifikaNo",
   },
   {
-    Header: "ParaportFiyatı",
+    Header: "Rapaport Fiyatı",
     accessor: "paraportFiyatı",
   },
   {
-    Header: "Duzenle",
-    accessor: "duzenle",
-  },
-  {
-    Header: "Sil",
-    accessor: "sil",
+    Header: "İşlemler",
+    accessor: "islemler",
   },
 ];
 
 export default function PirlantaListesi() {
+  const router = useRouter();
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<Diamond[] | string | null>(null);
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
@@ -129,31 +128,6 @@ export default function PirlantaListesi() {
       );
     }
     return item?.product_certificate?.sertifika;
-  }, []);
-
-  const duzenleButton = useCallback((item: any) => {
-    return (
-      <Link
-        className="btn rounded-md bg-yellow-600 p-4 text-center text-white"
-        href={`/Admin/StokYonetimi/Pirlanta/PirlantaEkle/${item.pk}`}
-      >
-        Güncelle
-      </Link>
-    );
-  }, []);
-
-  const silButton = useCallback(async (item: any) => {
-    const id = item.pk as number;
-    return (
-      <div
-        onClick={async () => {
-          await DeleteProductApiService({ id, callBack: updateData });
-        }}
-        className="btn cursor-pointer rounded-md bg-danger p-3 text-center text-white"
-      >
-        Sil
-      </div>
-    );
   }, []);
 
   const updateData = useCallback(() => {
@@ -182,8 +156,7 @@ export default function PirlantaListesi() {
             symmetry: item?.product_certificate?.symmetry,
             paraportFiyatı: undefined,
             height: item?.product_certificate?.height,
-            duzenle: duzenleButton(item),
-            sil: silButton(item),
+            islemler: islemlerArea({ id: item?.pk as number }),
           };
         });
         setActiveData(dataOneResult);
@@ -197,6 +170,28 @@ export default function PirlantaListesi() {
       }
     });
   }, []);
+
+  const islemlerArea = useCallback(
+    ({ id }: { id: number }) => {
+      return (
+        <div className="flex items-center justify-start  gap-6">
+          <FaPencil
+            className="cursor-pointer"
+            onClick={() =>
+              router.push(`/Admin/StokYonetimi/Pirlanta/PirlantaEkle/${id}`)
+            }
+          />
+          <FaTrash
+            className="cursor-pointer"
+            onClick={async () => {
+              await DeleteProductApiService({ id, callBack: updateData });
+            }}
+          />
+        </div>
+      );
+    },
+    [router, updateData],
+  );
 
   useEffect(() => {
     updateData();

@@ -28,7 +28,15 @@ export default function usePirlantaModalData({
     index: number,
   ) => {
     const target = e.target as HTMLInputElement;
-    const { kesim, carat, berraklik, renk, adet, maliyet, code } = properties;
+    const {
+      kesim,
+      carat,
+      berraklik,
+      renk,
+      firstPrice,
+      code,
+      menstrual_status,
+    } = properties;
     const item: SeciliUrunType = {
       pk: target.name,
       code,
@@ -37,8 +45,9 @@ export default function usePirlantaModalData({
       berraklik,
       renk,
       adet: 1,
-      maliyet: `${formatToCurrency(maliyet)} $`,
-      maliyetPrice: maliyet,
+      maliyet: `${formatToCurrency(firstPrice)} $`,
+      firstPrice,
+      menstrual_status,
     };
 
     if (target.checked) {
@@ -94,7 +103,7 @@ export default function usePirlantaModalData({
               e,
               {
                 ...item.properties,
-                maliyet: Number(firstMaliyet),
+                firstPrice: Number(firstMaliyet),
                 code: item.code,
               },
               index,

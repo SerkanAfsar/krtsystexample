@@ -14,8 +14,7 @@ export type IRenkliTasType = {
   frommixedItem?: string;
   sertifikaDosyasi?: File;
   total_cost?: number;
-  duzenle?: React.ReactNode;
-  sil?: React.ReactNode;
+  islemler?: React.ReactNode;
 };
 
 export type IDiamondType = {
@@ -77,8 +76,7 @@ export type ISadeType = {
   girisTarihi?: string;
   total_cost?: number;
   cost_currency?: string;
-  duzenle?: React.ReactNode;
-  sil?: React.ReactNode;
+  islemler?: React.ReactNode;
 };
 
 export type FormSectionType = {

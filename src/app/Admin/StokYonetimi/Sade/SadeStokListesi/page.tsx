@@ -7,14 +7,14 @@ import { ISadeType } from "../../../../../../types/formTypes";
 import { ResponseResult } from "../../../../../../types/responseTypes";
 import { ProductListType } from "../../../../../../types/types";
 import { SadeModelTurleri } from "@/utils/MockData";
-
-import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Column } from "react-table";
 
 import { LightgalleryItem } from "react-lightgallery";
 import { DeleteProductApiService } from "@/ApiServices/Products.ApiService";
 import Image from "next/image";
+import { FaPencil, FaTrash } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
 
 const columns: Column<ISadeType>[] = [
   {
@@ -50,16 +50,13 @@ const columns: Column<ISadeType>[] = [
     accessor: "iscilik",
   },
   {
-    Header: "Düzenle",
-    accessor: "duzenle",
-  },
-  {
-    Header: "Sil",
-    accessor: "sil",
+    Header: "İşlemler",
+    accessor: "islemler",
   },
 ];
 
 export default function SadeStokListesi() {
+  const router = useRouter();
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<ISadeType[] | string | null>(
     null,
@@ -101,8 +98,7 @@ export default function SadeStokListesi() {
               ? `${item?.properties?.hasGrami} gr`
               : undefined,
             iscilik: `${item?.properties?.iscilik} ${item?.properties?.cost_currency}`,
-            duzenle: duzenleButton(item),
-            sil: silButton(item),
+            islemler: islemlerArea({ id: item.pk as number }),
           };
         });
         setActiveData(dataOneResult);
@@ -117,32 +113,26 @@ export default function SadeStokListesi() {
     });
   }, [activePage]);
 
-  const duzenleButton = useCallback((item: any) => {
-    return (
-      <Link
-        className="btn rounded-md bg-yellow-600 p-3 text-white"
-        href={`/Admin/StokYonetimi/Sade/SadeEkle/${item.pk}`}
-      >
-        Güncelle
-      </Link>
-    );
-  }, []);
-
-  const silButton = useCallback(
-    async (item: any) => {
-      const id = item.pk as number;
+  const islemlerArea = useCallback(
+    ({ id }: { id: number }) => {
       return (
-        <div
-          onClick={async () => {
-            await DeleteProductApiService({ id, callBack: updateData });
-          }}
-          className="btn cursor-pointer rounded-md bg-danger p-3 text-center text-white"
-        >
-          Sil
+        <div className="flex items-center justify-start  gap-6">
+          <FaPencil
+            className="cursor-pointer"
+            onClick={() =>
+              router.push(`/Admin/StokYonetimi/Sade/SadeEkle/${id}`)
+            }
+          />
+          <FaTrash
+            className="cursor-pointer"
+            onClick={async () => {
+              await DeleteProductApiService({ id, callBack: updateData });
+            }}
+          />
         </div>
       );
     },
-    [updateData],
+    [router, updateData],
   );
 
   useEffect(() => {
