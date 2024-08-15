@@ -6,7 +6,7 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { ISadeType } from "../../../../../../types/formTypes";
 import { ResponseResult } from "../../../../../../types/responseTypes";
 import { ProductListType } from "../../../../../../types/types";
-import { SadeModelTurleri } from "@/utils/MockData";
+import { SadeModelTurleri } from "@/data/Sade.data";
 import { useCallback, useEffect, useState } from "react";
 import { Column } from "react-table";
 

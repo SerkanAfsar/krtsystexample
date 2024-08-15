@@ -1,13 +1,24 @@
 import { FormSectionType } from "../../types/formTypes";
-import { CustomOptionType } from "../../types/inputTypes";
+
 import {
+  AltinAyarData,
+  AltinRengiData,
   AtolyeListesi,
+  SadeModelTurleri,
+} from "@/data/Sade.data";
+import {
+  PirlantaBerraklikData,
   PirlantaBoyKodlari,
+  PirlantaElekData,
+  PirlantaKesimKodlariData,
+  PirlantaRenkData,
+} from "@/data/Pirlanta.data";
+import {
   RenkliTasListesiData,
+  RenkliTasListesiKesimData,
+  RenkliTasListesiMenseiList,
   RenkliTasRenkListesi,
-  SadeModelTurleriData,
-} from ".";
-import { MenseiList } from "./Mensei";
+} from "@/data/RenkliTas.data";
 
 export const AddSadeSections: Array<FormSectionType> = [
   {
@@ -60,7 +71,7 @@ export const AddSadeSections: Array<FormSectionType> = [
         requiredMessage: "Model Türü Değeri Boş Bırakılamaz",
         relativeTo: "type",
         span: 3,
-        options: SadeModelTurleriData,
+        options: SadeModelTurleri,
       },
       {
         name: "modelKodu",
@@ -126,43 +137,7 @@ export const AddSadeSections: Array<FormSectionType> = [
         requiredMessage: "Altın Rengi Değeri Boş Bırakılamaz",
         relativeTo: "type",
         span: 3,
-        options: [
-          {
-            titleVal: "Beyaz",
-            valueVal: "Beyaz",
-            extraValue: "W",
-          },
-          {
-            titleVal: "Yeşil",
-            valueVal: "Yeşil",
-            extraValue: "G",
-          },
-          {
-            titleVal: "Rose",
-            valueVal: "Rose",
-            extraValue: "R",
-          },
-          {
-            titleVal: "Yeşil Beyaz",
-            valueVal: "Yeşil Beyaz",
-            extraValue: "GW",
-          },
-          {
-            titleVal: "Beyaz Rose",
-            valueVal: "Beyaz Rose",
-            extraValue: "WR",
-          },
-          {
-            titleVal: "Yeşil Rose",
-            valueVal: "Yeşil Rose",
-            extraValue: "GR",
-          },
-          {
-            titleVal: "Çok Renkli",
-            valueVal: "Çok Renkli",
-            extraValue: "WGR",
-          },
-        ],
+        options: AltinRengiData,
       },
       {
         name: "gram",
@@ -183,15 +158,7 @@ export const AddSadeSections: Array<FormSectionType> = [
         requiredMessage: "Ayar Değeri Boş Bırakılamaz",
         relativeTo: "type",
         span: 3,
-        options: [
-          { titleVal: "18", valueVal: "18" },
-          { titleVal: "14", valueVal: "14" },
-          { titleVal: "8", valueVal: "8" },
-          { titleVal: "750", valueVal: "750" },
-          { titleVal: "585", valueVal: "585" },
-          { titleVal: "22", valueVal: "22" },
-          { titleVal: "24", valueVal: "24" },
-        ],
+        options: AltinAyarData,
       },
       {
         name: "hasGrami",
@@ -284,68 +251,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         requiredMessage: "Kesim Değerini Boş Bırakılamaz",
         relativeTo: "menstrual_status",
         isCodeRelated: true,
-        options: [
-          {
-            titleVal: "ROUND",
-            valueVal: "ROUND",
-            extraValue: "BR",
-          },
-          {
-            titleVal: "HEART",
-            valueVal: "HEART",
-            extraValue: "HS",
-          },
-          {
-            titleVal: "PEAR",
-            valueVal: "PEAR",
-            extraValue: "PS",
-          },
-          {
-            titleVal: "MARQUISE",
-            valueVal: "MARQUISE",
-            extraValue: "MQ",
-          },
-          {
-            titleVal: "OVAL",
-            valueVal: "OVAL",
-            extraValue: "OV",
-          },
-          {
-            titleVal: "BAGET",
-            valueVal: "BAGET",
-            extraValue: "BG",
-          },
-          {
-            titleVal: "TRAPEZ",
-            valueVal: "TRAPEZ",
-            extraValue: "TP",
-          },
-          {
-            titleVal: "TRIANGLE",
-            valueVal: "TRIANGLE",
-            extraValue: "TR",
-          },
-          {
-            titleVal: "PRENSES",
-            valueVal: "PRENSES",
-            extraValue: "PR",
-          },
-          {
-            titleVal: "RADIANT",
-            valueVal: "RADIANT",
-            extraValue: "RD",
-          },
-          {
-            titleVal: "EMERALD",
-            valueVal: "EMERALD",
-            extraValue: "EM",
-          },
-          {
-            titleVal: "CUSHION",
-            valueVal: "CUSHION",
-            extraValue: "CS",
-          },
-        ],
+        options: PirlantaKesimKodlariData,
         span: 2,
       },
       {
@@ -367,104 +273,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Renk Değerini Giriniz...",
         required: true,
         requiredMessage: "Renk Değeri Boş Bırakılamaz",
-        options: [
-          {
-            titleVal: "D",
-            valueVal: "D",
-          },
-          {
-            titleVal: "E",
-            valueVal: "E",
-          },
-          {
-            titleVal: "F",
-            valueVal: "F",
-          },
-          {
-            titleVal: "G",
-            valueVal: "G",
-          },
-          {
-            titleVal: "H",
-            valueVal: "H",
-          },
-          {
-            titleVal: "I",
-            valueVal: "I",
-          },
-          {
-            titleVal: "J",
-            valueVal: "J",
-          },
-          {
-            titleVal: "K",
-            valueVal: "K",
-          },
-          {
-            titleVal: "L",
-            valueVal: "L",
-          },
-          {
-            titleVal: "M",
-            valueVal: "M",
-          },
-          {
-            titleVal: "N",
-            valueVal: "N",
-          },
-          {
-            titleVal: "O",
-            valueVal: "O",
-          },
-          {
-            titleVal: "P",
-            valueVal: "P",
-          },
-          {
-            titleVal: "Q",
-            valueVal: "Q",
-          },
-          {
-            titleVal: "R",
-            valueVal: "R",
-          },
-          {
-            titleVal: "S",
-            valueVal: "S",
-          },
-          {
-            titleVal: "T",
-            valueVal: "T",
-          },
-          {
-            titleVal: "U",
-            valueVal: "U",
-          },
-          {
-            titleVal: "V",
-            valueVal: "V",
-          },
-          {
-            titleVal: "W",
-            valueVal: "W",
-          },
-          {
-            titleVal: "X",
-            valueVal: "X",
-          },
-          {
-            titleVal: "Y",
-            valueVal: "Y",
-          },
-          {
-            titleVal: "Z",
-            valueVal: "Z",
-          },
-          {
-            titleVal: "BLACK",
-            valueVal: "BLACK",
-          },
-        ],
+        options: PirlantaRenkData,
         relativeTo: "menstrual_status",
         span: 2,
         spesificRelatedItem: "Sertifikasız",
@@ -477,104 +286,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Renk Değeri Boş Bırakılamaz",
         span: 1,
-        options: [
-          {
-            titleVal: "D",
-            valueVal: "D",
-          },
-          {
-            titleVal: "E",
-            valueVal: "E",
-          },
-          {
-            titleVal: "F",
-            valueVal: "F",
-          },
-          {
-            titleVal: "G",
-            valueVal: "G",
-          },
-          {
-            titleVal: "H",
-            valueVal: "H",
-          },
-          {
-            titleVal: "I",
-            valueVal: "I",
-          },
-          {
-            titleVal: "J",
-            valueVal: "J",
-          },
-          {
-            titleVal: "K",
-            valueVal: "K",
-          },
-          {
-            titleVal: "L",
-            valueVal: "L",
-          },
-          {
-            titleVal: "M",
-            valueVal: "M",
-          },
-          {
-            titleVal: "N",
-            valueVal: "N",
-          },
-          {
-            titleVal: "O",
-            valueVal: "O",
-          },
-          {
-            titleVal: "P",
-            valueVal: "P",
-          },
-          {
-            titleVal: "Q",
-            valueVal: "Q",
-          },
-          {
-            titleVal: "R",
-            valueVal: "R",
-          },
-          {
-            titleVal: "S",
-            valueVal: "S",
-          },
-          {
-            titleVal: "T",
-            valueVal: "T",
-          },
-          {
-            titleVal: "U",
-            valueVal: "U",
-          },
-          {
-            titleVal: "V",
-            valueVal: "V",
-          },
-          {
-            titleVal: "W",
-            valueVal: "W",
-          },
-          {
-            titleVal: "X",
-            valueVal: "X",
-          },
-          {
-            titleVal: "Y",
-            valueVal: "Y",
-          },
-          {
-            titleVal: "Z",
-            valueVal: "Z",
-          },
-          {
-            titleVal: "BLACK",
-            valueVal: "BLACK",
-          },
-        ],
+        options: PirlantaRenkData,
         relativeTo: "menstrual_status",
         visibleRelative: "Sertifikasız",
       },
@@ -587,52 +299,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         relativeTo: "menstrual_status",
         span: 2,
-        options: [
-          {
-            titleVal: "FL",
-            valueVal: "FL",
-          },
-          {
-            titleVal: "IF",
-            valueVal: "IF",
-          },
-          {
-            titleVal: "VVS1",
-            valueVal: "VVS1",
-          },
-          {
-            titleVal: "VVS2",
-            valueVal: "VVS2",
-          },
-          {
-            titleVal: "VS1",
-            valueVal: "VS1",
-          },
-          {
-            titleVal: "VS2",
-            valueVal: "VS2",
-          },
-          {
-            titleVal: "SI1",
-            valueVal: "SI1",
-          },
-          {
-            titleVal: "SI2",
-            valueVal: "SI2",
-          },
-          {
-            titleVal: "I1",
-            valueVal: "I1",
-          },
-          {
-            titleVal: "I2",
-            valueVal: "I2",
-          },
-          {
-            titleVal: "I3",
-            valueVal: "I3",
-          },
-        ],
+        options: PirlantaBerraklikData,
         spesificRelatedItem: "Sertifikasız",
       },
       {
@@ -644,52 +311,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         relativeTo: "menstrual_status",
         span: 1,
-        options: [
-          {
-            titleVal: "FL",
-            valueVal: "FL",
-          },
-          {
-            titleVal: "IF",
-            valueVal: "IF",
-          },
-          {
-            titleVal: "VVS1",
-            valueVal: "VVS1",
-          },
-          {
-            titleVal: "VVS2",
-            valueVal: "VVS2",
-          },
-          {
-            titleVal: "VS1",
-            valueVal: "VS1",
-          },
-          {
-            titleVal: "VS2",
-            valueVal: "VS2",
-          },
-          {
-            titleVal: "SI1",
-            valueVal: "SI1",
-          },
-          {
-            titleVal: "SI2",
-            valueVal: "SI2",
-          },
-          {
-            titleVal: "I1",
-            valueVal: "I1",
-          },
-          {
-            titleVal: "I2",
-            valueVal: "I2",
-          },
-          {
-            titleVal: "I3",
-            valueVal: "I3",
-          },
-        ],
+        options: PirlantaBerraklikData,
         visibleRelative: "Sertifikasız",
       },
       {
@@ -703,7 +325,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         requiredMessage: "Menşei Değeri Boş Bırakılamaz",
         relativeTo: "menstrual_status",
         // showIconRelativeTo: "Sertifikasız",
-        staticOptions: MenseiList,
+        staticOptions: RenkliTasListesiMenseiList,
       },
 
       {
@@ -716,120 +338,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         relativeTo: "menstrual_status",
         visibleRelative: "Sertifikasız",
         span: 2,
-        options: [
-          {
-            titleVal: "60",
-            valueVal: "60",
-          },
-          {
-            titleVal: "70",
-            valueVal: "70",
-          },
-          {
-            titleVal: "80",
-            valueVal: "80",
-          },
-          {
-            titleVal: "90",
-            valueVal: "90",
-          },
-          {
-            titleVal: "100",
-            valueVal: "100",
-          },
-          {
-            titleVal: "110",
-            valueVal: "110",
-          },
-          {
-            titleVal: "115",
-            valueVal: "115",
-          },
-          {
-            titleVal: "120",
-            valueVal: "120",
-          },
-          {
-            titleVal: "125",
-            valueVal: "125",
-          },
-          {
-            titleVal: "130",
-            valueVal: "130",
-          },
-          {
-            titleVal: "135",
-            valueVal: "135",
-          },
-          {
-            titleVal: "140",
-            valueVal: "140",
-          },
-          {
-            titleVal: "145",
-            valueVal: "145",
-          },
-          {
-            titleVal: "150",
-            valueVal: "150",
-          },
-          {
-            titleVal: "155",
-            valueVal: "155",
-          },
-          {
-            titleVal: "160",
-            valueVal: "160",
-          },
-          {
-            titleVal: "170",
-            valueVal: "170",
-          },
-          {
-            titleVal: "180",
-            valueVal: "180",
-          },
-          {
-            titleVal: "190",
-            valueVal: "190",
-          },
-          {
-            titleVal: "200",
-            valueVal: "200",
-          },
-          {
-            titleVal: "210",
-            valueVal: "210",
-          },
-          {
-            titleVal: "220",
-            valueVal: "220",
-          },
-          {
-            titleVal: "230",
-            valueVal: "230",
-          },
-          {
-            titleVal: "240",
-            valueVal: "240",
-          },
-          {
-            titleVal: "250",
-            valueVal: "250",
-          },
-          {
-            titleVal: "260",
-            valueVal: "260",
-          },
-          {
-            titleVal: "270",
-            valueVal: "270",
-          },
-          {
-            titleVal: "70",
-            valueVal: "70",
-          },
-        ],
+        options: PirlantaElekData,
       },
 
       {
@@ -856,17 +365,6 @@ export const AddStoneSections: Array<FormSectionType> = [
         requiredMessage: "Açıklama Değeri Boş Bırakılamaz",
         span: 4,
       },
-      // {
-      //   name: "sertifikaResim",
-      //   type: "file",
-      //   title: "Sertifika",
-      //   placeholder: "Sertifika Resim Seçiniz...",
-      //   required: true,
-      //   requiredMessage: "Sertifika Resmi Seçiniz",
-      //   relativeTo: "menstrual_status",
-      //   span: 4,
-      //   visibleRelative: "Sertifikalı",
-      // },
     ],
   },
   {
@@ -1200,161 +698,6 @@ export const AddStoneSections: Array<FormSectionType> = [
   },
 ];
 
-export const SadeModelTurleri: CustomOptionType[] = [
-  {
-    titleVal: "Alyans",
-    valueVal: "Alyans",
-    extraValue: "ALY",
-  },
-  {
-    titleVal: "Bileklik",
-    valueVal: "Bileklik",
-    extraValue: "BL",
-  },
-  {
-    titleVal: "Kelepçe",
-    valueVal: "Kelepçe",
-    extraValue: "BNG",
-  },
-  {
-    titleVal: "Broş",
-    valueVal: "Broş",
-    extraValue: "BRS",
-  },
-  {
-    titleVal: "Kol Düğmesi",
-    valueVal: "Kol Düğmesi",
-    extraValue: "CF",
-  },
-  {
-    titleVal: "Küpe",
-    valueVal: "Küpe",
-    extraValue: "E",
-  },
-  {
-    titleVal: "Anturaj Küpe",
-    valueVal: "Anturaj Küpe",
-    extraValue: "EA",
-  },
-  {
-    titleVal: "Küpe Arkalığı",
-    valueVal: "Küpe Arkalığı",
-    extraValue: "EK",
-  },
-  {
-    titleVal: "Tektaş Küpe",
-    valueVal: "Tektaş Küpe",
-    extraValue: "ES",
-  },
-  {
-    titleVal: "Bilezik",
-    valueVal: "Bilezik",
-    extraValue: "FBR",
-  },
-  {
-    titleVal: "Kilit",
-    valueVal: "Kilit",
-    extraValue: "KLT",
-  },
-  {
-    titleVal: "Erkek Yüzüğü",
-    valueVal: "Erkek Yüzüğü",
-    extraValue: "MR",
-  },
-  {
-    titleVal: "Gerdanlık",
-    valueVal: "Gerdanlık",
-    extraValue: "NEC",
-  },
-  {
-    titleVal: "Zincirli Kolye",
-    valueVal: "Zincirli Kolye",
-    extraValue: "NZ",
-  },
-  {
-    titleVal: "Kolye Ucu",
-    valueVal: "Kolye Ucu",
-    extraValue: "P",
-  },
-  {
-    titleVal: "Anturaj Kolye Ucu",
-    valueVal: "Anturaj Kolye Ucu",
-    extraValue: "PA",
-  },
-  {
-    titleVal: "Tektaş Kolye ucu",
-    valueVal: "Tektaş Kolye ucu",
-    extraValue: "PS",
-  },
-  {
-    titleVal: "Anturaj Yüzük",
-    valueVal: "Anturaj Yüzük",
-    extraValue: "RA",
-  },
-  {
-    titleVal: "Genel Fantazi Yüzük",
-    valueVal: "Genel Fantazi Yüzük",
-    extraValue: "RF",
-  },
-  {
-    titleVal: "Tektaş Yüzük",
-    valueVal: "Tektaş Yüzük",
-    extraValue: "RS",
-  },
-  {
-    titleVal: "Tamtur Yüzük",
-    valueVal: "Tamtur Yüzük",
-    extraValue: "RTT",
-  },
-  {
-    titleVal: "Zincirler",
-    valueVal: "Zincirler",
-    extraValue: "RULO",
-  },
-  {
-    titleVal: "Rozet",
-    valueVal: "Rozet",
-    extraValue: "RZ",
-  },
-
-  {
-    titleVal: "Takım Bileklik",
-    valueVal: "Takım Bileklik",
-    extraValue: "TKB",
-  },
-  {
-    titleVal: "Takım Küpe",
-    valueVal: "Takım Küpe",
-    extraValue: "TKY",
-  },
-  {
-    titleVal: "Takım Kolye",
-    valueVal: "Takım Kolye",
-    extraValue: "TKP",
-  },
-  {
-    titleVal: "Takım Yüzük",
-    valueVal: "Takım Yüzük",
-    extraValue: "TKR",
-  },
-  {
-    titleVal: "Tespih",
-    valueVal: "Tespih",
-    extraValue: "TS",
-  },
-  {
-    titleVal: "Beş Taş Yüzük",
-    valueVal: "Beş Taş Yüzük",
-    extraValue: "WR",
-  },
-
-  {
-    titleVal: "Zincir",
-    valueVal: "Zincir",
-    extraValue: "ZN",
-  },
-];
-
 export const AddRenkliTasSections: Array<FormSectionType> = [
   {
     colsLenght: "8",
@@ -1443,60 +786,7 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
         requiredMessage: "Kesim Değerini Boş Bırakılamaz",
         relativeTo: "menstrual_status",
         span: 2,
-        options: [
-          {
-            titleVal: "ROUND",
-            valueVal: "ROUND",
-          },
-          {
-            titleVal: "HEART",
-            valueVal: "HEART",
-          },
-          {
-            titleVal: "PEAR",
-            valueVal: "PEAR",
-          },
-          {
-            titleVal: "MARQUISE",
-            valueVal: "MARQUISE",
-          },
-          {
-            titleVal: "OVAL",
-            valueVal: "OVAL",
-          },
-          {
-            titleVal: "BAGET",
-            valueVal: "BAGET",
-          },
-          {
-            titleVal: "TRAPEZ",
-            valueVal: "TRAPEZ",
-          },
-          {
-            titleVal: "TRIANGLE",
-            valueVal: "TRIANGLE",
-          },
-          {
-            titleVal: "PRENSES",
-            valueVal: "PRENSES",
-          },
-          {
-            titleVal: "RADIANT",
-            valueVal: "RADIANT",
-          },
-          {
-            titleVal: "EMERALD",
-            valueVal: "EMERALD",
-          },
-          {
-            titleVal: "CUSHION",
-            valueVal: "CUSHION",
-          },
-          {
-            titleVal: "CABOCHON",
-            valueVal: "CABOCHON",
-          },
-        ],
+        options: RenkliTasListesiKesimData,
       },
       {
         name: "mensei",
@@ -1507,7 +797,7 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
         requiredMessage: "Menşei Boş Bırakılamaz",
         relativeTo: "menstrual_status",
         span: 2,
-        staticOptions: MenseiList,
+        staticOptions: RenkliTasListesiMenseiList,
       },
       {
         name: "treatment",

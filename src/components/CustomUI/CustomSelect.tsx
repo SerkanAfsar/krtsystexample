@@ -1,7 +1,8 @@
 "use client";
 
 import { ElementType } from "../../../types/inputTypes";
-import { cn, selectKesimValue } from "@/utils";
+import { cn } from "@/utils";
+import { selectKesimValue } from "@/utils/Pirlanta.Utils";
 import { ClassValue } from "clsx";
 import React, { useId, useState } from "react";
 import { SelectOptionsType } from "./CustomForm";
@@ -44,12 +45,14 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
 
     return (
       <div className={cn("w-full", outerClass && outerClass)}>
-        <label
-          htmlFor={id}
-          className="mb-3 block h-5 text-sm font-medium text-black dark:text-white"
-        >
-          {item.title}
-        </label>
+        {item.title && (
+          <label
+            htmlFor={id}
+            className="mb-3 block h-5 text-sm font-medium text-black dark:text-white"
+          >
+            {item.title}
+          </label>
+        )}
         <div className="flex items-center justify-between gap-1">
           <div className="relative z-20 flex-1 bg-white dark:bg-form-input">
             <select

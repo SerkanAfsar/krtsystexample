@@ -157,3 +157,17 @@ export const GetSadeCodeByTypeService = async ({
   });
   return result as ResponseResult<NextOrderType>;
 };
+
+export const GetGemProductService = async ({
+  product_id,
+}: {
+  product_id: number;
+}): Promise<ResponseResult<ProductType>> => {
+  const result = await BaseService({
+    url: `product/gem-product-detail/`,
+    bodyData: { product_id },
+    method: "POST",
+    hasToken: true,
+  });
+  return result as ResponseResult<ProductType>;
+};

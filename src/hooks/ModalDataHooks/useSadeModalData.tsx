@@ -3,11 +3,9 @@ import { ResponseResult } from "../../../types/responseTypes";
 import { ProductListType } from "../../../types/types";
 import React, { useState, useCallback, useEffect } from "react";
 import { SeciliUrunType } from "@/components/IsEmirleri/UrunGruplariModul";
-import {
-  formatToCurrency,
-  SadeAltinKarsiliklari,
-  SadeModelTurleriData,
-} from "@/utils";
+import { formatToCurrency } from "@/utils";
+import { SadeAltinKarsiliklari } from "@/utils/Sade.Utils";
+import { SadeModelTurleri } from "@/data/Sade.data";
 import { GetWorkOrderProductListModalService } from "@/Services/WorkOrder.Services";
 export default function useSadeModalData({
   setSelectedValues,
@@ -49,7 +47,7 @@ export default function useSadeModalData({
         firstPrice,
         type: "Sade",
         modelTuru:
-          SadeModelTurleriData.find(
+          SadeModelTurleri.find(
             (a) => a.titleVal == modelTuru,
           )?.extraValue?.substring(0, 1) || "Not Exists",
         ayar: SadeAltinKarsiliklari(ayar),

@@ -7,7 +7,7 @@ import { SelectOptionsType } from "@/components/CustomUI/CustomForm";
 
 import { ResponseResult } from "../../../types/responseTypes";
 import { GetNextOrderType } from "../../../types/types";
-import { generateDiamondCode } from "@/utils";
+import { generateDiamondCode } from "@/utils/Pirlanta.Utils";
 import { useState, useEffect } from "react";
 
 export type PirlantaCodeItemType = {

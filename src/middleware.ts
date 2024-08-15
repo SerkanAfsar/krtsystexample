@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { validateToken } from "./utils";
+import { validateToken } from "./utils/Auth.Utils";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {

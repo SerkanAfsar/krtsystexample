@@ -35,12 +35,14 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className={cn("w-full", outerClass && outerClass, className)}>
-        <label
-          htmlFor={id}
-          className="mb-3 block text-sm font-medium text-black dark:text-white"
-        >
-          {item.title}
-        </label>
+        {item.title && (
+          <label
+            htmlFor={id}
+            className="mb-3 block text-sm font-medium text-black dark:text-white"
+          >
+            {item.title}
+          </label>
+        )}
         <div className="flex gap-1">
           <div className="relative flex-1">
             <input
@@ -55,7 +57,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
               }}
               onBlur={onBlur}
               className={cn(
-                "h-full w-full rounded border-[1.5px] border-stone-400 bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary",
+                "h-full w-full rounded border-[1.5px] border-stone-400 bg-transparent px-5 py-3 pb-[14px] font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary",
                 className,
                 err && "border-red",
                 item.rightIcon && "pr-[45px]",

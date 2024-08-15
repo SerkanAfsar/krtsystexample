@@ -267,7 +267,7 @@ export default function IsEmriBaslatmaContainer({
             <button
               type="button"
               className={cn(
-                " mt-5 rounded-md border border-primary bg-white p-3 text-black",
+                "mt-5 rounded-md border border-primary bg-white p-3 text-black disabled:bg-gray disabled:text-black-2",
                 isAdmin ? "col-start-2 col-end-3" : "col-start-3 col-end-4",
               )}
               disabled={isSubmitted}
