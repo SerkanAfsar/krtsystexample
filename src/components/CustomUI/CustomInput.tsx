@@ -1,8 +1,9 @@
 "use client";
 import { ElementType } from "../../../types/inputTypes";
-import { caratType, cn } from "@/utils";
+import { cn } from "@/utils";
 import { ClassValue } from "clsx";
 import * as React from "react";
+import { caratType } from "@/utils/Pirlanta.Utils";
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   item: ElementType;

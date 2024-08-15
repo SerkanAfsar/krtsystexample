@@ -15,7 +15,7 @@ import IsEmirDetayLoglari from "@/components/IsEmirleri/IsEmirDetayLoglari";
 import { notFound } from "next/navigation";
 import { ResponseResult } from "../../../../../../types/responseTypes";
 import { UserGroupsType } from "../../../../../../types/types";
-import { getLoggedUserId } from "@/utils/ServerActions.utils";
+import { getLoggedUserId } from "@/actions/Auth.actions";
 
 export default async function UretimBaslatma({ params }: { params: Params }) {
   const cookieStore = cookies();

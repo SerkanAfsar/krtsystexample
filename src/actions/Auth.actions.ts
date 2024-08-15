@@ -4,6 +4,7 @@ import { LoginType } from "../../types/inputTypes";
 import { LoginService } from "@/Services/Auth.Services";
 import { redirect } from "next/navigation";
 import { AuthType } from "../../types/types";
+import { jwtDecode, JwtPayload } from "jwt-decode";
 
 export const loginServer = async (data: LoginType) => {
   const result = await LoginService({ data });
@@ -32,4 +33,14 @@ export const loginServer = async (data: LoginType) => {
     : "Giriş Bilgileri Yanlış";
 
   return errString || null;
+};
+
+export const getLoggedUserId = async () => {
+  "use server";
+  const token = cookies().get("jwt")?.value;
+  if (token) {
+    const { user_id } = jwtDecode(token) as JwtPayload & { user_id: number };
+    return user_id;
+  }
+  return 0;
 };
