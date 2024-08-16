@@ -1,9 +1,7 @@
 import { GetWorkOrderLogsByWorkOrderId } from "@/Services/WorkOrder.Services";
-
 import React from "react";
 import { WorkOrderListType } from "../../../types/WorkOrder.types";
 import { formatDate, formatToCurrency } from "@/utils";
-import { format } from "date-fns/format";
 
 export default async function IsEmirDetayLoglari({ id }: { id: number }) {
   const result = await GetWorkOrderLogsByWorkOrderId({ id });

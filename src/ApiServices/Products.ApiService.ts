@@ -1,7 +1,6 @@
 import { ApiServiceResult } from "@/utils";
 import { ResponseResult } from "../../types/responseTypes";
 import { ProductListType, ProductType } from "../../types/types";
-import useAlertDelete from "@/hooks/useAlertDelete";
 
 export const DeleteProductApiService = async ({
   id,

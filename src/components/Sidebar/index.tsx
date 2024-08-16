@@ -7,7 +7,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import darkLogo from "../../../public/images/logodark.svg";
-import lightLogo from "../../../public/images/logolight.svg";
 import Image from "next/image";
 
 import SidebarLinkGroup from "./SidebarLinkGroup";

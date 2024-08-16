@@ -1,20 +1,9 @@
 "use client";
-import { GetProductDatatableService } from "@/Services/Product.Services";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { ISadeType } from "../../../../../../types/formTypes";
-import { ResponseResult } from "../../../../../../types/responseTypes";
-import { ProductListType } from "../../../../../../types/types";
-import { SadeModelTurleri } from "@/data/Sade.data";
-import { useCallback, useEffect, useState } from "react";
 import { Column } from "react-table";
-
-import { LightgalleryItem } from "react-lightgallery";
-import { DeleteProductApiService } from "@/ApiServices/Products.ApiService";
-import Image from "next/image";
-import { FaPencil, FaTrash } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
 import useGetProductData from "@/hooks/useGetProductData";
 import { SadeListHeaders } from "@/types/Sade";
 
