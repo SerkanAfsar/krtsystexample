@@ -1,7 +1,7 @@
 import React from "react";
 import { Column } from "react-table";
 
-export type MucevherListData = {
+export type MucevherListType = {
   resim: string | null;
   mucevherKodu: string | null;
   model: string | null;
@@ -16,7 +16,7 @@ export type MucevherListData = {
 };
 
 export const MucevherListesiDataHeaders: Column<
-  MucevherListData & { islemler: React.ReactNode }
+  MucevherListType & { islemler: React.ReactNode }
 >[] = [
   {
     Header: "Resim",

@@ -19,6 +19,20 @@ export const hasDecimal = (val: number): boolean => {
   return val - Math.floor(val) !== 0;
 };
 
+export const formatDate = (value: string): string => {
+  const date = new Date(value);
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  };
+  return date.toLocaleDateString("tr-TR", options);
+};
+
 export const ApiServiceResult = ({
   result,
   message,

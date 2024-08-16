@@ -104,7 +104,7 @@ const CustomDatatable = ({
             <tr {...headerGroup.getHeaderGroupProps()} key={key}>
               {headerGroup.headers.map((column, key) => (
                 <th
-                  className={cn(key == 0 ? "w-40" : "w-40")}
+                  className={cn(key == 0 ? "w-40" : "w-30")}
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                   key={key}
                 >
