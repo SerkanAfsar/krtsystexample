@@ -1,9 +1,7 @@
 import { GetWorkOrderLogsByWorkOrderId } from "@/Services/WorkOrder.Services";
-
 import React from "react";
 import { WorkOrderListType } from "../../../types/WorkOrder.types";
-import { formatToCurrency } from "@/utils";
-import { format } from "date-fns/format";
+import { formatDate, formatToCurrency } from "@/utils";
 
 export default async function IsEmirDetayLoglari({ id }: { id: number }) {
   const result = await GetWorkOrderLogsByWorkOrderId({ id });
@@ -28,6 +26,8 @@ export default async function IsEmirDetayLoglari({ id }: { id: number }) {
   }
   const data = result.data as WorkOrderListType;
 
+  console.log(data);
+
   const newData = data.logs?.sort((a, b) => {
     return Number(a.id) - Number(b.id);
   });
@@ -45,28 +45,24 @@ export default async function IsEmirDetayLoglari({ id }: { id: number }) {
       </div>
       <hr />
       <div className="block w-full p-5">
-        <div className="grid grid-cols-10 items-center gap-3  rounded-md border-[#e5e9ed] bg-[#f9fafb] p-3  font-medium text-black">
-          <div className="text-center">İş Emri Kodu</div>
+        <div className="grid grid-cols-9 items-center gap-3  rounded-md border-[#e5e9ed] bg-[#f9fafb] p-3  font-medium text-black">
           <div className="text-center">Tarih</div>
-          <div className="text-center">Çıkış Atolye</div>
+          <div className="text-center">Çıkış Atölye</div>
           <div className="text-center">Teslim Eden</div>
-          <div className="text-center">Giriş Atolye</div>
+          <div className="text-center">Giriş Atölye</div>
           <div className="text-center">Teslim Alan</div>
           <div className="text-center">İşçilik</div>
-          <div className="text-center">Fire</div>
-          <div className="text-center">Yapılan İşlem</div>
+          <div className="text-center">Çıkış Gramı</div>
+          <div className="text-center">Açıklama</div>
           <div className="text-center">İşçilik Maliyeti</div>
         </div>
 
         {newData?.map((item, index) => (
           <div
             key={index}
-            className="grid grid-cols-10 items-center gap-3 border-l-[1px] border-r-[1px] border-t-[1px] border-[#e5e9ed] p-3 font-medium  capitalize  text-black last:border-b-[1px]"
+            className="grid grid-cols-9 items-center gap-3 border-l-[1px] border-r-[1px] border-t-[1px] border-[#e5e9ed] p-3 font-medium  capitalize  text-black last:border-b-[1px]"
           >
-            <div className="text-center"></div>
-            <div className="text-center">
-              {format(new Date(item.created_at), "dd-MM-yyyy hh:ss")}
-            </div>
+            <div className="text-center">{formatDate(item.created_at)}</div>
             <div className="text-center">{item.from_group}</div>
             <div className="text-center">
               {item.from_person.split("@")[0].split("-")[0]}
@@ -78,10 +74,8 @@ export default async function IsEmirDetayLoglari({ id }: { id: number }) {
             <div className="text-center">
               {`${formatToCurrency(item.cost || 0)} $`}
             </div>
-            <div className="text-center">
-              {`${formatToCurrency(item?.wastage || 0)} $`}
-            </div>
-            <div className="text-center">Test (Boş)</div>
+            <div className="text-center">{`${item?.output_gram} gr`}</div>
+            <div className="text-center">{item.description}</div>
             <div className="text-center">{`${formatToCurrency(item.cost || 0)} $`}</div>
           </div>
         ))}

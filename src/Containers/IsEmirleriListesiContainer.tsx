@@ -1,18 +1,23 @@
 "use client";
 import { Column } from "react-table";
 import { WorkOrderType } from "../../types/WorkOrder.types";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { GetWorkOrdersList } from "@/Services/WorkOrder.Services";
 import { formatToCurrency } from "@/utils";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import { useRouter } from "next/navigation";
 import { DeleteWorkOrderApiService } from "@/ApiServices/WorkOrders.ApiService";
 import { FaPencil, FaTrash } from "react-icons/fa6";
+import { formatDate } from "@/utils";
+import {
+  ConvertWorkOrderStatus,
+  WorkOrderStatusType,
+} from "@/utils/WorkOrder.Utils";
 
 const columns: Column<
   WorkOrderType & {
     isEmriKodu: string;
-    mucevherKodu: string;
+    mucevherKodu: React.ReactNode;
     sertifika: string;
     cikis: string;
     giris: string;
@@ -72,16 +77,26 @@ export default function IsEmirleriListesiContainer() {
       const dataOneResult: any = data.map((item) => {
         return {
           isEmriKodu: item.id,
-          mucevherKodu: item?.product_temp_code || "Oluşmadı",
+          mucevherKodu: item?.product_temp_code ? (
+            <span>{item?.product_temp_code}</span>
+          ) : (
+            <button
+              disabled
+              className="inline-flex rounded-full border border-[#DC3545] px-3 py-1 text-sm font-medium text-[#DC3545] hover:opacity-80"
+            >
+              Oluşmadı
+            </button>
+          ),
           islem: item?.exit,
-          last_process_date: new Date(
-            item.last_process_date || null,
-          ).toLocaleDateString(),
+          last_process_date: item.last_process_date ? (
+            <div className="leading-6">
+              {formatDate(item.last_process_date as string)}
+            </div>
+          ) : null,
           total_product_cost: `${formatToCurrency(
             Number(item.total_product_cost),
           )} $`,
-          status: item.status,
-
+          status: ConvertWorkOrderStatus(item.status as WorkOrderStatusType),
           islemler: islemlerArea({ id: item.id as number }),
         };
       });

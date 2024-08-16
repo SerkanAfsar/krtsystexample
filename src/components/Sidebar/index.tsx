@@ -1,13 +1,13 @@
 "use client";
-
 import { FaHome, FaRing } from "react-icons/fa";
 import { IoDiamond } from "react-icons/io5";
 import { GiStonePile } from "react-icons/gi";
 import { MdBorderColor } from "react-icons/md";
-
 import React, { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import darkLogo from "../../../public/images/logodark.svg";
+import Image from "next/image";
 
 import SidebarLinkGroup from "./SidebarLinkGroup";
 
@@ -76,7 +76,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           href="/Admin/Dashboard"
           className="block w-full text-center text-3xl text-white "
         >
-          ATİLLA KARAT
+          <Image src={darkLogo} alt="Atilla Karat" />
         </Link>
 
         <button

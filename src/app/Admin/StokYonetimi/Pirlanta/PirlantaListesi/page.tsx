@@ -1,112 +1,15 @@
 "use client";
-import { GetProductDatatableService } from "@/Services/Product.Services";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import { ResponseResult } from "../../../../../../types/responseTypes";
-import { ProductListType } from "../../../../../../types/types";
 
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
-import { Column } from "react-table";
-import { FaPencil } from "react-icons/fa6";
-import { FaTrash } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 
-import { DeleteProductApiService } from "@/ApiServices/Products.ApiService";
-
-interface Diamond {
-  code?: string;
-  kesim?: string;
-  carat?: string;
-  sertifika?: string;
-  renk?: string;
-  berraklik?: string;
-  proposion?: string;
-  polish?: string;
-  symmetry?: string;
-  fluorescence?: string;
-  min?: string;
-  max?: string;
-  height?: string;
-  sertifikaNo?: string;
-  paraportFiyatı?: string;
-  islemler?: React.ReactNode;
-}
-
-const columns: Column<Diamond>[] = [
-  {
-    Header: "Pırlanta Kodu",
-    accessor: "code",
-  },
-  {
-    Header: "Kesim",
-    accessor: "kesim",
-  },
-  {
-    Header: "Karat",
-    accessor: "carat",
-  },
-  {
-    Header: "Sertifika",
-    accessor: "sertifika",
-  },
-  {
-    Header: "Renk",
-    accessor: "renk",
-  },
-  {
-    Header: "Berraklık",
-    accessor: "berraklik",
-  },
-  {
-    Header: "Proportion",
-    accessor: "proposion",
-  },
-  {
-    Header: "Polish",
-    accessor: "polish",
-  },
-  {
-    Header: "Symmetry",
-    accessor: "symmetry",
-  },
-  {
-    Header: "Floruence",
-    accessor: "fluorescence",
-  },
-  {
-    Header: "Min",
-    accessor: "min",
-  },
-  {
-    Header: "Max",
-    accessor: "max",
-  },
-  {
-    Header: "Height",
-    accessor: "height",
-  },
-  {
-    Header: "SertifikaNo",
-    accessor: "sertifikaNo",
-  },
-  {
-    Header: "Rapaport Fiyatı",
-    accessor: "paraportFiyatı",
-  },
-  {
-    Header: "İşlemler",
-    accessor: "islemler",
-  },
-];
+import useGetProductData from "@/hooks/useGetProductData";
+import { PirlantaListHeaders } from "@/types/Pirlanta";
 
 export default function PirlantaListesi() {
-  const router = useRouter();
-  const [activePage, setActivePage] = useState<number>(1);
-  const [activeData, setActiveData] = useState<Diamond[] | string | null>(null);
-  const [totalPageCount, setTotalPageCount] = useState<number>(1);
-
   const sertificateUrl = useCallback((item: any) => {
     if (item?.product_certificate?.sertifika == "GIA") {
       return (
@@ -130,72 +33,12 @@ export default function PirlantaListesi() {
     return item?.product_certificate?.sertifika;
   }, []);
 
-  const updateData = useCallback(() => {
-    setActiveData(null);
-    GetProductDatatableService({
-      order_by: null,
-      page: activePage,
-      type: "Diamond",
-    }).then((resp: ResponseResult<ProductListType>) => {
-      if (resp?.success) {
-        const data = resp.data as ProductListType;
-        const dataOneResult: any = data.results.map((item) => {
-          return {
-            berraklik: item?.properties?.berraklik,
-            carat: item?.properties?.carat,
-            code: item?.code,
-            fluorescence: item?.product_certificate?.fluorescence,
-            kesim: item?.properties?.kesim,
-            max: item?.product_certificate?.max,
-            min: item?.product_certificate?.min,
-            polish: item?.product_certificate?.polish,
-            proposion: item?.product_certificate?.propotion,
-            sertifika: sertificateUrl(item),
-            sertifikaNo: item?.product_certificate?.sertifikaNo,
-            renk: item?.properties?.renk,
-            symmetry: item?.product_certificate?.symmetry,
-            paraportFiyatı: undefined,
-            height: item?.product_certificate?.height,
-            islemler: islemlerArea({ id: item?.pk as number }),
-          };
-        });
-        setActiveData(dataOneResult);
-        setTotalPageCount(
-          Math.ceil(
-            data.count / Number(process.env.NEXT_PUBLIC_DATATABLE_ITEM_COUNT),
-          ),
-        );
-      } else {
-        setActiveData((resp.error && resp.error[0]) || "Hata");
-      }
-    });
-  }, []);
-
-  const islemlerArea = useCallback(
-    ({ id }: { id: number }) => {
-      return (
-        <div className="flex items-center justify-start  gap-6">
-          <FaPencil
-            className="cursor-pointer"
-            onClick={() =>
-              router.push(`/Admin/StokYonetimi/Pirlanta/PirlantaEkle/${id}`)
-            }
-          />
-          <FaTrash
-            className="cursor-pointer"
-            onClick={async () => {
-              await DeleteProductApiService({ id, callBack: updateData });
-            }}
-          />
-        </div>
-      );
-    },
-    [router, updateData],
-  );
-
-  useEffect(() => {
-    updateData();
-  }, [activePage, sertificateUrl, updateData]);
+  const { activeData, activePage, totalPageCount, setActivePage } =
+    useGetProductData(
+      "Diamond",
+      "/Admin/StokYonetimi/Pirlanta/PirlantaEkle/",
+      sertificateUrl,
+    );
 
   if (activeData == "Hata") {
     return (
@@ -214,7 +57,7 @@ export default function PirlantaListesi() {
       {activeData ? (
         <CustomDatatable
           totalPageCount={totalPageCount}
-          columns={columns}
+          columns={PirlantaListHeaders}
           dataOne={activeData}
           activePage={activePage}
           setActivePage={setActivePage}
