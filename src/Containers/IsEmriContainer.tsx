@@ -176,7 +176,7 @@ export default function IsEmriContainer() {
           <h3 className="p-4 text-lg font-medium text-black dark:text-white">
             İş Emri Bilgileri
           </h3>
-          <b className="mr-4 text-black">Ürün Kodu : {isEmriCode}</b>
+          <b className="mr-4 text-black">Mücevher Kodu : {isEmriCode}</b>
         </div>
         <hr />
         <div className="flex w-full flex-col gap-16 p-3">
