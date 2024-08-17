@@ -6,8 +6,35 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import ModalTwo from "@/components/Modals/ModalTwo";
 import useGetProductData from "@/hooks/useGetProductData";
 import { RenklitasListHeaders } from "@/types/RenkliTas";
+import Link from "next/link";
+import { useCallback } from "react";
 
 export default function RenkliTasStokListesi() {
+  const sertificateUrl = useCallback((item: any) => {
+    if (item?.product_certificate?.sertifika == "GIA") {
+      return (
+        <Link
+          className="underline"
+          target="_blank"
+          href={`https://www.gia.edu/report-check?reportno=${item?.product_certificate?.sertifikaNo}`}
+        >
+          GIA
+        </Link>
+      );
+    } else if (item?.product_certificate?.sertifika == "HRD") {
+      return (
+        <Link
+          target="_blank"
+          className="underline"
+          href={`https://my.hrdantwerp.com/?record_number=${item?.product_certificate?.sertifikaNo}`}
+        >
+          HRD
+        </Link>
+      );
+    }
+    return item?.product_certificate?.sertifika;
+  }, []);
+
   const {
     activeData,
     activePage,
@@ -19,7 +46,7 @@ export default function RenkliTasStokListesi() {
   } = useGetProductData(
     "ColoredStone",
     "/Admin/StokYonetimi/RenkliTas/RenkliTasEkle/",
-    undefined,
+    sertificateUrl,
   );
 
   if (activeData == "Hata") {

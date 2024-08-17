@@ -32,6 +32,7 @@ const InnerConvert = ({
           renkliTas: `${item?.properties?.renkliTas}`,
           carat: item?.properties?.carat,
           renk: item?.properties?.renk,
+          sertifika: sertifikaFunc(item),
           kesim: item?.properties?.kesim,
           mensei: item?.properties?.mensei,
           treatment: item?.properties?.treatment,

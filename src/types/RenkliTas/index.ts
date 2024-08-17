@@ -8,6 +8,7 @@ export type RenkliTasListType = {
   renk?: string;
   kesim?: string;
   mensei?: string;
+  sertifika?: string;
   treatment?: string;
   aciklama?: string;
   fromsingleormixed?: string;
@@ -29,6 +30,10 @@ export const RenklitasListHeaders: Column<
     accessor: "renkliTas",
   },
   {
+    Header: "Sertifika",
+    accessor: "sertifika",
+  },
+  {
     Header: "Karat",
     accessor: "carat",
   },
@@ -48,6 +53,7 @@ export const RenklitasListHeaders: Column<
     Header: "Treatment",
     accessor: "treatment",
   },
+
   {
     Header: "İşlemler",
     accessor: "islemler",

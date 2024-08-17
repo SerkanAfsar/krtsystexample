@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useCallback } from "react";
 import useGetProductData from "@/hooks/useGetProductData";
 import { PirlantaListHeaders } from "@/types/Pirlanta";
-import ModalOne from "@/components/Modals/ModalOne";
+
 import ModalTwo from "@/components/Modals/ModalTwo";
 
 export default function PirlantaListesi() {
@@ -14,6 +14,7 @@ export default function PirlantaListesi() {
     if (item?.product_certificate?.sertifika == "GIA") {
       return (
         <Link
+          className="underline"
           target="_blank"
           href={`https://www.gia.edu/report-check?reportno=${item?.product_certificate?.sertifikaNo}`}
         >
@@ -24,6 +25,7 @@ export default function PirlantaListesi() {
       return (
         <Link
           target="_blank"
+          className="underline"
           href={`https://my.hrdantwerp.com/?record_number=${item?.product_certificate?.sertifikaNo}`}
         >
           HRD
