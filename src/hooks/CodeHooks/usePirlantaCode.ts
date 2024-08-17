@@ -84,6 +84,8 @@ export default function usePirlantaCode({
             caratValue: data_carat,
           });
 
+          console.log(code);
+
           if (data_fromsingleormixed == "From Single") {
             if (!data_kesim || !data_carat) {
               return;

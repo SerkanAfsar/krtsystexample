@@ -1,5 +1,9 @@
-import { PirlantaBoyKodlari } from "@/data/Pirlanta.data";
+import {
+  PirlantaBoyKodlari,
+  PirlantaKesimKodlariData,
+} from "@/data/Pirlanta.data";
 import { CustomOptionType } from "../../types/inputTypes";
+import { UseFormGetValues } from "react-hook-form";
 
 export const selectKesimValue = ({
   selectedValue,
@@ -73,10 +77,11 @@ export const generateDiamondCode = ({
   caratValue?: number;
 }): string => {
   let code = "";
+
   if (kesimKodu) {
     code += selectKesimValue({
       selectedValue: kesimKodu,
-      options: PirlantaBoyKodlari,
+      options: PirlantaKesimKodlariData,
     });
   }
 
@@ -89,4 +94,17 @@ export const generateDiamondCode = ({
   }
 
   return code;
+};
+
+export const GenerateSertificateUrl = (
+  getValues: UseFormGetValues<any>,
+): string => {
+  const { sertifika, sertifikaNo } = getValues();
+  if (sertifika == "GIA") {
+    return `https://www.gia.edu/report-check?reportno=${sertifikaNo}`;
+  } else if (sertifika == "HRD") {
+    return `https://my.hrdantwerp.com/?record_number=${sertifikaNo}`;
+  } else {
+    return "#testyok";
+  }
 };

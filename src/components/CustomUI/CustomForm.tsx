@@ -55,6 +55,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       watch,
       setValue,
       setError,
+      getValues,
 
       formState: { errors, isSubmitting },
     } = useForm<any>({
@@ -116,11 +117,12 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
               errors={errors}
               register={register}
               section={section}
-              key={section.sectionTitle}
+              key={index}
               setError={setError}
               productCode={productCode}
               extraOptions={extraOptions}
               isAdd={isAdd}
+              getValues={getValues}
             />
           );
         })}

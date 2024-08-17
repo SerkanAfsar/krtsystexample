@@ -6,6 +6,7 @@ import CustomSelect from "./CustomSelect";
 import { cn } from "@/utils";
 import CustomFileSelect from "./CustomFileSelect";
 import { SelectOptionsType } from "./CustomForm";
+import { UseFormGetValues } from "react-hook-form";
 
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -21,6 +22,7 @@ export default function FormElementItem({
   setError,
   extraOptions,
   isAdd,
+  getValues,
   ...rest
 }: {
   item: ElementType;
@@ -31,6 +33,7 @@ export default function FormElementItem({
   setError: any;
   extraOptions?: SelectOptionsType[] | null;
   isAdd: boolean;
+  getValues: UseFormGetValues<any>;
 }) {
   const firstCondition =
     (data &&
@@ -74,6 +77,7 @@ export default function FormElementItem({
               !isDisabled && item.required ? item.requiredMessage : false,
             ...item.extraValidations,
           })}
+          setFormValues={setValue}
           value={item.isCurrency ? formatter.format(val) : val}
           err={err}
           key={item.name}
@@ -85,7 +89,9 @@ export default function FormElementItem({
           )}
           showIcon={showIconRelativeTo}
           item={item}
+          getValues={getValues}
           disabled={(!isAdd && item.isCodeRelated) || isDisabled}
+          {...rest}
         />
       );
     }
@@ -104,6 +110,7 @@ export default function FormElementItem({
           name={item.name}
           value={val}
           disabled={(!isAdd && item.isCodeRelated) || isDisabled}
+          {...rest}
         />
       );
     }
@@ -123,6 +130,7 @@ export default function FormElementItem({
           err={err}
           outerClass={cn(item.span && `col-span-${item.span.toString()}`)}
           disabled={(!isAdd && item.isCodeRelated) || isDisabled}
+          {...rest}
         />
       );
     }
@@ -141,6 +149,7 @@ export default function FormElementItem({
           disabled={(!isAdd && item.isCodeRelated) || isDisabled}
           staticOptions={item.staticOptions}
           showIcon={showIconRelativeTo}
+          {...rest}
         />
       );
     }
@@ -163,6 +172,7 @@ export default function FormElementItem({
           )}
           disabled={(!isAdd && item.isCodeRelated) || isDisabled}
           setError={setError}
+          {...rest}
         />
       );
     }

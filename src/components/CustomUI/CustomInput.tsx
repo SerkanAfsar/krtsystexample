@@ -4,6 +4,8 @@ import { cn } from "@/utils";
 import { ClassValue } from "clsx";
 import * as React from "react";
 import { caratType } from "@/utils/Pirlanta.Utils";
+import Link from "next/link";
+import { UseFormGetValues } from "react-hook-form";
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   item: ElementType;
@@ -13,6 +15,7 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   icon?: React.ReactNode;
   className?: ClassValue | null;
   showIcon?: boolean;
+  getValues: UseFormGetValues<any>;
 };
 
 const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
@@ -27,6 +30,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
       icon,
       outerClass,
       err,
+      getValues,
       ...rest
     },
     ref,
@@ -71,6 +75,15 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
               </div>
             )}
             {icon && icon}
+            {item.isLinkedWithIcon && (
+              <Link
+                target="_blank"
+                href={item.extraFunction ? item.extraFunction(getValues) : "#"}
+                className="absolute right-0 top-0 flex h-full w-[40px] items-center justify-center rounded rounded-l-none bg-black text-white"
+              >
+                {item.rightIcon}
+              </Link>
+            )}
           </div>
           {item.simgeturu == "caratType" && value && showIcon && (
             <div className="flex h-full  items-center justify-center rounded-sm bg-primary px-2 py-3 text-white">

@@ -18,7 +18,7 @@ export type ElementType = {
   rowSpan?: number;
   disabled?: boolean;
   relativeTo?: string;
-  rightIcon?: string;
+  rightIcon?: string | React.ReactNode;
   value?: string;
   isCurrency?: boolean;
   checkBoxList?: string[];
@@ -39,6 +39,8 @@ export type ElementType = {
   isCodeRelated?: boolean;
   staticOptions?: any;
   showIconRelativeTo?: string;
+  isLinkedWithIcon?: boolean;
+  extraFunction?: Function;
 };
 
 export type CustomOptionType = {

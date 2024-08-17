@@ -1,4 +1,5 @@
 import { FormSectionType } from "../../types/formTypes";
+import { FaGlobe } from "react-icons/fa6";
 
 import {
   AltinAyarData,
@@ -19,6 +20,7 @@ import {
   RenkliTasListesiMenseiList,
   RenkliTasRenkListesi,
 } from "@/data/RenkliTas.data";
+import { GenerateSertificateUrl } from "./Pirlanta.Utils";
 
 export const AddSadeSections: Array<FormSectionType> = [
   {
@@ -409,6 +411,9 @@ export const AddStoneSections: Array<FormSectionType> = [
         requiredMessage: "Sertifika No Değeri Boş Bırakılamaz",
         disabled: true,
         span: 3,
+        isLinkedWithIcon: true,
+        rightIcon: <FaGlobe />,
+        extraFunction: GenerateSertificateUrl,
       },
       {
         name: "sertifikaTarihi",
@@ -897,6 +902,9 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
         requiredMessage: "Sertifika No Değeri Boş Bırakılamaz",
         disabled: false,
         span: 3,
+        isLinkedWithIcon: true,
+        rightIcon: <FaGlobe />,
+        extraFunction: GenerateSertificateUrl,
       },
       {
         name: "sertifikaTarihi",

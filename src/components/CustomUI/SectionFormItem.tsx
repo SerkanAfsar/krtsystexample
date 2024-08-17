@@ -3,6 +3,7 @@ import { FormSectionType } from "../../../types/formTypes";
 import { cn } from "@/utils";
 import { SelectOptionsType } from "./CustomForm";
 import FormElementItem from "./FormElementItem";
+import { UseFormGetValues } from "react-hook-form";
 
 export default function SectionFormItem({
   section,
@@ -13,6 +14,7 @@ export default function SectionFormItem({
   errors,
   productCode,
   extraOptions,
+  getValues,
 
   isAdd,
   ...rest
@@ -26,6 +28,7 @@ export default function SectionFormItem({
   isAdd: boolean;
   productCode?: string | null;
   extraOptions?: SelectOptionsType[] | null;
+  getValues: UseFormGetValues<any>;
 }) {
   return (
     <div className="mb-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -52,11 +55,13 @@ export default function SectionFormItem({
                 register={register}
                 setValue={setValue}
                 errors={errors}
-                key={item.name}
+                key={index}
                 item={item}
                 data={data}
                 setError={setError}
                 isAdd={isAdd}
+                getValues={getValues}
+                {...rest}
               />
             );
           })}
@@ -77,12 +82,14 @@ export default function SectionFormItem({
                   register={register}
                   setValue={setValue}
                   errors={errors}
-                  key={item.name}
+                  key={index}
                   item={item}
                   data={data}
+                  getValues={getValues}
                   setError={setError}
                   extraOptions={extraOptions}
                   isAdd={isAdd}
+                  {...rest}
                 />
               ))}
             </div>
