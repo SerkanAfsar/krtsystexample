@@ -2,12 +2,12 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-
 import Link from "next/link";
 import { useCallback } from "react";
-
 import useGetProductData from "@/hooks/useGetProductData";
 import { PirlantaListHeaders } from "@/types/Pirlanta";
+import ModalOne from "@/components/Modals/ModalOne";
+import ModalTwo from "@/components/Modals/ModalTwo";
 
 export default function PirlantaListesi() {
   const sertificateUrl = useCallback((item: any) => {
@@ -33,12 +33,19 @@ export default function PirlantaListesi() {
     return item?.product_certificate?.sertifika;
   }, []);
 
-  const { activeData, activePage, totalPageCount, setActivePage } =
-    useGetProductData(
-      "Diamond",
-      "/Admin/StokYonetimi/Pirlanta/PirlantaEkle/",
-      sertificateUrl,
-    );
+  const {
+    activeData,
+    activePage,
+    totalPageCount,
+    setActivePage,
+    setConfirmDelete,
+    showConfirmDelete,
+    setShowConfirmDelete,
+  } = useGetProductData(
+    "Diamond",
+    "/Admin/StokYonetimi/Pirlanta/PirlantaEkle/",
+    sertificateUrl,
+  );
 
   if (activeData == "Hata") {
     return (
@@ -54,14 +61,23 @@ export default function PirlantaListesi() {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Pırlanta Stok Listesi" />
+      <ModalTwo
+        showConfirmDelete={showConfirmDelete}
+        setShowConfirmDelete={setShowConfirmDelete}
+        modalTitle="Üretim İş Emrini İptal Etmek İstediğinizden Emin misiniz?"
+        modalDescription="Kullanılan Sade,Pırlantalar ve Taşlar Stoklara Geri Gönderilecek"
+        setConfirmDelete={setConfirmDelete}
+      />
       {activeData ? (
-        <CustomDatatable
-          totalPageCount={totalPageCount}
-          columns={PirlantaListHeaders}
-          dataOne={activeData}
-          activePage={activePage}
-          setActivePage={setActivePage}
-        />
+        <>
+          <CustomDatatable
+            totalPageCount={totalPageCount}
+            columns={PirlantaListHeaders}
+            dataOne={activeData}
+            activePage={activePage}
+            setActivePage={setActivePage}
+          />
+        </>
       ) : (
         <div className="flex h-full w-full items-center justify-center">
           Yükleniyor...

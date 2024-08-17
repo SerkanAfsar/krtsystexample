@@ -6,6 +6,7 @@ import { ISadeType } from "../../../../../../types/formTypes";
 import { Column } from "react-table";
 import useGetProductData from "@/hooks/useGetProductData";
 import { SadeListHeaders } from "@/types/Sade";
+import ModalTwo from "@/components/Modals/ModalTwo";
 
 const columns: Column<ISadeType>[] = [
   {
@@ -47,12 +48,19 @@ const columns: Column<ISadeType>[] = [
 ];
 
 export default function SadeStokListesi() {
-  const { activeData, activePage, totalPageCount, setActivePage } =
-    useGetProductData(
-      "Simple",
-      "/Admin/StokYonetimi/Sade/SadeEkle/",
-      undefined,
-    );
+  const {
+    activeData,
+    activePage,
+    totalPageCount,
+    setActivePage,
+    setConfirmDelete,
+    showConfirmDelete,
+    setShowConfirmDelete,
+  } = useGetProductData(
+    "Simple",
+    "/Admin/StokYonetimi/Sade/SadeEkle/",
+    undefined,
+  );
 
   if (activeData == "Hata") {
     return (
@@ -68,6 +76,13 @@ export default function SadeStokListesi() {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Sade Stok Listesi" />
+      <ModalTwo
+        showConfirmDelete={showConfirmDelete}
+        setShowConfirmDelete={setShowConfirmDelete}
+        modalTitle="Üretim İş Emrini İptal Etmek İstediğinizden Emin misiniz?"
+        modalDescription="Kullanılan Sade,Pırlantalar ve Taşlar Stoklara Geri Gönderilecek"
+        setConfirmDelete={setConfirmDelete}
+      />
       {activeData ? (
         <CustomDatatable
           totalPageCount={totalPageCount}

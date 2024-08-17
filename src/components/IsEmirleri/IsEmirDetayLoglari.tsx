@@ -26,8 +26,6 @@ export default async function IsEmirDetayLoglari({ id }: { id: number }) {
   }
   const data = result.data as WorkOrderListType;
 
-  console.log(data);
-
   const newData = data.logs?.sort((a, b) => {
     return Number(a.id) - Number(b.id);
   });

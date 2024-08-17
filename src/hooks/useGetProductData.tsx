@@ -1,6 +1,6 @@
 import { DeleteProductApiService } from "@/ApiServices/Products.ApiService";
 import { GetProductDatatableService } from "@/Services/Product.Services";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FaPencil, FaTrash } from "react-icons/fa6";
 import { ResponseResult } from "../../types/responseTypes";
 import { ProductListType } from "../../types/types";
@@ -122,6 +122,9 @@ export default function useGetProductData(
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<any>(null);
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
+  const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
+  const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
+  const idRef = useRef<number | null>(null);
 
   const updateData = useCallback(() => {
     setActiveData(null);
@@ -132,7 +135,6 @@ export default function useGetProductData(
     }).then((resp: ResponseResult<ProductListType>) => {
       if (resp?.success) {
         const data = resp.data as ProductListType;
-
         const dataOneResult = InnerConvert({
           data,
           dataType: type,
@@ -166,13 +168,38 @@ export default function useGetProductData(
           <FaTrash
             className="cursor-pointer"
             onClick={async () => {
-              await DeleteProductApiService({ id, callBack: updateData });
+              setShowConfirmDelete(true);
+              idRef.current = id;
             }}
           />
         </div>
       );
     },
-    [router, updateData],
+    [router, redirectUrl],
   );
-  return { activeData, activePage, totalPageCount, setActivePage };
+
+  useEffect(() => {
+    if (confirmDelete && idRef.current && idRef) {
+      DeleteProductApiService({
+        id: idRef.current,
+        callBack: updateData,
+      });
+      setConfirmDelete(false);
+      setShowConfirmDelete(false);
+      idRef.current = null;
+    } else {
+      idRef.current = null;
+    }
+  }, [confirmDelete, updateData]);
+
+  return {
+    activeData,
+    activePage,
+    totalPageCount,
+    setActivePage,
+    confirmDelete,
+    setConfirmDelete,
+    setShowConfirmDelete,
+    showConfirmDelete,
+  };
 }

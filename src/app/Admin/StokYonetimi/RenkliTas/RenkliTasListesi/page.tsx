@@ -3,16 +3,24 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import ModalTwo from "@/components/Modals/ModalTwo";
 import useGetProductData from "@/hooks/useGetProductData";
 import { RenklitasListHeaders } from "@/types/RenkliTas";
 
 export default function RenkliTasStokListesi() {
-  const { activeData, activePage, totalPageCount, setActivePage } =
-    useGetProductData(
-      "ColoredStone",
-      "/Admin/StokYonetimi/RenkliTas/RenkliTasEkle/",
-      undefined,
-    );
+  const {
+    activeData,
+    activePage,
+    totalPageCount,
+    setActivePage,
+    setConfirmDelete,
+    showConfirmDelete,
+    setShowConfirmDelete,
+  } = useGetProductData(
+    "ColoredStone",
+    "/Admin/StokYonetimi/RenkliTas/RenkliTasEkle/",
+    undefined,
+  );
 
   if (activeData == "Hata") {
     return (
@@ -28,6 +36,13 @@ export default function RenkliTasStokListesi() {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Renkli Taş Stok Listesi" />
+      <ModalTwo
+        showConfirmDelete={showConfirmDelete}
+        setShowConfirmDelete={setShowConfirmDelete}
+        modalTitle="Üretim İş Emrini İptal Etmek İstediğinizden Emin misiniz?"
+        modalDescription="Kullanılan Sade,Pırlantalar ve Taşlar Stoklara Geri Gönderilecek"
+        setConfirmDelete={setConfirmDelete}
+      />
       {activeData ? (
         <CustomDatatable
           totalPageCount={totalPageCount}
