@@ -43,6 +43,7 @@ export default function RenkliTasStokListesi() {
     setConfirmDelete,
     showConfirmDelete,
     setShowConfirmDelete,
+    item,
   } = useGetProductData(
     "ColoredStone",
     "/Admin/StokYonetimi/RenkliTas/RenkliTasEkle/",
@@ -64,10 +65,11 @@ export default function RenkliTasStokListesi() {
     <DefaultLayout>
       <Breadcrumb pageName="Renkli Taş Stok Listesi" />
       <ModalTwo
+        code={item?.productCode}
         showConfirmDelete={showConfirmDelete}
         setShowConfirmDelete={setShowConfirmDelete}
-        modalTitle="Üretim İş Emrini İptal Etmek İstediğinizden Emin misiniz?"
-        modalDescription="Kullanılan Sade,Pırlantalar ve Taşlar Stoklara Geri Gönderilecek"
+        modalTitle="Renkli Taşı Silmek İstediğinizden Emin misiniz?"
+        modalDescription="Renkli Taş Kalıcı Olarak Silinecektir"
         setConfirmDelete={setConfirmDelete}
       />
       {activeData ? (

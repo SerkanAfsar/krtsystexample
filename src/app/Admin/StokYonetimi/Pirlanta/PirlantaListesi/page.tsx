@@ -43,6 +43,7 @@ export default function PirlantaListesi() {
     setConfirmDelete,
     showConfirmDelete,
     setShowConfirmDelete,
+    item,
   } = useGetProductData(
     "Diamond",
     "/Admin/StokYonetimi/Pirlanta/PirlantaEkle/",
@@ -64,10 +65,11 @@ export default function PirlantaListesi() {
     <DefaultLayout>
       <Breadcrumb pageName="Pırlanta Stok Listesi" />
       <ModalTwo
+        code={item?.productCode}
         showConfirmDelete={showConfirmDelete}
         setShowConfirmDelete={setShowConfirmDelete}
-        modalTitle="Üretim İş Emrini İptal Etmek İstediğinizden Emin misiniz?"
-        modalDescription="Kullanılan Sade,Pırlantalar ve Taşlar Stoklara Geri Gönderilecek"
+        modalTitle="Pırlantayı Silmek İstediğinizden Emin misiniz?"
+        modalDescription="Pırlanta Kalıcı Olarak Silinecektir"
         setConfirmDelete={setConfirmDelete}
       />
       {activeData ? (

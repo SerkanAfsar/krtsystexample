@@ -7,12 +7,14 @@ function ModalTwo({
   modalTitle,
   modalDescription,
   setConfirmDelete,
+  code,
 }: {
   showConfirmDelete: boolean;
   setShowConfirmDelete: any;
   modalTitle: string;
   modalDescription: string;
   setConfirmDelete: any;
+  code: string;
 }) {
   // const [modalOpen, setModalOpen] = useState(showConfirmDelete);
 
@@ -81,7 +83,7 @@ function ModalTwo({
             </svg>
           </span>
           <h3 className="mt-5.5 pb-2 text-xl font-bold text-black dark:text-white sm:text-2xl">
-            {modalTitle}
+            {code} {modalTitle}
           </h3>
           <p className="mb-10">{modalDescription}</p>
           <div className="-mx-3 flex flex-wrap gap-y-4">

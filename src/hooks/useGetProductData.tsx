@@ -36,7 +36,10 @@ const InnerConvert = ({
           kesim: item?.properties?.kesim,
           mensei: item?.properties?.mensei,
           treatment: item?.properties?.treatment,
-          islemler: islemlerArea({ id: item.pk as number }),
+          islemler: islemlerArea({
+            id: item?.pk as number,
+            productCode: item?.code,
+          }),
         };
       }) as RenkliTasListType[];
     }
@@ -58,7 +61,10 @@ const InnerConvert = ({
           symmetry: item?.product_certificate?.symmetry,
           paraportFiyatı: undefined,
           height: item?.product_certificate?.height,
-          islemler: islemlerArea({ id: item?.pk as number }),
+          islemler: islemlerArea({
+            id: item?.pk as number,
+            productCode: item?.code,
+          }),
         };
       }) as PirlantaListType[];
     }
@@ -89,7 +95,10 @@ const InnerConvert = ({
             ? `${item?.properties?.hasGrami} gr`
             : undefined,
           iscilik: `${item?.properties?.iscilik} ${item?.properties?.cost_currency}`,
-          islemler: islemlerArea({ id: item.pk as number }),
+          islemler: islemlerArea({
+            id: item?.pk as number,
+            productCode: item?.code,
+          }),
         };
       }) as SadeListType[];
     }
@@ -107,7 +116,10 @@ const InnerConvert = ({
           tedarikci: null,
           girisTarihi: null,
           ambar: null,
-          islemler: islemlerArea({ id: item?.pk as number }),
+          islemler: islemlerArea({
+            id: item?.pk as number,
+            productCode: item?.code,
+          }),
         };
       }) as MucevherListType[];
     }
@@ -125,7 +137,7 @@ export default function useGetProductData(
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
-  const idRef = useRef<number | null>(null);
+  const itemRef = useRef<any | null>(null);
 
   const updateData = useCallback(() => {
     setActiveData(null);
@@ -139,7 +151,7 @@ export default function useGetProductData(
         const dataOneResult = InnerConvert({
           data,
           dataType: type,
-          islemlerArea: islemlerArea,
+          islemlerArea,
           sertifikaFunc,
         });
         setActiveData(dataOneResult);
@@ -159,7 +171,7 @@ export default function useGetProductData(
   }, [activePage, updateData]);
 
   const islemlerArea = useCallback(
-    ({ id }: { id: number }) => {
+    ({ id, productCode }: { id: number; productCode: string }) => {
       return (
         <div className="flex items-center justify-start  gap-6">
           <FaPencil
@@ -170,7 +182,7 @@ export default function useGetProductData(
             className="cursor-pointer"
             onClick={async () => {
               setShowConfirmDelete(true);
-              idRef.current = id;
+              itemRef.current = { id, productCode };
             }}
           />
         </div>
@@ -180,16 +192,16 @@ export default function useGetProductData(
   );
 
   useEffect(() => {
-    if (confirmDelete && idRef.current && idRef) {
+    if (confirmDelete && itemRef && itemRef.current) {
       DeleteProductApiService({
-        id: idRef.current,
+        id: itemRef.current.id as number,
         callBack: updateData,
       });
       setConfirmDelete(false);
       setShowConfirmDelete(false);
-      idRef.current = null;
+      itemRef.current = null;
     } else {
-      idRef.current = null;
+      itemRef.current = null;
     }
   }, [confirmDelete, updateData]);
 
@@ -202,5 +214,6 @@ export default function useGetProductData(
     setConfirmDelete,
     setShowConfirmDelete,
     showConfirmDelete,
+    item: itemRef.current,
   };
 }

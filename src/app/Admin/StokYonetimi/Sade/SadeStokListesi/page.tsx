@@ -56,6 +56,7 @@ export default function SadeStokListesi() {
     setConfirmDelete,
     showConfirmDelete,
     setShowConfirmDelete,
+    item,
   } = useGetProductData(
     "Simple",
     "/Admin/StokYonetimi/Sade/SadeEkle/",
@@ -77,10 +78,11 @@ export default function SadeStokListesi() {
     <DefaultLayout>
       <Breadcrumb pageName="Sade Stok Listesi" />
       <ModalTwo
+        code={item?.productCode}
         showConfirmDelete={showConfirmDelete}
         setShowConfirmDelete={setShowConfirmDelete}
-        modalTitle="Üretim İş Emrini İptal Etmek İstediğinizden Emin misiniz?"
-        modalDescription="Kullanılan Sade,Pırlantalar ve Taşlar Stoklara Geri Gönderilecek"
+        modalTitle="Sadeyi Silmek İstediğinizden Emin misiniz?"
+        modalDescription="Sade Kalıcı Olarak Silinecektir"
         setConfirmDelete={setConfirmDelete}
       />
       {activeData ? (

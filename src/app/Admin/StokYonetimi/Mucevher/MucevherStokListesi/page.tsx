@@ -5,14 +5,31 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { MucevherListesiDataHeaders } from "@/types/Mucevher";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import useGetProductData from "@/hooks/useGetProductData";
+import ModalTwo from "@/components/Modals/ModalTwo";
 
 export default function MucevherStokListesi() {
-  const { activeData, activePage, totalPageCount, setActivePage } =
-    useGetProductData("Gem", "#", undefined);
+  const {
+    activeData,
+    activePage,
+    totalPageCount,
+    setActivePage,
+    setConfirmDelete,
+    showConfirmDelete,
+    setShowConfirmDelete,
+    item,
+  } = useGetProductData("Gem", "#", undefined);
 
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Mücevher Stok Listesi" />
+      <ModalTwo
+        code={item?.productCode}
+        showConfirmDelete={showConfirmDelete}
+        setShowConfirmDelete={setShowConfirmDelete}
+        modalTitle="Mücevheri Silmek İstediğinizden Emin misiniz?"
+        modalDescription="Mücevher Kalıcı Olarak Silinecektir"
+        setConfirmDelete={setConfirmDelete}
+      />
 
       {activeData ? (
         <CustomDatatable
