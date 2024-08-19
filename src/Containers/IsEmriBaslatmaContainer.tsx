@@ -121,7 +121,7 @@ export default function IsEmriBaslatmaContainer({
       }
     });
     return () => subscription.unsubscribe();
-  }, [watch]);
+  }, [watch, userId]);
 
   const handleFinish = async () => {
     await FinishWorkOrderApiService({ id: Number(id), callBack: () => {} });

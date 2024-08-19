@@ -19,7 +19,7 @@ export default function useGetWorkOrderListData() {
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
-  const idRef = useRef<number | null>(null);
+  const itemRef = useRef<any | null>(null);
 
   const updateData = useCallback(() => {
     setActiveData(null);
@@ -54,7 +54,10 @@ export default function useGetWorkOrderListData() {
             Number(item.total_product_cost),
           )} $`,
           status: ConvertWorkOrderStatus(item.status as WorkOrderStatusType),
-          islemler: islemlerArea({ id: item.id as number }),
+          islemler: islemlerArea({
+            id: item.id as number,
+            productCode: item.product_temp_code as string,
+          }),
         };
       });
       setActiveData(dataOneResult);
@@ -67,7 +70,7 @@ export default function useGetWorkOrderListData() {
   }, [activePage]);
 
   const islemlerArea = useCallback(
-    ({ id }: { id: number }) => {
+    ({ id, productCode }: { id: number; productCode: string }) => {
       return (
         <div className="flex items-center justify-start  gap-6">
           <FaPencil
@@ -80,7 +83,7 @@ export default function useGetWorkOrderListData() {
             className="cursor-pointer"
             onClick={async () => {
               setShowConfirmDelete(true);
-              idRef.current = id;
+              itemRef.current = { id, productCode };
             }}
           />
         </div>
@@ -94,18 +97,16 @@ export default function useGetWorkOrderListData() {
   }, [activePage, updateData]);
 
   useEffect(() => {
-    if (confirmDelete && idRef.current && idRef) {
+    if (confirmDelete && itemRef && itemRef.current) {
       DeleteWorkOrderApiService({
-        id: idRef.current,
-        callBack: () => {
-          updateData();
-        },
+        id: itemRef.current.id as number,
+        callBack: updateData,
       });
       setConfirmDelete(false);
       setShowConfirmDelete(false);
-      idRef.current = null;
+      itemRef.current = null;
     } else {
-      idRef.current = null;
+      itemRef.current = null;
     }
   }, [confirmDelete, updateData]);
 
@@ -118,5 +119,6 @@ export default function useGetWorkOrderListData() {
     setConfirmDelete,
     setShowConfirmDelete,
     showConfirmDelete,
+    item: itemRef.current,
   };
 }

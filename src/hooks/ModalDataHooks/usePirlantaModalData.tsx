@@ -60,7 +60,8 @@ export default function usePirlantaModalData({
       setSelectedValues((prev: SeciliUrunType[]) => [...prev, item]);
     } else {
       inputAdetRefs.current[index].value = "";
-      inputAdetRefs.current[index].disabled = true;
+      item?.menstrual_status == "Sertifikalı" ? true : false;
+      inputAdetRefs.current[index].value = "1";
 
       if (inputKaratRefs.current[index]) {
         inputKaratRefs.current[index].value = "";

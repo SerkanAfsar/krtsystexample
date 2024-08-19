@@ -57,8 +57,10 @@ export default function useRenkliTasModalData({
     };
 
     if (target.checked) {
-      inputAdetRefs.current[index].disabled = false;
+      inputAdetRefs.current[index].disabled =
+        item?.menstrual_status == "Sertifikalı" ? true : false;
       inputAdetRefs.current[index].value = "1";
+
       if (inputKaratRefs.current[index]) {
         inputKaratRefs.current[index].disabled = false;
       }

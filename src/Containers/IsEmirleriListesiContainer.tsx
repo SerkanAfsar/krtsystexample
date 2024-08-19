@@ -1,18 +1,8 @@
 "use client";
 import { Column } from "react-table";
 import { WorkOrderType } from "../../types/WorkOrder.types";
-import React, { useCallback, useEffect, useState } from "react";
-import { GetWorkOrdersList } from "@/Services/WorkOrder.Services";
-import { formatToCurrency } from "@/utils";
+import React from "react";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
-import { useRouter } from "next/navigation";
-import { DeleteWorkOrderApiService } from "@/ApiServices/WorkOrders.ApiService";
-import { FaPencil, FaTrash } from "react-icons/fa6";
-import { formatDate } from "@/utils";
-import {
-  ConvertWorkOrderStatus,
-  WorkOrderStatusType,
-} from "@/utils/WorkOrder.Utils";
 import useGetWorkOrderListData from "@/hooks/useGetWorkOrderListData";
 import ModalTwo from "@/components/Modals/ModalTwo";
 
@@ -150,6 +140,7 @@ export default function IsEmirleriListesiContainer() {
     setConfirmDelete,
     showConfirmDelete,
     setShowConfirmDelete,
+    item,
   } = useGetWorkOrderListData();
 
   if (typeof activeData == "string") {
@@ -165,6 +156,7 @@ export default function IsEmirleriListesiContainer() {
       {activeData ? (
         <>
           <ModalTwo
+            code={item?.productCode}
             showConfirmDelete={showConfirmDelete}
             setShowConfirmDelete={setShowConfirmDelete}
             modalTitle="Üretim İş Emrini İptal Etmek İstediğinizden Emin misiniz?"
