@@ -3,7 +3,8 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import ModalTwo from "@/components/Modals/ModalTwo";
+
+import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
 import useGetProductData from "@/hooks/useGetProductData";
 import { RenklitasListHeaders } from "@/types/RenkliTas";
 import Link from "next/link";
@@ -64,7 +65,7 @@ export default function RenkliTasStokListesi() {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Renkli Taş Stok Listesi" />
-      <ModalTwo
+      <CustomDeleteModal
         code={item?.productCode}
         showConfirmDelete={showConfirmDelete}
         setShowConfirmDelete={setShowConfirmDelete}

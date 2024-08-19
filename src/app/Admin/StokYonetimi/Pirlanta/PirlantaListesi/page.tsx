@@ -7,7 +7,7 @@ import { useCallback } from "react";
 import useGetProductData from "@/hooks/useGetProductData";
 import { PirlantaListHeaders } from "@/types/Pirlanta";
 
-import ModalTwo from "@/components/Modals/ModalTwo";
+import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
 
 export default function PirlantaListesi() {
   const sertificateUrl = useCallback((item: any) => {
@@ -64,7 +64,7 @@ export default function PirlantaListesi() {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Pırlanta Stok Listesi" />
-      <ModalTwo
+      <CustomDeleteModal
         code={item?.productCode}
         showConfirmDelete={showConfirmDelete}
         setShowConfirmDelete={setShowConfirmDelete}

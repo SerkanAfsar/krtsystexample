@@ -2,7 +2,7 @@ import { clsx, ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 import { ResponseResult } from "../../types/responseTypes";
-import { toast, ToastContent } from "react-toastify";
+import { toast } from "react-toastify";
 
 export const cn = (...args: ClassValue[]) => {
   return twMerge(clsx(args));

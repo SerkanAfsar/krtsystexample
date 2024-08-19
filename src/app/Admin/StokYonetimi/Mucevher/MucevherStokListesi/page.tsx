@@ -5,7 +5,7 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { MucevherListesiDataHeaders } from "@/types/Mucevher";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import useGetProductData from "@/hooks/useGetProductData";
-import ModalTwo from "@/components/Modals/ModalTwo";
+import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
 
 export default function MucevherStokListesi() {
   const {
@@ -22,7 +22,7 @@ export default function MucevherStokListesi() {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Mücevher Stok Listesi" />
-      <ModalTwo
+      <CustomDeleteModal
         code={item?.productCode}
         showConfirmDelete={showConfirmDelete}
         setShowConfirmDelete={setShowConfirmDelete}

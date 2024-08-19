@@ -6,7 +6,7 @@ import { ISadeType } from "../../../../../../types/formTypes";
 import { Column } from "react-table";
 import useGetProductData from "@/hooks/useGetProductData";
 import { SadeListHeaders } from "@/types/Sade";
-import ModalTwo from "@/components/Modals/ModalTwo";
+import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
 
 const columns: Column<ISadeType>[] = [
   {
@@ -77,7 +77,7 @@ export default function SadeStokListesi() {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Sade Stok Listesi" />
-      <ModalTwo
+      <CustomDeleteModal
         code={item?.productCode}
         showConfirmDelete={showConfirmDelete}
         setShowConfirmDelete={setShowConfirmDelete}

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 
-function ModalTwo({
+function CustomDeleteModal({
   showConfirmDelete,
   setShowConfirmDelete,
   modalTitle,
@@ -111,4 +111,4 @@ function ModalTwo({
   );
 }
 
-export default ModalTwo;
+export default CustomDeleteModal;

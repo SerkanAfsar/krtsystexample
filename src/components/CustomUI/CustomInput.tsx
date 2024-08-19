@@ -15,7 +15,7 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   icon?: React.ReactNode;
   className?: ClassValue | null;
   showIcon?: boolean;
-  getValues: UseFormGetValues<any>;
+  getValues?: UseFormGetValues<any>;
 };
 
 const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
