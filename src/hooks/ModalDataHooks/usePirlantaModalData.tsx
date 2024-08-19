@@ -51,7 +51,8 @@ export default function usePirlantaModalData({
     };
 
     if (target.checked) {
-      inputAdetRefs.current[index].disabled = false;
+      inputAdetRefs.current[index].disabled =
+        item?.menstrual_status == "Sertifikalı" ? true : false;
       inputAdetRefs.current[index].value = "1";
 
       if (inputKaratRefs.current[index]) {
@@ -60,8 +61,7 @@ export default function usePirlantaModalData({
       setSelectedValues((prev: SeciliUrunType[]) => [...prev, item]);
     } else {
       inputAdetRefs.current[index].value = "";
-      item?.menstrual_status == "Sertifikalı" ? true : false;
-      inputAdetRefs.current[index].value = "1";
+      inputAdetRefs.current[index].disabled = true;
 
       if (inputKaratRefs.current[index]) {
         inputKaratRefs.current[index].value = "";

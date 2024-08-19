@@ -152,6 +152,9 @@ export default function UrunGruplariModul({
                         key={index}
                         className="p ml-[-12px] h-8 w-16 rounded-sm border border-black pl-3 text-center"
                         type="number"
+                        disabled={
+                          item?.menstrual_status == "Sertifikalı" ? true : false
+                        }
                         value={item.adet}
                         onChange={(e) => {
                           const selectedIndexNo = selectedValues.findIndex(
