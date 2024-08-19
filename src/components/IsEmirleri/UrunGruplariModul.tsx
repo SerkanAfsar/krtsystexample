@@ -59,8 +59,6 @@ export default function UrunGruplariModul({
     });
   }, [selectedValues, setValues, title]);
 
-  console.log(selectedValues);
-
   return (
     <>
       <section

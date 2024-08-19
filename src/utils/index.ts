@@ -49,12 +49,15 @@ export const ApiServiceResult = ({
       default:
       case "success": {
         toast.success(message, { position: "top-right" });
+        break;
       }
       case "warning": {
         toast.warn(message, { position: "top-right" });
+        break;
       }
       case "error": {
         toast.error(message, { position: "top-right" });
+        break;
       }
     }
 
