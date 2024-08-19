@@ -13,7 +13,12 @@ export const DeleteProductApiService = async ({
     method: "DELETE",
   });
   const result = (await response.json()) as ResponseResult<ProductListType>;
-  ApiServiceResult({ result, callBack, message: "Ürün Silindi" });
+  ApiServiceResult({
+    result,
+    callBack,
+    message: "Ürün Silindi",
+    toastType: "error",
+  });
 };
 
 export const AddProductApiService = async ({
@@ -45,5 +50,10 @@ export const UpdateProductApiService = async ({
     body: JSON.stringify(data),
   });
   const result = (await response.json()) as ResponseResult<ProductType>;
-  ApiServiceResult({ result, callBack, message: "Ürün Güncellendi" });
+  ApiServiceResult({
+    result,
+    callBack,
+    message: "Ürün Güncellendi",
+    toastType: "warning",
+  });
 };

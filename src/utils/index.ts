@@ -2,7 +2,7 @@ import { clsx, ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 import { ResponseResult } from "../../types/responseTypes";
-import { toast } from "react-toastify";
+import { toast, ToastContent } from "react-toastify";
 
 export const cn = (...args: ClassValue[]) => {
   return twMerge(clsx(args));
@@ -37,13 +37,27 @@ export const ApiServiceResult = ({
   result,
   message,
   callBack,
+  toastType = "success",
 }: {
   result: ResponseResult<any>;
   message: string;
   callBack?: any;
+  toastType?: "success" | "warning" | "error";
 }) => {
   if (result?.success) {
-    toast.success(message, { position: "top-right" });
+    switch (toastType) {
+      default:
+      case "success": {
+        toast.success(message, { position: "top-right" });
+      }
+      case "warning": {
+        toast.warn(message, { position: "top-right" });
+      }
+      case "error": {
+        toast.error(message, { position: "top-right" });
+      }
+    }
+
     callBack && callBack();
   } else {
     const err =

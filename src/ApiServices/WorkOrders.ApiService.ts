@@ -17,7 +17,12 @@ export const DeleteWorkOrderApiService = async ({
     body: JSON.stringify({ id }),
   });
   const result: ResponseResult<string> = await response.json();
-  ApiServiceResult({ result, callBack, message: "İş Emri Silindi" });
+  ApiServiceResult({
+    result,
+    callBack,
+    message: "İş Emri Silindi",
+    toastType: "error",
+  });
 };
 
 export const FinishWorkOrderApiService = async ({
