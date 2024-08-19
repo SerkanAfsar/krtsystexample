@@ -176,7 +176,9 @@ export default function IsEmriContainer() {
           <h3 className="p-4 text-lg font-medium text-black dark:text-white">
             İş Emri Bilgileri
           </h3>
-          <b className="mr-4 text-black">Mücevher Kodu : {isEmriCode}</b>
+          <b className="mr-4 text-black dark:text-white">
+            Mücevher Kodu : {isEmriCode}
+          </b>
         </div>
         <hr />
         <div className="flex w-full flex-col gap-16 p-3">
@@ -185,21 +187,20 @@ export default function IsEmriContainer() {
           ))}
         </div>
         <div className="flex w-full flex-col items-end self-end p-3">
-          <h2 className="h-full self-end text-xl">
+          <h2 className="h-full self-end text-xl dark:text-white">
             Toplam Malzeme Maliyeti :{" "}
-            <span className="font-bold text-[red] underline">{`${formatToCurrency(totalPrice)} $`}</span>
+            <span className="font-bold text-black underline dark:text-white">{`${formatToCurrency(totalPrice)} $`}</span>
           </h2>
           <div className="flex w-full flex-col items-start gap-2">
-            <label className="font-bold text-black">
+            <label className="mb-1 block text-sm font-medium text-black dark:text-white">
               Üretim Açıklaması Giriniz
             </label>
             <textarea
-              cols={10}
               rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className=" w-full rounded-md border border-[#ccc] px-3 py-2 text-black"
               placeholder="Üretim Açıklaması Giriniz..."
+              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
             />
           </div>
         </div>

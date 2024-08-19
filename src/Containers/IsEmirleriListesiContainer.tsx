@@ -85,6 +85,7 @@ export default function IsEmirleriListesiContainer() {
             columns={columns}
             dataOne={activeData}
             activePage={activePage}
+            isFirstLarge={false}
             setActivePage={setActivePage}
           />
         </>

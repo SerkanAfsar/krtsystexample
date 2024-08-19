@@ -81,12 +81,14 @@ export default function UrunGruplariModul({
         </div>
         <div
           className={cn(
-            "grid gap-2 bg-gray p-2 text-left text-black",
+            "grid gap-2 bg-gray p-2 text-left text-black dark:bg-black dark:text-white",
             `grid-cols-${headerColumns.length}`,
           )}
         >
           {headerColumns.map((key, index) => (
-            <b key={index}>{key.title}</b>
+            <label className="font-bold dark:font-normal" key={index}>
+              {key.title}
+            </label>
           ))}
         </div>
         <div className="flex flex-col">
@@ -107,13 +109,17 @@ export default function UrunGruplariModul({
                 ) {
                   if (key == "carat") {
                     if (item.menstrual_status == "Sertifikalı") {
-                      return <div key={index}>{item.carat}</div>;
+                      return (
+                        <div className="dark:text-white" key={index}>
+                          {item.carat}
+                        </div>
+                      );
                     } else {
                       return (
                         <input
                           min="1"
                           key={index}
-                          className="ml-[-10px] h-8 w-16 rounded-sm border border-black pl-3 text-center"
+                          className="ml-[-10px]  h-8 w-16 rounded-md border border-black pl-3 text-center"
                           type="number"
                           value={item.used_carat}
                           onChange={(e) => {
@@ -148,7 +154,7 @@ export default function UrunGruplariModul({
                       <input
                         min="1"
                         key={index}
-                        className="p ml-[-12px] h-8 w-16 rounded-sm border border-black pl-3 text-center"
+                        className="p ml-[-12px] h-8 w-16 rounded-md border border-black pl-3 text-center dark:disabled:text-white"
                         type="number"
                         disabled={
                           item?.menstrual_status == "Sertifikalı" ? true : false
@@ -171,14 +177,18 @@ export default function UrunGruplariModul({
                       />
                     );
                   } else {
-                    return <div key={index}>{value}</div>;
+                    return (
+                      <div className="dark:text-white" key={index}>
+                        {value}
+                      </div>
+                    );
                   }
                 }
               })}
-              <div className="flex items-center justify-start gap-4">
+              <div className="flex items-center justify-start gap-4 dark:text-white">
                 <FaPencil className="cursor-pointer" />
                 <FaTrash
-                  className="cursor-pointer dark:text-white"
+                  className="cursor-pointer"
                   onClick={(e) => {
                     setSelectedValues((prev: SeciliUrunType[]) =>
                       prev.filter((a) => a.pk != item.pk),

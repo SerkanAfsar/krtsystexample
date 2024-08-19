@@ -15,7 +15,6 @@ export default function SectionFormItem({
   productCode,
   extraOptions,
   getValues,
-
   isAdd,
   ...rest
 }: {
@@ -37,7 +36,9 @@ export default function SectionFormItem({
           <h3 className="p-4 text-lg font-medium text-black dark:text-white">
             {section?.sectionTitle}
           </h3>
-          <b className="mr-4 text-black">{productCode && productCode}</b>
+          <b className="mr-4 text-black dark:text-white">
+            {productCode && productCode}
+          </b>
         </div>
         <hr />
 

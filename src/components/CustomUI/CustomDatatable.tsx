@@ -17,6 +17,7 @@ const CustomDatatable = ({
   setActivePage,
   className,
   hasOrder = true,
+  isFirstLarge = true,
 }: {
   dataOne: any;
   columns: any;
@@ -25,6 +26,7 @@ const CustomDatatable = ({
   setActivePage: any;
   className?: any;
   hasOrder?: boolean;
+  isFirstLarge?: boolean;
 }) => {
   const data = dataOne;
 
@@ -65,11 +67,11 @@ const CustomDatatable = ({
   return (
     <section
       className={cn(
-        "data-table-common data-table-two overflow-auto rounded-sm border border-stroke bg-white py-4 shadow-default dark:border-strokedark dark:bg-boxdark",
+        "data-table-common data-table-two !flex h-full w-full flex-col overflow-auto rounded-sm border border-stroke bg-white py-4 shadow-default dark:border-strokedark dark:bg-boxdark",
         className && className,
       )}
     >
-      <div className="flex w-full justify-between  px-8 pb-4 ">
+      <div className="flex w-full justify-between px-8 pb-4 ">
         <div className="w-100">
           <input
             type="text"
@@ -104,7 +106,7 @@ const CustomDatatable = ({
             <tr {...headerGroup.getHeaderGroupProps()} key={key}>
               {headerGroup.headers.map((column, key) => (
                 <th
-                  className={cn(key == 0 ? "w-40" : "w-30")}
+                  className={cn(key == 0 && isFirstLarge ? "w-40" : "w-30")}
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                   key={key}
                 >
@@ -168,7 +170,7 @@ const CustomDatatable = ({
         </tbody>
       </table>
 
-      <div className="flex justify-between border-t border-stroke px-8 pt-5 dark:border-strokedark">
+      <div className="mt-auto flex justify-between border-t border-stroke px-8 pt-5 dark:border-strokedark">
         <p className="font-medium">
           Gösterim {activePage} - {totalPageCount} Sayfa
         </p>

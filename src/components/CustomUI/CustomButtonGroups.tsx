@@ -45,9 +45,9 @@ const CustomButtonGroups = React.forwardRef<HTMLDivElement, HtmlDivProps>(
           <div
             onClick={() => setSelected(checkBoxList[0])}
             className={cn(
-              "inline-flex cursor-pointer rounded-l-lg border border-stone-400  px-2 py-1 font-medium text-black hover:border-primary hover:bg-primary hover:text-white dark:hover:border-primary sm:px-6 sm:py-3",
+              "dark:border-1 inline-flex cursor-pointer rounded-l-lg border border-stone-400 px-2 py-1 font-medium  text-black hover:border-primary hover:bg-primary hover:text-white dark:border-stone-400 dark:text-white dark:hover:border-stone-400 hover:dark:bg-white hover:dark:text-black sm:px-6 sm:py-3",
               selected == checkBoxList[0] &&
-                "border-primary bg-primary text-white",
+                "border-primary bg-primary dark:border-stone-400 dark:bg-white  dark:text-black hover:dark:border-stone-400",
             )}
           >
             {checkBoxList[0].toLocaleUpperCase()}
@@ -62,9 +62,9 @@ const CustomButtonGroups = React.forwardRef<HTMLDivElement, HtmlDivProps>(
           <div
             onClick={() => setSelected(checkBoxList[checkBoxList.length - 1])}
             className={cn(
-              "inline-flex cursor-pointer rounded-r-lg border border-l-0 border-stone-400 px-2 py-1 font-medium text-black hover:border-primary hover:bg-primary hover:text-white dark:border-strokedark dark:text-white dark:hover:border-primary sm:px-6 sm:py-3",
+              "inline-flex cursor-pointer rounded-r-lg border border-l-0 border-stone-400 px-2 py-1 font-medium text-black hover:border-primary hover:bg-primary hover:text-white dark:border-stone-400 dark:text-white   dark:hover:border-stone-400 dark:hover:bg-white dark:hover:text-black sm:px-6 sm:py-3",
               selected == checkBoxList[checkBoxList.length - 1] &&
-                "border-primary bg-primary text-white",
+                "border-primary bg-primary dark:border-stone-400  dark:bg-white dark:text-black dark:hover:border-stone-400",
             )}
           >
             {checkBoxList[checkBoxList.length - 1].toLocaleUpperCase()}
