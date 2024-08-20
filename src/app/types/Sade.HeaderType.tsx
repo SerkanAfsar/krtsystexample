@@ -1,6 +1,5 @@
-import { SelectOptionsType } from "@/components/CustomUI/CustomForm";
-
 import { SadeModelTurleri } from "@/data/Sade.data";
+import { CustomOptionType } from "../../../types/inputTypes";
 
 export type SadeModelType = {
   modelTuru: string | null;
@@ -16,7 +15,7 @@ export type SadeHeaderColumn = {
   accessor: keyof SadeModelType;
   type: "select" | "number";
   span: number;
-  selectOptions?: SelectOptionsType[];
+  selectOptions?: CustomOptionType[];
 };
 
 export const SadeHeaders: SadeHeaderColumn[] = [
@@ -25,7 +24,7 @@ export const SadeHeaders: SadeHeaderColumn[] = [
     accessor: "modelTuru",
     type: "select",
     selectOptions: SadeModelTurleri,
-    span: 1,
+    span: 2,
   },
   {
     header: "Gram",
@@ -43,7 +42,6 @@ export const SadeHeaders: SadeHeaderColumn[] = [
     header: "Renk",
     accessor: "renk",
     type: "select",
-
     span: 1,
   },
   {

@@ -1,9 +1,11 @@
 "use client";
-import { cn } from "@/utils";
-import { SadeHeaders, SadeModelType } from "@/app/types/Sade.HeaderType";
+
+import MucevherSadeSection from "@/components/Mucevher/MucevherSadeSection";
 import { ProductType } from "../../types/types";
 
 import React from "react";
+import MucevherPirlantaSection from "@/components/Mucevher/MucevherPirlantaSection";
+import MucevherRenkliTasSection from "@/components/Mucevher/MucevherRenkliTasSection";
 
 export type MucevherDetayDataType = {
   product: ProductType & { quantity: number; used_carat: number };
@@ -11,14 +13,22 @@ export type MucevherDetayDataType = {
 
 export default function MucevherDetayContainer({
   productList,
+  code,
+  isEdit,
 }: {
   productList: MucevherDetayDataType[];
+  code?: string;
+  isEdit: boolean;
 }) {
-  const sadeHeaderColSum = SadeHeaders.reduce((acc, next) => {
-    return acc + next.span;
-  }, 0);
-
   const sadeProducts = productList.filter((a) => a.product.type == "Simple");
+  const pirlantaProducts = productList.filter(
+    (a) => a.product.type == "Diamond",
+  );
+  const renkliTasProducts = productList.filter(
+    (a) => a.product.type == "ColoredStone",
+  );
+
+  console.log("renkliler", renkliTasProducts);
 
   return (
     <div className="mb-1 rounded-sm border border-stroke bg-white pb-5 shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -29,42 +39,24 @@ export default function MucevherDetayContainer({
           </h3>
           <div className="flex items-center justify-center gap-3">
             <span>Mücevher Kodu:</span>
-            <b className="mr-4 text-black"></b>
+            <b className="mr-4 text-black">{code}</b>
           </div>
         </div>
       </div>
       <hr />
-      <div className="m-4">
-        <div className={cn("grid gap-5", `grid-cols-${sadeHeaderColSum}`)}>
-          {SadeHeaders.map((column, index) => (
-            <div className={`col-span-${column.span} font-bold`} key={index}>
-              {column.header}
-            </div>
-          ))}
+      <div className="grid w-full grid-cols-6  p-4">
+        <div className="col-span-1 flex"></div>
+        <div className="col-span-5 flex flex-col">
+          <MucevherSadeSection sadeProducts={sadeProducts} isEdit={isEdit} />
+          <MucevherPirlantaSection
+            pirlantaProducts={pirlantaProducts}
+            isEdit={isEdit}
+          />
+          <MucevherRenkliTasSection
+            renkliTasProducts={renkliTasProducts}
+            isEdit={isEdit}
+          />
         </div>
-
-        {sadeProducts.map((item, index) => {
-          const newItem: SadeModelType = {
-            modelTuru: item.product.properties?.modelTuru as string,
-            ayar: item.product.properties?.ayar as number,
-            fiyat: item.product.total_cost as number,
-            gram: item.product.properties?.gram as number,
-            hasGram: item.product.properties?.hasGrami as number,
-            renk: item.product.properties?.altinRengi as string,
-          };
-          return (
-            <div
-              key={index}
-              className={cn("my-3 grid gap-5", `grid-cols-${sadeHeaderColSum}`)}
-            >
-              {SadeHeaders.map((column, index2) => {
-                return (
-                  <div key={index2} className={`col-span-${column.span}`}></div>
-                );
-              })}
-            </div>
-          );
-        })}
       </div>
     </div>
   );

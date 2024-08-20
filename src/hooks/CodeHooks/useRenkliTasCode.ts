@@ -3,11 +3,11 @@ import {
   GetNextOrderForMixedDiamondService,
   GetNextOrderFromSingleDiamondService,
 } from "@/Services/Product.Services";
-import { SelectOptionsType } from "@/components/CustomUI/CustomForm";
 
 import { ResponseResult } from "../../../types/responseTypes";
 import { GetNextOrderType } from "../../../types/types";
 import { useState, useEffect } from "react";
+import { CustomOptionType } from "../../../types/inputTypes";
 
 export default function useRenkliTasCode({
   dataRenkliTasCode,
@@ -31,7 +31,7 @@ export default function useRenkliTasCode({
   productCode?: string | null;
 }) {
   const [renkliTasCode, setRenkliTasCode] = useState<string | null>(null);
-  const [extraOptions, setExtraOptions] = useState<SelectOptionsType[] | null>(
+  const [extraOptions, setExtraOptions] = useState<CustomOptionType[] | null>(
     null,
   );
 
@@ -121,7 +121,7 @@ export default function useRenkliTasCode({
         .then((resp: ResponseResult<string[]>) => {
           if (resp?.success) {
             const respData = resp.data as string[];
-            const sekoData: SelectOptionsType[] = respData.map((item) => ({
+            const sekoData: CustomOptionType[] = respData.map((item) => ({
               titleVal: item,
               valueVal: item,
             }));

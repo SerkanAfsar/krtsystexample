@@ -1,11 +1,11 @@
-import { ElementType } from "../../../types/inputTypes";
+import { CustomOptionType, ElementType } from "../../../types/inputTypes";
 import CustomInput from "./CustomInput";
 import CustomButtonGroups from "./CustomButtonGroups";
 import CustomDatePicker from "./CustomDatePicker";
 import CustomSelect from "./CustomSelect";
 import { cn } from "@/utils";
 import CustomFileSelect from "./CustomFileSelect";
-import { SelectOptionsType } from "./CustomForm";
+
 import { UseFormGetValues } from "react-hook-form";
 
 const formatter = new Intl.NumberFormat("en-US", {
@@ -31,7 +31,7 @@ export default function FormElementItem({
   errors: any;
   setValue: any;
   setError: any;
-  extraOptions?: SelectOptionsType[] | null;
+  extraOptions?: CustomOptionType[] | null;
   isAdd: boolean;
   getValues: UseFormGetValues<any>;
 }) {

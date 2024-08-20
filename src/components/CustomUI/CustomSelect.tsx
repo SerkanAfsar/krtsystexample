@@ -1,16 +1,15 @@
 "use client";
 
-import { ElementType } from "../../../types/inputTypes";
+import { CustomOptionType, ElementType } from "../../../types/inputTypes";
 import { cn } from "@/utils";
 import { selectKesimValue } from "@/utils/Pirlanta.Utils";
 import { ClassValue } from "clsx";
 import React, { useId, useState } from "react";
-import { SelectOptionsType } from "./CustomForm";
 
 type SelectElementProps = React.InputHTMLAttributes<HTMLSelectElement> & {
   err?: string | null;
   outerClass?: ClassValue | null;
-  extraOptions?: SelectOptionsType[];
+  extraOptions?: CustomOptionType[];
   staticOptions?: any;
   showIcon?: boolean;
 } & { item: ElementType };
@@ -22,7 +21,6 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
       className,
       err,
       onChange: selectChange,
-
       name,
       extraOptions,
       outerClass,

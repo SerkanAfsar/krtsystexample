@@ -1,9 +1,10 @@
 import { FormSectionType } from "../../../types/formTypes";
 
 import { cn } from "@/utils";
-import { SelectOptionsType } from "./CustomForm";
+
 import FormElementItem from "./FormElementItem";
 import { UseFormGetValues } from "react-hook-form";
+import { CustomOptionType } from "../../../types/inputTypes";
 
 export default function SectionFormItem({
   section,
@@ -26,7 +27,7 @@ export default function SectionFormItem({
   setError: any;
   isAdd: boolean;
   productCode?: string | null;
-  extraOptions?: SelectOptionsType[] | null;
+  extraOptions?: CustomOptionType[] | null;
   getValues: UseFormGetValues<any>;
 }) {
   return (

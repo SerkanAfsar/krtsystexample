@@ -17,7 +17,11 @@ export default function MucevherStokListesi() {
     showConfirmDelete,
     setShowConfirmDelete,
     item,
-  } = useGetProductData("Gem", "#", undefined);
+  } = useGetProductData(
+    "Gem",
+    "/Admin/StokYonetimi/Mucevher/MucevherEkle/",
+    undefined,
+  );
 
   return (
     <DefaultLayout>

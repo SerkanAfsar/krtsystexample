@@ -7,7 +7,8 @@ import { GetGemProductService } from "@/Services/Product.Services";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 const MucevherDetay = async ({ params }: { params: Params }) => {
-  const result = await GetGemProductService({ product_id: 221 });
+  const result = await GetGemProductService({ product_id: Number(params.id) });
+
   if (!result.success) {
     return (
       <DefaultLayout>
@@ -25,6 +26,7 @@ const MucevherDetay = async ({ params }: { params: Params }) => {
       <Breadcrumb pageName="Mücevher Bilgileri" />
       <MucevherDetayContainer
         productList={result.data as MucevherDetayDataType[]}
+        isEdit={true}
       />
     </DefaultLayout>
   );

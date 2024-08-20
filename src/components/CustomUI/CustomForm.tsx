@@ -5,12 +5,7 @@ import { FormSectionType } from "../../../types/formTypes";
 import SectionFormItem from "./SectionFormItem";
 
 import { useParams, useRouter } from "next/navigation";
-
-export type SelectOptionsType = {
-  valueVal: string;
-  titleVal: string;
-  extraValue?: string;
-};
+import { CustomOptionType } from "../../../types/inputTypes";
 
 type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   sections?: FormSectionType[];
@@ -23,7 +18,7 @@ type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   filteredData?: any | null;
   productCode?: string | null;
   redirectUrl?: string;
-  extraOptions?: SelectOptionsType[] | null;
+  extraOptions?: CustomOptionType[] | null;
   isAdd: boolean;
   resultCallBack?: any;
 };
