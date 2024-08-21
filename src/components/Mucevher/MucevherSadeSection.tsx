@@ -14,15 +14,12 @@ export default function MucevherSadeSection({
     return acc + next.span;
   }, 0);
 
-  const totalPrice = sadeProducts.reduce((acc, next) => {
-    return acc + Number(next.product.total_cost || 0);
-  }, 0);
   return (
     <div className="my-3 w-full">
       <b className="mb-1 block text-black">Sade Bilgileri</b>
       <div
         className={cn(
-          "grid w-full gap-5 rounded-sm bg-gray p-1 text-black",
+          "grid w-full gap-3 rounded-sm bg-gray p-1 text-black",
           `grid-cols-${sadeHeaderColSum}`,
         )}
       >
@@ -32,7 +29,7 @@ export default function MucevherSadeSection({
           </div>
         ))}
       </div>
-      <div className={cn("my-3 grid gap-5", `grid-cols-${sadeHeaderColSum}`)}>
+      <div className={cn("my-3 grid gap-3", `grid-cols-${sadeHeaderColSum}`)}>
         {sadeProducts.map((item, index) => {
           const newItem: SadeModelType = {
             modelTuru: item.product.properties?.modelTuru as string,
@@ -46,10 +43,6 @@ export default function MucevherSadeSection({
             <MucevherSadeRow key={index} isEdit={isEdit} model={newItem} />
           );
         })}
-      </div>
-      <div className="w-full text-right font-bold text-black ">
-        <span className="underline">Toplam Fiyat</span> :
-        {formatToCurrency(totalPrice)} $
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ export const PirlantaHeaders: PirlantaHeaderColumn[] = [
   {
     header: "Karat",
     accessor: "karat",
-    span: 2,
+    span: 1,
   },
   {
     header: "Berraklık",
@@ -33,7 +33,7 @@ export const PirlantaHeaders: PirlantaHeaderColumn[] = [
   {
     header: "Renk",
     accessor: "renk",
-    span: 2,
+    span: 1,
   },
   {
     header: "Menşei",
@@ -48,6 +48,6 @@ export const PirlantaHeaders: PirlantaHeaderColumn[] = [
   {
     header: "Fiyat",
     accessor: "fiyat",
-    span: 1,
+    span: 2,
   },
 ];

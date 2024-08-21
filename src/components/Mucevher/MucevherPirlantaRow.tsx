@@ -102,6 +102,7 @@ export default function MucevherPirlantaRow({
             name: "fiyat",
             required: true,
             type: "text",
+            rightIcon: "$",
           }}
           value={formatToCurrency(Number(model.fiyat || 0))}
           disabled={isEdit}

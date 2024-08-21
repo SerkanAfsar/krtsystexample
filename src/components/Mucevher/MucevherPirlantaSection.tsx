@@ -9,22 +9,24 @@ import MucevherPirlantaRow from "./MucevherPirlantaRow";
 export default function MucevherPirlantaSection({
   pirlantaProducts,
   isEdit,
+  toplamAdet,
+  toplamMaliyet,
 }: {
   pirlantaProducts: MucevherDetayDataType[];
   isEdit: boolean;
+  toplamAdet: number;
+  toplamMaliyet: number;
 }) {
   const pirlantaHeaderColSum = PirlantaHeaders.reduce((acc, next) => {
     return acc + next.span;
   }, 0);
-  const totalPrice = pirlantaProducts.reduce((acc, next) => {
-    return acc + Number(next.product.total_cost || 0);
-  }, 0);
+
   return (
     <div className="my-3 w-full">
       <b className="mb-1 block text-black">Pırlanta Bilgileri</b>
       <div
         className={cn(
-          "grid w-full gap-5 rounded-sm bg-gray p-1 text-black",
+          "grid w-full gap-3 rounded-sm bg-gray p-1 text-black",
           `grid-cols-${pirlantaHeaderColSum}`,
         )}
       >
@@ -35,7 +37,7 @@ export default function MucevherPirlantaSection({
         ))}
       </div>
       <div
-        className={cn("my-3 grid gap-5", `grid-cols-${pirlantaHeaderColSum}`)}
+        className={cn("my-3 grid gap-3", `grid-cols-${pirlantaHeaderColSum}`)}
       >
         {pirlantaProducts.map((item, index) => {
           const newItem: PirlantaModelType = {
@@ -53,9 +55,17 @@ export default function MucevherPirlantaSection({
           );
         })}
       </div>
-      <div className="w-full text-right font-bold text-black ">
-        <span className="underline">Toplam Fiyat</span> :
-        {formatToCurrency(totalPrice)} $
+      <div className="flex w-full justify-end">
+        <div className="float-right flex w-auto flex-col flex-wrap font-bold text-black">
+          <div className="flex">
+            <div>Toplam Pırlanta Fiyat &nbsp;:&nbsp;</div>
+            <div>{formatToCurrency(toplamMaliyet)} $</div>
+          </div>
+          <div className="flex">
+            <div>Toplam Pırlanta Adet &nbsp;:&nbsp;</div>
+            <div>{toplamAdet}</div>
+          </div>
+        </div>
       </div>
     </div>
   );

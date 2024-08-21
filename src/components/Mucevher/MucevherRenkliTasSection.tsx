@@ -10,22 +10,24 @@ import MucevherRenkliTasRow from "./MucevherRenkliTasRow";
 export default function MucevherRenkliTasSection({
   renkliTasProducts,
   isEdit,
+  toplamAdet,
+  toplamMaliyet,
 }: {
   renkliTasProducts: MucevherDetayDataType[];
   isEdit: boolean;
+  toplamAdet: number;
+  toplamMaliyet: number;
 }) {
   const renkliTasHeaderColSum = RenkliTasHeaders.reduce((acc, next) => {
     return acc + next.span;
   }, 0);
-  const totalPrice = renkliTasProducts.reduce((acc, next) => {
-    return acc + Number(next.product.total_cost || 0);
-  }, 0);
+
   return (
     <div className="my-3 w-full">
       <b className="mb-1 block text-black">Renkli Taş Bilgileri</b>
       <div
         className={cn(
-          "grid w-full gap-5 rounded-sm bg-gray p-1 text-black",
+          "grid w-full gap-3 rounded-sm bg-gray p-1 text-black",
           `grid-cols-${renkliTasHeaderColSum}`,
         )}
       >
@@ -36,7 +38,7 @@ export default function MucevherRenkliTasSection({
         ))}
       </div>
       <div
-        className={cn("my-3 grid gap-5", `grid-cols-${renkliTasHeaderColSum}`)}
+        className={cn("my-3 grid gap-3", `grid-cols-${renkliTasHeaderColSum}`)}
       >
         {renkliTasProducts.map((item, index) => {
           const newItem: RenkliTasModelType = {
@@ -55,9 +57,18 @@ export default function MucevherRenkliTasSection({
           );
         })}
       </div>
-      <div className="w-full text-right font-bold text-black ">
-        <span className="underline">Toplam Fiyat</span> :
-        {formatToCurrency(totalPrice)} $
+
+      <div className="flex w-full justify-end">
+        <div className="float-right flex w-auto flex-col flex-wrap font-bold text-black">
+          <div className="flex">
+            <div>Toplam Renkli Taş Fiyat &nbsp;:&nbsp;</div>
+            <div>{formatToCurrency(toplamMaliyet)} $</div>
+          </div>
+          <div className="flex">
+            <div>Toplam Renkli Taş Adet &nbsp;:&nbsp;</div>
+            <div>{toplamAdet}</div>
+          </div>
+        </div>
       </div>
     </div>
   );

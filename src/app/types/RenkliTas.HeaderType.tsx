@@ -17,7 +17,7 @@ export type RenkliTasHeaderColumn = {
 
 export const RenkliTasHeaders: RenkliTasHeaderColumn[] = [
   {
-    header: "Renli Taş",
+    header: "Renkli Taş",
     accessor: "renkliTas",
     span: 2,
   },
@@ -30,7 +30,7 @@ export const RenkliTasHeaders: RenkliTasHeaderColumn[] = [
   {
     header: "Karat",
     accessor: "karat",
-    span: 2,
+    span: 1,
   },
 
   {
@@ -41,7 +41,7 @@ export const RenkliTasHeaders: RenkliTasHeaderColumn[] = [
   {
     header: "Mensei",
     accessor: "mensei",
-    span: 1,
+    span: 2,
   },
   {
     header: "Adet",
@@ -51,6 +51,6 @@ export const RenkliTasHeaders: RenkliTasHeaderColumn[] = [
   {
     header: "Fiyat",
     accessor: "fiyat",
-    span: 1,
+    span: 2,
   },
 ];
