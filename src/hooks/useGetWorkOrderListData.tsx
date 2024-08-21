@@ -9,6 +9,7 @@ import { WorkOrderType } from "../../types/WorkOrder.types";
 import { GetWorkOrdersList } from "@/Services/WorkOrder.Services";
 import { useRouter } from "next/navigation";
 import { DeleteWorkOrderApiService } from "@/ApiServices/WorkOrders.ApiService";
+import CustomToolTip from "@/components/CustomUI/CustomTooltip";
 
 export default function useGetWorkOrderListData() {
   const router = useRouter();
@@ -31,7 +32,9 @@ export default function useGetWorkOrderListData() {
         setActiveData(error);
       }
       const data = resp.results as WorkOrderType[];
+
       const dataOneResult: any = data.map((item) => {
+        const sonIslemTarihi = formatDate(item.last_process_date as string);
         return {
           isEmriKodu: item.id,
           mucevherKodu: item?.product_temp_code ? (
@@ -46,13 +49,32 @@ export default function useGetWorkOrderListData() {
           ),
           islem: item?.exit,
           last_process_date: item.last_process_date ? (
-            <div className="leading-6">
-              {formatDate(item.last_process_date as string)}
+            <div className="flex flex-col items-start justify-start gap-2">
+              <span>{sonIslemTarihi.primary}</span>
+              <span>{sonIslemTarihi.secondary}</span>
             </div>
           ) : null,
-          total_product_cost: `${formatToCurrency(
-            Number(item.total_product_cost),
-          )} $`,
+
+          totalProductColumn: (
+            <>
+              <CustomToolTip
+                text={`${formatToCurrency(
+                  Number(item.total_cost),
+                ).toString()} $`}
+              >
+                <div className="flex flex-col items-center justify-center gap-1">
+                  <b>Maliyet</b>
+                  <div>
+                    Malzeme :{" "}
+                    {formatToCurrency(Number(item.total_product_cost))} $
+                  </div>
+                  <div>
+                    İşçilik : {formatToCurrency(Number(item.labor_cost))} $
+                  </div>
+                </div>
+              </CustomToolTip>
+            </>
+          ),
           status: ConvertWorkOrderStatus(item.status as WorkOrderStatusType),
           islemler: islemlerArea({
             id: item.id as number,

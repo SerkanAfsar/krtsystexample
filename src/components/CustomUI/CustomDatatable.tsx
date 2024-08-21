@@ -156,7 +156,7 @@ const CustomDatatable = ({
                 {row.cells.map((cell, key) => {
                   return (
                     <td
-                      className="!align-middle text-sm font-thin "
+                      className="z-20 !align-middle text-sm font-thin "
                       {...cell.getCellProps()}
                       key={`cell-${key}`}
                     >

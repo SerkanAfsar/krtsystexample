@@ -1,4 +1,4 @@
-import { cn } from "@/utils";
+import { cn, formatToCurrency } from "@/utils";
 import { MucevherDetayDataType } from "@/Containers/MucevherDetayContainer";
 import {
   PirlantaHeaders,
@@ -15,6 +15,9 @@ export default function MucevherPirlantaSection({
 }) {
   const pirlantaHeaderColSum = PirlantaHeaders.reduce((acc, next) => {
     return acc + next.span;
+  }, 0);
+  const totalPrice = pirlantaProducts.reduce((acc, next) => {
+    return acc + Number(next.product.total_cost || 0);
   }, 0);
   return (
     <div className="my-3 w-full">
@@ -39,7 +42,7 @@ export default function MucevherPirlantaSection({
             karat: item.product.properties?.carat as number,
             mensei: item.product.properties?.mensei as string,
             berraklik: item.product.properties?.berraklik as string,
-            adet: item.product.remaining_count as number,
+            adet: item.quantity as number,
             kesim: item.product.properties?.kesim as string,
             renk: item.product.properties?.renk as string,
             fiyat: item.product.total_cost as number,
@@ -49,6 +52,10 @@ export default function MucevherPirlantaSection({
             <MucevherPirlantaRow isEdit={isEdit} key={index} model={newItem} />
           );
         })}
+      </div>
+      <div className="w-full text-right font-bold text-black ">
+        <span className="underline">Toplam Fiyat</span> :
+        {formatToCurrency(totalPrice)} $
       </div>
     </div>
   );

@@ -8,7 +8,9 @@ import MucevherPirlantaSection from "@/components/Mucevher/MucevherPirlantaSecti
 import MucevherRenkliTasSection from "@/components/Mucevher/MucevherRenkliTasSection";
 
 export type MucevherDetayDataType = {
-  product: ProductType & { quantity: number; used_carat: number };
+  product: ProductType;
+  quantity: number | null;
+  used_carat: number | null;
 };
 
 export default function MucevherDetayContainer({
@@ -27,8 +29,6 @@ export default function MucevherDetayContainer({
   const renkliTasProducts = productList.filter(
     (a) => a.product.type == "ColoredStone",
   );
-
-  console.log("renkliler", renkliTasProducts);
 
   return (
     <div className="mb-1 rounded-sm border border-stroke bg-white pb-5 shadow-default dark:border-strokedark dark:bg-boxdark">

@@ -36,7 +36,7 @@ const columns: Column<
   },
   {
     Header: "Maliyet",
-    accessor: "total_product_cost",
+    accessor: "totalProductColumn",
   },
   {
     Header: "Durum",

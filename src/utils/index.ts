@@ -3,6 +3,8 @@ import { twMerge } from "tailwind-merge";
 
 import { ResponseResult } from "../../types/responseTypes";
 import { toast } from "react-toastify";
+import { format } from "date-fns";
+import { tr } from "date-fns/locale";
 
 export const cn = (...args: ClassValue[]) => {
   return twMerge(clsx(args));
@@ -19,18 +21,15 @@ export const hasDecimal = (val: number): boolean => {
   return val - Math.floor(val) !== 0;
 };
 
-export const formatDate = (value: string): string => {
-  const date = new Date(value);
-  const options: Intl.DateTimeFormatOptions = {
-    weekday: "short",
-    year: "numeric",
-    month: "short",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
+export const formatDate = (value: string) => {
+  return {
+    primary: format(new Date(value), "dd MMM yyyy", {
+      locale: tr,
+    }),
+    secondary: format(new Date(value), "p", {
+      locale: tr,
+    }),
   };
-  return date.toLocaleDateString("tr-TR", options);
 };
 
 export const ApiServiceResult = ({

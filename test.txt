@@ -41,7 +41,6 @@
 
  ürün kodları ekle seçim ekrarnına madeni kaldır
 
-<<<<<<< HEAD
  ---> Mücevher kodu client side
 
 --->  Sertifika kaldır
@@ -54,7 +53,6 @@
  anil@atillakarat.com
  hakan@atillakarat.com
  kamil@atillakarat.com
-=======
 
 
 --> Üretim bitir de confirm çıkıcak
@@ -76,4 +74,3 @@ https://docs.google.com/spreadsheets/d/155zFdqi4GDtwpvCoWj9kDKb0qTwzgap5/edit?gi
 
 
 
->>>>>>> BWEB-ErrorHandling

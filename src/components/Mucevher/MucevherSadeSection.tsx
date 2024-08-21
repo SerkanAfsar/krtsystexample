@@ -1,6 +1,6 @@
 import { SadeHeaders, SadeModelType } from "@/app/types/Sade.HeaderType";
 import MucevherSadeRow from "./MucevherSadeRow";
-import { cn } from "@/utils";
+import { cn, formatToCurrency } from "@/utils";
 import { MucevherDetayDataType } from "@/Containers/MucevherDetayContainer";
 
 export default function MucevherSadeSection({
@@ -12,6 +12,10 @@ export default function MucevherSadeSection({
 }) {
   const sadeHeaderColSum = SadeHeaders.reduce((acc, next) => {
     return acc + next.span;
+  }, 0);
+
+  const totalPrice = sadeProducts.reduce((acc, next) => {
+    return acc + Number(next.product.total_cost || 0);
   }, 0);
   return (
     <div className="my-3 w-full">
@@ -42,6 +46,10 @@ export default function MucevherSadeSection({
             <MucevherSadeRow key={index} isEdit={isEdit} model={newItem} />
           );
         })}
+      </div>
+      <div className="w-full text-right font-bold text-black ">
+        <span className="underline">Toplam Fiyat</span> :
+        {formatToCurrency(totalPrice)} $
       </div>
     </div>
   );

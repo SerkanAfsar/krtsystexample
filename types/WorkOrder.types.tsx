@@ -1,3 +1,5 @@
+import React from "react";
+
 export type WorkOrderProductType = {
   product_id: number;
   quantity: number | null;
@@ -55,6 +57,9 @@ export type WorkOrderType = {
   exit?: string;
   group?: string;
   product_temp_code?: string;
+  totalProductColumn?: React.ReactNode;
+  labor_cost: number | null;
+  total_cost: number | null;
 };
 
 export type WorkOrderLogType = {

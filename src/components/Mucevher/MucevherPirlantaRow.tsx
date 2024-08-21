@@ -21,7 +21,6 @@ export default function MucevherPirlantaRow({
   model: PirlantaModelType;
   isEdit: boolean;
 }) {
-  console.log(model);
   const findSpan = (key: keyof PirlantaModelType): number => {
     return PirlantaHeaders.find((a) => a.accessor == key)?.span || 1;
   };

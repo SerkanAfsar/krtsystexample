@@ -11,7 +11,6 @@ export default function MucevherSadeRow({
   model: SadeModelType;
   isEdit: boolean;
 }) {
-  console.log(model);
   const findSpan = (key: keyof SadeModelType): number => {
     return SadeHeaders.find((a) => a.accessor == key)?.span || 1;
   };
