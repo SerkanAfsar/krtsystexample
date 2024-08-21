@@ -1,6 +1,6 @@
 import { SadeHeaders, SadeModelType } from "@/app/types/Sade.HeaderType";
 import MucevherSadeRow from "./MucevherSadeRow";
-import { cn, formatToCurrency } from "@/utils";
+import { cn } from "@/utils";
 import { MucevherDetayDataType } from "@/Containers/MucevherDetayContainer";
 
 export default function MucevherSadeSection({
