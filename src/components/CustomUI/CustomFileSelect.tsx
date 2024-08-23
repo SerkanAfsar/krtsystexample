@@ -10,7 +10,7 @@ type CustomFileSelectProps = React.InputHTMLAttributes<HTMLInputElement> & {
   err?: string | null;
   outerClass?: ClassValue | null;
   className?: ClassValue | null;
-  setError: any;
+  setError?: any;
   addedImage: string | null;
 };
 const CustomFileSelect = React.forwardRef<

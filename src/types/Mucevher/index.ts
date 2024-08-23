@@ -1,5 +1,7 @@
 import React from "react";
 import { Column } from "react-table";
+import { WorkOrderLogType } from "../../../types/WorkOrder.types";
+import { ProductType } from "../../../types/types";
 
 export type MucevherListType = {
   resim: string | null;
@@ -67,3 +69,9 @@ export const MucevherListesiDataHeaders: Column<
     accessor: "islemler",
   },
 ];
+
+export type MucevherDetayType = {
+  work_order_logs: WorkOrderLogType[];
+  inside_products: ProductType[];
+  product_code: string;
+};

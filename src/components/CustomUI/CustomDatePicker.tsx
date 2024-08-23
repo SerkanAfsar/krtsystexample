@@ -9,7 +9,7 @@ import { ElementType } from "../../../types/inputTypes";
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   outerClass?: ClassValue | null;
   err?: string | null;
-  setValue: any;
+  setValue?: any;
 } & {
   item: ElementType;
 };
@@ -88,7 +88,7 @@ const CustomDatePicker = React.forwardRef<HTMLInputElement, InputProps>(
 
           monthSelectorType: "static",
           onChange: (selectedDates, dateStr, instance) => {
-            setValue(name, dateStr);
+            setValue && setValue(name, dateStr);
           },
 
           prevArrow:
@@ -101,9 +101,14 @@ const CustomDatePicker = React.forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className={cn("w-full", outerClass && outerClass)}>
-        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-          {item.title}
-        </label>
+        {item.title && (
+          <label
+            htmlFor={id}
+            className="mb-3 block text-sm font-medium text-black dark:text-white"
+          >
+            {item.title}
+          </label>
+        )}
         <div className="relative">
           <input
             ref={ref}

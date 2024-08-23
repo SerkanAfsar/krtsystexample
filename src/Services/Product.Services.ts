@@ -2,6 +2,7 @@ import { ResponseResult } from "../../types/responseTypes";
 import { BaseService } from ".";
 import { GetNextOrderType, NextOrderType } from "../../types/inputTypes";
 import { ProductListType, ProductType } from "../../types/types";
+import { MucevherDetayType } from "@/types/Mucevher";
 
 export const GetProductService = async ({
   id,
@@ -162,12 +163,12 @@ export const GetGemProductService = async ({
   product_id,
 }: {
   product_id: number;
-}): Promise<ResponseResult<ProductType>> => {
+}): Promise<ResponseResult<MucevherDetayType>> => {
   const result = await BaseService({
     url: `product/gem-product-detail/`,
     bodyData: { product_id },
     method: "POST",
     hasToken: true,
   });
-  return result as ResponseResult<ProductType>;
+  return result as ResponseResult<MucevherDetayType>;
 };

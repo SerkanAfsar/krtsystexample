@@ -1,32 +1,36 @@
 import { GetWorkOrderLogsByWorkOrderId } from "@/Services/WorkOrder.Services";
 import React from "react";
-import { WorkOrderListType } from "../../../types/WorkOrder.types";
+import {
+  WorkOrderListType,
+  WorkOrderLogType,
+} from "../../../types/WorkOrder.types";
 import { formatDate, formatToCurrency } from "@/utils";
 
-export default async function IsEmirDetayLoglari({ id }: { id: number }) {
-  const result = await GetWorkOrderLogsByWorkOrderId({ id });
-  if (!result?.success) {
-    return (
-      <div className="mb-1 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="border-b border-stroke dark:border-strokedark">
-          <div className="flex w-full items-center justify-between">
-            <h3 className="flex items-center justify-center p-4 text-lg font-medium text-black dark:text-white">
-              <span className="ml-auto"> Üretim Bilgileri</span>
-              <b className="ml-auto mr-4"> </b>
-            </h3>
-            <b className="mr-4 text-black"></b>
-          </div>
-        </div>
-        <hr />
-        <div className="block w-full p-5 text-center">
-          {result.error ? result.error[0] : "Hata"}
-        </div>
-      </div>
-    );
+export default async function IsEmirDetayLoglari({
+  id,
+  workOrderLogs,
+}: {
+  id?: number;
+  workOrderLogs?: WorkOrderLogType[];
+}) {
+  let resultData: WorkOrderListType;
+  if (id) {
+    const result = await GetWorkOrderLogsByWorkOrderId({ id });
+    if (!result?.success) {
+      return <>{result.error ? result.error[0] : "Hata"}</>;
+    }
+    resultData = result.data as WorkOrderListType;
+  } else {
+    resultData = {
+      total_labor_cost:
+        workOrderLogs?.reduce((acc, next) => {
+          return acc + Number(next.cost);
+        }, 0) || 0,
+      logs: workOrderLogs || [],
+    };
   }
-  const data = result.data as WorkOrderListType;
 
-  const newData = data.logs?.sort((a, b) => {
+  const newData = resultData.logs?.sort((a, b) => {
     return Number(a.id) - Number(b.id);
   });
 
@@ -37,7 +41,7 @@ export default async function IsEmirDetayLoglari({ id }: { id: number }) {
           <span> Üretim Bilgileri</span>
           <b>
             Toplam İşçilk :
-            {`${formatToCurrency(Number(data?.total_labor_cost) || 0)} $`}
+            {`${formatToCurrency(Number(resultData?.total_labor_cost) || 0)} $`}
           </b>
         </div>
       </div>

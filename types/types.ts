@@ -3,7 +3,7 @@ import { Column } from "react-table";
 export type ProductType = {
   pk?: number;
   code?: string | null;
-  type?: "Diamond" | "Simple" | "ColoredStone";
+  type?: "Diamond" | "Simple" | "ColoredStone" | "Gem";
   properties?: { [key: string]: string | number | undefined };
   image?: string | ArrayBuffer;
   created_at?: string;
