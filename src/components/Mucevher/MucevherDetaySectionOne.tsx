@@ -7,7 +7,7 @@ import CustomRadioButtonList from "../CustomUI/CustomRadioButtonList";
 
 export default function MucevherDetaySectionOne() {
   const [description, setDescription] = useState<string>("");
-  const [files, setFiles] = useState<FileList[] | null>(null);
+  const [files, setFiles] = useState<FileList | null>(null);
 
   return (
     <div className="mb-1 rounded-sm border border-stroke bg-white p-3 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -28,8 +28,9 @@ export default function MucevherDetaySectionOne() {
                 <input
                   type="file"
                   accept="image/*"
+                  multiple={false}
                   className="absolute inset-0 z-50 m-0 h-full w-full p-0 opacity-0 outline-none"
-                  onChange={(event) => setFiles(event.target.files)}
+                  onChange={(event) => setFiles(event.target.files as FileList)}
                 />
                 <div className="flex flex-col items-center justify-center space-y-3">
                   <span className="flex h-11.5 w-11.5 items-center justify-center rounded-full border border-stroke bg-primary/5 dark:border-strokedark">
