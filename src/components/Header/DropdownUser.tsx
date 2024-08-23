@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { AuthMeType } from "../../../types/types";
+import { ResponseResult } from "../../../types/responseTypes";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
+  const [data, setData] = useState<AuthMeType>();
 
   // close on click outside
   useEffect(() => {
@@ -33,6 +36,17 @@ const DropdownUser = () => {
     return () => document.removeEventListener("keydown", keyHandler);
   });
 
+  useEffect(() => {
+    const service = async () => {
+      const response = await fetch("/api/auth");
+      const result = (await response.json()) as ResponseResult<AuthMeType>;
+      if (result.success) {
+        setData(result.data as AuthMeType);
+      }
+    };
+    service();
+  }, []);
+
   return (
     <div className="relative">
       <Link
@@ -43,27 +57,15 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Admin
+            {data?.username}
           </span>
-          <span className="block text-xs">Atilla Karat Admin</span>
+          <span className="block text-sm">{data?.email}</span>
         </span>
-
         <span className="h-12 w-12 rounded-full">
-          {/* <Image
-            width={112}
-            height={112}
-            src={"/images/user/user-01.png"}
-            style={{
-              width: "auto",
-              height: "auto",
-            }}
-            alt="User"
-          /> */}
           <div className="flex h-full w-full items-center justify-center rounded-[50%] bg-primary text-base font-bold text-white">
-            A
+            {data?.username?.substring(0, 1)}
           </div>
         </span>
-
         <svg
           className="hidden fill-current sm:block"
           width="12"

@@ -1,7 +1,7 @@
 import { LoginType } from "../../types/inputTypes";
 import { BaseService } from ".";
 import { ResponseResult } from "../../types/responseTypes";
-import { AuthType } from "../../types/types";
+import { AuthMeType, AuthType } from "../../types/types";
 
 export const LoginService = async ({
   data,
@@ -15,4 +15,14 @@ export const LoginService = async ({
     hasToken: false,
   });
   return result as ResponseResult<AuthType>;
+};
+
+export const AuthMeService = async (): Promise<ResponseResult<AuthMeType>> => {
+  const result = await BaseService({
+    url: "user/me/",
+    bodyData: null,
+    method: "GET",
+    hasToken: true,
+  });
+  return result as ResponseResult<AuthMeType>;
 };

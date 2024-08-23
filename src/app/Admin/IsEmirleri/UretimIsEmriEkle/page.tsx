@@ -13,3 +13,5 @@ const UretimIsEmriEkle = () => {
 };
 
 export default UretimIsEmriEkle;
+
+export const dynamic = "force-dynamic";

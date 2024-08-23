@@ -7,7 +7,7 @@ import CustomRadioButtonList from "../CustomUI/CustomRadioButtonList";
 
 export default function MucevherDetaySectionOne() {
   const [description, setDescription] = useState<string>("");
-  const [files, setFiles] = useState<FileList[] | null>(null);
+  const [files, setFiles] = useState<FileList | null>(null);
 
   return (
     <div className="mb-1 rounded-sm border border-stroke bg-white p-3 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark">
