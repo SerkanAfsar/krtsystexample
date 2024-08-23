@@ -10,3 +10,5 @@ export default function RenkliTaskEkle() {
     </DefaultLayout>
   );
 }
+
+export const dynamic = "force-dynamic";

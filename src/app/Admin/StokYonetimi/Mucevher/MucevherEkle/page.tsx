@@ -11,3 +11,5 @@ const MucevherEkle = () => {
 };
 
 export default MucevherEkle;
+
+export const dynamic = "force-dynamic";

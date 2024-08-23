@@ -56,24 +56,20 @@ export default function useGetWorkOrderListData() {
           ) : null,
 
           totalProductColumn: (
-            <>
-              <CustomToolTip
-                text={`${formatToCurrency(
-                  Number(item.total_cost),
-                ).toString()} $`}
-              >
-                <div className="flex flex-col items-center justify-center gap-1">
-                  <b>Maliyet</b>
-                  <div>
-                    Malzeme :{" "}
-                    {formatToCurrency(Number(item.total_product_cost))} $
-                  </div>
-                  <div>
-                    İşçilik : {formatToCurrency(Number(item.labor_cost))} $
-                  </div>
+            <CustomToolTip
+              text={`${formatToCurrency(Number(item.total_cost)).toString()} $`}
+            >
+              <div className="flex flex-col items-center justify-center gap-1">
+                <b>Maliyet</b>
+                <div>
+                  Malzeme : {formatToCurrency(Number(item.total_product_cost))}{" "}
+                  $
                 </div>
-              </CustomToolTip>
-            </>
+                <div>
+                  İşçilik : {formatToCurrency(Number(item.labor_cost))} $
+                </div>
+              </div>
+            </CustomToolTip>
           ),
           status: ConvertWorkOrderStatus(item.status as WorkOrderStatusType),
           islemler: islemlerArea({

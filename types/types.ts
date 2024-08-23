@@ -35,6 +35,13 @@ export type AuthType = {
   user_groups: UserGroupsType[];
 };
 
+export type AuthMeType = {
+  id: number;
+  username: string;
+  email: string;
+  groups: any[];
+};
+
 export type UserGroupsType = {
   id: number;
   name: string;
