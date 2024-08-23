@@ -35,6 +35,7 @@ const config: Config = {
       "2xsm": "375px",
       xsm: "425px",
       "3xl": "2000px",
+      "4xl": "3000px",
       ...defaultTheme.screens,
     },
     extend: {
