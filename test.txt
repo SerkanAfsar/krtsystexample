@@ -73,4 +73,16 @@ https://docs.google.com/spreadsheets/d/155zFdqi4GDtwpvCoWj9kDKb0qTwzgap5/edit?gi
 ---> admin kullanıcı iş emrini bitir endpointi iste mustafadan ve uygula (üretim müdürü olduğunda bitir buttonu hep gözükücek)
 
 
+25 ağustos
+--->Sade nin quantity si yoksa 1 girilicek
+
+
+eklede simple alanını sadedeki gram ve ayar bilgisini birleştirip 10g 8k
+total karatları topla toplam gir
+modal sadedeki model
+date string
+image base64
+total number of stones adetlerin toplamı
+kod kısmı aynı
+
 
