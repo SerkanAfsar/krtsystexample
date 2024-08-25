@@ -33,11 +33,12 @@ const MucevherDetay = async ({ params }: { params: Params }) => {
       component: <MucevherDetaySectionOne />,
     },
     {
-      colName: "Malzemeler",
+      colName: "Mücevher Bilgileri",
       component: (
         <MucevherDetayContainer
           productList={data.inside_products as MucevherDetayDataType[]}
           isEdit={true}
+          showTitle={false}
         />
       ),
     },

@@ -40,7 +40,7 @@ export default async function IsEmirDetayLoglari({
         <div className="flex w-full items-center justify-between p-4 text-lg font-medium text-black dark:text-white">
           <span> Üretim Bilgileri</span>
           <b>
-            Toplam İşçilk :
+            Toplam İşçilik :
             {`${formatToCurrency(Number(resultData?.total_labor_cost) || 0)} $`}
           </b>
         </div>

@@ -33,10 +33,7 @@ export const PirlantaListHeaders: Column<
     Header: "Karat",
     accessor: "carat",
   },
-  {
-    Header: "Sertifika",
-    accessor: "sertifika",
-  },
+
   {
     Header: "Renk",
     accessor: "renk",
@@ -74,8 +71,8 @@ export const PirlantaListHeaders: Column<
     accessor: "height",
   },
   {
-    Header: "SertifikaNo",
-    accessor: "sertifikaNo",
+    Header: "Sertifika",
+    accessor: "sertifika",
   },
   {
     Header: "Rapaport Fiyatı",

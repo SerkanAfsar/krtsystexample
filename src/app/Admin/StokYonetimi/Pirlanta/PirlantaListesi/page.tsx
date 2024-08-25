@@ -18,7 +18,7 @@ export default function PirlantaListesi() {
           target="_blank"
           href={`https://www.gia.edu/report-check?reportno=${item?.product_certificate?.sertifikaNo}`}
         >
-          GIA
+          {`GIA${item?.product_certificate?.sertifikaNo}`}
         </Link>
       );
     } else if (item?.product_certificate?.sertifika == "HRD") {
@@ -28,7 +28,7 @@ export default function PirlantaListesi() {
           className="underline"
           href={`https://my.hrdantwerp.com/?record_number=${item?.product_certificate?.sertifikaNo}`}
         >
-          HRD
+          {`HRD${item?.product_certificate?.sertifikaNo}`}
         </Link>
       );
     }
