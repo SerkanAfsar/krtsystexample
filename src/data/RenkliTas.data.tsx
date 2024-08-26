@@ -387,6 +387,45 @@ export const RenkliTasListesiKesimData: CustomOptionType[] = [
   },
 ];
 
+export const MenseiSelectedOptionsList: CustomOptionType[] = [
+  {
+    titleVal: "Türkiye",
+    valueVal: "Türkiye",
+  },
+  {
+    titleVal: "ABD",
+    valueVal: "ABD",
+  },
+  {
+    titleVal: "Belçika",
+    valueVal: "Belçika",
+  },
+  {
+    titleVal: "Dubai",
+    valueVal: "Dubai",
+  },
+  {
+    titleVal: "Hindistan",
+    valueVal: "Hindistan",
+  },
+  {
+    titleVal: "Hong kong",
+    valueVal: "Hong kong",
+  },
+  {
+    titleVal: "İtalya",
+    valueVal: "İtalya",
+  },
+  {
+    titleVal: "Panama",
+    valueVal: "Panama",
+  },
+  {
+    titleVal: "Taiwan",
+    valueVal: "Taiwan",
+  },
+];
+
 export const RenkliTasListesiMenseiList = () => {
   return (
     <>

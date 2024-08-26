@@ -127,7 +127,7 @@ const InnerConvert = ({
 };
 
 export default function useGetProductData(
-  type: "Diamond" | "Simple" | "Gem" | "ColoredStone",
+  type: "Diamond" | "Simple" | "ColoredStone",
   redirectUrl: string,
   sertifikaFunc?: any,
 ) {

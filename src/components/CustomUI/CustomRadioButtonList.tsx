@@ -4,6 +4,7 @@ export default function CustomRadioButtonList({
   values,
   name,
   defaultValue,
+  ...props
 }: {
   values: string[];
   name: string;
@@ -27,6 +28,7 @@ export default function CustomRadioButtonList({
               name={name}
               value={value}
               checked
+              {...props}
             />
             <div
               className={`mr-2 flex h-5 w-5 items-center justify-center rounded-full border ${

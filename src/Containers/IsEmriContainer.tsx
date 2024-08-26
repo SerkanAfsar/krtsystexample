@@ -19,6 +19,7 @@ import { AddWorkOrderService } from "@/Services/WorkOrder.Services";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { WorkOrderQueueApiService } from "@/ApiServices/WorkOrders.ApiService";
+import { MucevherCode } from "@/utils/Mucevher.Utils";
 
 const UrunGruplari: UrunGruplariModulType[] = [
   {
@@ -87,41 +88,8 @@ export default function IsEmriContainer() {
     const pirlantaArr = values.find((a) => a.title == "Pırlanta")?.products;
     const renkliTasArr = values.find((a) => a.title == "Renkli Taş")?.products;
     const sadeArr = values.find((a) => a.title == "Sade")?.products;
-    let code = "";
-    if (pirlantaArr && pirlantaArr?.length > 0 && renkliTasArr?.length == 0) {
-      code = "D";
-    }
-    if (
-      pirlantaArr &&
-      pirlantaArr.length > 0 &&
-      renkliTasArr &&
-      renkliTasArr.length > 0
-    ) {
-      code = "M";
-    }
-    if (
-      pirlantaArr &&
-      pirlantaArr.length == 0 &&
-      renkliTasArr &&
-      renkliTasArr.length > 0
-    ) {
-      code = "M";
-    }
-    if (
-      pirlantaArr &&
-      pirlantaArr.length == 0 &&
-      renkliTasArr &&
-      renkliTasArr.length == 1
-    ) {
-      const item = renkliTasArr[0]?.type;
-      code = `${item}`;
-    }
-    if (sadeArr && sadeArr.length > 0) {
-      const item = sadeArr[0];
-      code += item?.ayar;
-      code += item?.modelTuru;
-    }
-    return code;
+    const result = MucevherCode(pirlantaArr, sadeArr, renkliTasArr);
+    return result;
   }, [values]);
 
   useEffect(() => {

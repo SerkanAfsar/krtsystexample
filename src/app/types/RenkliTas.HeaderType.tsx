@@ -1,8 +1,7 @@
 export type RenkliTasModelType = {
   renkliTas: string | null;
   kesim: string | null;
-  karat: number | null;
-
+  carat: number | null;
   renk: string | null;
   mensei: string | null;
   adet: number | null;
@@ -29,7 +28,7 @@ export const RenkliTasHeaders: RenkliTasHeaderColumn[] = [
 
   {
     header: "Karat",
-    accessor: "karat",
+    accessor: "carat",
     span: 1,
   },
 

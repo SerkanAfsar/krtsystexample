@@ -1,6 +1,6 @@
 export type PirlantaModelType = {
   kesim: string | null;
-  karat: number | null;
+  carat: number | null;
   berraklik: string | null;
   renk: string | null;
   mensei: string | null;
@@ -22,7 +22,7 @@ export const PirlantaHeaders: PirlantaHeaderColumn[] = [
   },
   {
     header: "Karat",
-    accessor: "karat",
+    accessor: "carat",
     span: 1,
   },
   {

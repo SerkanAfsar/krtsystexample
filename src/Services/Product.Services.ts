@@ -2,7 +2,7 @@ import { ResponseResult } from "../../types/responseTypes";
 import { BaseService } from ".";
 import { GetNextOrderType, NextOrderType } from "../../types/inputTypes";
 import { ProductListType, ProductType } from "../../types/types";
-import { MucevherDetayType } from "@/types/Mucevher";
+import { AddMucevherExternalType, MucevherDetayType } from "@/types/Mucevher";
 
 export const GetProductService = async ({
   id,
@@ -94,6 +94,20 @@ export const GetProductDatatableService = async ({
   return result as ResponseResult<ProductListType>;
 };
 
+export const GetGemProductDatatableService = async (): Promise<
+  ResponseResult<ProductType>
+> => {
+  let urlPath: string = "product/list-gem-products/";
+
+  const result = await BaseService({
+    url: urlPath,
+    method: "GET",
+    bodyData: null,
+    hasToken: true,
+  });
+  return result as ResponseResult<ProductType>;
+};
+
 export const GetNextOrderForMixedDiamondService = async ({
   type = "Diamond",
   code,
@@ -171,4 +185,18 @@ export const GetGemProductService = async ({
     hasToken: true,
   });
   return result as ResponseResult<MucevherDetayType>;
+};
+
+export const PostGemProductService = async ({
+  body,
+}: {
+  body: any;
+}): Promise<ResponseResult<AddMucevherExternalType>> => {
+  const result = await BaseService({
+    url: `product/create-gem-product/`,
+    bodyData: body,
+    method: "POST",
+    hasToken: true,
+  });
+  return result as ResponseResult<AddMucevherExternalType>;
 };

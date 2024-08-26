@@ -4,15 +4,24 @@ import CustomDatePicker from "../CustomUI/CustomDatePicker";
 import CustomInput from "../CustomUI/CustomInput";
 
 import CustomRadioButtonList from "../CustomUI/CustomRadioButtonList";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { AddMucevherExternalType } from "@/types/Mucevher";
 
-export default function MucevherDetaySectionOne() {
-  const [description, setDescription] = useState<string>("");
+export default function MucevherDetaySectionOne({
+  isEdit = false,
+  register,
+  errors,
+}: {
+  isEdit?: boolean;
+  errors: FieldErrors<AddMucevherExternalType>;
+  register: UseFormRegister<AddMucevherExternalType>;
+}) {
   const [files, setFiles] = useState<FileList | null>(null);
 
   return (
-    <div className="mb-1 rounded-sm border border-stroke bg-white p-3 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div className="mb-1 rounded-sm   bg-white p-3 pb-5  dark:border-strokedark dark:bg-boxdark">
       <div className="grid grid-cols-5 gap-5">
-        <div className="col-span-1 mt-9">
+        <div className="col-span-1 mt-8">
           <div className="mb-5 bg-gray">
             <label
               htmlFor="taskImg"
@@ -107,75 +116,110 @@ export default function MucevherDetaySectionOne() {
             <div>
               <CustomInput
                 item={{
-                  name: "ReferansNo",
+                  name: "reference_no",
                   required: false,
                   type: "text",
                   placeholder: "Referans No",
                 }}
+                {...register("reference_no", {
+                  required: "Referans No Giriniz",
+                })}
+                disabled={isEdit}
+                err={errors.reference_no?.message}
               />
             </div>
             <div>
               <CustomInput
                 item={{
-                  name: "ReferansNo",
+                  name: "style_no",
                   required: false,
                   type: "text",
                   placeholder: "Style No",
                 }}
+                {...register("style_no", { required: "Style No Giriniz" })}
+                err={errors.style_no?.message}
+                disabled={isEdit}
               />
             </div>
             <div>
               <CustomInput
                 item={{
-                  name: "iscilik",
+                  name: "labor_cost",
                   required: false,
-                  type: "text",
+                  type: "number",
                   placeholder: "İşçilik",
                   rightIcon: "$",
                 }}
+                err={errors.labor_cost?.message}
+                {...register("labor_cost", {
+                  required: "İşçilik Giriniz",
+                  valueAsNumber: true,
+                })}
+                disabled={isEdit}
               />
             </div>
             <div>
               <CustomInput
                 item={{
-                  name: "satinAlmaFiyati",
+                  name: "purchase_price",
                   required: false,
-                  type: "text",
+                  type: "number",
                   placeholder: "Satın Alma Fiyatı",
                   rightIcon: "$",
                 }}
+                err={errors.purchase_price?.message}
+                {...register("purchase_price", {
+                  required: "Satın Alma Fiyatı Giriniz",
+                  valueAsNumber: true,
+                })}
+                disabled={isEdit}
               />
             </div>
             <div>
               <CustomInput
                 item={{
-                  name: "etiketFiyati",
+                  name: "price_tag",
                   required: false,
-                  type: "text",
+                  type: "number",
                   placeholder: "Etiket Fiyatı",
                   rightIcon: "$",
                 }}
+                {...register("price_tag", {
+                  required: "Etiket Fiyatı Giriniz",
+                  valueAsNumber: true,
+                })}
+                err={errors.price_tag?.message}
+                disabled={isEdit}
               />
             </div>
             <div className="col-start-4 col-end-5">
               <CustomDatePicker
                 item={{
-                  name: "girisTarihi",
+                  name: "entry_date",
                   required: true,
                   type: "datepicker",
                   title: "Giriş Tarihi",
                 }}
-                setValue={null}
+                {...register("entry_date", {
+                  required: "Giriş Tarihi Seçiniz",
+                })}
+                err={errors.entry_date?.message}
+                disabled={isEdit}
               />
             </div>
             <div className="col-start-5 col-end-6">
               <CustomDatePicker
                 item={{
-                  name: "cikisTarihi",
+                  name: "sale_date",
                   required: true,
                   type: "datepicker",
                   title: "Çıkış Tarihi",
                 }}
+                {...register("sale_date", {
+                  required: "Çıkış Tarihi Seçiniz",
+                })}
+                err={errors.sale_date?.message}
+                disabled={isEdit}
                 setValue={null}
               />
             </div>
@@ -186,21 +230,33 @@ export default function MucevherDetaySectionOne() {
                 </label>
                 <textarea
                   rows={3}
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  {...register("description", {
+                    required: "Açıklama Alanı Giriniz",
+                  })}
+                  disabled={isEdit}
                   placeholder="Açıklama..."
                   className="w-full rounded-lg border-[1.5px]  border-stone-400 bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
+                {errors.description && (
+                  <span className="text-red">{errors.description.message}</span>
+                )}
               </div>
             </div>
             <div className="col-start-1 col-end-6">
               <CustomRadioButtonList
-                defaultValue=""
+                defaultValue="Kadın"
                 name="cinsiyet"
-                values={["Erkek", "Kadın"]}
+                values={["Kadın", "Erkek"]}
               />
             </div>
           </div>
+          {!isEdit && (
+            <div className="w-full text-right">
+              <button className="bg-primary px-8 py-2 text-white" type="submit">
+                İleri
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import { SeciliUrunType } from "@/components/IsEmirleri/UrunGruplariModul";
 import { formatToCurrency } from "@/utils";
 import { SadeAltinKarsiliklari } from "@/utils/Sade.Utils";
-import { SadeModelTurleri } from "@/data/Sade.data";
+
 import { GetWorkOrderProductListModalService } from "@/Services/WorkOrder.Services";
 export default function useSadeModalData({
   setSelectedValues,
@@ -46,10 +46,7 @@ export default function useSadeModalData({
         maliyet: `${formatToCurrency(firstPrice)} $`,
         firstPrice,
         type: "Sade",
-        modelTuru:
-          SadeModelTurleri.find(
-            (a) => a.titleVal == modelTuru,
-          )?.extraValue?.substring(0, 1) || "Not Exists",
+        modelTuru,
         ayar: SadeAltinKarsiliklari(ayar),
       };
 

@@ -10,8 +10,8 @@ export type MucevherListType = {
   sade: string | null;
   toplamKarat: number | null;
   toplamTasAdet: number | null;
-  toplamIscilik: number | null;
-  etiketFiyati: number | null;
+  toplamIscilik: number | null | string;
+  etiketFiyati: number | null | string;
   tedarikci: string | null;
   girisTarihi: string | null;
   ambar: string | null;
@@ -74,4 +74,55 @@ export type MucevherDetayType = {
   work_order_logs: WorkOrderLogType[];
   inside_products: ProductType[];
   product_code: string;
+};
+
+export type AddMucevherExternalType = {
+  code: string;
+  model: string;
+  total_carat: number;
+  simple: string;
+  reference_no: string;
+  style_no: string;
+  labor_cost: number;
+  purchase_price: number;
+  price_tag: number;
+  entry_date: string;
+  sale_date: string;
+  description: string;
+  image: string;
+  products: {
+    sade: { [key: string]: string | number }[];
+    pirlanta: { [key: string]: string | number }[];
+    renkliTas: { [key: string]: string | number }[];
+  };
+};
+
+export type MucevherSadeRegisterType = {
+  modelTuru: string;
+  gram: number;
+  ayar: string;
+  renk: string;
+  hasGrami: number;
+  fiyat: number;
+};
+
+export type MucevherPirlantaRegisterType = {
+  kesim: string;
+  carat: number;
+  berraklik: string;
+  renk: number;
+  mensei: string;
+  adet: number;
+  fiyat: number;
+};
+
+export type RenkliTasRegisterType = {
+  renkliTas: string;
+  kesim: string;
+  carat: number;
+  berraklik: string;
+  renk: number;
+  mensei: string;
+  adet: number;
+  fiyat: number;
 };

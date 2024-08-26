@@ -1,12 +1,12 @@
 "use client";
 
-import MucevherSadeSection from "@/components/Mucevher/MucevherSadeSection";
+import MucevherSadeSection from "@/components/Mucevher/SadeMucevher/MucevherSadeSection";
 import { ProductType } from "../../types/types";
-
 import React from "react";
-import MucevherPirlantaSection from "@/components/Mucevher/MucevherPirlantaSection";
-import MucevherRenkliTasSection from "@/components/Mucevher/MucevherRenkliTasSection";
-import { formatToCurrency } from "@/utils";
+import MucevherPirlantaSection from "@/components/Mucevher/PirlantaMucevher/MucevherPirlantaSection";
+import MucevherRenkliTasSection from "@/components/Mucevher/RenkliTasMucevher/MucevherRenkliTasSection";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { AddMucevherExternalType } from "@/types/Mucevher";
 
 export type MucevherDetayDataType = {
   product: ProductType;
@@ -19,42 +19,29 @@ export default function MucevherDetayContainer({
   code,
   isEdit,
   showTitle = true,
+  register,
+  errors,
+  setActiveStep,
 }: {
-  productList: MucevherDetayDataType[];
+  productList: MucevherDetayDataType[] | null;
   code?: string;
   isEdit: boolean;
   showTitle?: boolean;
+  register: UseFormRegister<AddMucevherExternalType>;
+  errors: FieldErrors<AddMucevherExternalType>;
+  setActiveStep?: any;
 }) {
-  const sadeProducts = productList.filter((a) => a.product.type == "Simple");
-  const pirlantaProducts = productList.filter(
-    (a) => a.product.type == "Diamond",
-  );
-  const renkliTasProducts = productList.filter(
-    (a) => a.product.type == "ColoredStone",
-  );
+  const sadeProducts =
+    productList?.filter((a) => a.product.type == "Simple") || null;
 
-  const sadeTotalPrice = sadeProducts.reduce((acc, next) => {
-    return acc + Number(next.product.total_cost || 0);
-  }, 0);
+  const pirlantaProducts =
+    productList?.filter((a) => a.product.type == "Diamond") || null;
 
-  const toplamPirlantaPrice = pirlantaProducts.reduce((acc, next) => {
-    return acc + Number(next.product.total_cost || 0);
-  }, 0);
-
-  const toplamPirlantaAdet = pirlantaProducts.reduce((acc, next) => {
-    return acc + Number(next.quantity || 0);
-  }, 0);
-
-  const toplamRenkliTasPrice = renkliTasProducts.reduce((acc, next) => {
-    return acc + Number(next.product.total_cost || 0);
-  }, 0);
-
-  const toplamRenkliTasAdet = renkliTasProducts.reduce((acc, next) => {
-    return acc + Number(next.quantity || 0);
-  }, 0);
+  const renkliTasProducts =
+    productList?.filter((a) => a.product.type == "ColoredStone") || null;
 
   return (
-    <div className="mb-1 rounded-sm border border-stroke bg-white pb-5 shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div className="mb-1 rounded-sm bg-white pb-5  dark:border-strokedark dark:bg-boxdark">
       {showTitle && (
         <>
           <div className="border-b border-stroke dark:border-strokedark">
@@ -74,25 +61,49 @@ export default function MucevherDetayContainer({
       <div className="grid w-full grid-cols-6  p-4">
         {/* <div className="col-span-1 flex"></div> */}
         <div className="col-span-6 flex flex-col">
-          <MucevherSadeSection sadeProducts={sadeProducts} isEdit={isEdit} />
+          <MucevherSadeSection
+            register={register}
+            sadeProducts={sadeProducts}
+            isEdit={isEdit}
+            errors={errors}
+          />
           <MucevherPirlantaSection
-            toplamAdet={toplamPirlantaAdet}
-            toplamMaliyet={toplamPirlantaPrice}
             pirlantaProducts={pirlantaProducts}
             isEdit={isEdit}
+            register={register}
+            errors={errors}
           />
           <MucevherRenkliTasSection
-            toplamAdet={toplamRenkliTasAdet}
-            toplamMaliyet={toplamRenkliTasPrice}
             renkliTasProducts={renkliTasProducts}
             isEdit={isEdit}
+            register={register}
+            errors={errors}
           />
         </div>
         <div className="col-span-6 mt-4 flex">
-          <h2 className=" h-full w-full justify-end text-right  text-xl dark:text-white">
+          {/* <h2 className=" h-full w-full justify-end text-right  text-xl dark:text-white">
             Toplam Malzeme Maliyeti :{" "}
             <span className="text-right font-bold text-black underline dark:text-white">{`${formatToCurrency(toplamPirlantaPrice + toplamRenkliTasPrice + sadeTotalPrice)} $`}</span>
-          </h2>
+          </h2> */}
+        </div>
+        <div className="col-span-6 mt-8 block w-full text-right">
+          {!isEdit && (
+            <div className="w-full text-right">
+              <button
+                className="mr-5  border border-primary px-8 py-2 text-black"
+                type="button"
+                onClick={() => setActiveStep && setActiveStep(0)}
+              >
+                Geri
+              </button>
+              <button
+                className=" bg-primary px-8 py-2 text-white"
+                type="submit"
+              >
+                Kaydet
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

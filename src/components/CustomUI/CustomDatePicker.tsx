@@ -35,6 +35,7 @@ const CustomDatePicker = React.forwardRef<HTMLInputElement, InputProps>(
         flatpickr(".form-datepicker", {
           mode: "single",
           static: true,
+
           shorthandCurrentMonth: true,
           locale: {
             firstDayOfWeek: 1,

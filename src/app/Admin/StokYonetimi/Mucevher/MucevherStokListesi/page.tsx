@@ -1,11 +1,10 @@
 "use client";
-
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { MucevherListesiDataHeaders } from "@/types/Mucevher";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
-import useGetProductData from "@/hooks/useGetProductData";
 import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
+import useGemProductData from "@/hooks/useGetGemProductData";
 
 export default function MucevherStokListesi() {
   const {
@@ -17,11 +16,7 @@ export default function MucevherStokListesi() {
     showConfirmDelete,
     setShowConfirmDelete,
     item,
-  } = useGetProductData(
-    "Gem",
-    "/Admin/StokYonetimi/Mucevher/MucevherEkle/",
-    undefined,
-  );
+  } = useGemProductData("/Admin/StokYonetimi/Mucevher/MucevherEkle/");
 
   return (
     <DefaultLayout>
