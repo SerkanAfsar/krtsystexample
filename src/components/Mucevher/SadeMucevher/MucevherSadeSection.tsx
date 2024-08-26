@@ -75,16 +75,20 @@ export default function MucevherSadeSection({
       {!isEdit && (
         <div className="w-full text-right">
           <button
+            type="button"
             className="w-40 rounded-md bg-primary px-4 py-2 text-center text-white"
             onClick={() => {
-              sadeTempItems.push({
-                ayar: null,
-                fiyat: null,
-                gram: null,
-                hasGram: null,
-                modelTuru: null,
-                renk: null,
-              });
+              setSadeTempItems((prev: any) => [
+                ...prev,
+                {
+                  ayar: null,
+                  fiyat: null,
+                  gram: null,
+                  hasGram: null,
+                  modelTuru: null,
+                  renk: null,
+                },
+              ]);
             }}
           >
             Sade Ekle

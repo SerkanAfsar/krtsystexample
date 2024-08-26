@@ -92,17 +92,21 @@ export default function MucevherPirlantaSection({
       {!isEdit && (
         <div className="w-full text-right">
           <button
+            type="button"
             className="w-40 rounded-md bg-primary px-4 py-2 text-center text-white"
             onClick={() => {
-              pirlantaTempItems.push({
-                adet: null,
-                berraklik: null,
-                fiyat: null,
-                carat: null,
-                kesim: null,
-                mensei: null,
-                renk: null,
-              });
+              setPirlantaTempItems((prev: any) => [
+                ...prev,
+                {
+                  adet: null,
+                  berraklik: null,
+                  fiyat: null,
+                  carat: null,
+                  kesim: null,
+                  mensei: null,
+                  renk: null,
+                },
+              ]);
             }}
           >
             Pırlanta Ekle

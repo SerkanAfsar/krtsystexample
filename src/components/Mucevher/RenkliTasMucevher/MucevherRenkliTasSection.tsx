@@ -107,17 +107,21 @@ export default function MucevherRenkliTasSection({
       {!isEdit && (
         <div className="w-full text-right">
           <button
+            type="button"
             className="w-40 rounded-md bg-primary px-4 py-2 text-center text-white"
             onClick={() => {
-              renkliTasTempItems.push({
-                adet: null,
-                fiyat: null,
-                carat: null,
-                kesim: null,
-                mensei: null,
-                renk: null,
-                renkliTas: null,
-              });
+              setRenkliTasTempItems((prev: any) => [
+                ...prev,
+                {
+                  adet: null,
+                  fiyat: null,
+                  carat: null,
+                  kesim: null,
+                  mensei: null,
+                  renk: null,
+                  renkliTas: null,
+                },
+              ]);
             }}
           >
             Renkli Taş Ekle

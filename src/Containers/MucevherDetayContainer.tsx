@@ -59,7 +59,6 @@ export default function MucevherDetayContainer({
         </>
       )}
       <div className="grid w-full grid-cols-6  p-4">
-        {/* <div className="col-span-1 flex"></div> */}
         <div className="col-span-6 flex flex-col">
           <MucevherSadeSection
             register={register}
@@ -96,10 +95,7 @@ export default function MucevherDetayContainer({
               >
                 Geri
               </button>
-              <button
-                className=" bg-primary px-8 py-2 text-white"
-                type="submit"
-              >
+              <button className="bg-primary px-8 py-2 text-white" type="submit">
                 Kaydet
               </button>
             </div>
