@@ -1,25 +1,57 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomDatePicker from "../CustomUI/CustomDatePicker";
 import CustomInput from "../CustomUI/CustomInput";
 
 import CustomRadioButtonList from "../CustomUI/CustomRadioButtonList";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
+import Image from "next/image";
+import { ProductType } from "../../../types/types";
 
 export default function MucevherDetaySectionOne({
   isEdit = false,
   register,
   errors,
+  setValue,
+  mainData,
 }: {
   isEdit?: boolean;
+  setValue: UseFormSetValue<AddMucevherExternalType>;
   errors: FieldErrors<AddMucevherExternalType>;
   register: UseFormRegister<AddMucevherExternalType>;
+  mainData?: ProductType;
 }) {
   const [files, setFiles] = useState<FileList | null>(null);
+  const [image, setImage] = useState<string | ArrayBuffer | undefined>(
+    mainData?.image,
+  );
+
+  const getBase64 = (file: any): any => {
+    if (file && file[0]) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file[0]);
+      reader.onload = function () {
+        setImage(reader.result ?? undefined);
+        setValue("image", (reader.result as string) ?? null);
+      };
+      reader.onerror = function (error) {
+        console.log("Base 64 Error: ", error);
+        setImage(undefined);
+      };
+    }
+  };
+
+  useEffect(() => {
+    if (files || isEdit) {
+      getBase64(files);
+    } else {
+      setImage(undefined);
+    }
+  }, [files]);
 
   return (
-    <div className="mb-1 rounded-sm   bg-white p-3 pb-5  dark:border-strokedark dark:bg-boxdark">
+    <div className="mb-1 rounded-sm   bg-white   dark:border-strokedark dark:bg-boxdark">
       <div className="grid grid-cols-5 gap-5">
         <div className="col-span-1 mt-8">
           <div className="mb-5 bg-gray">
@@ -27,47 +59,59 @@ export default function MucevherDetaySectionOne({
               htmlFor="taskImg"
               className="block p-1 text-center font-bold text-black dark:text-white"
             >
-              Resim Ekle
+              {isEdit ? "Resim" : "Resim Ekle"}
             </label>
             <div>
-              <div
-                id="FileUpload"
-                className="relative block w-full appearance-none rounded-sm border border-dashed border-stroke bg-white px-4 py-4 dark:border-strokedark dark:bg-boxdark sm:py-14"
-              >
-                <input
-                  type="file"
-                  accept="image/*"
-                  multiple={false}
-                  className="absolute inset-0 z-50 m-0 h-full w-full p-0 opacity-0 outline-none"
-                  onChange={(event) => setFiles(event.target.files as FileList)}
-                />
-                <div className="flex flex-col items-center justify-center space-y-3">
-                  <span className="flex h-11.5 w-11.5 items-center justify-center rounded-full border border-stroke bg-primary/5 dark:border-strokedark">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g clipPath="url(#clip0_75_12841)">
-                        <path
-                          d="M2.5 15.8333H17.5V17.5H2.5V15.8333ZM10.8333 4.85663V14.1666H9.16667V4.85663L4.1075 9.91663L2.92917 8.73829L10 1.66663L17.0708 8.73746L15.8925 9.91579L10.8333 4.85829V4.85663Z"
-                          fill="#3C50E0"
-                        />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_75_12841">
-                          <rect width="20" height="20" fill="white" />
-                        </clipPath>
-                      </defs>
-                    </svg>
-                  </span>
-                  <p className="text-md block text-center">
-                    Resim Sürükle Ya da Seç
-                  </p>
+              {!image ? (
+                <div
+                  id="FileUpload"
+                  className="relative block w-full appearance-none rounded-sm border border-dashed border-stroke bg-white px-4 py-4 dark:border-strokedark dark:bg-boxdark sm:py-14"
+                >
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple={false}
+                    className="absolute inset-0 z-50 m-0 h-full w-full p-0 opacity-0 outline-none"
+                    onChange={(event) =>
+                      setFiles(event.target.files as FileList)
+                    }
+                  />
+                  <div className="flex flex-col items-center justify-center space-y-3">
+                    <span className="flex h-11.5 w-11.5 items-center justify-center rounded-full border border-stroke bg-primary/5 dark:border-strokedark">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g clipPath="url(#clip0_75_12841)">
+                          <path
+                            d="M2.5 15.8333H17.5V17.5H2.5V15.8333ZM10.8333 4.85663V14.1666H9.16667V4.85663L4.1075 9.91663L2.92917 8.73829L10 1.66663L17.0708 8.73746L15.8925 9.91579L10.8333 4.85829V4.85663Z"
+                            fill="#3C50E0"
+                          />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_75_12841">
+                            <rect width="20" height="20" fill="white" />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </span>
+                    <p className="text-md block text-center">
+                      Resim Sürükle Ya da Seç
+                    </p>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <Image
+                  src={image as string}
+                  alt="deneme"
+                  width={300}
+                  height={200}
+                  className="h-auto w-full"
+                />
+              )}
 
               {files !== null && (
                 <div className="mt-4.5 border border-stroke bg-white px-4 py-3 dark:border-strokedark dark:bg-boxdark">
@@ -124,6 +168,7 @@ export default function MucevherDetaySectionOne({
                 {...register("reference_no", {
                   required: "Referans No Giriniz",
                 })}
+                value={mainData?.properties?.referenceNo}
                 disabled={isEdit}
                 err={errors.reference_no?.message}
               />
@@ -137,6 +182,7 @@ export default function MucevherDetaySectionOne({
                   placeholder: "Style No",
                 }}
                 {...register("style_no", { required: "Style No Giriniz" })}
+                value={mainData?.properties?.styleNo}
                 err={errors.style_no?.message}
                 disabled={isEdit}
               />
@@ -155,6 +201,7 @@ export default function MucevherDetaySectionOne({
                   required: "İşçilik Giriniz",
                   valueAsNumber: true,
                 })}
+                value={mainData?.properties?.styleNo}
                 disabled={isEdit}
               />
             </div>
@@ -172,6 +219,7 @@ export default function MucevherDetaySectionOne({
                   required: "Satın Alma Fiyatı Giriniz",
                   valueAsNumber: true,
                 })}
+                value={mainData?.properties?.purchase_price}
                 disabled={isEdit}
               />
             </div>
@@ -180,7 +228,7 @@ export default function MucevherDetaySectionOne({
                 item={{
                   name: "price_tag",
                   required: false,
-                  type: "number",
+                  type: "text",
                   placeholder: "Etiket Fiyatı",
                   rightIcon: "$",
                 }}
@@ -188,8 +236,9 @@ export default function MucevherDetaySectionOne({
                   required: "Etiket Fiyatı Giriniz",
                   valueAsNumber: true,
                 })}
+                value={mainData?.properties?.price_tag}
                 err={errors.price_tag?.message}
-                disabled={isEdit}
+                disabled={true}
               />
             </div>
             <div className="col-start-4 col-end-5">
@@ -200,6 +249,7 @@ export default function MucevherDetaySectionOne({
                   type: "datepicker",
                   title: "Giriş Tarihi",
                 }}
+                value={mainData?.properties?.productionDate}
                 {...register("entry_date", {
                   required: "Giriş Tarihi Seçiniz",
                 })}
@@ -218,6 +268,7 @@ export default function MucevherDetaySectionOne({
                 {...register("sale_date", {
                   required: "Çıkış Tarihi Seçiniz",
                 })}
+                value={mainData?.properties?.saleDate}
                 err={errors.sale_date?.message}
                 disabled={isEdit}
                 setValue={null}
@@ -233,6 +284,7 @@ export default function MucevherDetaySectionOne({
                   {...register("description", {
                     required: "Açıklama Alanı Giriniz",
                   })}
+                  value={mainData?.properties?.description}
                   disabled={isEdit}
                   placeholder="Açıklama..."
                   className="w-full rounded-lg border-[1.5px]  border-stone-400 bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"

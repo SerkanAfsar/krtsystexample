@@ -10,6 +10,7 @@ import { WorkOrderQueueApiService } from "@/ApiServices/WorkOrders.ApiService";
 import { PostGemProductService } from "@/Services/Product.Services";
 import { toast } from "react-toastify";
 import { MucevherCode } from "@/utils/Mucevher.Utils";
+import { formatToCurrency } from "@/utils";
 
 export default function MucevherEkleContainer() {
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -17,8 +18,8 @@ export default function MucevherEkleContainer() {
   const {
     register,
     handleSubmit,
-
     watch,
+    setValue,
     formState: { errors, isValid },
   } = useForm<AddMucevherExternalType>({});
 
@@ -68,22 +69,35 @@ export default function MucevherEkleContainer() {
     }
   };
 
+  const [pirlanta, sade, renkliTas] = watch([
+    "products.pirlanta",
+    "products.sade",
+    "products.renkliTas",
+  ]);
+
   useEffect(() => {
-    const subscription = watch((value, { name, type }) => {
-      if (value.products) {
-        const { pirlanta, sade, renkliTas } = value.products || {};
-        const resultCode = MucevherCode(pirlanta, sade, renkliTas);
-        const process = async () => {
-          const result = await WorkOrderQueueApiService({ code: resultCode });
-          setCode(`${resultCode}-${result}`);
-        };
-        if (resultCode) {
-          process();
-        }
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [watch]);
+    const resultCode = MucevherCode(pirlanta, sade, renkliTas);
+    const process = async () => {
+      const result = await WorkOrderQueueApiService({ code: resultCode });
+      setCode(`${resultCode}-${result}`);
+    };
+    if (resultCode) {
+      process();
+    }
+  }, [pirlanta, sade, renkliTas]);
+
+  const [labor_cost, purchase_price] = watch(["labor_cost", "purchase_price"]);
+
+  useEffect(() => {
+    if (labor_cost && purchase_price) {
+      setValue(
+        "price_tag",
+        formatToCurrency(Number(Number(labor_cost)) + Number(purchase_price)),
+      );
+    } else {
+      setValue("price_tag", null);
+    }
+  }, [labor_cost, purchase_price]);
 
   const components: any[] = [
     <MucevherDetaySectionOne
@@ -91,6 +105,7 @@ export default function MucevherEkleContainer() {
       register={register}
       isEdit={false}
       key={0}
+      setValue={setValue}
     />,
     <MucevherDetayContainer
       productList={null}
@@ -103,12 +118,10 @@ export default function MucevherEkleContainer() {
     />,
   ];
   return (
-    <div className="mb-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div className="mb-5 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="flex w-full flex-col items-start justify-start border-b border-stroke pb-4 dark:border-strokedark">
         <div className="float-right flex w-full items-center justify-between">
-          <h3 className="p-4 text-lg font-medium text-black dark:text-white">
-            Mücevher Ekle
-          </h3>
+          <div></div>
           <b className="mr-4 text-black dark:text-white">
             Mücevher Kodu : {code}
           </b>

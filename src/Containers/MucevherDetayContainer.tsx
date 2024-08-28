@@ -1,5 +1,4 @@
 "use client";
-
 import MucevherSadeSection from "@/components/Mucevher/SadeMucevher/MucevherSadeSection";
 import { ProductType } from "../../types/types";
 import React from "react";
@@ -7,6 +6,15 @@ import MucevherPirlantaSection from "@/components/Mucevher/PirlantaMucevher/Muce
 import MucevherRenkliTasSection from "@/components/Mucevher/RenkliTasMucevher/MucevherRenkliTasSection";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
+import { SadeModelType } from "@/app/types/Sade.HeaderType";
+import { PirlantaModelType } from "@/app/types/Pirlanta.HeaderType";
+import { RenkliTasModelType } from "@/app/types/RenkliTas.HeaderType";
+
+export type CustomArrType = (
+  | SadeModelType
+  | PirlantaModelType
+  | RenkliTasModelType
+)[];
 
 export type MucevherDetayDataType = {
   product: ProductType;
@@ -23,7 +31,7 @@ export default function MucevherDetayContainer({
   errors,
   setActiveStep,
 }: {
-  productList: MucevherDetayDataType[] | null;
+  productList: CustomArrType | null;
   code?: string;
   isEdit: boolean;
   showTitle?: boolean;
@@ -32,13 +40,16 @@ export default function MucevherDetayContainer({
   setActiveStep?: any;
 }) {
   const sadeProducts =
-    productList?.filter((a) => a.product.type == "Simple") || null;
+    (productList?.filter((a) => a.type == "Simple") as SadeModelType[]) || null;
 
   const pirlantaProducts =
-    productList?.filter((a) => a.product.type == "Diamond") || null;
+    (productList?.filter((a) => a?.type == "Diamond") as PirlantaModelType[]) ||
+    null;
 
   const renkliTasProducts =
-    productList?.filter((a) => a.product.type == "ColoredStone") || null;
+    (productList?.filter(
+      (a) => a?.type == "ColoredStone",
+    ) as RenkliTasModelType[]) || null;
 
   return (
     <div className="mb-1 rounded-sm bg-white pb-5  dark:border-strokedark dark:bg-boxdark">
@@ -58,7 +69,7 @@ export default function MucevherDetayContainer({
           <hr />
         </>
       )}
-      <div className="grid w-full grid-cols-6  p-4">
+      <div className="grid w-full grid-cols-6  ">
         <div className="col-span-6 flex flex-col">
           <MucevherSadeSection
             register={register}

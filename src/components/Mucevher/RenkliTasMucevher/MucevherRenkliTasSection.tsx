@@ -1,5 +1,4 @@
-import { cn, formatToCurrency } from "@/utils";
-import { MucevherDetayDataType } from "@/Containers/MucevherDetayContainer";
+import { cn } from "@/utils";
 
 import {
   RenkliTasHeaders,
@@ -16,7 +15,7 @@ export default function MucevherRenkliTasSection({
   register,
   errors,
 }: {
-  renkliTasProducts: MucevherDetayDataType[] | null;
+  renkliTasProducts: RenkliTasModelType[] | null;
   isEdit: boolean;
   register: UseFormRegister<AddMucevherExternalType>;
   errors: FieldErrors<AddMucevherExternalType>;
@@ -28,13 +27,13 @@ export default function MucevherRenkliTasSection({
     return acc + next.span;
   }, 0);
 
-  const toplamRenkliTasPrice = renkliTasProducts?.reduce((acc, next) => {
-    return acc + Number(next.product.total_cost || 0);
-  }, 0);
+  // const toplamRenkliTasPrice = renkliTasProducts?.reduce((acc, next) => {
+  //   return acc + Number(next.product.total_cost || 0);
+  // }, 0);
 
-  const toplamRenkliTasAdet = renkliTasProducts?.reduce((acc, next) => {
-    return acc + Number(next.quantity || 0);
-  }, 0);
+  // const toplamRenkliTasAdet = renkliTasProducts?.reduce((acc, next) => {
+  //   return acc + Number(next.quantity || 0);
+  // }, 0);
 
   return (
     <div className="my-3 w-full">
@@ -55,15 +54,15 @@ export default function MucevherRenkliTasSection({
         className={cn("my-3 grid gap-3", `grid-cols-${renkliTasHeaderColSum}`)}
       >
         {renkliTasProducts?.map((item, index) => {
-          const newItem: RenkliTasModelType = {
-            renkliTas: item.product.properties?.renkliTas as string,
-            kesim: item.product.properties?.kesim as string,
-            carat: item.product.properties?.carat as number,
-            adet: item.quantity as number,
-            mensei: item.product.properties?.mensei as string,
-            fiyat: item.product.total_cost as number,
-            renk: item.product.properties?.renk as string,
-          };
+          // const newItem: RenkliTasModelType = {
+          //   renkliTas: item.product.properties?.renkliTas as string,
+          //   kesim: item.product.properties?.kesim as string,
+          //   carat: item.product.properties?.carat as number,
+          //   adet: item.quantity as number,
+          //   mensei: item.product.properties?.mensei as string,
+          //   fiyat: item.product.total_cost as number,
+          //   renk: item.product.properties?.renk as string,
+          // };
 
           return (
             <MucevherRenkliTasRow
@@ -72,7 +71,7 @@ export default function MucevherRenkliTasSection({
               isEdit={isEdit}
               key={index}
               index={index}
-              model={newItem}
+              model={item}
             />
           );
         })}
@@ -120,6 +119,7 @@ export default function MucevherRenkliTasSection({
                   mensei: null,
                   renk: null,
                   renkliTas: null,
+                  type: "ColoredStone",
                 },
               ]);
             }}
@@ -128,7 +128,7 @@ export default function MucevherRenkliTasSection({
           </button>
         </div>
       )}
-      {isEdit && (
+      {/* {isEdit && (
         <div className="flex w-full justify-end">
           <div className="float-right flex w-auto flex-col flex-wrap font-bold text-black">
             <div className="flex">
@@ -141,7 +141,7 @@ export default function MucevherRenkliTasSection({
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

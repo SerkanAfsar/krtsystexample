@@ -44,6 +44,7 @@ export default function MucevherPirlantaRow({
           {...register(`products.pirlanta.${index}.kesim`, {
             required: "Kesim Giriniz",
           })}
+          value={(model?.kesim as string) ?? null}
           err={errors.products?.pirlanta?.[index]?.["kesim"]?.message}
           // value={model.kesim as string}
           disabled={isEdit}
@@ -60,6 +61,7 @@ export default function MucevherPirlantaRow({
           {...register(`products.pirlanta.${index}.carat`, {
             required: "Karat Giriniz",
           })}
+          value={(model?.carat as number) ?? null}
           // value={model.karat as number}
           disabled={isEdit}
           err={errors.products?.pirlanta?.[index]?.["carat"]?.message}
@@ -74,6 +76,7 @@ export default function MucevherPirlantaRow({
             options: PirlantaBerraklikData,
             placeholder: "Berranlık Seçiniz",
           }}
+          value={(model?.berraklik as string) ?? null}
           {...register(`products.pirlanta.${index}.berraklik`, {
             required: "Berraklık Giriniz",
           })}
@@ -91,10 +94,10 @@ export default function MucevherPirlantaRow({
             options: PirlantaRenkData,
             placeholder: "Renk Seçiniz",
           }}
+          value={(model?.renk as string) ?? null}
           {...register(`products.pirlanta.${index}.renk`, {
             required: "Renk Giriniz",
           })}
-          // value={model.renk as string}
           disabled={isEdit}
           err={errors.products?.pirlanta?.[index]?.["renk"]?.message}
         />
@@ -111,6 +114,7 @@ export default function MucevherPirlantaRow({
           {...register(`products.pirlanta.${index}.mensei`, {
             required: "Mensei Giriniz",
           })}
+          value={(model?.mensei as string) ?? null}
           // value={model.mensei as string}
           disabled={isEdit}
           err={errors.products?.pirlanta?.[index]?.["mensei"]?.message}
@@ -124,6 +128,7 @@ export default function MucevherPirlantaRow({
             type: "number",
             placeholder: "Adet Giriniz",
           }}
+          value={(model?.adet as number) ?? null}
           {...register(`products.pirlanta.${index}.adet`, {
             required: "Adet Giriniz",
             valueAsNumber: true,
@@ -142,6 +147,7 @@ export default function MucevherPirlantaRow({
             rightIcon: "$",
             placeholder: "Fiyat Giriniz",
           }}
+          value={(model?.fiyat as number) ?? null}
           {...register(`products.pirlanta.${index}.fiyat`, {
             required: "Fiyat Giriniz",
             valueAsNumber: true,
@@ -149,6 +155,15 @@ export default function MucevherPirlantaRow({
           // value={formatToCurrency(Number(model.fiyat || 0))}
           disabled={isEdit}
           err={errors.products?.pirlanta?.[index]?.["fiyat"]?.message}
+        />
+      </div>
+      <div className="hidden">
+        <input
+          type="hidden"
+          {...register(`products.pirlanta.${index}.type`, {
+            required: false,
+          })}
+          value={"Diamond"}
         />
       </div>
     </>

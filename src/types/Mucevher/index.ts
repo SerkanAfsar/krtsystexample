@@ -2,6 +2,7 @@ import React from "react";
 import { Column } from "react-table";
 import { WorkOrderLogType } from "../../../types/WorkOrder.types";
 import { ProductType } from "../../../types/types";
+import { CustomArrType } from "@/Containers/MucevherDetayContainer";
 
 export type MucevherListType = {
   resim: string | null;
@@ -72,8 +73,9 @@ export const MucevherListesiDataHeaders: Column<
 
 export type MucevherDetayType = {
   work_order_logs: WorkOrderLogType[];
-  inside_products: ProductType[];
+  inside_products: ProductType[] | CustomArrType;
   product_code: string;
+  product?: ProductType | null;
 };
 
 export type AddMucevherExternalType = {
@@ -85,7 +87,7 @@ export type AddMucevherExternalType = {
   style_no: string;
   labor_cost: number;
   purchase_price: number;
-  price_tag: number;
+  price_tag: number | string | null;
   entry_date: string;
   sale_date: string;
   description: string;

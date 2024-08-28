@@ -6,6 +6,7 @@ import { ResponseResult } from "../../types/responseTypes";
 import { ProductType } from "../../types/types";
 import { useRouter } from "next/navigation";
 import { MucevherListType } from "@/types/Mucevher";
+import Image from "next/image";
 
 const InnerConvert = ({
   data,
@@ -16,7 +17,14 @@ const InnerConvert = ({
 }) => {
   return data.map((item) => {
     return {
-      resim: item?.image,
+      resim: item.image && (
+        <Image
+          src={item.image as string}
+          width={60}
+          height={50}
+          alt={item.code as string}
+        />
+      ),
       mucevherKodu: item?.code,
       model: item?.properties?.model,
       sade: item?.properties?.simple,

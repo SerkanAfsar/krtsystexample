@@ -6,6 +6,7 @@ export type PirlantaModelType = {
   mensei: string | null;
   adet: number | null;
   fiyat: number | null;
+  type?: string;
 };
 
 export type PirlantaHeaderColumn = {

@@ -1,5 +1,5 @@
-import { cn, formatToCurrency } from "@/utils";
-import { MucevherDetayDataType } from "@/Containers/MucevherDetayContainer";
+import { cn } from "@/utils";
+
 import {
   PirlantaHeaders,
   PirlantaModelType,
@@ -15,7 +15,7 @@ export default function MucevherPirlantaSection({
   register,
   errors,
 }: {
-  pirlantaProducts: MucevherDetayDataType[] | null;
+  pirlantaProducts: PirlantaModelType[] | null;
   isEdit: boolean;
   register: UseFormRegister<AddMucevherExternalType>;
   errors: FieldErrors<AddMucevherExternalType>;
@@ -27,13 +27,13 @@ export default function MucevherPirlantaSection({
     return acc + next.span;
   }, 0);
 
-  const toplamPirlantaPrice = pirlantaProducts?.reduce((acc, next) => {
-    return acc + Number(next.product.total_cost || 0);
-  }, 0);
+  // const toplamPirlantaPrice = pirlantaProducts?.reduce((acc, next) => {
+  //   return acc + Number(next.product.total_cost || 0);
+  // }, 0);
 
-  const toplamPirlantaAdet = pirlantaProducts?.reduce((acc, next) => {
-    return acc + Number(next.quantity || 0);
-  }, 0);
+  // const toplamPirlantaAdet = pirlantaProducts?.reduce((acc, next) => {
+  //   return acc + Number(next.quantity || 0);
+  // }, 0);
 
   return (
     <div className="my-3 w-full">
@@ -54,22 +54,22 @@ export default function MucevherPirlantaSection({
         className={cn("my-3 grid gap-3", `grid-cols-${pirlantaHeaderColSum}`)}
       >
         {pirlantaProducts?.map((item, index) => {
-          const newItem: PirlantaModelType = {
-            carat: item.product.properties?.carat as number,
-            mensei: item.product.properties?.mensei as string,
-            berraklik: item.product.properties?.berraklik as string,
-            adet: item.quantity as number,
-            kesim: item.product.properties?.kesim as string,
-            renk: item.product.properties?.renk as string,
-            fiyat: item.product.total_cost as number,
-          };
+          // const newItem: PirlantaModelType = {
+          //   carat: item.product.properties?.carat as number,
+          //   mensei: item.product.properties?.mensei as string,
+          //   berraklik: item.product.properties?.berraklik as string,
+          //   adet: item.quantity as number,
+          //   kesim: item.product.properties?.kesim as string,
+          //   renk: item.product.properties?.renk as string,
+          //   fiyat: item.product.total_cost as number,
+          // };
 
           return (
             <MucevherPirlantaRow
               index={index}
               isEdit={isEdit}
               key={index}
-              model={newItem}
+              model={item}
               errors={errors}
               register={register}
             />
@@ -105,6 +105,7 @@ export default function MucevherPirlantaSection({
                   kesim: null,
                   mensei: null,
                   renk: null,
+                  type: "Diamond",
                 },
               ]);
             }}
@@ -113,7 +114,7 @@ export default function MucevherPirlantaSection({
           </button>
         </div>
       )}
-      {isEdit && (
+      {/* {isEdit && (
         <div className="flex w-full justify-end">
           <div className="float-right flex w-auto flex-col flex-wrap font-bold text-black">
             <div className="flex">
@@ -126,7 +127,7 @@ export default function MucevherPirlantaSection({
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

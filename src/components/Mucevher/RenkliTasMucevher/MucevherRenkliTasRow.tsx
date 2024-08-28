@@ -46,6 +46,7 @@ export default function MucevherRenkliTasRow({
           {...register(`products.renkliTas.${index}.renkliTas`, {
             required: "Renkli Taş Giriniz",
           })}
+          value={(model?.renkliTas as string) ?? null}
           err={errors.products?.renkliTas?.[index]?.["renkliTas"]?.message}
           // value={model.renkliTas as string}
           disabled={isEdit}
@@ -63,6 +64,7 @@ export default function MucevherRenkliTasRow({
           {...register(`products.renkliTas.${index}.kesim`, {
             required: "Kesim Giriniz",
           })}
+          value={(model?.kesim as string) ?? null}
           err={errors.products?.renkliTas?.[index]?.["kesim"]?.message}
           // value={model.kesim as string}
           disabled={isEdit}
@@ -80,6 +82,7 @@ export default function MucevherRenkliTasRow({
             required: "Karat Giriniz",
             valueAsNumber: true,
           })}
+          value={(model?.carat as number) ?? null}
           err={errors.products?.renkliTas?.[index]?.["carat"]?.message}
           // value={model.karat as number}
           disabled={isEdit}
@@ -98,6 +101,7 @@ export default function MucevherRenkliTasRow({
           {...register(`products.renkliTas.${index}.renk`, {
             required: "Renk Giriniz",
           })}
+          value={(model?.renk as string) ?? null}
           err={errors.products?.renkliTas?.[index]?.["renk"]?.message}
           // value={model.renk as string}
           disabled={isEdit}
@@ -115,6 +119,7 @@ export default function MucevherRenkliTasRow({
           {...register(`products.renkliTas.${index}.mensei`, {
             required: "Menşei Giriniz",
           })}
+          value={(model?.mensei as string) ?? null}
           err={errors.products?.renkliTas?.[index]?.["mensei"]?.message}
           // value={model.mensei as string}
           disabled={isEdit}
@@ -132,6 +137,7 @@ export default function MucevherRenkliTasRow({
             required: "Adet Giriniz",
             valueAsNumber: true,
           })}
+          value={(model?.adet as number) ?? null}
           err={errors.products?.renkliTas?.[index]?.["adet"]?.message}
           // value={model.adet as number}
           disabled={isEdit}
@@ -150,9 +156,19 @@ export default function MucevherRenkliTasRow({
             required: "Fiyat Giriniz",
             valueAsNumber: true,
           })}
+          value={(model?.fiyat as number) ?? null}
           err={errors.products?.renkliTas?.[index]?.["fiyat"]?.message}
           // value={formatToCurrency(Number(model.fiyat || 0))}
           disabled={isEdit}
+        />
+      </div>
+      <div className="hidden">
+        <input
+          type="hidden"
+          {...register(`products.renkliTas.${index}.type`, {
+            required: false,
+          })}
+          value={"ColoredStone"}
         />
       </div>
     </>

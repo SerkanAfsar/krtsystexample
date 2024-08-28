@@ -25,7 +25,7 @@ const MucevherDetay = async ({ params }: { params: Params }) => {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Mücevher Bilgileri" />
-      <MucevherDetayTabsContainer data={data} />
+      <MucevherDetayTabsContainer isEdit={true} data={data} />
     </DefaultLayout>
   );
 };

@@ -5,9 +5,10 @@ export type SadeModelType = {
   modelTuru: string | null;
   gram: number | null;
   ayar: number | null;
-  renk: string | null;
+  altinRengi: string | null;
   hasGram: number | null;
   fiyat: number | null;
+  type?: string;
 };
 
 export type SadeHeaderColumn = {
@@ -40,7 +41,7 @@ export const SadeHeaders: SadeHeaderColumn[] = [
   },
   {
     header: "Renk",
-    accessor: "renk",
+    accessor: "altinRengi",
     type: "select",
     span: 1,
   },

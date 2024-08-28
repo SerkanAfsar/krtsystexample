@@ -86,3 +86,16 @@ total number of stones adetlerin toplamı
 kod kısmı aynı
 
 
+
+Mücevher resim olayı ----> Done
+Mücevher Listesi resim ---->Done
+Mücevher detay ürünlerin gösterilmesi  
+
+iş emrinden --> style no,ref no,satın alma fiyatı,  disabled
+
+mücevher detayda-->işçilik tab yok
+
+mücevher detayda --> üretim iş emrinden geleni işçilik textbox a yazdır
+
+
+

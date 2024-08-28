@@ -37,6 +37,7 @@ export default function MucevherSadeRow({
           {...register(`products.sade.${index}.modelTuru`, {
             required: "Model Türü Giriniz",
           })}
+          value={(model?.modelTuru as string) ?? null}
           err={errors.products?.sade?.[index]?.modelTuru?.message}
           disabled={isEdit}
         />
@@ -53,6 +54,7 @@ export default function MucevherSadeRow({
             required: "Gram Giriniz",
             valueAsNumber: true,
           })}
+          value={(model?.gram as number) ?? null}
           err={errors.products?.sade?.[index]?.gram?.message}
           // value={model?.gram as number}
           disabled={isEdit}
@@ -69,12 +71,13 @@ export default function MucevherSadeRow({
           {...register(`products.sade.${index}.ayar`, {
             required: "Ayar Giriniz",
           })}
+          value={(model?.ayar as number) ?? null}
           err={errors.products?.sade?.[index]?.ayar?.message}
           // value={model?.ayar as number}
           disabled={isEdit}
         />
       </div>
-      <div className={`col-span-${findSpan("renk")}`}>
+      <div className={`col-span-${findSpan("altinRengi")}`}>
         <CustomSelect
           item={{
             name: "altinRengi",
@@ -86,8 +89,8 @@ export default function MucevherSadeRow({
           {...register(`products.sade.${index}.altinRengi`, {
             required: "Altın Rengi Giriniz",
           })}
+          value={(model?.altinRengi as string) ?? null}
           err={errors.products?.sade?.[index]?.altinRengi?.message}
-          // value={model?.renk as string}
           disabled={isEdit}
         />
       </div>
@@ -103,6 +106,7 @@ export default function MucevherSadeRow({
             required: "Has Gram Giriniz",
             valueAsNumber: true,
           })}
+          value={(model?.hasGram as number) ?? null}
           err={errors.products?.sade?.[index]?.hasGram?.message}
           // value={model?.hasGram as number}
           disabled={isEdit}
@@ -121,9 +125,19 @@ export default function MucevherSadeRow({
             required: "Fiyat Giriniz",
             valueAsNumber: true,
           })}
+          value={(model?.fiyat as number) ?? null}
           err={errors.products?.sade?.[index]?.fiyat?.message}
           // value={formatToCurrency(Number(model?.fiyat || 0))}
           disabled={isEdit}
+        />
+      </div>
+      <div className="hidden">
+        <input
+          type="hidden"
+          {...register(`products.sade.${index}.type`, {
+            required: false,
+          })}
+          value={"Simple"}
         />
       </div>
     </>

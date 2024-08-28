@@ -14,6 +14,7 @@ export type ProductType = {
   remaining_count?: number;
   menstrual_status?: string;
   product_cost?: { [key: string]: string | number | undefined };
+  quantity?: number | null;
 };
 
 export type ProductListType = {
