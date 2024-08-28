@@ -4,9 +4,11 @@ import Image from "next/image";
 export default function CustomImageSelect({
   mainImage,
   title,
+  setCustomImage,
 }: {
   title?: string;
   mainImage?: string | ArrayBuffer;
+  setCustomImage?: any;
 }) {
   const [files, setFiles] = useState<FileList | null>(null);
   const [image, setImage] = useState<string | ArrayBuffer | undefined>(
@@ -19,6 +21,7 @@ export default function CustomImageSelect({
       reader.readAsDataURL(file[0]);
       reader.onload = function () {
         setImage(reader.result ?? undefined);
+        setCustomImage && setCustomImage(reader.result ?? undefined);
       };
       reader.onerror = function (error) {
         console.log("Base 64 Error: ", error);

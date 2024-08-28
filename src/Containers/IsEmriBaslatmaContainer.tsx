@@ -145,13 +145,8 @@ export default function IsEmriBaslatmaContainer({
         <CustomMucevherSaveModal
           code={workOrder?.product_temp_code as string}
           showConfirm={showConfirm}
+          id={Number(id)}
           setShowConfirm={setShowConfirm}
-          handleFunction={() =>
-            FinishWorkOrderApiService({
-              id: Number(id),
-              callBack: () => {},
-            })
-          }
         />
       )}
 

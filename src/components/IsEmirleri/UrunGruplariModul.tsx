@@ -74,7 +74,7 @@ export default function UrunGruplariModul({
           <b>{title}</b>
           <button
             type="button"
-            className="btn block rounded-md bg-primary px-3 py-2 text-center text-white"
+            className="btn block w-40 rounded-md bg-primary px-3 py-2 text-center text-white"
             onClick={() => setModalOpen(true)}
           >
             {buttonText}

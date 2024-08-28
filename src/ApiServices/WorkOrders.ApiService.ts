@@ -27,9 +27,13 @@ export const DeleteWorkOrderApiService = async ({
 
 export const FinishWorkOrderApiService = async ({
   id,
+  ware_house,
+  image,
   callBack,
 }: {
   id: number;
+  ware_house: string;
+  image: string;
   callBack?: any;
 }) => {
   const response = await fetch("/api/workorder/finish", {
@@ -37,7 +41,7 @@ export const FinishWorkOrderApiService = async ({
     headers: {
       "Content-Type": "application/json; charset=utf-8",
     },
-    body: JSON.stringify({ id }),
+    body: JSON.stringify({ id, ware_house, image }),
   });
   const result: ResponseResult<string> = await response.json();
   ApiServiceResult({ result, callBack, message: "İş Emri Tamamlandı" });
