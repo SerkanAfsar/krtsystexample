@@ -180,6 +180,7 @@ export default function UrunGruplariModul({
                   } else if (key == "resim") {
                     return (
                       <Image
+                        key={index}
                         src={value as string}
                         width={40}
                         height={40}
