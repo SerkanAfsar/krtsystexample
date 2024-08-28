@@ -43,7 +43,7 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
 
     return (
       <div className={cn("w-full", outerClass && outerClass)}>
-        {item.title && (
+        {(item.title || item?.isTopMargin) && (
           <label
             htmlFor={id}
             className="mb-3 block h-5 text-sm font-medium text-black dark:text-white"

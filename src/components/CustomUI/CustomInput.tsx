@@ -40,7 +40,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className={cn("w-full", outerClass && outerClass, className)}>
-        {item.title && (
+        {(item.title || item?.isTopMargin) && (
           <label
             htmlFor={id}
             className="mb-3 block text-sm font-medium text-black dark:text-white"

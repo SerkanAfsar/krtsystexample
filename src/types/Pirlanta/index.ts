@@ -75,7 +75,7 @@ export const PirlantaListHeaders: Column<
     accessor: "sertifika",
   },
   {
-    Header: "Rapaport Fiyatı",
+    Header: "Rapaport",
     accessor: "paraportFiyatı",
   },
   {

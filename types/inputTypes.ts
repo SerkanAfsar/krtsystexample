@@ -41,6 +41,7 @@ export type ElementType = {
   showIconRelativeTo?: string;
   isLinkedWithIcon?: boolean;
   extraFunction?: Function;
+  isTopMargin?: boolean;
 };
 
 export type CustomOptionType = {
