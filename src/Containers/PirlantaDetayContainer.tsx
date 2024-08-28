@@ -73,7 +73,7 @@ const PirlantaDetayContainer = ({
 
   const sectionLenght: number =
     data.menstrual_status == "Sertifikalı"
-      ? AddStoneSections.length
+      ? AddStoneSections.length - 1
       : AddStoneSections.length - 1;
 
   return (
