@@ -26,6 +26,7 @@ const UrunGruplari: UrunGruplariModulType[] = [
     buttonText: "Sade Ekle ",
     headerColumns: [
       { title: "Ürün Kodu", accessor: "code" },
+      { title: "Resim", accessor: "resim" },
       { title: "Renk", accessor: "renk" },
       { title: "Gram", accessor: "gram" },
       { title: "Has", accessor: "has" },
@@ -168,7 +169,7 @@ export default function IsEmriContainer() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Üretim Açıklaması Giriniz..."
-              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+              className="w-full rounded-lg border-[1.5px] border-stone-400 bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
             />
           </div>
         </div>

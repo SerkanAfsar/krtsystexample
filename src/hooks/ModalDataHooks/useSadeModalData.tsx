@@ -7,6 +7,7 @@ import { formatToCurrency } from "@/utils";
 import { SadeAltinKarsiliklari } from "@/utils/Sade.Utils";
 
 import { GetWorkOrderProductListModalService } from "@/Services/WorkOrder.Services";
+import Image from "next/image";
 export default function useSadeModalData({
   setSelectedValues,
   selectedValues,
@@ -32,13 +33,16 @@ export default function useSadeModalData({
         hasGrami: has,
         modelTuru: model,
         ayar,
+        img,
         firstPrice,
+        image,
         modelTuru,
       } = properties;
 
       const item: SeciliUrunType = {
         pk: target.name,
         code,
+        resim: img,
         renk,
         gram,
         has,
@@ -87,10 +91,20 @@ export default function useSadeModalData({
                     ...item.properties,
                     code: item.code,
                     firstPrice: maliyet,
+                    img: item.image ?? null,
                   })
                 }
               />
             ),
+            resim: item.image ? (
+              <Image
+                src={item.image as string}
+                alt={item.code as string}
+                className="h-auto w-16"
+                width={80}
+                height={40}
+              />
+            ) : null,
             code: item.code,
             renk: item?.properties?.altinRengi,
             gram: item?.properties?.gram,

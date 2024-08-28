@@ -4,7 +4,7 @@ import { CustomOptionType } from "../../../types/inputTypes";
 export type SadeModelType = {
   modelTuru: string | null;
   gram: number | null;
-  ayar: number | null;
+  ayar: string | null;
   altinRengi: string | null;
   hasGram: number | null;
   fiyat: number | null;

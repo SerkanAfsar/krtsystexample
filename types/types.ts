@@ -1,3 +1,4 @@
+import React from "react";
 import { Column } from "react-table";
 
 export type ProductType = {
@@ -62,6 +63,7 @@ interface IData {
 
 interface ISadeData {
   code?: string;
+  resim?: React.ReactNode;
   sec: string;
   maden: string;
   renk: string;
@@ -74,6 +76,7 @@ interface ISadeData {
 export const ModalSadeHeaders: (Column<ISadeData> & { isHidden?: boolean })[] =
   [
     { Header: "Seç", accessor: "sec" },
+    { Header: "Resim", accessor: "resim" },
     { Header: "Ürün Kodu", accessor: "code" },
     { Header: "Renk", accessor: "renk" },
     { Header: "Gram", accessor: "gram" },

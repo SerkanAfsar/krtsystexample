@@ -11,6 +11,7 @@ import { PostGemProductService } from "@/Services/Product.Services";
 import { toast } from "react-toastify";
 import { MucevherCode } from "@/utils/Mucevher.Utils";
 import { formatToCurrency } from "@/utils";
+import { SadeHasGramHesapla } from "@/utils/Sade.Utils";
 
 export default function MucevherEkleContainer() {
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -97,7 +98,25 @@ export default function MucevherEkleContainer() {
     } else {
       setValue("price_tag", null);
     }
-  }, [labor_cost, purchase_price]);
+  }, [labor_cost, purchase_price, setValue]);
+
+  const sadeProducts = watch("products.sade");
+  const sadeProductsString = JSON.stringify(sadeProducts);
+
+  useEffect(() => {
+    if (sadeProducts) {
+      for (let index = 0; index < sadeProducts.length; index++) {
+        const { gram, ayar } = sadeProducts[index];
+
+        if (gram) {
+          setValue(
+            `products.sade.${index}.hasGram`,
+            SadeHasGramHesapla({ ayar: ayar as string, gram: gram as number }),
+          );
+        }
+      }
+    }
+  }, [sadeProductsString, sadeProducts, setValue]);
 
   const components: any[] = [
     <MucevherDetaySectionOne

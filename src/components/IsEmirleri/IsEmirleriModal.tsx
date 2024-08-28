@@ -37,6 +37,7 @@ export default function IsEmirleriModal({
         </div>
         {activeData ? (
           <CustomDatatable
+            isFirstLarge={false}
             className={"block shadow-none"}
             totalPageCount={totalPageCount}
             columns={modalHeaderColumns}

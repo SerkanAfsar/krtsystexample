@@ -1,6 +1,10 @@
 import { SadeHeaders, SadeModelType } from "@/app/types/Sade.HeaderType";
 import CustomSelect from "@/components/CustomUI/CustomSelect";
-import { AltinRengiData, SadeModelTurleri } from "@/data/Sade.data";
+import {
+  AltinAyarData,
+  AltinRengiData,
+  SadeModelTurleri,
+} from "@/data/Sade.data";
 import CustomInput from "@/components/CustomUI/CustomInput";
 
 import { FieldErrors, UseFormRegister } from "react-hook-form";
@@ -61,17 +65,18 @@ export default function MucevherSadeRow({
         />
       </div>
       <div className={`col-span-${findSpan("ayar")}`}>
-        <CustomInput
+        <CustomSelect
           item={{
             name: "ayar",
             required: true,
-            type: "number",
+            type: "select",
             placeholder: "Ayar",
+            options: AltinAyarData,
           }}
           {...register(`products.sade.${index}.ayar`, {
             required: "Ayar Giriniz",
           })}
-          value={(model?.ayar as number) ?? null}
+          value={(model?.ayar as string) ?? null}
           err={errors.products?.sade?.[index]?.ayar?.message}
           // value={model?.ayar as number}
           disabled={isEdit}
@@ -109,7 +114,7 @@ export default function MucevherSadeRow({
           value={(model?.hasGram as number) ?? null}
           err={errors.products?.sade?.[index]?.hasGram?.message}
           // value={model?.hasGram as number}
-          disabled={isEdit}
+          disabled={true}
         />
       </div>
       <div className={`col-span-${findSpan("fiyat")}`}>

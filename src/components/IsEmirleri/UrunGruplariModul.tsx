@@ -10,6 +10,7 @@ import {
   ProductItemsType,
   WorkOrderProductType,
 } from "../../../types/WorkOrder.types";
+import Image from "next/image";
 
 export type UrunGruplariModulType = {
   title: string;
@@ -96,10 +97,10 @@ export default function UrunGruplariModul({
             <div
               key={index}
               className={cn(
-                "mx-2 mt-1 grid gap-2 text-left text-black",
+                "mx-2 mt-1 grid gap-2 pb-2 text-left text-black",
                 `grid-cols-${headerColumns.length}`,
                 "items-center",
-                "border-b-[1px] border-graydark py-1",
+                "border-b-[1px] border-stone-400 py-4",
               )}
             >
               {Object.entries(item).map(([key, value], index) => {
@@ -174,6 +175,15 @@ export default function UrunGruplariModul({
                             ...prev.slice(selectedIndexNo + 1, newItems.length),
                           ]);
                         }}
+                      />
+                    );
+                  } else if (key == "resim") {
+                    return (
+                      <Image
+                        src={value as string}
+                        width={40}
+                        height={40}
+                        alt="Sade"
                       />
                     );
                   } else {
