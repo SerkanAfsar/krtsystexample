@@ -74,7 +74,6 @@ export const GetProductDatatableService = async ({
   page?: number;
   type?: string | null;
 }): Promise<ResponseResult<ProductListType>> => {
-  console.log("page is ", page);
   let urlPath: string = "product/?order_by='pk'";
   // if (order_by) {
   //   urlPath += `order_by=${order_by}`;
