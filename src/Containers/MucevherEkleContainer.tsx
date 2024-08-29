@@ -49,7 +49,6 @@ export default function MucevherEkleContainer() {
           ...data,
           code,
           model: data?.products?.sade?.[0]?.modelTuru || null,
-          simple: "1.26 gr 14K",
           total_carat,
           entry_date: "01/01/2025",
           sale_date: "02/01/2025",
@@ -61,6 +60,7 @@ export default function MucevherEkleContainer() {
           ],
         };
         const response = await PostGemProductService({ body: reqData });
+        console.log(response);
         if (response.statusCode == 200) {
           return toast.success("Mücevher Eklendi", { position: "top-right" });
         } else {
@@ -114,6 +114,10 @@ export default function MucevherEkleContainer() {
             SadeHasGramHesapla({ ayar: ayar as string, gram: gram as number }),
           );
         }
+      }
+      const { gram, ayar } = sadeProducts[0];
+      if (gram && ayar) {
+        setValue("simple", `${gram}gr ${ayar}k`);
       }
     }
   }, [sadeProductsString, sadeProducts, setValue]);
