@@ -63,6 +63,8 @@ export default function SadeStokListesi() {
     undefined,
   );
 
+  console.log("active page is ", activePage);
+
   if (activeData == "Hata") {
     return (
       <DefaultLayout>

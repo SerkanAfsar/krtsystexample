@@ -5,7 +5,6 @@ import { FaPencil, FaTrash } from "react-icons/fa6";
 import { ResponseResult } from "../../types/responseTypes";
 import { ProductListType } from "../../types/types";
 import { useRouter } from "next/navigation";
-import { MucevherListType } from "@/types/Mucevher";
 import { SadeListType } from "@/types/Sade";
 import { RenkliTasListType } from "@/types/RenkliTas";
 import { PirlantaListType } from "@/types/Pirlanta";
@@ -20,7 +19,7 @@ const InnerConvert = ({
   sertifikaFunc,
 }: {
   data: ProductListType;
-  dataType: "Diamond" | "Simple" | "Gem" | "ColoredStone";
+  dataType: "Diamond" | "Simple" | "ColoredStone";
   islemlerArea: any;
   sertifikaFunc?: any;
 }) => {
@@ -77,7 +76,12 @@ const InnerConvert = ({
                 src={item.image as string}
                 width={40}
                 height={40}
-                style={{ width: "auto", cursor: "pointer", height: "40px" }}
+                style={{
+                  width: "60px",
+                  cursor: "pointer",
+                  height: "auto",
+                  maxHeight: "60px",
+                }}
                 alt={item.code as string}
               />
             </LightgalleryItem>
@@ -101,27 +105,6 @@ const InnerConvert = ({
           }),
         };
       }) as SadeListType[];
-    }
-    case "Gem": {
-      return data.results.map((item) => {
-        return {
-          resim: item?.image,
-          mucevherKodu: item?.code,
-          model: null,
-          sade: null,
-          toplamKarat: null,
-          toplamTasAdet: null,
-          toplamIscilik: null,
-          etiketFiyati: null,
-          tedarikci: null,
-          girisTarihi: null,
-          ambar: null,
-          islemler: islemlerArea({
-            id: item?.pk as number,
-            productCode: item?.code,
-          }),
-        };
-      }) as MucevherListType[];
     }
   }
 };
@@ -164,11 +147,11 @@ export default function useGetProductData(
         setActiveData((resp.error && resp.error[0]) || "Hata");
       }
     });
-  }, []);
+  }, [activePage]);
 
   useEffect(() => {
     updateData();
-  }, [activePage, updateData]);
+  }, [updateData]);
 
   const islemlerArea = useCallback(
     ({ id, productCode }: { id: number; productCode: string }) => {

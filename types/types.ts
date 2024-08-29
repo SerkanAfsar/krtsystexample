@@ -73,7 +73,7 @@ interface ISadeData {
   maliyet: string;
 }
 
-export const ModalSadeHeaders: (Column<ISadeData> & { isHidden?: boolean })[] =
+export const SadeModalHeaders: (Column<ISadeData> & { isHidden?: boolean })[] =
   [
     { Header: "Seç", accessor: "sec" },
     { Header: "Resim", accessor: "resim" },
@@ -85,11 +85,17 @@ export const ModalSadeHeaders: (Column<ISadeData> & { isHidden?: boolean })[] =
     { Header: "Maliyet", accessor: "maliyet" },
   ];
 
-export const ModalHeaders: (Column<IData> & { isHidden?: boolean })[] = [
+export const RenkliTasModalHeaders: (Column<IData & { name?: string }> & {
+  isHidden?: boolean;
+})[] = [
   { Header: "Seç", accessor: "sec" },
   {
     Header: "Ürün Kodu",
     accessor: "code",
+  },
+  {
+    Header: "Renkli Taş",
+    accessor: "name",
   },
   {
     Header: "Kesim",
@@ -117,3 +123,38 @@ export const ModalHeaders: (Column<IData> & { isHidden?: boolean })[] = [
     accessor: "maliyet",
   },
 ];
+
+export const PirlantaModalHeaders: (Column<IData> & { isHidden?: boolean })[] =
+  [
+    { Header: "Seç", accessor: "sec" },
+    {
+      Header: "Ürün Kodu",
+      accessor: "code",
+    },
+
+    {
+      Header: "Kesim",
+      accessor: "kesim",
+    },
+    {
+      Header: "Karat",
+      accessor: "carat",
+    },
+    {
+      Header: "Renk",
+      accessor: "renk",
+    },
+    {
+      Header: "Adet",
+      accessor: "adet",
+    },
+    {
+      Header: "Kullanılan Karat",
+      accessor: "kullanilanKarat",
+      isHidden: true,
+    },
+    {
+      Header: "Maliyet",
+      accessor: "maliyet",
+    },
+  ];

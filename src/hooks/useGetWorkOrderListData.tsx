@@ -87,6 +87,10 @@ export default function useGetWorkOrderListData() {
     });
   }, [activePage]);
 
+  useEffect(() => {
+    updateData();
+  }, [updateData]);
+
   const islemlerArea = useCallback(
     ({ id, productCode }: { id: number; productCode: string }) => {
       return (

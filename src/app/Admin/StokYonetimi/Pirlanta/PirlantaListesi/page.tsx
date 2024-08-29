@@ -3,13 +3,14 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import Link from "next/link";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import useGetProductData from "@/hooks/useGetProductData";
 import { PirlantaListHeaders } from "@/types/Pirlanta";
 
 import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
 
 export default function PirlantaListesi() {
+  const [activePage, setActivePage] = useState<number>(1);
   const sertificateUrl = useCallback((item: any) => {
     if (item?.product_certificate?.sertifika == "GIA") {
       return (
@@ -37,9 +38,9 @@ export default function PirlantaListesi() {
 
   const {
     activeData,
-    activePage,
+
     totalPageCount,
-    setActivePage,
+
     setConfirmDelete,
     showConfirmDelete,
     setShowConfirmDelete,
@@ -48,6 +49,7 @@ export default function PirlantaListesi() {
     "Diamond",
     "/Admin/StokYonetimi/Pirlanta/PirlantaEkle/",
     sertificateUrl,
+    activePage,
   );
 
   if (activeData == "Hata") {

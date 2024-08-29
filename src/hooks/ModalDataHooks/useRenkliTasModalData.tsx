@@ -41,6 +41,7 @@ export default function useRenkliTasModalData({
       code,
       firstPrice,
     } = properties;
+
     const item: SeciliUrunType = {
       pk: target.name,
       code,
@@ -121,6 +122,7 @@ export default function useRenkliTasModalData({
               />
             ),
             code: item.code,
+            name: item?.properties?.renkliTas,
             carat: item?.properties?.carat,
             berraklik: item?.properties?.berraklik,
             renk: item?.properties?.renk,
