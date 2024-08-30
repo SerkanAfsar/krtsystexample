@@ -6,6 +6,8 @@ import CardDataStats from "../CardDataStats";
 import { GiCutDiamond, GiDiamondTrophy } from "react-icons/gi";
 import { MdWork } from "react-icons/md";
 import { FaUserFriends } from "react-icons/fa";
+import Kurlar from "../Kurlar";
+import { AltinKurlari, DovizKurlari } from "@/utils/MockData";
 
 const ECommerce: React.FC = () => {
   return (
@@ -33,6 +35,8 @@ const ECommerce: React.FC = () => {
         <CardDataStats title="Müşteri" total="3.456" rate="0.95%" levelUp>
           <FaUserFriends size={"25px"} />
         </CardDataStats>
+        <Kurlar className="col-span-2" item={DovizKurlari} />
+        <Kurlar className="col-span-2" item={AltinKurlari} />
       </div>
     </>
   );
