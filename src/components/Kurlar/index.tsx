@@ -1,4 +1,4 @@
-import { cn, formatToCurrency } from "@/utils";
+import { cn } from "@/utils";
 import { ClassValue } from "clsx";
 
 export type KurlarType = {
