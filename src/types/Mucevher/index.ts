@@ -6,13 +6,13 @@ import { CustomArrType } from "@/Containers/MucevherDetayContainer";
 
 export type MucevherListType = {
   resim: string | null;
-  mucevherKodu: string | null;
+  code: string | null;
   model: string | null;
   sade: string | null;
-  toplamKarat: number | null;
-  toplamTasAdet: number | null;
-  toplamIscilik: number | null | string;
-  etiketFiyati: number | null | string;
+  totalCarat: number | null;
+  totalNumberOfStones: number | null;
+  totalLaborCost: number | null | string;
+  priceTag: number | null | string;
   tedarikci: string | null;
   girisTarihi: string | null;
   ambar: string | null;
@@ -27,7 +27,7 @@ export const MucevherListesiDataHeaders: Column<
   },
   {
     Header: "Mücevher Kodu",
-    accessor: "mucevherKodu",
+    accessor: "code",
   },
   {
     Header: "Model",
@@ -39,19 +39,19 @@ export const MucevherListesiDataHeaders: Column<
   },
   {
     Header: "Toplam Karat",
-    accessor: "toplamKarat",
+    accessor: "totalCarat",
   },
   {
     Header: "Toplam Taş Adet",
-    accessor: "toplamTasAdet",
+    accessor: "totalNumberOfStones",
   },
   {
     Header: "Toplam İşçilik",
-    accessor: "toplamIscilik",
+    accessor: "totalLaborCost",
   },
   {
     Header: "Etiket Fiyatı",
-    accessor: "etiketFiyati",
+    accessor: "priceTag",
   },
   {
     Header: "Tedarikçi",

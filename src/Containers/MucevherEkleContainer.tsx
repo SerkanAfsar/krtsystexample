@@ -60,7 +60,7 @@ export default function MucevherEkleContainer() {
           ],
         };
         const response = await PostGemProductService({ body: reqData });
-        console.log(response);
+
         if (response.statusCode == 200) {
           return toast.success("Mücevher Eklendi", { position: "top-right" });
         } else {

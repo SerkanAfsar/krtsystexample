@@ -3,7 +3,7 @@ import { Column } from "react-table";
 export type SadeListType = {
   type?: string;
   resim?: React.ReactNode;
-  sadeKodu?: string;
+  code?: string;
   modelTuru?: string;
   modelKodu?: string;
   atolye?: string;
@@ -27,7 +27,7 @@ export const SadeListHeaders: Column<
   },
   {
     Header: "Sade Kodu",
-    accessor: "sadeKodu",
+    accessor: "code",
   },
   {
     Header: "Model Kodu",

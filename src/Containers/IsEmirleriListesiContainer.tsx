@@ -8,8 +8,8 @@ import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
 
 const columns: Column<
   WorkOrderType & {
-    isEmriKodu: string;
-    mucevherKodu: React.ReactNode;
+    id: string;
+    code: React.ReactNode;
     sertifika: string;
     cikis: string;
     giris: string;
@@ -19,11 +19,11 @@ const columns: Column<
 >[] = [
   {
     Header: "İş Emri Kodu",
-    accessor: "isEmriKodu",
+    accessor: "id",
   },
   {
     Header: "Mücevher Kodu",
-    accessor: "mucevherKodu",
+    accessor: "code",
   },
 
   {

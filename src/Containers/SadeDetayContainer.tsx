@@ -31,7 +31,7 @@ export default function SadeDetayContainer({
   });
 
   useEffect(() => {
-    setData((prev: any) => ({ ...prev, sadeKodu: sadeCode }));
+    setData((prev: any) => ({ ...prev, code: sadeCode }));
   }, [sadeCode]);
 
   const getBase64 = (file: any): any => {

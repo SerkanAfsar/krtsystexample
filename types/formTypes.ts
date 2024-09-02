@@ -63,7 +63,7 @@ export type AddDiamondType = IDiamondType &
 export type ISadeType = {
   type?: string;
   resim?: File;
-  sadeKodu?: string;
+  code?: string | null;
   modelTuru?: string;
   modelKodu?: string;
   atolye?: string;

@@ -10,6 +10,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "lightgallery.js/dist/css/lightgallery.css";
 import { LightgalleryProvider } from "react-lightgallery";
+import { Suspense } from "react";
 
 export default function RootLayout({
   children,
@@ -25,7 +26,11 @@ export default function RootLayout({
             controls: false,
           }}
         >
-          <div className="dark:bg-boxdark-2 dark:text-bodydark">{children}</div>
+          <Suspense>
+            <div className="dark:bg-boxdark-2 dark:text-bodydark">
+              {children}
+            </div>
+          </Suspense>
         </LightgalleryProvider>
         <ToastContainer />
       </body>

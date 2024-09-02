@@ -15,7 +15,7 @@ const columns: Column<ISadeType>[] = [
   },
   {
     Header: "Sade Kodu",
-    accessor: "sadeKodu",
+    accessor: "code",
   },
   {
     Header: "Model Kodu",

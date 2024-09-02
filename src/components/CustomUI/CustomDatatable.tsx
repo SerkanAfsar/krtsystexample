@@ -3,11 +3,11 @@ import { cn } from "@/utils";
 import React from "react";
 import {
   useTable,
-  useSortBy,
   useGlobalFilter,
   useFilters,
   usePagination,
 } from "react-table";
+import { useRouter } from "next/navigation";
 
 const CustomDatatable = ({
   dataOne,
@@ -28,6 +28,7 @@ const CustomDatatable = ({
   hasOrder?: boolean;
   isFirstLarge?: boolean;
 }) => {
+  const router = useRouter();
   const data = dataOne;
 
   const tableInstance = useTable(
@@ -37,7 +38,7 @@ const CustomDatatable = ({
     },
     useFilters,
     useGlobalFilter,
-    useSortBy,
+
     usePagination,
   );
 
@@ -104,47 +105,61 @@ const CustomDatatable = ({
         <thead>
           {headerGroups.map((headerGroup, key) => (
             <tr {...headerGroup.getHeaderGroupProps()} key={key}>
-              {headerGroup.headers.map((column, key) => (
-                <th
-                  className={cn(key == 0 && isFirstLarge ? "w-40" : "w-30")}
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  key={key}
-                >
-                  <div className="flex items-center">
-                    <span>{column.render("Header")}</span>
+              {headerGroup.headers.map((column, key) => {
+                return (
+                  <th
+                    className={cn(key == 0 && isFirstLarge ? "w-40" : "w-30")}
+                    {...column.getHeaderProps()}
+                    key={key}
+                  >
+                    <div className="flex items-center">
+                      <span>{column.render("Header")}</span>
 
-                    <div className="ml-2 inline-flex flex-col space-y-[2px]">
-                      <span className="inline-block">
-                        <svg
-                          className="fill-current"
-                          width="10"
-                          height="5"
-                          viewBox="0 0 10 5"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
+                      <div className="ml-2 inline-flex flex-col space-y-[2px]">
+                        <span
+                          className="inline-block cursor-pointer"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            router.push(`?order_by=${column.id}&sort=desc`);
+                          }}
                         >
-                          <path d="M5 0L0 5H10L5 0Z" fill="" />
-                        </svg>
-                      </span>
-                      <span className="inline-block">
-                        <svg
-                          className="fill-current"
-                          width="10"
-                          height="5"
-                          viewBox="0 0 10 5"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
+                          <svg
+                            className="fill-current"
+                            width="10"
+                            height="5"
+                            viewBox="0 0 10 5"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path d="M5 0L0 5H10L5 0Z" fill="" />
+                          </svg>
+                        </span>
+                        <span
+                          className="inline-block cursor-pointer"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            router.push(`?order_by=${column.id}&sort=asc`);
+                          }}
                         >
-                          <path
-                            d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                            fill=""
-                          />
-                        </svg>
-                      </span>
+                          <svg
+                            className="fill-current"
+                            width="10"
+                            height="5"
+                            viewBox="0 0 10 5"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
+                              fill=""
+                            />
+                          </svg>
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </th>
-              ))}
+                  </th>
+                );
+              })}
             </tr>
           ))}
         </thead>

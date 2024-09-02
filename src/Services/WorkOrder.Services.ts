@@ -113,16 +113,19 @@ export const AddWorkOrderLogService = async ({
 
 export const GetWorkOrdersList = async ({
   page,
+  order_by,
 }: {
   page?: number;
+  order_by?: string | null;
 }): Promise<any> => {
-  let url = `product/work-order-list/`;
+  let urlPath: string = "product/work-order-list/?";
+  urlPath += `order_by=${order_by ?? "pk"}`;
   if (page) {
-    url += `?page=${page}`;
+    urlPath += `&page=${page.toString()}`;
   }
 
   const result = await BaseService({
-    url: url,
+    url: urlPath,
     bodyData: null,
     method: "GET",
     hasToken: true,

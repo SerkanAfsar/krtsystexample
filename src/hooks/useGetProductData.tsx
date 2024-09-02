@@ -1,10 +1,11 @@
+"use client";
 import { DeleteProductApiService } from "@/ApiServices/Products.ApiService";
 import { GetProductDatatableService } from "@/Services/Product.Services";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FaPencil, FaTrash } from "react-icons/fa6";
 import { ResponseResult } from "../../types/responseTypes";
 import { ProductListType } from "../../types/types";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { SadeListType } from "@/types/Sade";
 import { RenkliTasListType } from "@/types/RenkliTas";
 import { PirlantaListType } from "@/types/Pirlanta";
@@ -88,7 +89,7 @@ const InnerConvert = ({
           ),
           modelKodu: `${SadeModelTurleri.find((a) => a.titleVal == item?.properties?.modelTuru)?.extraValue}${item?.properties?.modelKodu}`,
           modelTuru: item?.properties?.modelTuru,
-          sadeKodu: item?.code,
+          code: item?.code,
           ayar: item?.properties?.ayar
             ? `${item?.properties?.ayar}K`
             : undefined,
@@ -115,6 +116,7 @@ export default function useGetProductData(
   sertifikaFunc?: any,
 ) {
   const router = useRouter();
+  const params = useSearchParams();
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<any>(null);
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
@@ -122,10 +124,12 @@ export default function useGetProductData(
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
   const itemRef = useRef<any | null>(null);
 
+  const order_by = params.get("order_by");
+
   const updateData = useCallback(() => {
     setActiveData(null);
     GetProductDatatableService({
-      order_by: null,
+      order_by: order_by,
       page: activePage,
       type,
     }).then((resp: ResponseResult<ProductListType>) => {
@@ -147,7 +151,7 @@ export default function useGetProductData(
         setActiveData((resp.error && resp.error[0]) || "Hata");
       }
     });
-  }, [activePage]);
+  }, [activePage, order_by]);
 
   useEffect(() => {
     updateData();

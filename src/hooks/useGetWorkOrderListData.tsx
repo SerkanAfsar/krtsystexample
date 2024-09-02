@@ -7,12 +7,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { FaPencil, FaTrash } from "react-icons/fa6";
 import { WorkOrderType } from "../../types/WorkOrder.types";
 import { GetWorkOrdersList } from "@/Services/WorkOrder.Services";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { DeleteWorkOrderApiService } from "@/ApiServices/WorkOrders.ApiService";
 import CustomToolTip from "@/components/CustomUI/CustomTooltip";
 
 export default function useGetWorkOrderListData() {
   const router = useRouter();
+  const params = useSearchParams();
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<WorkOrderType[] | string | null>(
     [],
@@ -21,11 +22,13 @@ export default function useGetWorkOrderListData() {
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
   const itemRef = useRef<any | null>(null);
+  const order_by = params.get("order_by");
 
   const updateData = useCallback(() => {
     setActiveData(null);
     GetWorkOrdersList({
       page: activePage,
+      order_by: order_by,
     }).then((resp: any) => {
       const { error } = resp;
       if (error) {
@@ -36,8 +39,8 @@ export default function useGetWorkOrderListData() {
       const dataOneResult: any = data.map((item) => {
         const sonIslemTarihi = formatDate(item.last_process_date as string);
         return {
-          isEmriKodu: item.id,
-          mucevherKodu: item?.product_temp_code ? (
+          id: item.id,
+          code: item?.product_temp_code ? (
             <span>{item?.product_temp_code}</span>
           ) : (
             <button
@@ -85,7 +88,7 @@ export default function useGetWorkOrderListData() {
         ),
       );
     });
-  }, [activePage]);
+  }, [activePage, order_by]);
 
   useEffect(() => {
     updateData();

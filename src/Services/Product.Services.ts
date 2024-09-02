@@ -74,10 +74,8 @@ export const GetProductDatatableService = async ({
   page?: number;
   type?: string | null;
 }): Promise<ResponseResult<ProductListType>> => {
-  let urlPath: string = "product/?order_by='pk'";
-  // if (order_by) {
-  //   urlPath += `order_by=${order_by}`;
-  // }
+  let urlPath: string = "product/?";
+  urlPath += `order_by=${order_by ?? "pk"}`;
   if (page) {
     urlPath += `&page=${page.toString()}`;
   }
@@ -94,10 +92,18 @@ export const GetProductDatatableService = async ({
   return result as ResponseResult<ProductListType>;
 };
 
-export const GetGemProductDatatableService = async (): Promise<
-  ResponseResult<ProductType>
-> => {
-  let urlPath: string = "product/list-gem-products/";
+export const GetGemProductDatatableService = async ({
+  order_by,
+  page,
+}: {
+  order_by?: string | null;
+  page?: number;
+}): Promise<ResponseResult<ProductListType>> => {
+  let urlPath: string = "product/list-gem-products/?";
+  urlPath += `order_by=${order_by ?? "pk"}`;
+  if (page) {
+    urlPath += `&page=${page.toString()}`;
+  }
 
   const result = await BaseService({
     url: urlPath,
@@ -105,7 +111,7 @@ export const GetGemProductDatatableService = async (): Promise<
     bodyData: null,
     hasToken: true,
   });
-  return result as ResponseResult<ProductType>;
+  return result as ResponseResult<ProductListType>;
 };
 
 export const GetNextOrderForMixedDiamondService = async ({
