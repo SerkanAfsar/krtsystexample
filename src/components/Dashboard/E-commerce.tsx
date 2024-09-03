@@ -81,7 +81,7 @@ const ECommerce = ({
           {/* <GiDiamondTrophy  /> */}
           <GiStonePile size={"25px"} />
         </CardDataStats>
-        <CardDataStats title="Müşteri" total="3.456">
+        <CardDataStats title="Müşteri" total="0">
           <FaUserFriends size={"25px"} />
         </CardDataStats>
         <CardDataStats title="Tedarikçi" total="0">
