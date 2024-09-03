@@ -25,7 +25,6 @@ const ECommerce = ({
   workorderCount: number;
   isEmriData: WorkOrderType[];
 }) => {
-  console.log(isEmriData);
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
@@ -33,7 +32,7 @@ const ECommerce = ({
           <MdWork size={"25px"} />
         </CardDataStats>
         <CardDataStats
-          title="Tamamlanmış Emiri"
+          title="Tamamlanmış İş Emiri"
           total={isEmriData
             .filter((a) => a.status == "Completed")
             .length.toString()}
