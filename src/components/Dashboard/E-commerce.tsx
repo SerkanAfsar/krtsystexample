@@ -3,38 +3,92 @@ import React from "react";
 
 import CardDataStats from "../CardDataStats";
 
-import { GiCutDiamond, GiDiamondTrophy } from "react-icons/gi";
+import { GiCutDiamond, GiDiamondTrophy, GiStonePile } from "react-icons/gi";
 import { MdWork } from "react-icons/md";
-import { FaUserFriends } from "react-icons/fa";
+import { FaRing, FaUserFriends } from "react-icons/fa";
 import Kurlar from "../Kurlar";
 import { AltinKurlari, DovizKurlari } from "@/utils/MockData";
+import { WorkOrderType } from "../../../types/WorkOrder.types";
 
-const ECommerce: React.FC = () => {
+const ECommerce = ({
+  pirlantaCount,
+  renkliTasCount,
+  sadeCount,
+  mucevherCount,
+  workorderCount,
+  isEmriData,
+}: {
+  pirlantaCount: number;
+  renkliTasCount: number;
+  sadeCount: number;
+  mucevherCount: number;
+  workorderCount: number;
+  isEmriData: WorkOrderType[];
+}) => {
+  console.log(isEmriData);
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Toplam Ürün" total="3500" rate="0.43%" levelUp>
-          <GiCutDiamond size={"25px"} />
+        <CardDataStats title="İş Emiri" total={workorderCount.toString()}>
+          <MdWork size={"25px"} />
         </CardDataStats>
         <CardDataStats
-          title="25 Yeni İş Emiri"
-          total="200"
-          rate="4.35%"
-          levelUp
+          title="Tamamlanmış Emiri"
+          total={isEmriData
+            .filter((a) => a.status == "Completed")
+            .length.toString()}
         >
           <MdWork size={"25px"} />
         </CardDataStats>
         <CardDataStats
-          title="Pırlanta Satışı"
-          total="1200"
-          rate="2.59%"
-          levelDown
+          title="Aktif İş Emiri"
+          total={isEmriData
+            .filter((a) => a.status == "Pending")
+            .length.toString()}
         >
+          <MdWork size={"25px"} />
+        </CardDataStats>
+        <CardDataStats
+          title="İptal Edilmiş İş Emiri"
+          total={isEmriData
+            .filter((a) => a.status == "Cancelled")
+            .length.toString()}
+        >
+          <MdWork size={"25px"} />
+        </CardDataStats>
+        <CardDataStats
+          title="Toplam Ürün"
+          total={(
+            pirlantaCount +
+            renkliTasCount +
+            sadeCount +
+            mucevherCount
+          ).toString()}
+        >
+          <GiCutDiamond size={"25px"} />
+        </CardDataStats>
+
+        <CardDataStats title="Pırlanta" total={pirlantaCount.toString()}>
           <GiDiamondTrophy size={"25px"} />
         </CardDataStats>
-        <CardDataStats title="Müşteri" total="3.456" rate="0.95%" levelUp>
+        <CardDataStats title="Renkli Taş" total={renkliTasCount.toString()}>
+          <GiStonePile size={"25px"} />
+        </CardDataStats>
+        <CardDataStats title="Sade" total={sadeCount.toString()}>
+          {/* <GiDiamondTrophy size={"25px"} /> */}
+          <FaRing size={"25px"} />
+        </CardDataStats>
+        <CardDataStats title="Mücevher" total={mucevherCount.toString()}>
+          {/* <GiDiamondTrophy  /> */}
+          <GiStonePile size={"25px"} />
+        </CardDataStats>
+        <CardDataStats title="Müşteri" total="3.456">
           <FaUserFriends size={"25px"} />
         </CardDataStats>
+        <CardDataStats title="Tedarikçi" total="0">
+          <FaUserFriends size={"25px"} />
+        </CardDataStats>
+        <div></div>
         <Kurlar className="col-span-2" item={DovizKurlari} />
         <Kurlar className="col-span-2" item={AltinKurlari} />
       </div>
