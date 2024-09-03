@@ -3,12 +3,20 @@ import React from "react";
 
 import CardDataStats from "../CardDataStats";
 
-import { GiCutDiamond, GiDiamondTrophy, GiStonePile } from "react-icons/gi";
-import { MdWork } from "react-icons/md";
-import { FaRing, FaUserFriends } from "react-icons/fa";
+import {
+  GiCrystalEarrings,
+  GiCutDiamond,
+  GiDiamondTrophy,
+  GiGems,
+  GiStakeHammer,
+} from "react-icons/gi";
+
+import { FaUserFriends } from "react-icons/fa";
 import Kurlar from "../Kurlar";
 import { AltinKurlari, DovizKurlari } from "@/utils/MockData";
 import { WorkOrderType } from "../../../types/WorkOrder.types";
+import { LiaRingSolid } from "react-icons/lia";
+import { BsBuildings } from "react-icons/bs";
 
 const ECommerce = ({
   pirlantaCount,
@@ -29,7 +37,8 @@ const ECommerce = ({
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
         <CardDataStats title="İş Emiri" total={workorderCount.toString()}>
-          <MdWork size={"25px"} />
+          {/* <MdWork size={"25px"} /> */}
+          <GiStakeHammer size={"25px"} />
         </CardDataStats>
         <CardDataStats
           title="Tamamlanmış İş Emiri"
@@ -37,7 +46,8 @@ const ECommerce = ({
             .filter((a) => a.status == "Completed")
             .length.toString()}
         >
-          <MdWork size={"25px"} />
+          {/* <MdWork size={"25px"} /> */}
+          <GiStakeHammer size={"25px"} />
         </CardDataStats>
         <CardDataStats
           title="Aktif İş Emiri"
@@ -45,7 +55,8 @@ const ECommerce = ({
             .filter((a) => a.status == "Pending")
             .length.toString()}
         >
-          <MdWork size={"25px"} />
+          {/* <MdWork size={"25px"} /> */}
+          <GiStakeHammer size={"25px"} />
         </CardDataStats>
         <CardDataStats
           title="İptal Edilmiş İş Emiri"
@@ -53,7 +64,8 @@ const ECommerce = ({
             .filter((a) => a.status == "Cancelled")
             .length.toString()}
         >
-          <MdWork size={"25px"} />
+          {/* <MdWork size={"25px"} /> */}
+          <GiStakeHammer size={"25px"} />
         </CardDataStats>
         <CardDataStats
           title="Toplam Ürün"
@@ -71,21 +83,25 @@ const ECommerce = ({
           <GiDiamondTrophy size={"25px"} />
         </CardDataStats>
         <CardDataStats title="Renkli Taş" total={renkliTasCount.toString()}>
-          <GiStonePile size={"25px"} />
+          {/* <GiStonePile size={"25px"} /> */}
+          <GiGems size={"25px"} />
         </CardDataStats>
         <CardDataStats title="Sade" total={sadeCount.toString()}>
           {/* <GiDiamondTrophy size={"25px"} /> */}
-          <FaRing size={"25px"} />
+          {/* <FaRing size={"25px"} /> */}
+          <LiaRingSolid size={"25px"} />
         </CardDataStats>
         <CardDataStats title="Mücevher" total={mucevherCount.toString()}>
           {/* <GiDiamondTrophy  /> */}
-          <GiStonePile size={"25px"} />
+          {/* <GiStonePile size={"25px"} /> */}
+          <GiCrystalEarrings size={"25px"} />
         </CardDataStats>
         <CardDataStats title="Müşteri" total="0">
           <FaUserFriends size={"25px"} />
         </CardDataStats>
         <CardDataStats title="Tedarikçi" total="0">
-          <FaUserFriends size={"25px"} />
+          {/* <FaUserFriends size={"25px"} /> */}
+          <BsBuildings size={"25px"} />
         </CardDataStats>
         <div></div>
         <Kurlar className="col-span-2" item={DovizKurlari} />
