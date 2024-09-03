@@ -11,7 +11,7 @@ import Image from "next/image";
 
 import SidebarLinkGroup from "./SidebarLinkGroup";
 import { LiaRingSolid } from "react-icons/lia";
-import { BsBuildings } from "react-icons/bs";
+
 import { RiExportFill, RiStore3Fill } from "react-icons/ri";
 
 interface SidebarProps {
