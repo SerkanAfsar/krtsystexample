@@ -730,6 +730,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       >
                         {/* <MdBorderColor /> */}
                         {/* <FaBoxes /> */}
+                        {/* <RiStore3Fill /> */}
                         <RiStore3Fill />
                         Firmalar
                         <svg
@@ -866,7 +867,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                   >
                                     {/* <FaRing /> */}
                                     {/* <LiaRingSolid /> */}
-                                    <RiExportFill />
+                                    {/* <RiExportFill /> */}
                                     Müşteriler
                                     <svg
                                       className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
