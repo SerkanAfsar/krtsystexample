@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import CustomSelect from "./CustomSelect";
 import CustomImageSelect from "./CustomImageSelect";
 import { FinishWorkOrderApiService } from "@/ApiServices/WorkOrders.ApiService";
+import { AmbarOptionsData } from "@/utils/MockData";
 
 function CustomMucevherSaveModal({
   id,
@@ -80,10 +81,7 @@ function CustomMucevherSaveModal({
                 required: true,
                 type: "select",
                 title: "Ambar Seçiniz",
-                options: [
-                  { titleVal: "Ambar1", valueVal: "Ambar1" },
-                  { titleVal: "Ambar2", valueVal: "Ambar2" },
-                ],
+                options: AmbarOptionsData,
               }}
               value={ware_house}
               onChange={(e) => setWareHouse(e.target.value)}

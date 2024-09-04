@@ -23,6 +23,72 @@ import {
 import { GenerateSertificateUrl } from "./Pirlanta.Utils";
 import { KurlarType } from "@/components/Kurlar";
 import { formatToCurrency } from ".";
+import { CustomOptionType } from "../../types/inputTypes";
+export const PirlantaSertifikaKodlari: CustomOptionType[] = [
+  {
+    titleVal: "HRD",
+    valueVal: "HRD",
+  },
+  {
+    titleVal: "GIA",
+    valueVal: "GIA",
+  },
+  {
+    titleVal: "NONE",
+    valueVal: "NONE",
+  },
+  {
+    titleVal: "IGI",
+    valueVal: "IGI",
+  },
+  {
+    titleVal: "ANL",
+    valueVal: "ANL",
+  },
+];
+
+export const RenkliTasSertifikaKodlari: CustomOptionType[] = [
+  {
+    titleVal: "HRD",
+    valueVal: "HRD",
+  },
+  {
+    titleVal: "GIA",
+    valueVal: "GIA",
+  },
+  {
+    titleVal: "NONE",
+    valueVal: "NONE",
+  },
+  {
+    titleVal: "GIL",
+    valueVal: "GIL",
+  },
+  {
+    titleVal: "GRS",
+    valueVal: "GRS",
+  },
+  {
+    titleVal: "AGL",
+    valueVal: "AGL",
+  },
+  {
+    titleVal: "GFCO",
+    valueVal: "GFCO",
+  },
+  {
+    titleVal: "IGSL",
+    valueVal: "IGSL",
+  },
+  {
+    titleVal: "IGI",
+    valueVal: "IGI",
+  },
+  {
+    titleVal: "GFC",
+    valueVal: "GFC",
+  },
+];
 
 export const AddSadeSections: Array<FormSectionType> = [
   {
@@ -389,20 +455,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: false,
         span: 3,
         requiredMessage: "Kesim Değerini Boş Bırakılamaz",
-        options: [
-          {
-            titleVal: "HRD",
-            valueVal: "HRD",
-          },
-          {
-            titleVal: "GIA",
-            valueVal: "GIA",
-          },
-          {
-            titleVal: "NONE",
-            valueVal: "NONE",
-          },
-        ],
+        options: PirlantaSertifikaKodlari,
       },
 
       {
@@ -881,20 +934,7 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
         required: false,
         span: 3,
         requiredMessage: "Sertifika Değeri Boş Bırakılamaz",
-        options: [
-          {
-            titleVal: "HRD",
-            valueVal: "HRD",
-          },
-          {
-            titleVal: "GIA",
-            valueVal: "GIA",
-          },
-          {
-            titleVal: "NONE",
-            valueVal: "NONE",
-          },
-        ],
+        options: PirlantaSertifikaKodlari,
       },
       {
         name: "sertifikaNo",
@@ -1008,3 +1048,12 @@ export const AltinKurlari: KurlarType = {
     },
   ],
 };
+
+export const AmbarOptionsData: CustomOptionType[] = [
+  { titleVal: "Galataport", valueVal: "Galataport" },
+  { titleVal: "Zorlu", valueVal: "Zorlu" },
+  { titleVal: "Anlı", valueVal: "Anlı" },
+  { titleVal: "OnlyOne", valueVal: "OnlyOne" },
+  { titleVal: "Luxia", valueVal: "Luxia" },
+  { titleVal: "Merkez", valueVal: "Merkez" },
+];

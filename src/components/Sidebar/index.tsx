@@ -12,7 +12,7 @@ import Image from "next/image";
 import SidebarLinkGroup from "./SidebarLinkGroup";
 import { LiaRingSolid } from "react-icons/lia";
 
-import { RiExportFill, RiStore3Fill } from "react-icons/ri";
+import { RiExportFill, RiImportFill, RiStore3Fill } from "react-icons/ri";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -782,7 +782,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                     }}
                                   >
                                     {/* <IoDiamond /> */}
-                                    <RiExportFill />
+                                    <RiImportFill />
                                     Tedarikçiler
                                     <svg
                                       className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
@@ -867,7 +867,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                   >
                                     {/* <FaRing /> */}
                                     {/* <LiaRingSolid /> */}
-                                    {/* <RiExportFill /> */}
+                                    <RiExportFill />
                                     Müşteriler
                                     <svg
                                       className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
