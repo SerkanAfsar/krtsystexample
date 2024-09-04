@@ -5,7 +5,15 @@ import PirlantaDetayContainer from "@/Containers/PirlantaDetayContainer";
 const PirlantaEkle = () => {
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Pırlanta Ekle" />
+      <Breadcrumb
+        pages={[
+          {
+            name: "Pırlanta Stok Listesi",
+            url: "/Admin/StokYonetimi/Pirlanta/PirlantaListesi",
+          },
+        ]}
+        pageName="Pırlanta Ekle"
+      />
       <PirlantaDetayContainer isAdd={true} pirlantaItemData={null} />
     </DefaultLayout>
   );

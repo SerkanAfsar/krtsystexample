@@ -24,7 +24,15 @@ const MucevherDetay = async ({ params }: { params: Params }) => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Mücevher Bilgileri" />
+      <Breadcrumb
+        pages={[
+          {
+            name: "Mücevher Stok Listesi",
+            url: "/Admin/StokYonetimi/Mucevher/MucevherStokListesi",
+          },
+        ]}
+        pageName="Mücevher Bilgileri"
+      />
       <MucevherDetayTabsContainer isEdit={true} data={data} />
     </DefaultLayout>
   );

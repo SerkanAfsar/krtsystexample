@@ -22,7 +22,15 @@ export default async function RenkliTaskGuncelle({
     };
     return (
       <DefaultLayout>
-        <Breadcrumb pageName="Renkli Taş Güncelle" />
+        <Breadcrumb
+          pages={[
+            {
+              name: "Renkli Taş Stok Listesi",
+              url: "/Admin/StokYonetimi/RenkliTas/RenkliTasListesi",
+            },
+          ]}
+          pageName="Renkli Taş Güncelle"
+        />
         <RenkliTasDetayContainer isAdd={false} renkliTasItemData={resultData} />
       </DefaultLayout>
     );

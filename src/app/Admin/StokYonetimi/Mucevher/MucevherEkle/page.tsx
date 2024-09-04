@@ -5,7 +5,15 @@ import MucevherEkleContainer from "@/Containers/MucevherEkleContainer";
 const MucevherEkle = () => {
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Yeni Mücevher Ekle " />
+      <Breadcrumb
+        pages={[
+          {
+            name: "Mücevher Stok Listesi",
+            url: "/Admin/StokYonetimi/Mucevher/MucevherStokListesi",
+          },
+        ]}
+        pageName="Yeni Mücevher Ekle "
+      />
       <MucevherEkleContainer />
     </DefaultLayout>
   );

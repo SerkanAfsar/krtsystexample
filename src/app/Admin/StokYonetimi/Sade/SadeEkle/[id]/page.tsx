@@ -20,7 +20,15 @@ export default async function SadeDetay({
 
     return (
       <DefaultLayout>
-        <Breadcrumb pageName="Sade Güncelle" />
+        <Breadcrumb
+          pages={[
+            {
+              name: "Sade Stok Listesi",
+              url: "/Admin/StokYonetimi/Sade/SadeStokListesi",
+            },
+          ]}
+          pageName="Sade Güncelle"
+        />
         <SadeDetayContainer isAdd={false} sadeItemData={realData} />
       </DefaultLayout>
     );

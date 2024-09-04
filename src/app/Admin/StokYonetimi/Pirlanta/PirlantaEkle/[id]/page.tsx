@@ -24,7 +24,15 @@ const PirlantaGuncelle = async ({ params }: { params: { id: string } }) => {
     };
     return (
       <DefaultLayout>
-        <Breadcrumb pageName="Pırlanta Güncelle" />
+        <Breadcrumb
+          pages={[
+            {
+              name: "Pırlanta Stok Listesi",
+              url: "/Admin/StokYonetimi/Pirlanta/PirlantaListesi",
+            },
+          ]}
+          pageName="Pırlanta Güncelle"
+        />
         <PirlantaDetayContainer isAdd={false} pirlantaItemData={resultData} />
       </DefaultLayout>
     );

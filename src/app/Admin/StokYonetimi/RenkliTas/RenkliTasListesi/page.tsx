@@ -54,7 +54,7 @@ export default function RenkliTasStokListesi() {
   if (activeData == "Hata") {
     return (
       <DefaultLayout>
-        <Breadcrumb pageName="Sade Stok Listesi" />
+        <Breadcrumb pageName="Renkli Taş Stok Listesi" />
         <div className="flex h-full w-full items-center justify-center">
           Hata.
         </div>

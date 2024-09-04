@@ -42,6 +42,7 @@ export default async function UretimBaslatma({ params }: { params: Params }) {
   if (!workOrderResult.success) {
     throw new Error(workOrderResult.error ? workOrderResult.error[0] : "Hata ");
   }
+  const workOrderData = workOrderResult.data as WorkOrderType;
 
   const groups = await GetWorkOrderGroupTypes({ group_name: undefined });
   if (!groups.success) {
@@ -50,11 +51,19 @@ export default async function UretimBaslatma({ params }: { params: Params }) {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Üretim İş Emri Başlatma " />
+      <Breadcrumb
+        pages={[
+          {
+            name: "İş Emirleri",
+            url: "/Admin/IsEmirleri/UretimIsEmirleriListesi",
+          },
+        ]}
+        pageName={`${workOrderData.product_temp_code} İş Emri Bilgileri- ${workOrderData.status === "Completed" ? "(Tamamlanmış)" : ""}`}
+      />
       <IsEmriBaslatmaContainer
         userId={userId}
         isAdmin={isAdmin}
-        workOrder={workOrderResult.data as WorkOrderType}
+        workOrderData={workOrderData}
         workOrderGroups={(groups?.data as WorkOrderTeamGroupType[]) || []}
       />
       <IsEmirDetayLoglari id={Number(params.id)} />

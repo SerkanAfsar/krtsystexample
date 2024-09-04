@@ -6,7 +6,15 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 const ProFormLayout = () => {
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Sade Ekle" />
+      <Breadcrumb
+        pages={[
+          {
+            name: "Sade Stok Listesi",
+            url: "/Admin/StokYonetimi/Sade/SadeStokListesi",
+          },
+        ]}
+        pageName="Sade Ekle"
+      />
       <SadeDetayContainer isAdd={true} sadeItemData={null} />
     </DefaultLayout>
   );

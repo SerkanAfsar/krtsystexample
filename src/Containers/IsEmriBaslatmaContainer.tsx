@@ -22,13 +22,13 @@ import CustomMucevherSaveModal from "@/components/CustomUI/CustomMucevherSaveMod
 
 export default function IsEmriBaslatmaContainer({
   workOrderGroups,
-  workOrder,
+  workOrderData,
   isAdmin,
   userId,
 }: {
   userId: number;
   isAdmin: boolean;
-  workOrder: WorkOrderType;
+  workOrderData: WorkOrderType;
   workOrderGroups: WorkOrderTeamGroupType[];
 }) {
   const { id } = useParams();
@@ -36,7 +36,10 @@ export default function IsEmriBaslatmaContainer({
   const searchParams = useSearchParams();
   const [teslimEdenList, setTeslimEdenList] = useState<CustomOptionType[]>([]);
   const [teslimAlanList, setTeslimAlanList] = useState<CustomOptionType[]>([]);
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(
+    workOrderData.status === "Completed",
+  );
+
   const [showConfirm, setShowConfirm] = useState<boolean>(false);
 
   const isFirst =
@@ -56,13 +59,16 @@ export default function IsEmriBaslatmaContainer({
   } = useForm<WorkOrderAtolyeType>({
     defaultValues: {
       from_group:
-        workOrderGroups.find((a) => a.name == workOrder.group)?.id || undefined,
+        workOrderGroups.find((a) => a.name == workOrderData.group)?.id ||
+        undefined,
     },
   });
 
   useEffect(() => {
     if (!isFirst && !isSubmitted) {
-      const grpId = workOrderGroups.find((a) => a.name == workOrder.group)?.id;
+      const grpId = workOrderGroups.find(
+        (a) => a.name == workOrderData.group,
+      )?.id;
       GetWorkOrderPeopleByGroups({ group_ids: [Number(grpId)] })
         .then((resp: WorkOrderPeopleList[]) => {
           const data = resp.map((item) => ({
@@ -74,7 +80,7 @@ export default function IsEmriBaslatmaContainer({
         .then((data) => {
           setTeslimEdenList(data);
           const fromPerson = data.find(
-            (a) => a.titleVal == workOrder.user,
+            (a) => a.titleVal == workOrderData.user,
           )?.valueVal;
 
           setValue("from_person", fromPerson ? Number(fromPerson) : 0);
@@ -85,10 +91,10 @@ export default function IsEmriBaslatmaContainer({
     }
   }, [
     isFirst,
-    workOrder.group,
+    workOrderData.group,
     workOrderGroups,
     setValue,
-    workOrder.user,
+    workOrderData.user,
     isSubmitted,
   ]);
 
@@ -141,7 +147,7 @@ export default function IsEmriBaslatmaContainer({
     <>
       {showConfirm && (
         <CustomMucevherSaveModal
-          code={workOrder?.product_temp_code as string}
+          code={workOrderData?.product_temp_code as string}
           showConfirm={showConfirm}
           id={Number(id)}
           setShowConfirm={setShowConfirm}
@@ -156,7 +162,9 @@ export default function IsEmriBaslatmaContainer({
             </h3>
             <div className="flex items-center justify-center gap-3">
               <span>Mücevher Kodu:</span>
-              <b className="mr-4 text-black">{workOrder?.product_temp_code}</b>
+              <b className="mr-4 text-black">
+                {workOrderData?.product_temp_code}
+              </b>
             </div>
           </div>
         </div>
@@ -284,6 +292,7 @@ export default function IsEmriBaslatmaContainer({
                 className={cn(
                   "mt-5 rounded-md bg-primary p-3 text-white",
                   isAdmin ? "col-start-3 col-end-4 " : "col-start-4 col-end-5",
+                  "disabled:bg-opacity-50",
                 )}
                 disabled={isSubmitted}
               >
@@ -294,7 +303,8 @@ export default function IsEmriBaslatmaContainer({
                 <button
                   type="button"
                   onClick={() => setShowConfirm(true)}
-                  className="col-start-4  col-end-5 mt-5 rounded-md bg-primary p-3 text-white"
+                  disabled={isSubmitted}
+                  className="col-start-4  col-end-5 mt-5 rounded-md bg-primary p-3 text-white disabled:bg-opacity-50"
                 >
                   BİTİR
                 </button>

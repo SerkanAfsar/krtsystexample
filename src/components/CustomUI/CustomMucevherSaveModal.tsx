@@ -4,6 +4,7 @@ import CustomSelect from "./CustomSelect";
 import CustomImageSelect from "./CustomImageSelect";
 import { FinishWorkOrderApiService } from "@/ApiServices/WorkOrders.ApiService";
 import { AmbarOptionsData } from "@/utils/MockData";
+import { useRouter } from "next/navigation";
 
 function CustomMucevherSaveModal({
   id,
@@ -17,6 +18,7 @@ function CustomMucevherSaveModal({
   code: string;
   handleFunction?: any;
 }) {
+  const router = useRouter();
   const trigger = useRef<any>(null);
   const modal = useRef<any>(null);
   const [img, setImage] = useState<string | ArrayBuffer | undefined>();
@@ -167,6 +169,7 @@ function CustomMucevherSaveModal({
                 ware_house: ware_house as string,
                 image: img as string,
               });
+              router.refresh();
               setShowConfirm(false);
             }}
             className="block w-1/4 bg-primary px-6 py-3 uppercase  text-white"

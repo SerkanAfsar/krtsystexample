@@ -6,7 +6,15 @@ import IsEmriContainer from "@/Containers/IsEmriContainer";
 const UretimIsEmriEkle = () => {
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Yeni İş Emri " />
+      <Breadcrumb
+        pages={[
+          {
+            name: "Üretim İş Emirleri Listesi",
+            url: "/Admin/IsEmirleri/UretimIsEmirleriListesi",
+          },
+        ]}
+        pageName="Yeni İş Emri "
+      />
       <IsEmriContainer />
     </DefaultLayout>
   );
