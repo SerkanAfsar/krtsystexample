@@ -9,6 +9,7 @@ import useGetProductData from "@/hooks/useGetProductData";
 import { RenklitasListHeaders } from "@/types/RenkliTas";
 import Link from "next/link";
 import { useCallback } from "react";
+import CustomErrorAlert from "@/components/CustomUI/Alerts/CustomErrorAlert";
 
 export default function RenkliTasStokListesi() {
   const sertificateUrl = useCallback((item: any) => {
@@ -44,23 +45,13 @@ export default function RenkliTasStokListesi() {
     setConfirmDelete,
     showConfirmDelete,
     setShowConfirmDelete,
+    error,
     item,
   } = useGetProductData(
     "ColoredStone",
     "/Admin/StokYonetimi/RenkliTas/RenkliTasEkle/",
     sertificateUrl,
   );
-
-  if (activeData == "Hata") {
-    return (
-      <DefaultLayout>
-        <Breadcrumb pageName="Renkli Taş Stok Listesi" />
-        <div className="flex h-full w-full items-center justify-center">
-          Hata.
-        </div>
-      </DefaultLayout>
-    );
-  }
 
   return (
     <DefaultLayout>
@@ -73,18 +64,17 @@ export default function RenkliTasStokListesi() {
         modalDescription="Renkli Taş Kalıcı Olarak Silinecektir"
         setConfirmDelete={setConfirmDelete}
       />
-      {activeData ? (
+
+      {error ? (
+        <CustomErrorAlert title="Hata" description={error} />
+      ) : (
         <CustomDatatable
           totalPageCount={totalPageCount}
           columns={RenklitasListHeaders}
-          dataOne={activeData}
+          data={activeData}
           activePage={activePage}
           setActivePage={setActivePage}
         />
-      ) : (
-        <div className="flex h-full w-full items-center justify-center">
-          Yükleniyor...
-        </div>
       )}
     </DefaultLayout>
   );

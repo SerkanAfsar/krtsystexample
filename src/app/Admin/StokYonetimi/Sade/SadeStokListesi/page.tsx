@@ -7,6 +7,7 @@ import { Column } from "react-table";
 import useGetProductData from "@/hooks/useGetProductData";
 import { SadeListHeaders } from "@/types/Sade";
 import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
+import CustomErrorAlert from "@/components/CustomUI/Alerts/CustomErrorAlert";
 
 const columns: Column<ISadeType>[] = [
   {
@@ -56,23 +57,13 @@ export default function SadeStokListesi() {
     setConfirmDelete,
     showConfirmDelete,
     setShowConfirmDelete,
+    error,
     item,
   } = useGetProductData(
     "Simple",
     "/Admin/StokYonetimi/Sade/SadeEkle/",
     undefined,
   );
-
-  if (activeData == "Hata") {
-    return (
-      <DefaultLayout>
-        <Breadcrumb pageName="Sade Stok Listesi" />
-        <div className="flex h-full w-full items-center justify-center">
-          Hata.
-        </div>
-      </DefaultLayout>
-    );
-  }
 
   return (
     <DefaultLayout>
@@ -85,18 +76,17 @@ export default function SadeStokListesi() {
         modalDescription="Sade Kalıcı Olarak Silinecektir"
         setConfirmDelete={setConfirmDelete}
       />
-      {activeData ? (
+
+      {error ? (
+        <CustomErrorAlert title="Hata" description={error} />
+      ) : (
         <CustomDatatable
           totalPageCount={totalPageCount}
           columns={SadeListHeaders}
-          dataOne={activeData}
+          data={activeData}
           activePage={activePage}
           setActivePage={setActivePage}
         />
-      ) : (
-        <div className="flex h-full w-full items-center justify-center">
-          Yükleniyor...
-        </div>
       )}
     </DefaultLayout>
   );

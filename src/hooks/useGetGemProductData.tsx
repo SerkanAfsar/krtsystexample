@@ -48,16 +48,17 @@ export default function useGemProductData(redirectUrl: string) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [activePage, setActivePage] = useState<number>(1);
-  const [activeData, setActiveData] = useState<any>(null);
+  const [activeData, setActiveData] = useState<any[]>([]);
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const itemRef = useRef<any | null>(null);
 
   const order_by = searchParams.get("order_by");
 
   const updateData = useCallback(() => {
-    setActiveData(null);
+    setActiveData([]);
     GetGemProductDatatableService({
       page: activePage,
       order_by: order_by,
@@ -75,7 +76,7 @@ export default function useGemProductData(redirectUrl: string) {
           ),
         );
       } else {
-        setActiveData((resp.error && resp.error[0]) || "Hata");
+        setError((resp.error && resp.error[0]) || "Hata");
       }
     });
   }, [activePage, order_by]);
@@ -87,7 +88,7 @@ export default function useGemProductData(redirectUrl: string) {
   const islemlerArea = useCallback(
     ({ id, productCode }: { id: number; productCode: string }) => {
       return (
-        <div className="flex items-center justify-start  gap-6">
+        <div className="flex items-center justify-center  gap-6">
           <FaPencil
             className="cursor-pointer"
             onClick={() => router.push(`${redirectUrl}${id}`)}
@@ -129,5 +130,6 @@ export default function useGemProductData(redirectUrl: string) {
     setShowConfirmDelete,
     showConfirmDelete,
     item: itemRef.current,
+    error,
   };
 }

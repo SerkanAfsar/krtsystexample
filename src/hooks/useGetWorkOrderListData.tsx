@@ -97,7 +97,7 @@ export default function useGetWorkOrderListData() {
   const islemlerArea = useCallback(
     ({ id, productCode }: { id: number; productCode: string }) => {
       return (
-        <div className="flex items-center justify-start  gap-6">
+        <div className="flex items-center justify-center  gap-6">
           <FaPencil
             className="cursor-pointer"
             onClick={() =>

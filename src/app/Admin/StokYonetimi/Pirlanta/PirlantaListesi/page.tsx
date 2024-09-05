@@ -8,6 +8,7 @@ import useGetProductData from "@/hooks/useGetProductData";
 import { PirlantaListHeaders } from "@/types/Pirlanta";
 
 import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
+import CustomErrorAlert from "@/components/CustomUI/Alerts/CustomErrorAlert";
 
 export default function PirlantaListesi() {
   const sertificateUrl = useCallback((item: any) => {
@@ -43,23 +44,13 @@ export default function PirlantaListesi() {
     setConfirmDelete,
     showConfirmDelete,
     setShowConfirmDelete,
+    error,
     item,
   } = useGetProductData(
     "Diamond",
     "/Admin/StokYonetimi/Pirlanta/PirlantaEkle/",
     sertificateUrl,
   );
-
-  if (activeData == "Hata") {
-    return (
-      <DefaultLayout>
-        <Breadcrumb pageName="Pırlanta Stok Listesi" />
-        <div className="flex h-full w-full items-center justify-center">
-          Hata.
-        </div>
-      </DefaultLayout>
-    );
-  }
 
   return (
     <DefaultLayout>
@@ -72,20 +63,16 @@ export default function PirlantaListesi() {
         modalDescription="Pırlanta Kalıcı Olarak Silinecektir"
         setConfirmDelete={setConfirmDelete}
       />
-      {activeData ? (
-        <>
-          <CustomDatatable
-            totalPageCount={totalPageCount}
-            columns={PirlantaListHeaders}
-            dataOne={activeData}
-            activePage={activePage}
-            setActivePage={setActivePage}
-          />
-        </>
+      {error ? (
+        <CustomErrorAlert title="Hata" description={error} />
       ) : (
-        <div className="flex h-full w-full items-center justify-center">
-          Yükleniyor...
-        </div>
+        <CustomDatatable
+          totalPageCount={totalPageCount}
+          columns={PirlantaListHeaders}
+          data={activeData}
+          activePage={activePage}
+          setActivePage={setActivePage}
+        />
       )}
     </DefaultLayout>
   );

@@ -340,7 +340,6 @@ span.flatpickr-weekday,
 
 .data-table-common .datatable-table > tbody > tr > td:last-child,
 .data-table-common .datatable-table > thead > tr > th:last-child {
-  @apply pr-8;
 }
 
 .data-table-common .datatable-table > thead > tr:last-child > th {

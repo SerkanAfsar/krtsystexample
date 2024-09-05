@@ -5,6 +5,7 @@ import { MucevherListesiDataHeaders } from "@/types/Mucevher";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
 import useGemProductData from "@/hooks/useGetGemProductData";
+import CustomErrorAlert from "@/components/CustomUI/Alerts/CustomErrorAlert";
 
 export default function MucevherStokListesi() {
   const {
@@ -15,6 +16,7 @@ export default function MucevherStokListesi() {
     setConfirmDelete,
     showConfirmDelete,
     setShowConfirmDelete,
+    error,
     item,
   } = useGemProductData("/Admin/StokYonetimi/Mucevher/MucevherEkle/");
 
@@ -30,18 +32,16 @@ export default function MucevherStokListesi() {
         setConfirmDelete={setConfirmDelete}
       />
 
-      {activeData ? (
+      {error ? (
+        <CustomErrorAlert title="Hata" description={error} />
+      ) : (
         <CustomDatatable
           totalPageCount={totalPageCount}
           columns={MucevherListesiDataHeaders}
-          dataOne={activeData}
+          data={activeData}
           activePage={activePage}
           setActivePage={setActivePage}
         />
-      ) : (
-        <div className="flex h-full w-full items-center justify-center">
-          Yükleniyor...
-        </div>
       )}
     </DefaultLayout>
   );
