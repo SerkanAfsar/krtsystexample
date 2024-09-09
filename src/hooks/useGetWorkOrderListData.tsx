@@ -15,24 +15,24 @@ export default function useGetWorkOrderListData() {
   const router = useRouter();
   const params = useSearchParams();
   const [activePage, setActivePage] = useState<number>(1);
-  const [activeData, setActiveData] = useState<WorkOrderType[] | string | null>(
-    [],
-  );
+  const [activeData, setActiveData] = useState<WorkOrderType[]>([]);
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const itemRef = useRef<any | null>(null);
   const order_by = params.get("order_by");
 
   const updateData = useCallback(() => {
-    setActiveData(null);
+    setActiveData([]);
     GetWorkOrdersList({
       page: activePage,
       order_by: order_by,
     }).then((resp: any) => {
       const { error } = resp;
       if (error) {
-        setActiveData(error);
+        setError(error[0] || "Hata");
+        return;
       }
       const data = resp.results as WorkOrderType[];
 
@@ -145,5 +145,6 @@ export default function useGetWorkOrderListData() {
     setShowConfirmDelete,
     showConfirmDelete,
     item: itemRef.current,
+    error,
   };
 }

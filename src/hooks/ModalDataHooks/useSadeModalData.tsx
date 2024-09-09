@@ -18,6 +18,7 @@ export default function useSadeModalData({
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<any>([]);
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
+  const [error, setError] = useState<string | null>(null);
 
   const handleCheck = (
     e: React.FormEvent<HTMLInputElement>,
@@ -63,7 +64,7 @@ export default function useSadeModalData({
   };
 
   const updateData = useCallback(() => {
-    setActiveData(null);
+    setActiveData([]);
     GetWorkOrderProductListModalService({
       type: "Simple",
     }).then((resp: ResponseResult<ProductListType>) => {
@@ -120,7 +121,7 @@ export default function useSadeModalData({
           ),
         );
       } else {
-        setActiveData((resp.error && resp.error[0]) || "Hata");
+        setError(resp.error?.at(0) || "Hata");
       }
     });
   }, [activePage]);
@@ -134,5 +135,6 @@ export default function useSadeModalData({
     setActivePage,
     activeData,
     totalPageCount,
+    error,
   };
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import CustomErrorAlert from "../CustomUI/Alerts/CustomErrorAlert";
 import CustomDatatable from "../CustomUI/CustomDatatable";
 import { IoMdCloseCircle } from "react-icons/io";
 
@@ -21,7 +22,7 @@ export default function IsEmirleriModal({
   if (!tableFunction) {
     return null;
   }
-  const { totalPageCount, activeData, activePage, setActivePage } =
+  const { totalPageCount, activeData, activePage, error, setActivePage } =
     tableFunction({ setSelectedValues, selectedValues });
 
   return (
@@ -35,20 +36,19 @@ export default function IsEmirleriModal({
             onClick={() => setModalOpen(false)}
           />
         </div>
-        {activeData ? (
+
+        {error ? (
+          <CustomErrorAlert title="Hata" description={error} />
+        ) : (
           <CustomDatatable
             isFirstLarge={false}
             className={"block shadow-none"}
             totalPageCount={totalPageCount}
             columns={modalHeaderColumns}
-            dataOne={activeData}
+            data={activeData}
             activePage={activePage}
             setActivePage={setActivePage}
           />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center">
-            Yükleniyor...
-          </div>
         )}
       </div>
     </div>

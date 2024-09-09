@@ -151,9 +151,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
-                      <Link
-                        href="/"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      <div
+                        className={`group relative flex cursor-pointer items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                           (pathname === "/StokYonetimi" ||
                             pathname.includes("StokYonetimi")) &&
                           "bg-graydark dark:bg-meta-4"
@@ -185,7 +184,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             fill=""
                           />
                         </svg>
-                      </Link>
+                      </div>
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
                         className={`translate transform overflow-hidden ${
@@ -202,9 +201,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             {(handleClick, open) => {
                               return (
                                 <React.Fragment>
-                                  <Link
-                                    href="/"
-                                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                                  <div
+                                    className={`group relative flex cursor-pointer items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                                       (pathname === "/stone" ||
                                         pathname.includes("Pirlanta")) &&
                                       "bg-graydark dark:bg-meta-4"
@@ -235,7 +233,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                         fill=""
                                       />
                                     </svg>
-                                  </Link>
+                                  </div>
                                   {/* <!-- Dropdown Menu Start --> */}
                                   <div
                                     className={`translate transform overflow-hidden ${
@@ -284,9 +282,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             {(handleClick, open) => {
                               return (
                                 <React.Fragment>
-                                  <Link
-                                    href="/"
-                                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                                  <div
+                                    className={`group relative flex  cursor-pointer items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                                       (pathname === "/Sade" ||
                                         pathname.includes("Sade")) &&
                                       "bg-graydark dark:bg-meta-4"
@@ -318,7 +315,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                         fill=""
                                       />
                                     </svg>
-                                  </Link>
+                                  </div>
                                   {/* <!-- Dropdown Menu Start --> */}
                                   <div
                                     className={`translate transform overflow-hidden ${
@@ -368,9 +365,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             {(handleClick, open) => {
                               return (
                                 <React.Fragment>
-                                  <Link
-                                    href="/"
-                                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                                  <div
+                                    className={`group relative flex cursor-pointer items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                                       (pathname === "/RenkliTas" ||
                                         pathname.includes("RenkliTas")) &&
                                       "bg-graydark dark:bg-meta-4"
@@ -402,7 +398,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                         fill=""
                                       />
                                     </svg>
-                                  </Link>
+                                  </div>
                                   {/* <!-- Dropdown Menu Start --> */}
                                   <div
                                     className={`translate transform overflow-hidden ${
@@ -451,9 +447,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             {(handleClick, open) => {
                               return (
                                 <React.Fragment>
-                                  <Link
-                                    href="/"
-                                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                                  <div
+                                    className={`group relative flex cursor-pointer items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                                       (pathname === "/Mucevher" ||
                                         pathname.includes("Mucevher")) &&
                                       "bg-graydark dark:bg-meta-4"
@@ -485,7 +480,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                         fill=""
                                       />
                                     </svg>
-                                  </Link>
+                                  </div>
                                   {/* <!-- Dropdown Menu Start --> */}
                                   <div
                                     className={`translate transform overflow-hidden ${
@@ -548,9 +543,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
-                      <Link
-                        href="/Admin/IsEmirleri/IsEmriEkle"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      <div
+                        className={`group relative flex cursor-pointer items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                           (pathname === "/IsEmirleri" ||
                             pathname.includes("IsEmriEkle")) &&
                           "bg-graydark dark:bg-meta-4"
@@ -582,7 +576,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             fill=""
                           />
                         </svg>
-                      </Link>
+                      </div>
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
                         className={`translate transform overflow-hidden ${
@@ -638,9 +632,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
-                      <Link
-                        href="/Admin/Finans"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      <div
+                        className={`group relative flex cursor-pointer items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                           (pathname === "/Finans" ||
                             pathname.includes("Finans")) &&
                           "bg-graydark dark:bg-meta-4"
@@ -672,7 +665,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             fill=""
                           />
                         </svg>
-                      </Link>
+                      </div>
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
                         className={`translate transform overflow-hidden ${
@@ -714,9 +707,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
-                      <Link
-                        href="/"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      <div
+                        className={`group relative flex cursor-pointer items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                           (pathname === "/Firmalar" ||
                             pathname.includes("Firmalar")) &&
                           "bg-graydark dark:bg-meta-4"
@@ -750,7 +742,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             fill=""
                           />
                         </svg>
-                      </Link>
+                      </div>
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
                         className={`translate transform overflow-hidden ${
@@ -767,9 +759,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             {(handleClick, open) => {
                               return (
                                 <React.Fragment>
-                                  <Link
-                                    href="/"
-                                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                                  <div
+                                    className={`group relative flex cursor-pointer items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                                       (pathname === "/Tedarikciler" ||
                                         pathname.includes("Tedarikciler")) &&
                                       "bg-graydark dark:bg-meta-4"
@@ -801,7 +792,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                         fill=""
                                       />
                                     </svg>
-                                  </Link>
+                                  </div>
                                   {/* <!-- Dropdown Menu Start --> */}
                                   <div
                                     className={`translate transform overflow-hidden ${
@@ -851,9 +842,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             {(handleClick, open) => {
                               return (
                                 <React.Fragment>
-                                  <Link
-                                    href="/"
-                                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                                  <div
+                                    className={`group relative flex cursor-pointer items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                                       (pathname === "/Musteriler" ||
                                         pathname.includes("Musteriler")) &&
                                       "bg-graydark dark:bg-meta-4"
@@ -886,7 +876,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                         fill=""
                                       />
                                     </svg>
-                                  </Link>
+                                  </div>
                                   {/* <!-- Dropdown Menu Start --> */}
                                   <div
                                     className={`translate transform overflow-hidden ${

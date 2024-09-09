@@ -5,6 +5,7 @@ import React from "react";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import useGetWorkOrderListData from "@/hooks/useGetWorkOrderListData";
 import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
+import CustomErrorAlert from "@/components/CustomUI/Alerts/CustomErrorAlert";
 
 const columns: Column<
   WorkOrderType & {
@@ -57,20 +58,15 @@ export default function IsEmirleriListesiContainer() {
     setConfirmDelete,
     showConfirmDelete,
     setShowConfirmDelete,
+    error,
     item,
   } = useGetWorkOrderListData();
 
-  if (typeof activeData == "string") {
-    return (
-      <div className="flex h-full w-full items-center justify-center">
-        {activeData}
-      </div>
-    );
-  }
-
   return (
     <>
-      {activeData ? (
+      {error ? (
+        <CustomErrorAlert title="Hata" description={error} />
+      ) : (
         <>
           <CustomDeleteModal
             code={item?.productCode}
@@ -83,16 +79,12 @@ export default function IsEmirleriListesiContainer() {
           <CustomDatatable
             totalPageCount={totalPageCount}
             columns={columns}
-            dataOne={activeData}
+            data={activeData}
             activePage={activePage}
             isFirstLarge={false}
             setActivePage={setActivePage}
           />
         </>
-      ) : (
-        <div className="flex h-full w-full items-center justify-center">
-          Yükleniyor...
-        </div>
       )}
     </>
   );

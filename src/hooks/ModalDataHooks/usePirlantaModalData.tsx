@@ -17,6 +17,7 @@ export default function usePirlantaModalData({
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<any>([]);
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
+  const [error, setError] = useState<string | null>(null);
 
   const inputAdetRefs = useRef<HTMLInputElement[]>([]);
   const inputKaratRefs = useRef<HTMLInputElement[]>([]);
@@ -177,6 +178,7 @@ export default function usePirlantaModalData({
   };
 
   const updateData = useCallback(() => {
+    setActiveData([]);
     GetWorkOrderProductListModalService({
       type: "Diamond",
     }).then((resp: ResponseResult<ProductListType>) => {
@@ -192,7 +194,7 @@ export default function usePirlantaModalData({
           ),
         );
       } else {
-        setActiveData((resp.error && resp.error[0]) || "Hata");
+        setError(resp.error?.at(0) || "Hata");
       }
     });
   }, []);
@@ -206,5 +208,6 @@ export default function usePirlantaModalData({
     setActivePage,
     activeData,
     totalPageCount,
+    error,
   };
 }

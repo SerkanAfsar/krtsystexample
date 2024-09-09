@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "lightgallery.js/dist/css/lightgallery.css";
 import { LightgalleryProvider } from "react-lightgallery";
 import { Suspense } from "react";
+import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 
 export default function RootLayout({
   children,
@@ -29,9 +30,16 @@ export default function RootLayout({
           <Suspense>
             <div className="dark:bg-boxdark-2 dark:text-bodydark">
               {children}
+              <ProgressBar
+                height="4px"
+                color="#3C50E0"
+                options={{ showSpinner: true }}
+                shallowRouting
+              />
             </div>
           </Suspense>
         </LightgalleryProvider>
+
         <ToastContainer />
       </body>
     </html>

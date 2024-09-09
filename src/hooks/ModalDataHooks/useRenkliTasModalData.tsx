@@ -19,6 +19,7 @@ export default function useRenkliTasModalData({
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<any>([]);
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
+  const [error, setError] = useState<string | null>(null);
 
   const inputAdetRefs = useRef<HTMLInputElement[]>([]);
   const inputKaratRefs = useRef<HTMLInputElement[]>([]);
@@ -84,7 +85,7 @@ export default function useRenkliTasModalData({
   };
 
   const updateData = useCallback(() => {
-    setActiveData(null);
+    setActiveData([]);
     GetWorkOrderProductListModalService({
       type: "ColoredStone",
     }).then((resp: ResponseResult<ProductListType>) => {
@@ -192,7 +193,7 @@ export default function useRenkliTasModalData({
           ),
         );
       } else {
-        setActiveData((resp.error && resp.error[0]) || "Hata");
+        setError(resp.error?.at(0) || "Hata");
       }
     });
   }, [activePage]);
@@ -206,5 +207,6 @@ export default function useRenkliTasModalData({
     setActivePage,
     activeData,
     totalPageCount,
+    error,
   };
 }
