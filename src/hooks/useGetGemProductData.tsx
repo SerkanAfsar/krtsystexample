@@ -56,12 +56,14 @@ export default function useGemProductData(redirectUrl: string) {
   const itemRef = useRef<any | null>(null);
 
   const order_by = searchParams.get("order_by");
+  const sort = (searchParams.get("sort") as "asc" | "desc") || undefined;
 
   const updateData = useCallback(() => {
     setActiveData([]);
     GetGemProductDatatableService({
       page: activePage,
       order_by: order_by,
+      sort,
     }).then((resp: ResponseResult<ProductListType>) => {
       if (resp?.success) {
         const data = resp.data as ProductListType;
@@ -79,7 +81,7 @@ export default function useGemProductData(redirectUrl: string) {
         setError((resp.error && resp.error[0]) || "Hata");
       }
     });
-  }, [activePage, order_by]);
+  }, [activePage, order_by, sort]);
 
   useEffect(() => {
     updateData();

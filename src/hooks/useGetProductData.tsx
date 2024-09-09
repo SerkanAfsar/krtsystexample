@@ -126,12 +126,14 @@ export default function useGetProductData(
   const itemRef = useRef<any | null>(null);
 
   const order_by = params.get("order_by");
+  const sort = (params.get("sort") as "asc" | "desc") || undefined;
 
   const updateData = useCallback(() => {
     setActiveData([]);
     GetProductDatatableService({
       order_by: order_by,
       page: activePage,
+      sort,
       type,
     }).then((resp: ResponseResult<ProductListType>) => {
       if (resp?.success) {
@@ -152,7 +154,7 @@ export default function useGetProductData(
         setError(resp?.error?.at(0) ?? "Hata");
       }
     });
-  }, [activePage, order_by]);
+  }, [activePage, order_by, sort]);
 
   useEffect(() => {
     updateData();

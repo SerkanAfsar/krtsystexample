@@ -69,13 +69,15 @@ export const GetProductDatatableService = async ({
   order_by,
   page,
   type,
+  sort,
 }: {
   order_by?: string | null;
   page?: number;
   type?: string | null;
+  sort?: "asc" | "desc";
 }): Promise<ResponseResult<ProductListType>> => {
   let urlPath: string = "product/?";
-  urlPath += `order_by=${order_by ?? "pk"}`;
+  urlPath += `order_by=${order_by ? (sort == "asc" ? `${order_by}` : `-${order_by}`) : "pk"}`;
   if (page) {
     urlPath += `&page=${page.toString()}`;
   }
@@ -95,12 +97,14 @@ export const GetProductDatatableService = async ({
 export const GetGemProductDatatableService = async ({
   order_by,
   page,
+  sort,
 }: {
   order_by?: string | null;
   page?: number;
+  sort?: "asc" | "desc";
 }): Promise<ResponseResult<ProductListType>> => {
   let urlPath: string = "product/list-gem-products/?";
-  urlPath += `order_by=${order_by ?? "pk"}`;
+  urlPath += `order_by=${order_by ? (sort == "asc" ? `${order_by}` : `-${order_by}`) : "pk"}`;
   if (page) {
     urlPath += `&page=${page.toString()}`;
   }

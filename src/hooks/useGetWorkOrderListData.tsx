@@ -21,13 +21,16 @@ export default function useGetWorkOrderListData() {
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const itemRef = useRef<any | null>(null);
+
   const order_by = params.get("order_by");
+  const sort = (params.get("sort") as "asc" | "desc") || undefined;
 
   const updateData = useCallback(() => {
     setActiveData([]);
     GetWorkOrdersList({
       page: activePage,
       order_by: order_by,
+      sort,
     }).then((resp: any) => {
       const { error } = resp;
       if (error) {
@@ -88,7 +91,7 @@ export default function useGetWorkOrderListData() {
         ),
       );
     });
-  }, [activePage, order_by]);
+  }, [activePage, order_by, sort]);
 
   useEffect(() => {
     updateData();

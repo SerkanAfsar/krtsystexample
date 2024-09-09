@@ -114,12 +114,14 @@ export const AddWorkOrderLogService = async ({
 export const GetWorkOrdersList = async ({
   page,
   order_by,
+  sort,
 }: {
   page?: number;
   order_by?: string | null;
+  sort?: "asc" | "desc";
 }): Promise<any> => {
   let urlPath: string = "product/work-order-list/?";
-  urlPath += `order_by=${order_by ?? "pk"}`;
+  urlPath += `order_by=${order_by ? (sort == "asc" ? `${order_by}` : `-${order_by}`) : "pk"}`;
   if (page) {
     urlPath += `&page=${page.toString()}`;
   }

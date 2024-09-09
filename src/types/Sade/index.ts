@@ -9,7 +9,7 @@ export type SadeListType = {
   atolye?: string;
   iscilik?: string;
   altinRengi?: string;
-  gram?: string;
+  gram?: number;
   ayar?: string;
   hasGrami?: string;
   aciklama?: string;
