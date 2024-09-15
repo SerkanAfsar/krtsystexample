@@ -1,13 +1,22 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import TedarikciDetayContainer from "@/Containers/TedarikciDetayContainer";
 
 export default function TedarikciEkle() {
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Tedarikçi Ekle" />
-      <div className="mb-5 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
-        Tedarikçi Ekle Ekranı Geliştirilmeye Devam Ediliyor...
-      </div>
+      <Breadcrumb
+        pages={[
+          {
+            name: "Tedarikçi Listesi",
+            url: "/Admin/Firmalar/Tedarikciler/TedarikciListesi",
+          },
+        ]}
+        pageName="Tedarikçi Ekle"
+      />
+      <TedarikciDetayContainer isAdd={true} tedarikciItemData={null} />
     </DefaultLayout>
   );
 }
+
+export const dynamic = "force-dynamic";

@@ -7,6 +7,8 @@ export type ElementType = {
     | "datepicker"
     | "customButtonGroup"
     | "number"
+    | "textarea"
+    | "radiobuttonlist"
     | "file";
   title?: string;
   name: string;

@@ -25,6 +25,13 @@ export type ProductListType = {
   results: ProductType[];
 };
 
+export type CustomDataListType<T> = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: T[];
+};
+
 export type GetNextOrderType = {
   next_order?: string;
 };
@@ -158,3 +165,21 @@ export const PirlantaModalHeaders: (Column<IData> & { isHidden?: boolean })[] =
       accessor: "maliyet",
     },
   ];
+
+export type TedarikciType = {
+  id?: number;
+  e_mail: string;
+  authorized_e_mail: string;
+  code: string;
+  type: string;
+  name: string;
+  phone: string;
+  address: string;
+  area: string;
+  currenc_code: string;
+  tax_office: string;
+  tax_number: string;
+  bank: string;
+  authorized_name: string;
+  authorized_phone: string;
+};

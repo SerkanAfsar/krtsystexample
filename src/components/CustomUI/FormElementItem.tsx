@@ -7,6 +7,8 @@ import { cn } from "@/utils";
 import CustomFileSelect from "./CustomFileSelect";
 
 import { UseFormGetValues } from "react-hook-form";
+import CustomTextArea from "./CustomTextArea";
+import CustomRadioButtonList from "./CustomRadioButtonList";
 
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -172,6 +174,46 @@ export default function FormElementItem({
           )}
           disabled={(!isAdd && item.isCodeRelated) || isDisabled}
           setError={setError}
+          {...rest}
+        />
+      );
+    }
+    case "textarea": {
+      return (
+        <CustomTextArea
+          {...register(item.name, {
+            required:
+              !isDisabled && item.required ? item.requiredMessage : false,
+            ...item.extraValidations,
+          })}
+          value={val}
+          err={err}
+          key={item.name}
+          outerClass={cn(
+            item?.span && `col-span-${item.span.toString()}`,
+            item.colStart && `col-start-${item.colStart}`,
+            item.colEnd && `col-end-${item.colEnd}`,
+            item.rowSpan && `row-span-${item.rowSpan}`,
+          )}
+          item={item}
+          className="w-fu"
+          disabled={(!isAdd && item.isCodeRelated) || isDisabled}
+          {...rest}
+        />
+      );
+    }
+    case "radiobuttonlist": {
+      return (
+        <CustomRadioButtonList
+          defaultValue={val}
+          values={item.checkBoxList as string[]}
+          {...register(item.name, {
+            required:
+              !isDisabled && item.required ? item.requiredMessage : false,
+            ...item.extraValidations,
+          })}
+          item={item}
+          setValue={setValue}
           {...rest}
         />
       );
