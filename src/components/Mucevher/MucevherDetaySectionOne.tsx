@@ -299,6 +299,12 @@ export default function MucevherDetaySectionOne({
                 defaultValue="Kadın"
                 name="cinsiyet"
                 values={["Kadın", "Erkek"]}
+                item={{
+                  name: "deneme",
+                  required: true,
+                  type: "text",
+                }}
+                setValue={setValue}
               />
             </div>
           </div>

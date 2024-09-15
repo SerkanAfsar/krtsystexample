@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FaPencil, FaTrash } from "react-icons/fa6";
 import { useRouter, useSearchParams } from "next/navigation";
-import { DeleteWorkOrderApiService } from "@/ApiServices/WorkOrders.ApiService";
 import { TedarikciType } from "../../types/types";
 import { GetTedarikciDatatableService } from "@/Services/Supplier.Services";
 import { DeleteTedarikciApiService } from "@/ApiServices/Suppliers.ApiService";
