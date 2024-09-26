@@ -14,6 +14,7 @@ const CustomTextArea = React.forwardRef<
   HTMLTextAreaElement,
   CustomTextAreaProps
 >(({ className, outerClass, item, err, ...props }, ref) => {
+  console.log(props);
   return (
     <div className={cn("w-full", outerClass && outerClass, className)}>
       {item.title && (
@@ -25,6 +26,8 @@ const CustomTextArea = React.forwardRef<
       <textarea
         {...props}
         ref={ref}
+        cols={item.cols}
+        rows={item.rows}
         placeholder={item.placeholder || item.title || ""}
         className={cn(
           "w-full rounded-md border border-stone-400 bg-white px-4.5 py-3 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-boxdark dark:text-white dark:focus:border-primary",

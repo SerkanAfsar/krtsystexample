@@ -147,7 +147,10 @@ export default function FormElementItem({
           item={item}
           extraOptions={extraOptions}
           err={err}
-          outerClass={cn(item.span && `col-span-${colSpan}`)}
+          outerClass={cn(
+            item.span && `col-span-${colSpan}`,
+            item.moveToTop && "mt-[-110px]",
+          )}
           disabled={(!isAdd && item.isCodeRelated) || isDisabled}
           staticOptions={item.staticOptions}
           showIcon={showIconRelativeTo}
@@ -196,7 +199,7 @@ export default function FormElementItem({
             item.rowSpan && `row-span-${item.rowSpan}`,
           )}
           item={item}
-          className="w-fu"
+          className="w-full"
           disabled={(!isAdd && item.isCodeRelated) || isDisabled}
           {...rest}
         />

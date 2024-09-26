@@ -183,3 +183,26 @@ export type TedarikciType = {
   authorized_name: string;
   authorized_phone: string;
 };
+
+export type MusteriType = {
+  id?: number;
+  code: string;
+  name: string;
+  phone: string;
+  email: string;
+  area: string;
+  country: string;
+  faturaAdresi: string;
+  gonderimAdresi: string;
+  companyType: string;
+  kurulusTarihi: Date;
+  vergiNo: string;
+  banka: string;
+  meslekOdasi: string;
+  sirketSektoru: string;
+  sektorYili: string;
+  bankaHesapBilgisi: string;
+  yetkiliAdSoyad: string;
+  yetkiliTelefon: string;
+  yetkiliEPosta: string;
+};
