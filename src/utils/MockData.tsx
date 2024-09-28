@@ -482,7 +482,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
         span: 2,
       },
       {
-        name: "faturaAdresi",
+        name: "invoice_address",
         type: "textarea",
         title: "Müşteri Fatura Adresİ",
         placeholder: "Müşteri Fatura Adresi Giriniz...",
@@ -494,7 +494,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
         colEnd: "6",
       },
       {
-        name: "gonderimAdresi",
+        name: "shipping_address",
         type: "textarea",
         title: "Müşteri Gönderim Adresi",
         placeholder: "Müşteri Gönderim Adresi  Giriniz...",
@@ -506,11 +506,11 @@ export const AddMusteriSections: Array<FormSectionType> = [
         colEnd: "9",
       },
       {
-        name: "country",
+        name: "country_code",
         type: "select",
         title: "Ülke Seçiniz",
         placeholder: "Ülke Seçiniz...",
-        required: true,
+        required: false,
         requiredMessage: "Ülke Seçiniz",
         span: 2,
         moveToTop: true,
@@ -524,16 +524,16 @@ export const AddMusteriSections: Array<FormSectionType> = [
     keyString: "infoSection2",
     elements: [
       {
-        name: "companyType",
+        name: "company_type",
         type: "select",
         title: "Şirket Türü",
         placeholder: "Şirket Türü Seçiniz",
-        required: true,
+        required: false,
         requiredMessage: "Şirket Türü Seçiniz",
         span: 2,
       },
       {
-        name: "kurulusTarihi",
+        name: "company_foundation_date",
         type: "datepicker",
         title: "Şirket Kuruluş Tarihi",
         placeholder: "Şirket Kuruluş Tarihi Giriniz...",
@@ -542,7 +542,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
         span: 2,
       },
       {
-        name: "vergiNo",
+        name: "tax_number",
         type: "text",
         title: "Vergi No",
         placeholder: "Vergi No Giriniz...",
@@ -560,7 +560,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
         span: 2,
       },
       {
-        name: "meslekOdasi",
+        name: "chamber_of_commerce",
         type: "text",
         title: "Meslek Odası",
         placeholder: "Meslek Odası Giriniz...",
@@ -569,7 +569,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
         span: 2,
       },
       {
-        name: "sirketSektoru",
+        name: "company_sector",
         type: "text",
         title: "Şirket Sektörü",
         placeholder: "Şirket Sektörü Giriniz...",
@@ -578,7 +578,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
         span: 2,
       },
       {
-        name: "sektorYili",
+        name: "sector_year",
         type: "number",
         title: "Sektör Yılı",
         placeholder: "Sektör Yılı Giriniz...",
@@ -587,7 +587,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
         span: 2,
       },
       {
-        name: "bankaHesapBilgisi",
+        name: "bank_account_info",
         type: "text",
         title: "Banka Hesap Bilgisi",
         placeholder: "Banka Hesap Bilgisi Giriniz...",
@@ -604,7 +604,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
     keyString: "infoSection3",
     elements: [
       {
-        name: "yetkiliAdSoyad",
+        name: "authorized_name",
         type: "text",
         title: "Yetkili Ad/Soyad",
         placeholder: "Yetkili Ad Soyad Giriniz...",
@@ -613,7 +613,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
         span: 2,
       },
       {
-        name: "yetkiliTelefon",
+        name: "authorized_phone",
         type: "text",
         title: "Yetkili Telefonu",
         placeholder: "Yetkili Telefonu Giriniz...",
@@ -622,7 +622,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
         span: 2,
       },
       {
-        name: "yetkiliEPosta",
+        name: "authorized_e_mail",
         type: "text",
         title: "Yetkili E-Mail",
         placeholder: "Yetkili E-Mail Giriniz...",

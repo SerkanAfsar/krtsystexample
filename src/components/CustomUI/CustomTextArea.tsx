@@ -14,7 +14,6 @@ const CustomTextArea = React.forwardRef<
   HTMLTextAreaElement,
   CustomTextAreaProps
 >(({ className, outerClass, item, err, ...props }, ref) => {
-  console.log(props);
   return (
     <div className={cn("w-full", outerClass && outerClass, className)}>
       {item.title && (

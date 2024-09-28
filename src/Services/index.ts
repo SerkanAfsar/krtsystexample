@@ -38,8 +38,6 @@ export const BaseService = async ({
       delete headers?.Authorization;
     }
 
-    console.log(`${process.env.NEXT_PUBLIC_API_URL}${url}`);
-
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
       method: method || "GET",
       headers: headers,
