@@ -1,0 +1,56 @@
+export type RenkliTasModelType = {
+  renkliTas: string | null;
+  kesim: string | null;
+  carat: number | null;
+  renk: string | null;
+  mensei: string | null;
+  adet: number | null;
+  fiyat: number | null;
+  type?: string;
+};
+
+export type RenkliTasHeaderColumn = {
+  header: string;
+  accessor: keyof RenkliTasModelType;
+  span: number;
+};
+
+export const RenkliTasHeaders: RenkliTasHeaderColumn[] = [
+  {
+    header: "Renkli Taş",
+    accessor: "renkliTas",
+    span: 2,
+  },
+  {
+    header: "Kesim",
+    accessor: "kesim",
+    span: 2,
+  },
+
+  {
+    header: "Karat",
+    accessor: "carat",
+    span: 1,
+  },
+
+  {
+    header: "Renk",
+    accessor: "renk",
+    span: 1,
+  },
+  {
+    header: "Mensei",
+    accessor: "mensei",
+    span: 2,
+  },
+  {
+    header: "Adet",
+    accessor: "adet",
+    span: 1,
+  },
+  {
+    header: "Fiyat",
+    accessor: "fiyat",
+    span: 2,
+  },
+];

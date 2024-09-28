@@ -1,0 +1,63 @@
+import { SadeModelTurleri } from "@/data/Sade.data";
+
+export const SadeAltinKarsiliklari = (ayar: string): string => {
+  switch (ayar) {
+    case "18":
+    case "750": {
+      return "18";
+    }
+    case "14":
+    case "585": {
+      return "14";
+    }
+    default:
+    case "8": {
+      return "08";
+    }
+  }
+};
+export const sadeModelIlkHarf = (modelTuru: string): string => {
+  return (
+    SadeModelTurleri.find(
+      (a) => a.titleVal == modelTuru,
+    )?.extraValue?.substring(0, 1) || "Not Exists"
+  );
+};
+
+export const SadeHasGramHesapla = ({
+  ayar,
+  gram,
+}: {
+  ayar: string;
+  gram: number;
+}): string => {
+  if (ayar && gram) {
+    switch (ayar) {
+      default:
+      case "18":
+      case "750": {
+        const result = (18 / 24) * gram;
+        return result.toFixed(2);
+      }
+      case "14":
+      case "585": {
+        const result = (14 / 24) * gram;
+        return result.toFixed(2);
+      }
+      case "8": {
+        const result = (8 / 24) * gram;
+        return result.toFixed(2);
+      }
+      case "22": {
+        const result = (22 / 24) * gram;
+        return result.toFixed(2);
+      }
+      case "24": {
+        const result = (24 / 24) * gram;
+        return result.toFixed(2);
+      }
+    }
+  } else {
+    return "Not Exists";
+  }
+};

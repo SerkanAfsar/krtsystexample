@@ -1,17 +1,11 @@
 "use client";
 import * as React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { FormSectionType } from "@/types/formTypes";
+import { FormSectionType } from "../../../types/formTypes";
 import SectionFormItem from "./SectionFormItem";
-import { toast } from "react-toastify";
-import { ResponseResult } from "@/types/responseTypes";
-import { useParams, useRouter } from "next/navigation";
 
-export type SelectOptionsType = {
-  valueVal: string;
-  titleVal: string;
-  extraValue?: string;
-};
+import { useParams, useRouter } from "next/navigation";
+import { CustomOptionType } from "../../../types/inputTypes";
 
 type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   sections?: FormSectionType[];
@@ -24,7 +18,7 @@ type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   filteredData?: any | null;
   productCode?: string | null;
   redirectUrl?: string;
-  extraOptions?: SelectOptionsType[] | null;
+  extraOptions?: CustomOptionType[] | null;
   isAdd: boolean;
   resultCallBack?: any;
 };
@@ -56,13 +50,14 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       watch,
       setValue,
       setError,
-      formState: { errors },
+      getValues,
+
+      formState: { errors, isSubmitting },
     } = useForm<any>({
       defaultValues: data,
     });
     const { id } = useParams();
     const router = useRouter();
-    const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
     React.useEffect(() => {
       const subscription = watch((value: any) => {
@@ -77,31 +72,15 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       setActiveStep((prev: number) => (prev < stepCount - 1 ? prev + 1 : prev));
 
       if (activeStep == stepCount - 1 && serviceFunction && filteredData) {
-        setIsLoading(true);
-        const result: ResponseResult = await serviceFunction({
+        await serviceFunction({
           id: id ?? null,
           data: filteredData,
+          callBack: () => {
+            if (redirectUrl) {
+              return router.push(redirectUrl);
+            }
+          },
         });
-
-        if (result.result) {
-          toast.success("Ekleme Başarılı", { position: "top-right" });
-          setIsLoading(false);
-          if (redirectUrl) {
-            return router.push(redirectUrl);
-          }
-        } else {
-          setIsLoading(false);
-          Object.entries(result.payload).map(([key, value], index) => {
-            setTimeout(() => {
-              const res = value as string[];
-              toast.error(
-                `${key.toUpperCase()} ${res[0].toLocaleUpperCase()}`,
-                { position: "top-right" },
-              );
-            }, 200 * index);
-          });
-          return;
-        }
       }
     };
 
@@ -125,6 +104,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
             delete filteredData[section.keyString];
             return null;
           }
+
           return (
             <SectionFormItem
               data={data}
@@ -132,11 +112,12 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
               errors={errors}
               register={register}
               section={section}
-              key={section.sectionTitle}
+              key={index}
               setError={setError}
               productCode={productCode}
               extraOptions={extraOptions}
               isAdd={isAdd}
+              getValues={getValues}
             />
           );
         })}
@@ -152,12 +133,12 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
             </button>
           )}
           <button
-            disabled={isLoading}
+            disabled={isSubmitting}
             type="submit"
             className="flex w-full justify-center rounded  bg-primary p-3 font-medium text-gray hover:bg-opacity-90 md:w-auto"
           >
             {activeStep == stepCount - 1
-              ? isLoading
+              ? isSubmitting
                 ? "Kaydediliyor..."
                 : "Kaydet"
               : "İleri"}

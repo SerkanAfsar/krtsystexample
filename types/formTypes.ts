@@ -8,6 +8,13 @@ export type IRenkliTasType = {
   kesim?: string;
   mensei?: string;
   treatment?: string;
+  aciklama?: string;
+  fromsingleormixed?: string;
+  pricePerCarat?: number;
+  frommixedItem?: string;
+  sertifikaDosyasi?: File;
+  total_cost?: number;
+  islemler?: React.ReactNode;
 };
 
 export type IDiamondType = {
@@ -18,6 +25,7 @@ export type IDiamondType = {
   kesim?: string;
   elek?: string;
   boy?: string;
+  mensei?: string;
   aciklama?: string;
   fromsingleormixed?: string;
   frommixedItem?: string;
@@ -37,6 +45,7 @@ export type ISertifikaType = {
   table?: string;
   totalDepth?: string;
   girdle?: string;
+  sertifikaDosyasi?: File;
 };
 
 export type IPirlantaPricingType = {
@@ -54,7 +63,7 @@ export type AddDiamondType = IDiamondType &
 export type ISadeType = {
   type?: string;
   resim?: File;
-  sadeKodu?: string;
+  code?: string | null;
   modelTuru?: string;
   modelKodu?: string;
   atolye?: string;
@@ -67,8 +76,7 @@ export type ISadeType = {
   girisTarihi?: string;
   total_cost?: number;
   cost_currency?: string;
-  duzenle?: React.ReactNode;
-  sil?: React.ReactNode;
+  islemler?: React.ReactNode;
 };
 
 export type FormSectionType = {

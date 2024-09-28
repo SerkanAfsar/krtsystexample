@@ -1,0 +1,93 @@
+import { GetWorkOrderLogsByWorkOrderId } from "@/Services/WorkOrder.Services";
+import React from "react";
+import {
+  WorkOrderListType,
+  WorkOrderLogType,
+} from "../../../types/WorkOrder.types";
+import { formatDate, formatToCurrency } from "@/utils";
+
+export default async function IsEmirDetayLoglari({
+  id,
+  workOrderLogs,
+}: {
+  id?: number;
+  workOrderLogs?: WorkOrderLogType[];
+}) {
+  let resultData: WorkOrderListType;
+  if (id) {
+    const result = await GetWorkOrderLogsByWorkOrderId({ id });
+    if (!result?.success) {
+      return <>{result.error ? result.error[0] : "Hata"}</>;
+    }
+    resultData = result.data as WorkOrderListType;
+  } else {
+    resultData = {
+      total_labor_cost:
+        workOrderLogs?.reduce((acc, next) => {
+          return acc + Number(next.cost);
+        }, 0) || 0,
+      logs: workOrderLogs || [],
+    };
+  }
+
+  const newData = resultData.logs?.sort((a, b) => {
+    return Number(a.id) - Number(b.id);
+  });
+
+  return (
+    <div className="mb-1 mt-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className="border-b border-stroke dark:border-strokedark">
+        <div className="flex w-full items-center justify-between p-4 text-lg font-medium text-black dark:text-white">
+          <span> Üretim Bilgileri</span>
+          <b>
+            Toplam İşçilik :
+            {`${formatToCurrency(Number(resultData?.total_labor_cost) || 0)} $`}
+          </b>
+        </div>
+      </div>
+      <hr />
+      <div className="block w-full p-5">
+        <div className="grid grid-cols-9 items-center gap-3  rounded-md border-[#e5e9ed] bg-[#f9fafb] p-3  font-medium text-black">
+          <div className="text-center">Tarih</div>
+          <div className="text-center">Çıkış Atölye</div>
+          <div className="text-center">Teslim Eden</div>
+          <div className="text-center">Giriş Atölye</div>
+          <div className="text-center">Teslim Alan</div>
+          <div className="text-center">İşçilik</div>
+          <div className="text-center">Çıkış Gramı</div>
+          <div className="text-center">Açıklama</div>
+          <div className="text-center">İşçilik Maliyeti</div>
+        </div>
+
+        {newData?.map((item, index) => {
+          const { primary, secondary } = formatDate(item.created_at as string);
+          return (
+            <div
+              key={index}
+              className="grid grid-cols-9 items-center gap-3 border-l-[1px] border-r-[1px] border-t-[1px] border-[#e5e9ed] p-3 font-medium  capitalize  text-black last:border-b-[1px]"
+            >
+              <div className="flex flex-col items-center justify-center gap-1  text-center">
+                <span>{primary}</span>
+                <span>{secondary}</span>
+              </div>
+              <div className="text-center">{item.from_group}</div>
+              <div className="text-center">
+                {item.from_person.split("@")[0].split("-")[0]}
+              </div>
+              <div className="text-center">{item.to_group}</div>
+              <div className="text-center">
+                {item.to_person.split("@")[0].split("-")[0]}
+              </div>
+              <div className="text-center">
+                {`${formatToCurrency(item.cost || 0)} $`}
+              </div>
+              <div className="text-center">{`${item?.output_gram} gr`}</div>
+              <div className="text-center">{item.description}</div>
+              <div className="text-center">{`${formatToCurrency(item.cost || 0)} $`}</div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}

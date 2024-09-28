@@ -1,11 +1,81 @@
+"use client";
+
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 
-export default function RenkliTasListesi() {
+import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
+import useGetProductData from "@/hooks/useGetProductData";
+import { RenklitasListHeaders } from "@/types/RenkliTas";
+import Link from "next/link";
+import { useCallback } from "react";
+import CustomErrorAlert from "@/components/CustomUI/Alerts/CustomErrorAlert";
+
+export default function RenkliTasStokListesi() {
+  const sertificateUrl = useCallback((item: any) => {
+    if (item?.product_certificate?.sertifika == "GIA") {
+      return (
+        <Link
+          className="underline"
+          target="_blank"
+          href={`https://www.gia.edu/report-check?reportno=${item?.product_certificate?.sertifikaNo}`}
+        >
+          {`GIA${item?.product_certificate?.sertifikaNo}`}
+        </Link>
+      );
+    } else if (item?.product_certificate?.sertifika == "HRD") {
+      return (
+        <Link
+          target="_blank"
+          className="underline"
+          href={`https://my.hrdantwerp.com/?record_number=${item?.product_certificate?.sertifikaNo}`}
+        >
+          {`HRD${item?.product_certificate?.sertifikaNo}`}
+        </Link>
+      );
+    }
+    return item?.product_certificate?.sertifika;
+  }, []);
+
+  const {
+    activeData,
+    activePage,
+    totalPageCount,
+    setActivePage,
+    setConfirmDelete,
+    showConfirmDelete,
+    setShowConfirmDelete,
+    error,
+    item,
+  } = useGetProductData(
+    "ColoredStone",
+    "/Admin/StokYonetimi/RenkliTas/RenkliTasEkle/",
+    sertificateUrl,
+  );
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Renkli Taş Stok Listesi" />
-      <div>Renkli Taş Stok Listesi(Hazırlanıyor)</div>
+      <CustomDeleteModal
+        code={item?.productCode}
+        showConfirmDelete={showConfirmDelete}
+        setShowConfirmDelete={setShowConfirmDelete}
+        modalTitle="Renkli Taşı Silmek İstediğinizden Emin misiniz?"
+        modalDescription="Renkli Taş Kalıcı Olarak Silinecektir"
+        setConfirmDelete={setConfirmDelete}
+      />
+
+      {error ? (
+        <CustomErrorAlert title="Hata" description={error} />
+      ) : (
+        <CustomDatatable
+          totalPageCount={totalPageCount}
+          columns={RenklitasListHeaders}
+          data={activeData}
+          activePage={activePage}
+          setActivePage={setActivePage}
+        />
+      )}
     </DefaultLayout>
   );
 }

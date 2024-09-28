@@ -6,29 +6,40 @@ import "dropzone/dist/dropzone.css";
 import "@/css/satoshi.css";
 import "@/css/simple-datatables.css";
 import "@/css/style.css";
-import React, { useEffect, useState } from "react";
-import Loader from "@/components/common/Loader";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "lightgallery.js/dist/css/lightgallery.css";
+import { LightgalleryProvider } from "react-lightgallery";
+import { Suspense } from "react";
+import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
-  }, []);
-
   return (
     <html lang="tr">
       <body suppressHydrationWarning={true}>
-        <div className="dark:bg-boxdark-2 dark:text-bodydark">
-          {loading ? <Loader /> : children}
-        </div>
+        <LightgalleryProvider
+          lightgallerySettings={{
+            thumbnail: false,
+            controls: false,
+          }}
+        >
+          <Suspense>
+            <div className="dark:bg-boxdark-2 dark:text-bodydark">
+              {children}
+              <ProgressBar
+                height="4px"
+                color="#3C50E0"
+                options={{ showSpinner: true }}
+                shallowRouting
+              />
+            </div>
+          </Suspense>
+        </LightgalleryProvider>
+
         <ToastContainer />
       </body>
     </html>

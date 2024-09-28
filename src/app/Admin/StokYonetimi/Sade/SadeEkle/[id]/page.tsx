@@ -2,6 +2,7 @@ import SadeDetayContainer from "@/Containers/SadeDetayContainer";
 import { GetProductService } from "@/Services/Product.Services";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import { ProductType } from "../../../../../../../types/types";
 import { notFound } from "next/navigation";
 
 export default async function SadeDetay({
@@ -10,15 +11,24 @@ export default async function SadeDetay({
   params: { id: string };
 }) {
   const result = await GetProductService({ id: Number(params.id) });
-  if (result.result) {
-    const data = result.payload;
+  if (result?.success) {
+    const data = result.data as ProductType;
+
     const props = data.properties;
     delete data.properties;
     const realData = { ...data, ...props };
 
     return (
       <DefaultLayout>
-        <Breadcrumb pageName="Sade Güncelle" />
+        <Breadcrumb
+          pages={[
+            {
+              name: "Sade Stok Listesi",
+              url: "/Admin/StokYonetimi/Sade/SadeStokListesi",
+            },
+          ]}
+          pageName="Sade Güncelle"
+        />
         <SadeDetayContainer isAdd={false} sadeItemData={realData} />
       </DefaultLayout>
     );

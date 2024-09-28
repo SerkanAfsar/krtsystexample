@@ -7,6 +7,7 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/Containers/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/utils/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   safelist: [
     {
@@ -34,6 +35,7 @@ const config: Config = {
       "2xsm": "375px",
       xsm: "425px",
       "3xl": "2000px",
+      "4xl": "3000px",
       ...defaultTheme.screens,
     },
     extend: {
@@ -285,6 +287,18 @@ const config: Config = {
       },
 
       keyframes: {
+        modalEffect: {
+          "0%": {
+            top: "-20px",
+            marginTop: "-20px",
+            opacity: "0",
+          },
+          "100%": {
+            top: "0px",
+            marginTop: "0px",
+            opacity: "1",
+          },
+        },
         linspin: {
           "100%": { transform: "rotate(360deg)" },
         },
@@ -330,6 +344,7 @@ const config: Config = {
         },
       },
       animation: {
+        modalAnimation: "modalEffect 0.4s easeInOut",
         linspin: "linspin 1568.2353ms linear infinite",
         easespin: "easespin 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both",
         "left-spin":

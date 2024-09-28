@@ -1,19 +1,13 @@
 "use client";
-import {
-  DeleteProductService,
-  GetProductDatatableService,
-} from "@/Services/Product.Services";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import { ISadeType } from "@/types/formTypes";
-import { ProductResponseType } from "@/types/responseTypes";
-import { SadeModelTurleri } from "@/utils/MockData";
-import Image from "next/image";
-import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { ISadeType } from "../../../../../../types/formTypes";
 import { Column } from "react-table";
-import { toast } from "react-toastify";
+import useGetProductData from "@/hooks/useGetProductData";
+import { SadeListHeaders } from "@/types/Sade";
+import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
+import CustomErrorAlert from "@/components/CustomUI/Alerts/CustomErrorAlert";
 
 const columns: Column<ISadeType>[] = [
   {
@@ -22,7 +16,7 @@ const columns: Column<ISadeType>[] = [
   },
   {
     Header: "Sade Kodu",
-    accessor: "sadeKodu",
+    accessor: "code",
   },
   {
     Header: "Model Kodu",
@@ -49,142 +43,50 @@ const columns: Column<ISadeType>[] = [
     accessor: "iscilik",
   },
   {
-    Header: "Düzenle",
-    accessor: "duzenle",
-  },
-  {
-    Header: "Sil",
-    accessor: "sil",
+    Header: "İşlemler",
+    accessor: "islemler",
   },
 ];
 
 export default function SadeStokListesi() {
-  const [activePage, setActivePage] = useState<number>(1);
-  const [activeData, setActiveData] = useState<ISadeType[] | string | null>(
-    null,
-  );
-  const [totalPageCount, setTotalPageCount] = useState<number>(1);
-
-  const updateData = useCallback(() => {
-    setActiveData(null);
-    GetProductDatatableService({
-      order_by: null,
-      page: activePage,
-      type: "Simple",
-    }).then((resp: ProductResponseType) => {
-      if (resp.result) {
-        const dataOneResult: any = resp.payload.results.map((item) => {
-          return {
-            resim: (
-              <Image
-                src={item.image}
-                key={item.pk}
-                alt={item.pk}
-                width={150}
-                height={80}
-              />
-            ),
-            modelKodu: `${SadeModelTurleri.find((a) => a.titleVal == item.properties.modelTuru)?.extraValue}${item?.properties?.modelKodu}`,
-            modelTuru: item?.properties?.modelTuru,
-            sadeKodu: item?.code,
-            ayar: item?.properties?.ayar
-              ? `${item?.properties?.ayar}${item.properties.ayar.length == 2 ? `K` : ""}`
-              : undefined,
-            gram: item?.properties?.gram
-              ? `${item?.properties?.gram} gr`
-              : undefined,
-            hasGrami: item?.properties?.hasGrami
-              ? `${item?.properties?.hasGrami} gr`
-              : undefined,
-            iscilik: `${item?.properties?.iscilik} ${item?.properties?.cost_currency}`,
-            duzenle: duzenleButton(item),
-            sil: silButton(item),
-          };
-        });
-        setActiveData(dataOneResult);
-        setTotalPageCount(
-          Math.ceil(
-            resp.payload.count /
-              Number(process.env.NEXT_PUBLIC_DATATABLE_ITEM_COUNT),
-          ),
-        );
-      } else {
-        setActiveData(resp.message || "Hata");
-      }
-    });
-  }, [activePage]);
-
-  const duzenleButton = useCallback((item: any) => {
-    return (
-      <Link
-        className="btn rounded-md bg-yellow-600 p-3 text-white"
-        href={`/Admin/StokYonetimi/Sade/SadeEkle/${item.pk}`}
-      >
-        Güncelle
-      </Link>
-    );
-  }, []);
-
-  const silButton = useCallback(
-    async (item: any) => {
-      const id = item.pk as Number;
-      return (
-        <div
-          onClick={async () => {
-            const result = await DeleteProductService({ id });
-            if (result.result) {
-              toast.success("Ürün Silindi", { position: "top-right" });
-              updateData();
-            } else {
-              toast.error(result.message || "Hata", { position: "top-right" });
-              return;
-            }
-          }}
-          className="btn cursor-pointer rounded-md bg-danger p-3 text-center text-white"
-        >
-          Sil
-        </div>
-      );
-    },
-    [updateData],
+  const {
+    activeData,
+    activePage,
+    totalPageCount,
+    setActivePage,
+    setConfirmDelete,
+    showConfirmDelete,
+    setShowConfirmDelete,
+    error,
+    item,
+  } = useGetProductData(
+    "Simple",
+    "/Admin/StokYonetimi/Sade/SadeEkle/",
+    undefined,
   );
 
-  useEffect(() => {
-    updateData();
-  }, [activePage, updateData]);
-
-  if (activeData == "Hata") {
-    return (
-      <DefaultLayout>
-        <Breadcrumb pageName="Sade Stok Listesi" />
-        <div className="flex h-full w-full items-center justify-center">
-          Hata.
-        </div>
-      </DefaultLayout>
-    );
-  }
-  if (activeData == "Hata") {
-    return (
-      <div className="flex h-full w-full items-center justify-center">
-        Hata.
-      </div>
-    );
-  }
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Sade Stok Listesi" />
-      {activeData ? (
+      <CustomDeleteModal
+        code={item?.productCode}
+        showConfirmDelete={showConfirmDelete}
+        setShowConfirmDelete={setShowConfirmDelete}
+        modalTitle="Sadeyi Silmek İstediğinizden Emin misiniz?"
+        modalDescription="Sade Kalıcı Olarak Silinecektir"
+        setConfirmDelete={setConfirmDelete}
+      />
+
+      {error ? (
+        <CustomErrorAlert title="Hata" description={error} />
+      ) : (
         <CustomDatatable
           totalPageCount={totalPageCount}
-          columns={columns}
-          dataOne={activeData}
+          columns={SadeListHeaders}
+          data={activeData}
           activePage={activePage}
           setActivePage={setActivePage}
         />
-      ) : (
-        <div className="flex h-full w-full items-center justify-center">
-          Yükleniyor...
-        </div>
       )}
     </DefaultLayout>
   );

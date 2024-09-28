@@ -1,22 +1,24 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import MucevherEkleContainer from "@/Containers/MucevherEkleContainer";
 
-export default function MucevherEkle() {
+const MucevherEkle = () => {
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Mücevher Ekle" />
-      <div className="grid grid-cols-none gap-9 ">
-        <div className="flex flex-col gap-9">
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Mücevher Ekle
-              </h3>
-            </div>
-            {/* <CustomForm IFormInput={sadeType} elements={AddSadeFields} /> */}
-          </div>
-        </div>
-      </div>
+      <Breadcrumb
+        pages={[
+          {
+            name: "Mücevher Stok Listesi",
+            url: "/Admin/StokYonetimi/Mucevher/MucevherStokListesi",
+          },
+        ]}
+        pageName="Yeni Mücevher Ekle "
+      />
+      <MucevherEkleContainer />
     </DefaultLayout>
   );
-}
+};
+
+export default MucevherEkle;
+
+export const dynamic = "force-dynamic";

@@ -1,37 +1,36 @@
-import {
-  AddProductType,
-  ProductResponseType,
-  ResponseResult,
-} from "@/types/responseTypes";
+import { ResponseResult } from "../../types/responseTypes";
 import { BaseService } from ".";
-import { GetNextOrderType } from "@/types/inputTypes";
+import { GetNextOrderType, NextOrderType } from "../../types/inputTypes";
+import { ProductListType, ProductType } from "../../types/types";
+import { AddMucevherExternalType, MucevherDetayType } from "@/types/Mucevher";
 
 export const GetProductService = async ({
   id,
 }: {
-  id: Number;
-}): Promise<ResponseResult> => {
+  id: number;
+}): Promise<ResponseResult<ProductType>> => {
   const result = await BaseService({
     url: `product/${id.toString()}`,
     bodyData: null,
     method: "GET",
     hasToken: true,
   });
-  return result as ResponseResult;
+  return result as ResponseResult<ProductType>;
 };
 
 export const AddProductService = async ({
   data,
 }: {
-  data: AddProductType;
-}): Promise<ResponseResult> => {
+  data: ProductType;
+}): Promise<ResponseResult<ProductType>> => {
   const result = await BaseService({
     url: "product/",
     bodyData: data,
     method: "POST",
     hasToken: true,
+    isFormData: false,
   });
-  return result as ResponseResult;
+  return result as ResponseResult<ProductType>;
 };
 
 export const UpdateProductService = async ({
@@ -39,60 +38,48 @@ export const UpdateProductService = async ({
   data,
 }: {
   id: Number;
-  data: AddProductType;
-}): Promise<ResponseResult> => {
+  data: ProductType;
+}): Promise<ResponseResult<ProductType>> => {
   const result = await BaseService({
     url: `product/${id.toString()}`,
     bodyData: data,
     method: "PUT",
     hasToken: true,
   });
-  return result as ResponseResult;
+
+  return result as ResponseResult<ProductType>;
 };
 
 export const DeleteProductService = async ({
   id,
 }: {
-  id: Number;
-}): Promise<ResponseResult> => {
+  id: number;
+}): Promise<ResponseResult<ProductType>> => {
   const result = await BaseService({
-    url: `product/${id.toString()}/`,
+    url: `product/${id}/`,
     bodyData: null,
     method: "DELETE",
     hasToken: true,
   });
-  return result as ResponseResult;
-};
 
-export const DiamondQueueByCodeService = async ({
-  data,
-}: {
-  data: GetNextOrderType;
-}): Promise<ResponseResult> => {
-  const result = await BaseService({
-    url: "product/get-next-order/",
-    bodyData: data,
-    method: "POST",
-    hasToken: true,
-  });
-  return result as ResponseResult;
+  return result as ResponseResult<ProductType>;
 };
 
 export const GetProductDatatableService = async ({
   order_by,
   page,
   type,
+  sort,
 }: {
   order_by?: string | null;
   page?: number;
   type?: string | null;
-}): Promise<ProductResponseType> => {
+  sort?: "asc" | "desc";
+}): Promise<ResponseResult<ProductListType>> => {
   let urlPath: string = "product/?";
-  // if (order_by) {
-  //   urlPath += `order_by=${order_by}`;
-  // }
+  urlPath += `order_by=${order_by ? (sort == "asc" ? `${order_by}` : `-${order_by}`) : "pk"}`;
   if (page) {
-    urlPath += `page=${page.toString()}`;
+    urlPath += `&page=${page.toString()}`;
   }
   if (type) {
     urlPath += `&type=${type}`;
@@ -104,7 +91,31 @@ export const GetProductDatatableService = async ({
     bodyData: null,
     hasToken: true,
   });
-  return result as ProductResponseType;
+  return result as ResponseResult<ProductListType>;
+};
+
+export const GetGemProductDatatableService = async ({
+  order_by,
+  page,
+  sort,
+}: {
+  order_by?: string | null;
+  page?: number;
+  sort?: "asc" | "desc";
+}): Promise<ResponseResult<ProductListType>> => {
+  let urlPath: string = "product/list-gem-products/?";
+  urlPath += `order_by=${order_by ? (sort == "asc" ? `${order_by}` : `-${order_by}`) : "pk"}`;
+  if (page) {
+    urlPath += `&page=${page.toString()}`;
+  }
+
+  const result = await BaseService({
+    url: urlPath,
+    method: "GET",
+    bodyData: null,
+    hasToken: true,
+  });
+  return result as ResponseResult<ProductListType>;
 };
 
 export const GetNextOrderForMixedDiamondService = async ({
@@ -113,7 +124,7 @@ export const GetNextOrderForMixedDiamondService = async ({
 }: {
   type: string;
   code: string;
-}): Promise<ResponseResult> => {
+}): Promise<ResponseResult<GetNextOrderType>> => {
   const data = { type, code };
   const result = await BaseService({
     url: "product/get-next-order-for-mixed-diamond/",
@@ -121,49 +132,81 @@ export const GetNextOrderForMixedDiamondService = async ({
     bodyData: data,
     hasToken: true,
   });
-  return result as ResponseResult;
+  return result as ResponseResult<GetNextOrderType>;
 };
 
 export const GetNextOrderFromSingleDiamondService = async ({
   from_mixed = false,
   code,
+  type,
 }: {
   from_mixed: boolean;
   code: string;
-}): Promise<ResponseResult> => {
-  const data = { from_mixed, code };
+  type: "Diamond" | "Single" | "ColoredStone";
+}): Promise<ResponseResult<GetNextOrderType>> => {
+  const data = { from_mixed, code, type };
   const result = await BaseService({
     url: "product/product-single-next-order/",
     method: "Post",
     bodyData: data,
     hasToken: true,
   });
-  return result as ResponseResult;
+  return result as ResponseResult<GetNextOrderType>;
 };
 export const GetListMixedProductsCodeDiamondService = async ({
   code,
+  type,
 }: {
   code: string;
-}): Promise<ResponseResult> => {
+  type: string;
+}): Promise<ResponseResult<string[]>> => {
   const result = await BaseService({
-    url: `product/list-mixed-products-codes/?code=${code}`,
+    url: `product/list-mixed-products-codes/?code=${code}&type=${type}`,
     method: "Get",
     bodyData: null,
     hasToken: true,
   });
-  return result as ResponseResult;
+  return result as ResponseResult<string[]>;
 };
 
 export const GetSadeCodeByTypeService = async ({
   type,
 }: {
   type: string;
-}): Promise<ResponseResult> => {
+}): Promise<ResponseResult<NextOrderType>> => {
   const result = await BaseService({
     url: `product/product-simple-next-order/`,
     method: "Post",
     bodyData: { type },
     hasToken: true,
   });
-  return result as ResponseResult;
+  return result as ResponseResult<NextOrderType>;
+};
+
+export const GetGemProductService = async ({
+  product_id,
+}: {
+  product_id: number;
+}): Promise<ResponseResult<MucevherDetayType>> => {
+  const result = await BaseService({
+    url: `product/gem-product-detail/`,
+    bodyData: { product_id },
+    method: "POST",
+    hasToken: true,
+  });
+  return result as ResponseResult<MucevherDetayType>;
+};
+
+export const PostGemProductService = async ({
+  body,
+}: {
+  body: any;
+}): Promise<ResponseResult<AddMucevherExternalType>> => {
+  const result = await BaseService({
+    url: `product/create-gem-product/`,
+    bodyData: body,
+    method: "POST",
+    hasToken: true,
+  });
+  return result as ResponseResult<AddMucevherExternalType>;
 };

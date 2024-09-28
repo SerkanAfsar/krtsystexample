@@ -7,6 +7,8 @@ export type ElementType = {
     | "datepicker"
     | "customButtonGroup"
     | "number"
+    | "textarea"
+    | "radiobuttonlist"
     | "file";
   title?: string;
   name: string;
@@ -18,7 +20,7 @@ export type ElementType = {
   rowSpan?: number;
   disabled?: boolean;
   relativeTo?: string;
-  rightIcon?: string;
+  rightIcon?: string | React.ReactNode;
   value?: string;
   isCurrency?: boolean;
   checkBoxList?: string[];
@@ -36,6 +38,13 @@ export type ElementType = {
   pictureExtraText?: string;
   isExtra?: boolean;
   extraValidations?: object;
+  isCodeRelated?: boolean;
+  staticOptions?: any;
+  showIconRelativeTo?: string;
+  isLinkedWithIcon?: boolean;
+  extraFunction?: Function;
+  isTopMargin?: boolean;
+  [key: string]: any;
 };
 
 export type CustomOptionType = {
@@ -52,4 +61,8 @@ export type LoginType = {
 export type GetNextOrderType = {
   type: string;
   code: string;
+};
+
+export type NextOrderType = {
+  next_order: number;
 };

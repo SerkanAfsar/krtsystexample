@@ -1,8 +1,10 @@
-import { FormSectionType } from "@/types/formTypes";
-import FormElementItem from "./FormElementItem";
-import { ClassValue } from "clsx";
+import { FormSectionType } from "../../../types/formTypes";
+
 import { cn } from "@/utils";
-import { SelectOptionsType } from "./CustomForm";
+
+import FormElementItem from "./FormElementItem";
+import { UseFormGetValues } from "react-hook-form";
+import { CustomOptionType } from "../../../types/inputTypes";
 
 export default function SectionFormItem({
   section,
@@ -13,7 +15,9 @@ export default function SectionFormItem({
   errors,
   productCode,
   extraOptions,
+  getValues,
   isAdd,
+  ...rest
 }: {
   section: FormSectionType;
   data: any;
@@ -23,7 +27,8 @@ export default function SectionFormItem({
   setError: any;
   isAdd: boolean;
   productCode?: string | null;
-  extraOptions?: SelectOptionsType[] | null;
+  extraOptions?: CustomOptionType[] | null;
+  getValues: UseFormGetValues<any>;
 }) {
   return (
     <div className="mb-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -32,7 +37,9 @@ export default function SectionFormItem({
           <h3 className="p-4 text-lg font-medium text-black dark:text-white">
             {section?.sectionTitle}
           </h3>
-          <b className="mr-4 text-black">{productCode && productCode}</b>
+          <b className="mr-4 text-black dark:text-white">
+            {productCode && productCode}
+          </b>
         </div>
         <hr />
 
@@ -44,18 +51,22 @@ export default function SectionFormItem({
               : "grid-cols-12",
           )}
         >
-          {section?.elements.map((item, index) => (
-            <FormElementItem
-              register={register}
-              setValue={setValue}
-              errors={errors}
-              key={item.name}
-              item={item}
-              data={data}
-              setError={setError}
-              isAdd={isAdd}
-            />
-          ))}
+          {section?.elements.map((item, index) => {
+            return (
+              <FormElementItem
+                register={register}
+                setValue={setValue}
+                errors={errors}
+                key={index}
+                item={item}
+                data={data}
+                setError={setError}
+                isAdd={isAdd}
+                getValues={getValues}
+                {...rest}
+              />
+            );
+          })}
         </div>
         {section.extraElementRelativeTo &&
           data[section.extraElementRelativeTo] ==
@@ -73,12 +84,14 @@ export default function SectionFormItem({
                   register={register}
                   setValue={setValue}
                   errors={errors}
-                  key={item.name}
+                  key={index}
                   item={item}
                   data={data}
+                  getValues={getValues}
                   setError={setError}
                   extraOptions={extraOptions}
                   isAdd={isAdd}
+                  {...rest}
                 />
               ))}
             </div>

@@ -1,21 +1,21 @@
 "use client";
-import {
-  AddProductService,
-  UpdateProductService,
-} from "@/Services/Product.Services";
 
 import CustomForm from "@/components/CustomUI/CustomForm";
-import useSadeCode from "@/hooks/useSadeCode";
-
-import { ISadeType } from "@/types/formTypes";
+import useSadeCode from "@/hooks/CodeHooks/useSadeCode";
+import { ISadeType } from "../../types/formTypes";
+import { ProductType } from "../../types/types";
 import { AddSadeSections } from "@/utils/MockData";
 import { useCallback, useEffect, useState } from "react";
+import {
+  AddProductApiService,
+  UpdateProductApiService,
+} from "@/ApiServices/Products.ApiService";
 
 export default function SadeDetayContainer({
   sadeItemData,
   isAdd,
 }: {
-  sadeItemData: (ISadeType & { code?: string }) | null;
+  sadeItemData: (ISadeType & { code?: string | null }) | null;
   isAdd: boolean;
 }) {
   const sadeItem: ISadeType = sadeItemData ?? {};
@@ -31,7 +31,7 @@ export default function SadeDetayContainer({
   });
 
   useEffect(() => {
-    setData((prev: any) => ({ ...prev, sadeKodu: sadeCode }));
+    setData((prev: any) => ({ ...prev, code: sadeCode }));
   }, [sadeCode]);
 
   const getBase64 = (file: any): any => {
@@ -48,7 +48,7 @@ export default function SadeDetayContainer({
     }
   };
 
-  const newData: ISadeType = AddSadeSections.filter(
+  const newData: ProductType = AddSadeSections.filter(
     (a) => a.groupNumber == 0,
   ).reduce(
     (acc, next) => {
@@ -85,6 +85,14 @@ export default function SadeDetayContainer({
         }
         case "8": {
           const result = (8 / 24) * parseFloat(value.gram);
+          return result.toFixed(2);
+        }
+        case "22": {
+          const result = (22 / 24) * parseFloat(value.gram);
+          return result.toFixed(2);
+        }
+        case "24": {
+          const result = (24 / 24) * parseFloat(value.gram);
           return result.toFixed(2);
         }
       }
@@ -132,7 +140,7 @@ export default function SadeDetayContainer({
       productCode={sadeCode}
       isAdd={isAdd}
       resultCallBack={updateData}
-      serviceFunction={isAdd ? AddProductService : UpdateProductService}
+      serviceFunction={isAdd ? AddProductApiService : UpdateProductApiService}
       filteredData={newData}
       redirectUrl="/Admin/StokYonetimi/Sade/SadeStokListesi"
     />

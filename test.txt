@@ -14,3 +14,88 @@
  https://www.gia.edu/report-check?reportno=34243243242432 gia ise bu
 
  https://my.hrdantwerp.com/ hrd 
+
+
+
+ Mixed urun sectiyse onun icinde kac caratlik kullanacak onu vermeli
+
+
+ Cost iscilik maliyeti
+
+
+ Adam grup seçip ordan kime yollayacagini secebilecek tek id verebilirsin abi
+
+
+ sade = has gramı * altın kuru
+
+ renkli taşa maliyet ekle.
+
+ pırlantada toplam fiyat
+
+ sadeye adet girmicek. Renkli taş ve pırlantaya adet giricek (modal da)
+
+ Renkli taş ve pırlantada sertifikalı ise adet=1. 
+
+ Sertifikasız ise adet istediğin kadar koyulabilinir.
+
+
+ ürün kodları ekle seçim ekrarnına madeni kaldır
+
+ ---> Mücevher kodu client side
+
+--->  Sertifika kaldır
+
+----> İşlemi kaldır. Çıkış giriş backend den gelicek (string olarak gelicek)
+
+---> Workorder finish endpoint eklenicek
+
+
+ anil@atillakarat.com
+ hakan@atillakarat.com
+ kamil@atillakarat.com
+
+
+--> Üretim bitir de confirm çıkıcak
+
+--> Üretim sekmesi admin ise bitir çıkıcak (jwt kontrol) 
+
+--> Pırlanta + Renkli Taş=Multimix / Birden Fazla Renk Barındıran
+
+--> Renkli Taş sadece bir tane seçerse kodu olucak birden fazla seçerse Multimix / Birden Fazla Renk Barındıran
+
+--> İki pırlanta seçerse d kalmaya devam edicek
+
+https://docs.google.com/spreadsheets/d/155zFdqi4GDtwpvCoWj9kDKb0qTwzgap5/edit?gid=629087872#gid=629087872
+
+
+---> Mustafadan iş emri status endpointleri istediğin
+---> Mücevher kodu eksikleri tamamla
+---> admin kullanıcı iş emrini bitir endpointi iste mustafadan ve uygula (üretim müdürü olduğunda bitir buttonu hep gözükücek)
+
+
+25 ağustos
+--->Sade nin quantity si yoksa 1 girilicek
+
+
+eklede simple alanını sadedeki gram ve ayar bilgisini birleştirip 10g 8k
+total karatları topla toplam gir
+modal sadedeki model
+date string
+image base64
+total number of stones adetlerin toplamı
+kod kısmı aynı
+
+
+
+Mücevher resim olayı ----> Done
+Mücevher Listesi resim ---->Done
+Mücevher detay ürünlerin gösterilmesi  
+
+iş emrinden --> style no,ref no,satın alma fiyatı,  disabled
+
+mücevher detayda-->işçilik tab yok
+
+mücevher detayda --> üretim iş emrinden geleni işçilik textbox a yazdır
+
+
+

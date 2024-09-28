@@ -4,12 +4,12 @@ import { useEffect } from "react";
 import { ClassValue } from "clsx";
 import React from "react";
 import { cn } from "@/utils";
-import { ElementType } from "@/types/inputTypes";
+import { ElementType } from "../../../types/inputTypes";
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   outerClass?: ClassValue | null;
   err?: string | null;
-  setValue: any;
+  setValue?: any;
 } & {
   item: ElementType;
 };
@@ -35,9 +35,61 @@ const CustomDatePicker = React.forwardRef<HTMLInputElement, InputProps>(
         flatpickr(".form-datepicker", {
           mode: "single",
           static: true,
+
+          shorthandCurrentMonth: true,
+          locale: {
+            firstDayOfWeek: 1,
+            weekdays: {
+              longhand: [
+                "Pazar",
+                "Pazartesi",
+                "Salı",
+                "Çarşamba",
+                "Perşembe",
+                "Cuma",
+                "Cumartesi",
+              ],
+              shorthand: ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"],
+            },
+            months: {
+              longhand: [
+                "Ocak",
+                "Şubat",
+                "Mart",
+                "Nisan",
+                "Mayıs",
+                "Haziran",
+                "Temmuz",
+                "Ağustos",
+                "Eylül",
+                "Ekim",
+                "Kasım",
+                "Aralık",
+              ],
+              shorthand: [
+                "Oca",
+                "Şub",
+                "Mar",
+                "Nis",
+                "May",
+                "Haz",
+                "Tem",
+                "Ağu",
+                "Eyl",
+                "Eki",
+                "Kas",
+                "Ara",
+              ],
+            },
+            // today: "Bugün",
+            // clear: "Temizle",
+          },
+
+          defaultDate: "today",
+
           monthSelectorType: "static",
           onChange: (selectedDates, dateStr, instance) => {
-            setValue(name, dateStr);
+            setValue && setValue(name, dateStr);
           },
 
           prevArrow:
@@ -50,9 +102,14 @@ const CustomDatePicker = React.forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className={cn("w-full", outerClass && outerClass)}>
-        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-          {item.title}
-        </label>
+        {item.title && (
+          <label
+            htmlFor={id}
+            className="mb-3 block text-sm font-medium text-black dark:text-white"
+          >
+            {item.title}
+          </label>
+        )}
         <div className="relative">
           <input
             ref={ref}

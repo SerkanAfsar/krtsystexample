@@ -1,8 +1,21 @@
-import React, { useState, useEffect, useRef } from "react";
+"use client";
+import React, { useEffect, useRef } from "react";
 
-const ModalTwo: React.FC = () => {
-  const [modalOpen, setModalOpen] = useState(false);
-
+function ModalTwo({
+  showConfirmDelete,
+  setShowConfirmDelete,
+  modalTitle,
+  modalDescription,
+  setConfirmDelete,
+  code,
+}: {
+  showConfirmDelete: boolean;
+  setShowConfirmDelete: any;
+  modalTitle: string;
+  modalDescription: string;
+  setConfirmDelete: any;
+  code: string;
+}) {
   const trigger = useRef<any>(null);
   const modal = useRef<any>(null);
 
@@ -11,12 +24,12 @@ const ModalTwo: React.FC = () => {
     const clickHandler = ({ target }: MouseEvent) => {
       if (!modal.current) return;
       if (
-        !modalOpen ||
+        !showConfirmDelete ||
         modal.current.contains(target) ||
         trigger.current.contains(target)
       )
         return;
-      setModalOpen(false);
+      setShowConfirmDelete(false);
     };
     document.addEventListener("click", clickHandler);
     return () => document.removeEventListener("click", clickHandler);
@@ -25,8 +38,8 @@ const ModalTwo: React.FC = () => {
   // close if the esc key is pressed
   useEffect(() => {
     const keyHandler = ({ keyCode }: KeyboardEvent) => {
-      if (!modalOpen || keyCode !== 27) return;
-      setModalOpen(false);
+      if (!showConfirmDelete || keyCode !== 27) return;
+      setShowConfirmDelete(false);
     };
     document.addEventListener("keydown", keyHandler);
     return () => document.removeEventListener("keydown", keyHandler);
@@ -34,22 +47,13 @@ const ModalTwo: React.FC = () => {
 
   return (
     <div>
-      <button
-        ref={trigger}
-        onClick={() => setModalOpen(!modalOpen)}
-        className="rounded-md bg-primary px-9 py-3 font-medium text-white"
-      >
-        Modal 2
-      </button>
       <div
-        className={`fixed left-0 top-0 z-999999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${
-          modalOpen ? "block" : "hidden"
-        }`}
+        className={`fixed left-0 top-0 z-999999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${showConfirmDelete ? "block" : "hidden"}`}
       >
         <div
           ref={modal}
-          onFocus={() => setModalOpen(true)}
-          onBlur={() => setModalOpen(false)}
+          onFocus={() => setShowConfirmDelete(true)}
+          onBlur={() => setShowConfirmDelete(false)}
           className="w-full max-w-142.5 rounded-lg bg-white px-8 py-12 text-center dark:bg-boxdark md:px-17.5 md:py-15"
         >
           <span className="mx-auto inline-block">
@@ -77,24 +81,27 @@ const ModalTwo: React.FC = () => {
             </svg>
           </span>
           <h3 className="mt-5.5 pb-2 text-xl font-bold text-black dark:text-white sm:text-2xl">
-            Deactivate Your Account
+            {code} {modalTitle}
           </h3>
-          <p className="mb-10">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry Lorem Ipsum been.
-          </p>
+          <p className="mb-10">{modalDescription}</p>
           <div className="-mx-3 flex flex-wrap gap-y-4">
             <div className="w-full px-3 2xsm:w-1/2">
               <button
-                onClick={() => setModalOpen(false)}
+                onClick={() => setShowConfirmDelete(false)}
                 className="block w-full rounded border border-stroke bg-gray p-3 text-center font-medium text-black transition hover:border-meta-1 hover:bg-meta-1 hover:text-white dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-meta-1 dark:hover:bg-meta-1"
               >
-                Cancel
+                İptal Et
               </button>
             </div>
             <div className="w-full px-3 2xsm:w-1/2">
-              <button className="block w-full rounded border border-meta-1 bg-meta-1 p-3 text-center font-medium text-white transition hover:bg-opacity-90">
-                Deactivate
+              <button
+                type="button"
+                onClick={() => {
+                  setConfirmDelete(true);
+                }}
+                className="block w-full rounded border border-meta-1 bg-meta-1 p-3 text-center font-medium text-white transition hover:bg-opacity-90"
+              >
+                Sil
               </button>
             </div>
           </div>
@@ -102,6 +109,6 @@ const ModalTwo: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export default ModalTwo;

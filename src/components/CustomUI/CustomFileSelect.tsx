@@ -1,4 +1,4 @@
-import { ElementType } from "@/types/inputTypes";
+import { ElementType } from "../../../types/inputTypes";
 import React, { useState } from "react";
 import { ClassValue } from "clsx";
 import { cn } from "@/utils";
@@ -10,7 +10,8 @@ type CustomFileSelectProps = React.InputHTMLAttributes<HTMLInputElement> & {
   err?: string | null;
   outerClass?: ClassValue | null;
   className?: ClassValue | null;
-  setError: any;
+  setError?: any;
+  addedImage: string | null;
 };
 const CustomFileSelect = React.forwardRef<
   HTMLInputElement,
@@ -26,11 +27,13 @@ const CustomFileSelect = React.forwardRef<
       outerClass,
       err,
       setError,
+      addedImage,
       ...rest
     },
     ref,
   ) => {
-    const [image, setImage] = useState<string | null>(null);
+    const [image, setImage] = useState<string | null>(addedImage);
+
     return (
       <div className={cn(outerClass && outerClass, err && "border-red")}>
         <label className="mb-3 block text-sm font-medium text-black dark:text-white">
@@ -70,7 +73,7 @@ const CustomFileSelect = React.forwardRef<
           </div>
         )}
         {item.pictureExtraText && (
-          <div className="my-5 block w-full text-left  text-base font-bold text-black-2">
+          <div className="my-5 block w-full text-left text-base  font-bold text-black-2 dark:text-white">
             {item.pictureExtraText}
           </div>
         )}

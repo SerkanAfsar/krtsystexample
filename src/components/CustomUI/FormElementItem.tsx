@@ -1,11 +1,14 @@
-import { ElementType } from "@/types/inputTypes";
+import { CustomOptionType, ElementType } from "../../../types/inputTypes";
 import CustomInput from "./CustomInput";
 import CustomButtonGroups from "./CustomButtonGroups";
 import CustomDatePicker from "./CustomDatePicker";
 import CustomSelect from "./CustomSelect";
 import { cn } from "@/utils";
 import CustomFileSelect from "./CustomFileSelect";
-import { SelectOptionsType } from "./CustomForm";
+
+import { UseFormGetValues } from "react-hook-form";
+import CustomTextArea from "./CustomTextArea";
+import CustomRadioButtonList from "./CustomRadioButtonList";
 
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -21,6 +24,8 @@ export default function FormElementItem({
   setError,
   extraOptions,
   isAdd,
+  getValues,
+  ...rest
 }: {
   item: ElementType;
   register: any;
@@ -28,8 +33,9 @@ export default function FormElementItem({
   errors: any;
   setValue: any;
   setError: any;
-  extraOptions?: SelectOptionsType[] | null;
+  extraOptions?: CustomOptionType[] | null;
   isAdd: boolean;
+  getValues: UseFormGetValues<any>;
 }) {
   const firstCondition =
     (data &&
@@ -56,6 +62,11 @@ export default function FormElementItem({
       ? "1"
       : item.span;
 
+  const showIconRelativeTo =
+    item.relativeTo &&
+    item.showIconRelativeTo &&
+    item.showIconRelativeTo == data[item.relativeTo];
+
   const err = errors[item.name]?.message?.toString() ?? null;
 
   switch (item.type) {
@@ -68,6 +79,7 @@ export default function FormElementItem({
               !isDisabled && item.required ? item.requiredMessage : false,
             ...item.extraValidations,
           })}
+          setFormValues={setValue}
           value={item.isCurrency ? formatter.format(val) : val}
           err={err}
           key={item.name}
@@ -77,8 +89,11 @@ export default function FormElementItem({
             item.colEnd && `col-end-${item.colEnd}`,
             item.rowSpan && `row-span-${item.rowSpan}`,
           )}
+          showIcon={showIconRelativeTo}
           item={item}
-          disabled={isDisabled}
+          getValues={getValues}
+          disabled={(!isAdd && item.isCodeRelated) || isDisabled}
+          {...rest}
         />
       );
     }
@@ -96,6 +111,8 @@ export default function FormElementItem({
           register={register}
           name={item.name}
           value={val}
+          disabled={(!isAdd && item.isCodeRelated) || isDisabled}
+          {...rest}
         />
       );
     }
@@ -114,7 +131,8 @@ export default function FormElementItem({
           setValue={setValue}
           err={err}
           outerClass={cn(item.span && `col-span-${item.span.toString()}`)}
-          disabled={isDisabled}
+          disabled={(!isAdd && item.isCodeRelated) || isDisabled}
+          {...rest}
         />
       );
     }
@@ -129,8 +147,14 @@ export default function FormElementItem({
           item={item}
           extraOptions={extraOptions}
           err={err}
-          outerClass={cn(item.span && `col-span-${colSpan}`)}
-          disabled={isDisabled}
+          outerClass={cn(
+            item.span && `col-span-${colSpan}`,
+            item.moveToTop && "mt-[-110px]",
+          )}
+          disabled={(!isAdd && item.isCodeRelated) || isDisabled}
+          staticOptions={item.staticOptions}
+          showIcon={showIconRelativeTo}
+          {...rest}
         />
       );
     }
@@ -146,12 +170,54 @@ export default function FormElementItem({
           key={item.name}
           item={item}
           err={err}
+          addedImage={data?.image}
           outerClass={cn(
             item.span && `col-span-${colSpan}`,
             item.rowSpan && `row-span-${item.rowSpan}`,
           )}
-          disabled={isDisabled}
+          disabled={(!isAdd && item.isCodeRelated) || isDisabled}
           setError={setError}
+          {...rest}
+        />
+      );
+    }
+    case "textarea": {
+      return (
+        <CustomTextArea
+          {...register(item.name, {
+            required:
+              !isDisabled && item.required ? item.requiredMessage : false,
+            ...item.extraValidations,
+          })}
+          value={val}
+          err={err}
+          key={item.name}
+          outerClass={cn(
+            item?.span && `col-span-${item.span.toString()}`,
+            item.colStart && `col-start-${item.colStart}`,
+            item.colEnd && `col-end-${item.colEnd}`,
+            item.rowSpan && `row-span-${item.rowSpan}`,
+          )}
+          item={item}
+          className="w-full"
+          disabled={(!isAdd && item.isCodeRelated) || isDisabled}
+          {...rest}
+        />
+      );
+    }
+    case "radiobuttonlist": {
+      return (
+        <CustomRadioButtonList
+          defaultValue={val}
+          values={item.checkBoxList as string[]}
+          {...register(item.name, {
+            required:
+              !isDisabled && item.required ? item.requiredMessage : false,
+            ...item.extraValidations,
+          })}
+          item={item}
+          setValue={setValue}
+          {...rest}
         />
       );
     }
