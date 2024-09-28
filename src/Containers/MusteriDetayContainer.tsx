@@ -5,6 +5,10 @@ import CustomForm from "@/components/CustomUI/CustomForm";
 import { useState } from "react";
 import { MusteriType } from "../../types/types";
 import { AddMusteriSections } from "@/utils/MockData";
+import {
+  AddCustomerApiService,
+  UpdateCustomerApiService,
+} from "@/ApiServices/Customer.ApiService";
 // import {
 //   AddTedarikciApiService,
 //   UpdateTedarikciApiService,
@@ -17,6 +21,7 @@ export default function MusteriDetayContainer({
   musteriItemData: MusteriType | null;
   isAdd: boolean;
 }) {
+  console.log(JSON.stringify(musteriItemData));
   const tedarikciItem: Partial<MusteriType> = musteriItemData ?? {};
   const [activeStep, setActiveStep] = useState<number>(0);
   const [data, setData] = useState<Partial<MusteriType>>(tedarikciItem);
@@ -35,17 +40,17 @@ export default function MusteriDetayContainer({
     return { ...acc, [next.keyString]: elems };
   }, {});
 
-  //   const filteredData = Object.values(newData).reduce<Partial<TedarikciType>>(
-  //     (acc: any, next: any) => {
-  //       if (next["area"] == "Yurtiçi") {
-  //         next["area"] = "Domestic";
-  //       } else if (next["area"] == "Yurtdışı") {
-  //         next["area"] = "Foreign";
-  //       }
-  //       return { ...acc, ...next };
-  //     },
-  //     { type: "TestData" },
-  //   );
+  const filteredData = Object.values(newData).reduce<Partial<MusteriType>>(
+    (acc: any, next: any) => {
+      if (next["area"] == "Yurtiçi") {
+        next["area"] = "Domestic";
+      } else if (next["area"] == "Yurtdışı") {
+        next["area"] = "Foreign";
+      }
+      return { ...acc, ...next };
+    },
+    {},
+  );
 
   return (
     <CustomForm
@@ -56,11 +61,9 @@ export default function MusteriDetayContainer({
       data={{ ...data, area: data.area == "Domestic" ? "Yurtiçi" : "Yurtdışı" }}
       stepCount={1}
       isAdd={isAdd}
-      // serviceFunction={
-      //   isAdd ? AddTedarikciApiService : UpdateTedarikciApiService
-      // }
-      //   filteredData={filteredData}
-      redirectUrl="/Admin/Firmalar/Tedarikciler/TedarikciListesi"
+      serviceFunction={isAdd ? AddCustomerApiService : UpdateCustomerApiService}
+      filteredData={filteredData}
+      redirectUrl="/Admin/Firmalar/Musteriler/MusteriListesi"
     />
   );
 }

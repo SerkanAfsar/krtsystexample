@@ -1,13 +1,12 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import MusteriListesiContainer from "@/Containers/MusteriListesiContainer";
 
-export default function MusteriListesi() {
+export default function TedarikciListesi() {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Müşteri Listesi" />
-      <div className="mb-5 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
-        Müşteri Listesi Ekranı Geliştirilmeye Devam Ediliyor...
-      </div>
+      <MusteriListesiContainer />
     </DefaultLayout>
   );
 }
