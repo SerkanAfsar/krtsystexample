@@ -93,3 +93,23 @@ export const GetMusteriService = async ({
   });
   return result as ResponseResult<MusteriType>;
 };
+
+export const GetCustomersListForSalesService = async ({
+  search,
+}: {
+  search?: string;
+}): Promise<ResponseResult<MusteriType>> => {
+  let urlPath: string = "product/customer/search/";
+
+  if (search) {
+    urlPath += `?search=${search.toString()}`;
+  }
+
+  const result = await BaseService({
+    url: urlPath,
+    bodyData: null,
+    method: "GET",
+    hasToken: true,
+  });
+  return result as ResponseResult<MusteriType>;
+};

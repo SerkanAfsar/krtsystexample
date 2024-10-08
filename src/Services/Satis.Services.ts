@@ -1,3 +1,4 @@
+import { ProductSaleType } from "@/Containers/SatisEkleContainer";
 import { BaseService } from ".";
 import { ResponseResult } from "../../types/responseTypes";
 import { CustomDataListType } from "../../types/types";
@@ -35,4 +36,19 @@ export const GetSatisUrunDatatableService = async ({
   });
 
   return result as ResponseResult<CustomDataListType<any>>;
+};
+
+export const AddSatisService = async ({
+  data,
+}: {
+  data: ProductSaleType;
+}): Promise<ResponseResult<ProductSaleType>> => {
+  const result = await BaseService({
+    url: "product/customer/products/sales-product/",
+    bodyData: data,
+    method: "POST",
+    hasToken: true,
+  });
+
+  return result as ResponseResult<ProductSaleType>;
 };

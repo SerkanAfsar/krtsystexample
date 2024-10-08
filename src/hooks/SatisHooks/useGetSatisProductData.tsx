@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { ResponseResult } from "../../../types/responseTypes";
 import { CustomDataListType } from "../../../types/types";
 import { GetSatisUrunDatatableService } from "@/Services/Satis.Services";
-import { cn, hasDecimal } from "@/utils";
+import { cn, formatToCurrency, hasDecimal } from "@/utils";
 import { SatisItemType } from "@/app/Admin/Satislar/SatisEkle/page";
 
 export default function useGetSatisProductData({
@@ -28,6 +28,7 @@ export default function useGetSatisProductData({
     const target = e.target as HTMLInputElement;
     const item: any = {
       product_id: Number(target.name),
+      used_carat: 0,
     };
 
     if (target.checked) {
@@ -73,7 +74,13 @@ export default function useGetSatisProductData({
       code: item?.code,
       type: item?.type,
       totalCarat: item?.properties?.totalCarat || null,
-      maliyet: item?.total_cost,
+      maliyet: item?.total_cost ? (
+        <div className="w-full text-center">
+          ${formatToCurrency(Number(item?.total_cost))}
+        </div>
+      ) : (
+        ""
+      ),
       total_cost: item?.total_cost,
       kullanilanKarat: item?.menstrual_status == "Mixed" && (
         <CustomSatisInput

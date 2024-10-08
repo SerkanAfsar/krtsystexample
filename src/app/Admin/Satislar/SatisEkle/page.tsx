@@ -1,22 +1,30 @@
-"use client";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import { SatisModalHeader } from "../../../../../types/types";
-import useGetSatisProductData from "@/hooks/SatisHooks/useGetSatisProductData";
-import { useState } from "react";
+import SatisEkleContainer, {
+  CustomSearchSelectType,
+} from "@/Containers/SatisEkleContainer";
+import { GetCustomersListForSalesService } from "@/Services/Customer.Service";
+import { MusteriType } from "../../../../../types/types";
 
 export type SatisItemType = {
   product_id: number;
   used_carat: number;
 };
-const SatisEklePage = () => {
-  const [selectedValues, setSelectedValues] = useState<SatisItemType[]>([]);
-  const { activeData, activePage, totalPageCount, setActivePage, error } =
-    useGetSatisProductData({
-      selectedValues,
-      setSelectedValues,
-    });
+export default async function SatisEklePage() {
+  const musteriResult = await GetCustomersListForSalesService({
+    search: undefined,
+  });
+  if (!musteriResult.success) {
+    throw new Error(musteriResult.error ? musteriResult?.error[0] : "Hata");
+  }
+
+  const musteriResultData = musteriResult.data as MusteriType[];
+  const customers: CustomSearchSelectType[] = musteriResultData.map(
+    (item: MusteriType) => ({
+      label: item.name,
+      value: item.id as number,
+    }),
+  );
 
   return (
     <DefaultLayout>
@@ -29,21 +37,11 @@ const SatisEklePage = () => {
         ]}
         pageName="Yeni Satış Ekle "
       />
-      {error ? (
-        error
-      ) : (
-        <CustomDatatable
-          totalPageCount={totalPageCount}
-          columns={SatisModalHeader}
-          data={activeData}
-          activePage={activePage}
-          setActivePage={setActivePage}
-        />
-      )}
+      <div className="flex w-full flex-col gap-4 bg-white p-6">
+        <SatisEkleContainer customers={customers} />
+      </div>
     </DefaultLayout>
   );
-};
-
-export default SatisEklePage;
+}
 
 export const dynamic = "force-dynamic";
