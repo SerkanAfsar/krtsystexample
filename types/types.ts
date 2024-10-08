@@ -206,3 +206,45 @@ export type MusteriType = {
   authorized_phone: string;
   authorized_e_mail: string;
 };
+
+interface ISatisUrunType {
+  sec: string;
+  code: string;
+  type: string;
+  total_cost: string;
+  totalCarat: number;
+  kullanilanKarat: number;
+  maliyet: string;
+}
+
+export const SatisModalHeader: (Column<ISatisUrunType> & {
+  isHidden?: boolean;
+})[] = [
+  { Header: "Seç", accessor: "sec" },
+  {
+    Header: "Ürün Kodu",
+    accessor: "code",
+  },
+  {
+    Header: "Tipi",
+    accessor: "type",
+  },
+  {
+    Header: "Toplam Fiyat",
+    accessor: "total_cost",
+  },
+  {
+    Header: "Toplam Karat",
+    accessor: "totalCarat",
+  },
+
+  {
+    Header: "Kullanılan Karat",
+    accessor: "kullanilanKarat",
+    isHidden: true,
+  },
+  {
+    Header: "Maliyet",
+    accessor: "maliyet",
+  },
+];

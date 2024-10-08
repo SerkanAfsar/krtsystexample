@@ -9,10 +9,6 @@ import {
   AddCustomerApiService,
   UpdateCustomerApiService,
 } from "@/ApiServices/Customer.ApiService";
-// import {
-//   AddTedarikciApiService,
-//   UpdateTedarikciApiService,
-// } from "@/ApiServices/Suppliers.ApiService";
 
 export default function MusteriDetayContainer({
   musteriItemData,
@@ -21,7 +17,6 @@ export default function MusteriDetayContainer({
   musteriItemData: MusteriType | null;
   isAdd: boolean;
 }) {
-  console.log(JSON.stringify(musteriItemData));
   const tedarikciItem: Partial<MusteriType> = musteriItemData ?? {};
   const [activeStep, setActiveStep] = useState<number>(0);
   const [data, setData] = useState<Partial<MusteriType>>(tedarikciItem);
