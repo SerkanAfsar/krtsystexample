@@ -1,18 +1,44 @@
+"use client";
+
+import { DovizKurlariType } from "@/types";
 import { cn } from "@/utils";
 import { ClassValue } from "clsx";
+import React, { useEffect, useState } from "react";
 
-export type KurlarType = {
-  title: string;
-  data: { [key: string]: string | object }[];
-};
 export default function Kurlar({
   className,
-  item,
+  title,
+  apiUrl,
+  subTitle,
 }: {
-  item: KurlarType;
   className: ClassValue;
+  title: string;
+  apiUrl: string;
+  subTitle: string;
 }) {
-  const objKeys = Object.keys(item.data[0]);
+  const [stateItem, setStateItem] = useState<DovizKurlariType>();
+  useEffect(() => {
+    const process = async () => {
+      const response = await fetch(apiUrl, {
+        method: "GET",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+      });
+      const result = await response.json();
+
+      setStateItem(result);
+    };
+
+    const timer = setInterval(() => {
+      process();
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, [apiUrl]);
+
+  if (!stateItem) {
+    return <div>Yükleniyor...</div>;
+  }
   return (
     <div
       className={cn(
@@ -21,44 +47,40 @@ export default function Kurlar({
       )}
     >
       <h2 className="block w-full text-left text-lg font-bold  text-black">
-        {item.title}
+        {title}
       </h2>
       <div
-        className={`grid w-full font-bold text-black grid-cols-${objKeys.length} gap-3 bg-[#e4e6eb] p-2`}
+        className={`grid w-full grid-cols-5 gap-3 bg-[#e4e6eb] p-2 font-bold text-black`}
       >
-        {objKeys.map((header: any, index) => {
+        <div className="col-span-1">{subTitle}</div>
+        <div className="col-span-1">Alış</div>
+        <div className="col-span-1">Satış</div>
+        <div className="col-span-1">Fark</div>
+        <div className="col-span-1">Güncelleme</div>
+      </div>
+      <div
+        className={`text-md grid w-full grid-cols-5 gap-3 p-2 font-normal text-black`}
+      >
+        {Object.entries(stateItem).map(([key, value], index) => {
           return (
-            <div className="col-span-1" key={index}>
-              {typeof header != "object" ? header : header?.value}
-            </div>
+            <React.Fragment key={index}>
+              <div className="col-span-1">{value.isim}</div>
+              <div className="col-span-1">{value.alis} TL</div>
+              <div className="col-span-1">{value.satis} TL</div>
+              <div
+                className={cn(
+                  value.degisim?.toString().includes("-")
+                    ? "text-red"
+                    : "text-green-700",
+                )}
+              >
+                {value.degisim} %
+              </div>
+              <div className="col-span-1">{value.zaman}</div>
+            </React.Fragment>
           );
         })}
       </div>
-      {item.data.map((data: any, index) => (
-        <div
-          key={index}
-          className={`grid w-full p-2 grid-cols-${objKeys.length} gap-3 font-bold text-black`}
-        >
-          {objKeys.map((keyItem, index) => {
-            const item = data[keyItem];
-            return (
-              <div
-                className={cn(
-                  "col-span-1",
-                  typeof item == "object"
-                    ? item.increase
-                      ? "text-red"
-                      : "text-green-600"
-                    : "text-black",
-                )}
-                key={index}
-              >
-                {typeof item != "object" ? item : item.value}
-              </div>
-            );
-          })}
-        </div>
-      ))}
     </div>
   );
 }

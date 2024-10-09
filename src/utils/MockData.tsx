@@ -21,8 +21,6 @@ import {
   RenkliTasRenkListesi,
 } from "@/data/RenkliTas.data";
 import { GenerateSertificateUrl } from "./Pirlanta.Utils";
-import { KurlarType } from "@/components/Kurlar";
-import { formatToCurrency } from ".";
 import { CustomOptionType } from "../../types/inputTypes";
 export const PirlantaSertifikaKodlari: CustomOptionType[] = [
   {
@@ -1349,78 +1347,6 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
     ],
   },
 ];
-
-export const DovizKurlari: KurlarType = {
-  title: "Döviz Kurları",
-  data: [
-    {
-      Döviz: "Dolar",
-      Alış: formatToCurrency(Number(33.9662)) as string,
-      Satış: formatToCurrency(33.9872) as string,
-      Fark: {
-        value: "0.30%",
-        increase: true,
-      },
-      Güncelleme: "25.08.2024 18:00",
-    },
-    {
-      Döviz: "Euro",
-      Alış: formatToCurrency(37.9926) as string,
-      Satış: formatToCurrency(38.0601) as string,
-      Fark: {
-        value: "0.72%",
-        increase: false,
-      },
-      Güncelleme: "25.08.2024 18:00",
-    },
-    {
-      Döviz: "Sterlin",
-      Alış: formatToCurrency(44.8659) as string,
-      Satış: formatToCurrency(44.9484) as string,
-      Fark: {
-        value: "1.20%",
-        increase: false,
-      },
-      Güncelleme: "25.08.2024 18:00",
-    },
-  ],
-};
-
-export const AltinKurlari: KurlarType = {
-  title: "Altın Kurları",
-  data: [
-    {
-      Altın: "Has Altın",
-      Alış: formatToCurrency(Number(2796.01)) as string,
-      Satış: formatToCurrency(2807.34) as string,
-      Fark: {
-        value: "0.41%",
-        increase: false,
-      },
-      Güncelleme: "25.08.2024 18:00",
-    },
-    {
-      Altın: "Ons Altın",
-      Alış: formatToCurrency(2512.2) as string,
-      Satış: formatToCurrency(2512.6) as string,
-      Fark: {
-        value: "0.72%",
-        increase: true,
-      },
-      Güncelleme: "25.08.2024 18:00",
-    },
-    {
-      Altın: "Gram Altın",
-      Alış: formatToCurrency(2782.03) as string,
-      Satış: formatToCurrency(2815.76) as string,
-      Fark: {
-        value: "1.20%",
-        increase: true,
-      },
-      Güncelleme: "25.08.2024 18:00",
-    },
-  ],
-};
 
 export const AmbarOptionsData: CustomOptionType[] = [
   { titleVal: "Galataport", valueVal: "Galataport" },

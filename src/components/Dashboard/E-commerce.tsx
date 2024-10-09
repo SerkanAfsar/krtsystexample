@@ -13,7 +13,7 @@ import {
 
 import { FaUserFriends } from "react-icons/fa";
 import Kurlar from "../Kurlar";
-import { AltinKurlari, DovizKurlari } from "@/utils/MockData";
+
 import { WorkOrderType } from "../../../types/WorkOrder.types";
 import { LiaRingSolid } from "react-icons/lia";
 import { BsBuildings } from "react-icons/bs";
@@ -104,8 +104,20 @@ const ECommerce = ({
           <BsBuildings size={"25px"} />
         </CardDataStats>
         <div></div>
-        <Kurlar className="col-span-2" item={DovizKurlari} />
-        <Kurlar className="col-span-2" item={AltinKurlari} />
+        <Kurlar
+          className="col-span-2"
+          apiUrl="/api/kurlar/doviz"
+          title="Döviz Kurları"
+          key={"0"}
+          subTitle="Döviz"
+        />
+        <Kurlar
+          className="col-span-2"
+          apiUrl="/api/kurlar/altin"
+          title="Altın Kurları"
+          key={"1"}
+          subTitle="Altın"
+        />
       </div>
     </>
   );
