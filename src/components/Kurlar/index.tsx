@@ -3,7 +3,7 @@
 import { DovizKurlariType } from "@/types";
 import { cn } from "@/utils";
 import { ClassValue } from "clsx";
-import React, { useEffect, useState } from "react";
+import React, { cache, useEffect, useState } from "react";
 
 export default function Kurlar({
   className,
@@ -19,10 +19,7 @@ export default function Kurlar({
   const [stateItem, setStateItem] = useState<DovizKurlariType>();
   useEffect(() => {
     const process = async () => {
-      const response = await fetch(apiUrl, {
-        method: "GET",
-        headers: { "Content-Type": "application/json; charset=utf-8" },
-      });
+      const response = await fetch(apiUrl, { cache: "no-store" });
       const result = await response.json();
 
       setStateItem(result);

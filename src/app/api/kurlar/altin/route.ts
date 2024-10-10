@@ -2,7 +2,9 @@ import { CurrencyType, DovizKurlariType } from "@/types";
 import { HTMLElement, parse } from "node-html-parser";
 
 export async function GET() {
-  const response = await fetch("https://bigpara.hurriyet.com.tr/altin/");
+  const response = await fetch("https://bigpara.hurriyet.com.tr/altin/", {
+    cache: "no-store",
+  });
   const result = await response.text();
   const text = parse(result);
   const elems = text.querySelectorAll(".tBody ul");

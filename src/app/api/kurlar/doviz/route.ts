@@ -2,7 +2,9 @@ import { CurrencyType, DovizKurlariType } from "@/types";
 import { HTMLElement, parse } from "node-html-parser";
 
 export async function GET() {
-  const response = await fetch("https://bigpara.hurriyet.com.tr/doviz/");
+  const response = await fetch("https://bigpara.hurriyet.com.tr/doviz/", {
+    cache: "no-store",
+  });
   const result = await response.text();
   const text = parse(result);
   const elems = text.querySelectorAll(".tBody ul");
@@ -16,6 +18,7 @@ export async function GET() {
     euro: returnResult(euroElem),
     sterlin: returnResult(sterlinElem),
   };
+
   return Response.json(currecyResult);
 }
 
@@ -30,3 +33,5 @@ const returnResult = (elem: HTMLElement): CurrencyType => {
     zaman: liItem[5].innerText,
   };
 };
+
+export const dynamic = "force-dynamic";
