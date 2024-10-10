@@ -3,7 +3,7 @@
 import { DovizKurlariType } from "@/types";
 import { cn } from "@/utils";
 import { ClassValue } from "clsx";
-import React, { cache, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Kurlar({
   className,
