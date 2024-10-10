@@ -14,9 +14,11 @@ import {
 export default function SadeDetayContainer({
   sadeItemData,
   isAdd,
+  gramAltinKur,
 }: {
   sadeItemData: (ISadeType & { code?: string | null }) | null;
   isAdd: boolean;
+  gramAltinKur: number;
 }) {
   const sadeItem: ISadeType = sadeItemData ?? {};
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -102,9 +104,7 @@ export default function SadeDetayContainer({
   const totalCoastHesapla = useCallback(
     ({ hasGrami, iscilik }: { hasGrami?: string; iscilik: number }) => {
       if (hasGrami && iscilik) {
-        const totalCost =
-          Number(hasGrami) * Number(process.env.NEXT_PUBLIC_HAS_KURU) +
-          Number(iscilik);
+        const totalCost = Number(hasGrami) * gramAltinKur + Number(iscilik);
 
         return totalCost.toFixed(2);
       }

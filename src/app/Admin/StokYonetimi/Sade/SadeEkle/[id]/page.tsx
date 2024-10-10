@@ -4,6 +4,7 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { ProductType } from "../../../../../../../types/types";
 import { notFound } from "next/navigation";
+import { getGramAltinKuru } from "@/utils/Sade.Utils";
 
 export default async function SadeDetay({
   params,
@@ -13,6 +14,8 @@ export default async function SadeDetay({
   const result = await GetProductService({ id: Number(params.id) });
   if (result?.success) {
     const data = result.data as ProductType;
+
+    const gramAltiKuru = await getGramAltinKuru();
 
     const props = data.properties;
     delete data.properties;
@@ -29,7 +32,11 @@ export default async function SadeDetay({
           ]}
           pageName="Sade Güncelle"
         />
-        <SadeDetayContainer isAdd={false} sadeItemData={realData} />
+        <SadeDetayContainer
+          gramAltinKur={gramAltiKuru}
+          isAdd={false}
+          sadeItemData={realData}
+        />
       </DefaultLayout>
     );
   } else {

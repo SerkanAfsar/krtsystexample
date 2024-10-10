@@ -2,8 +2,11 @@ import SadeDetayContainer from "@/Containers/SadeDetayContainer";
 
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import { getGramAltinKuru } from "@/utils/Sade.Utils";
 
-const ProFormLayout = () => {
+const SadeEklePage = async () => {
+  const gramAltiKuru = await getGramAltinKuru();
+
   return (
     <DefaultLayout>
       <Breadcrumb
@@ -15,9 +18,13 @@ const ProFormLayout = () => {
         ]}
         pageName="Sade Ekle"
       />
-      <SadeDetayContainer isAdd={true} sadeItemData={null} />
+      <SadeDetayContainer
+        isAdd={true}
+        gramAltinKur={gramAltiKuru}
+        sadeItemData={null}
+      />
     </DefaultLayout>
   );
 };
 
-export default ProFormLayout;
+export default SadeEklePage;

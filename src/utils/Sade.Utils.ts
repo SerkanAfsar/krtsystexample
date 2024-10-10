@@ -1,4 +1,6 @@
 import { SadeModelTurleri } from "@/data/Sade.data";
+import { CurrencyType } from "@/types";
+import { HTMLElement, parse } from "node-html-parser";
 
 export const SadeAltinKarsiliklari = (ayar: string): string => {
   switch (ayar) {
@@ -60,4 +62,33 @@ export const SadeHasGramHesapla = ({
   } else {
     return "Not Exists";
   }
+};
+
+export const getGramAltinKuru = async () => {
+  const response = await fetch("https://bigpara.hurriyet.com.tr/altin/", {
+    cache: "no-store",
+  });
+  const result = await response.text();
+  const text = parse(result);
+  const elems = text.querySelectorAll(".tBody ul");
+
+  const gramAltinElem = elems[0];
+
+  const gramAltinLi = returnResult(gramAltinElem);
+
+  return gramAltinLi?.satis
+    ? Number(gramAltinLi?.satis?.replace(".", "").replace(",", "."))
+    : 2200;
+};
+
+const returnResult = (elem: HTMLElement): CurrencyType => {
+  const liItem = elem.querySelectorAll("li");
+
+  return {
+    isim: liItem[0].innerText,
+    alis: liItem[1].innerText,
+    satis: liItem[2].innerText,
+    degisim: liItem[3].innerText.replace("%", ""),
+    zaman: liItem[4].innerText,
+  };
 };
