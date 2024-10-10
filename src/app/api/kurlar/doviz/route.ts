@@ -33,5 +33,3 @@ const returnResult = (elem: HTMLElement): CurrencyType => {
     zaman: liItem[5].innerText,
   };
 };
-
-export const dynamic = "force-dynamic";

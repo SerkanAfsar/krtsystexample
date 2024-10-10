@@ -108,14 +108,12 @@ const ECommerce = ({
           className="col-span-2"
           apiUrl="/api/kurlar/doviz"
           title="Döviz Kurları"
-          key={"0"}
           subTitle="Döviz"
         />
         <Kurlar
           className="col-span-2"
           apiUrl="/api/kurlar/altin"
           title="Altın Kurları"
-          key={"1"}
           subTitle="Altın"
         />
       </div>
