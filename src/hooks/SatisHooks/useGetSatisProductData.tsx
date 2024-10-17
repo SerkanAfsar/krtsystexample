@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { ResponseResult } from "../../../types/responseTypes";
 import { CustomDataListType } from "../../../types/types";
 import { GetSatisUrunDatatableService } from "@/Services/Satis.Services";
-import { cn, formatToCurrency, hasDecimal } from "@/utils";
+import { cn, formatToCurrency, hasDecimal, ProductTypesIntl } from "@/utils";
 import { SatisItemType } from "@/app/Admin/Satislar/SatisEkle/page";
 
 export default function useGetSatisProductData({
@@ -23,6 +23,7 @@ export default function useGetSatisProductData({
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const inputKaratRefs = useRef<HTMLInputElement[]>([]);
+  const inputPriceRefs = useRef<HTMLInputElement[]>([]);
 
   const handleCheck = (e: React.FormEvent<HTMLInputElement>, index: number) => {
     const target = e.target as HTMLInputElement;
@@ -35,11 +36,18 @@ export default function useGetSatisProductData({
       if (inputKaratRefs.current[index]) {
         inputKaratRefs.current[index].disabled = false;
       }
+      if (inputPriceRefs.current[index]) {
+        inputPriceRefs.current[index].disabled = false;
+      }
       setSelectedValues((prev: any[]) => [...prev, item]);
     } else {
       if (inputKaratRefs.current[index]) {
         inputKaratRefs.current[index].value = "";
         inputKaratRefs.current[index].disabled = true;
+      }
+      if (inputPriceRefs.current[index]) {
+        inputPriceRefs.current[index].value = "";
+        inputPriceRefs.current[index].disabled = true;
       }
 
       setSelectedValues((prev: any[]) =>
@@ -72,7 +80,21 @@ export default function useGetSatisProductData({
         />
       ),
       code: item?.code,
-      type: item?.type,
+      type: ProductTypesIntl(item?.type),
+      price: (
+        <CustomSatisPriceInput
+          condition={condition}
+          product_id={item.pk as number}
+          setSelectedValues={setSelectedValues}
+          ref={(el) => {
+            if (el) {
+              inputPriceRefs.current[index] = el;
+            }
+          }}
+          val={null}
+        />
+      ),
+
       totalCarat: item?.properties?.totalCarat || null,
       maliyet: item?.total_cost ? (
         <div className="w-full text-center">
@@ -81,7 +103,9 @@ export default function useGetSatisProductData({
       ) : (
         ""
       ),
-      total_cost: item?.total_cost,
+      total_cost: item?.total_cost
+        ? `$${formatToCurrency(Number(item?.total_cost))}`
+        : null,
       kullanilanKarat: item?.menstrual_status == "Mixed" && (
         <CustomSatisInput
           condition={condition}
@@ -201,5 +225,48 @@ const CustomSatisInput = React.forwardRef<
     );
   },
 );
-
 CustomSatisInput.displayName = "CustomSatisInput";
+
+const CustomSatisPriceInput = React.forwardRef<
+  HTMLInputElement,
+  React.InputHTMLAttributes<HTMLInputElement> & {
+    condition: boolean;
+    setSelectedValues: any;
+    val: number | null;
+    product_id: number;
+  }
+>(
+  (
+    { className, condition, setSelectedValues, val, product_id, ...props },
+    ref,
+  ) => {
+    const [value, setValue] = useState<number | null>(val);
+
+    useEffect(() => {
+      setSelectedValues((prev: SatisItemType[]) => {
+        const indexNo = prev.findIndex((a) => a.product_id == product_id);
+        if (indexNo > -1) {
+          prev[indexNo].sales_price = Number(value);
+        }
+        return [...prev];
+      });
+    }, [value, setSelectedValues, product_id]);
+
+    return (
+      <div className="flex flex-col items-start justify-start gap-2">
+        <input
+          type="number"
+          value={value?.toString()}
+          className={cn("h-8 w-30 rounded-sm border bg-white/70 p-3")}
+          {...props}
+          ref={ref}
+          disabled={!condition}
+          onChange={(e) => setValue(Number(e.target.value))}
+        />
+        {/* {isErr && <span className="text-red">Fiyat Giriniz...</span>} */}
+      </div>
+    );
+  },
+);
+
+CustomSatisPriceInput.displayName = "CustomSatisPriceInput";

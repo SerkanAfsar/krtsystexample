@@ -1,6 +1,5 @@
 import { clsx, ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-
 import { ResponseResult } from "../../types/responseTypes";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
@@ -71,5 +70,21 @@ export const ApiServiceResult = ({
     return toast.error(err, {
       position: "top-right",
     });
+  }
+};
+
+export const ProductTypesIntl = (
+  type: "Diamond" | "Simple" | "ColoredStone" | "Gem",
+): string => {
+  switch (type) {
+    case "ColoredStone":
+    default:
+      return "Renkli Taş";
+    case "Diamond":
+      return "Pırlanta";
+    case "Gem":
+      return "Mücevher";
+    case "Simple":
+      return "Sade";
   }
 };

@@ -9,6 +9,7 @@ import { MusteriType } from "../../../../../types/types";
 export type SatisItemType = {
   product_id: number;
   used_carat: number;
+  sales_price: number;
 };
 export default async function SatisEklePage() {
   const musteriResult = await GetCustomersListForSalesService({

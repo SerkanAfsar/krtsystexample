@@ -210,6 +210,7 @@ export type MusteriType = {
 interface ISatisUrunType {
   sec: string;
   code: string;
+  price: string;
   type: string;
   total_cost: string;
   totalCarat: number;
@@ -224,6 +225,10 @@ export const SatisModalHeader: (Column<ISatisUrunType> & {
   {
     Header: "Ürün Kodu",
     accessor: "code",
+  },
+  {
+    Header: "Satış Fiyatı",
+    accessor: "price",
   },
   {
     Header: "Tipi",

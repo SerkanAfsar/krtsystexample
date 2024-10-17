@@ -29,6 +29,7 @@ export default function SatisEkleContainer({
   const [selectedCustomerId, setSelectedCustomerId] = useState<
     number | undefined
   >(undefined);
+  // const [sales_price, setSalePrice] = useState<number | null>(null);
   const { activeData, activePage, totalPageCount, setActivePage, error } =
     useGetSatisProductData({
       selectedValues,
@@ -62,6 +63,7 @@ export default function SatisEkleContainer({
           setSelectedCustomerId(item ? item.value : undefined);
         }}
       />
+
       <div className="block w-full">
         <label className="mb-2 block w-full font-bold text-black">
           Ürünleri Seçiniz
