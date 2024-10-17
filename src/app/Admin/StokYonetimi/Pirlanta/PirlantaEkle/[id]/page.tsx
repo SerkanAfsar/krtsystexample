@@ -16,6 +16,7 @@ const PirlantaGuncelle = async ({ params }: { params: { id: string } }) => {
     delete data.properties;
     delete data.product_certificate;
     delete data.product_cost;
+
     const resultData: AddDiamondType = {
       ...data,
       ...properties,

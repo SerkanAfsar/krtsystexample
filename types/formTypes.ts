@@ -15,7 +15,7 @@ export type IRenkliTasType = {
   sertifikaDosyasi?: File;
   total_cost?: number;
   islemler?: React.ReactNode;
-  supplier_id: number;
+  supplier_id?: number;
 };
 
 export type IDiamondType = {
@@ -30,7 +30,7 @@ export type IDiamondType = {
   aciklama?: string;
   fromsingleormixed?: string;
   frommixedItem?: string;
-  supplier_id: number;
+  supplier_id?: number;
 };
 
 export type ISertifikaType = {
