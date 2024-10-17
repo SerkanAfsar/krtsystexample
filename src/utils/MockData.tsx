@@ -22,6 +22,7 @@ import {
 } from "@/data/RenkliTas.data";
 import { GenerateSertificateUrl } from "./Pirlanta.Utils";
 import { CustomOptionType } from "../../types/inputTypes";
+import { TedarikciCustomListType } from "./Tedarikciler.Utils";
 export const PirlantaSertifikaKodlari: CustomOptionType[] = [
   {
     titleVal: "HRD",
@@ -495,7 +496,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
         name: "shipping_address",
         type: "textarea",
         title: "Müşteri Gönderim Adresi",
-        placeholder: "Müşteri Gönderim Adresi  Giriniz...",
+        placeholder: "Müşteri Gönderim Adresi Giriniz...",
         required: false,
         rows: 4,
         requiredMessage: "Müşteri Gönderim Adresi Boş Bırakılamaz",
@@ -511,6 +512,9 @@ export const AddMusteriSections: Array<FormSectionType> = [
         required: false,
         requiredMessage: "Ülke Seçiniz",
         span: 2,
+        relativeTo: "area",
+        visibleRelative: "Yurtdışı",
+        staticOptions: RenkliTasListesiMenseiList,
         moveToTop: true,
       },
     ],
@@ -806,7 +810,18 @@ export const AddStoneSections: Array<FormSectionType> = [
         relativeTo: "menstrual_status",
         required: false,
         requiredMessage: "Açıklama Değeri Boş Bırakılamaz",
-        span: 4,
+        span: 2,
+      },
+      {
+        name: "supplier_id",
+        type: "select",
+        title: "Tedarikçi",
+        placeholder: "Tedarikçi Değerini Giriniz...",
+        relativeTo: "menstrual_status",
+        required: false,
+        requiredMessage: "Tedarikçi Değeri Boş Bırakılamaz",
+        span: 2,
+        customOptions: TedarikciCustomListType,
       },
     ],
   },
@@ -1274,6 +1289,17 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
         disabled: false,
         rightIcon: "$",
         span: 2,
+      },
+      {
+        name: "supplier_id",
+        type: "select",
+        title: "Tedarikçi",
+        placeholder: "Tedarikçi Değerini Giriniz...",
+        relativeTo: "menstrual_status",
+        required: false,
+        requiredMessage: "Tedarikçi Değeri Boş Bırakılamaz",
+        span: 2,
+        customOptions: TedarikciCustomListType,
       },
       // {
       //   name: "sertifikaDosyasi",

@@ -72,6 +72,7 @@ export default function RenkliTasDetayContainer({
         total_cost: data.total_cost,
         pricePerCarat: data?.pricePerCarat ?? null,
       },
+      supplier_id: Number(data.supplier_id),
     },
   );
 

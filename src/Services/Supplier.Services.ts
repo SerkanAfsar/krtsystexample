@@ -18,6 +18,19 @@ export const AddTedarikciService = async ({
   return result as ResponseResult<TedarikciType>;
 };
 
+export const GetAllTedarikciService = async (): Promise<
+  ResponseResult<any>
+> => {
+  const result = await BaseService({
+    url: "product/supplier",
+    bodyData: null,
+    method: "GET",
+    hasToken: true,
+  });
+
+  return result as ResponseResult<any>;
+};
+
 export const GetTedarikciService = async ({
   id,
 }: {

@@ -8,7 +8,7 @@ import CustomFileSelect from "./CustomFileSelect";
 
 import { UseFormGetValues } from "react-hook-form";
 import CustomTextArea from "./CustomTextArea";
-import CustomRadioButtonList from "./CustomRadioButtonList";
+import { CustomRadioButtonList } from "./CustomRadioButtonList";
 
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -215,6 +215,7 @@ export default function FormElementItem({
               !isDisabled && item.required ? item.requiredMessage : false,
             ...item.extraValidations,
           })}
+          name={item.name}
           item={item}
           setValue={setValue}
           {...rest}

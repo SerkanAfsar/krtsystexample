@@ -68,6 +68,7 @@ const PirlantaDetayContainer = ({
       type: "Diamond",
       buy_date: data.buy_date,
       code: pruductCode,
+      supplier_id: Number(data.supplier_id),
     },
   );
 

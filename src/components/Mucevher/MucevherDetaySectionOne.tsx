@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import CustomDatePicker from "../CustomUI/CustomDatePicker";
 import CustomInput from "../CustomUI/CustomInput";
 
-import CustomRadioButtonList from "../CustomUI/CustomRadioButtonList";
+import { CustomRadioButtonList } from "../CustomUI/CustomRadioButtonList";
 import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
 import Image from "next/image";

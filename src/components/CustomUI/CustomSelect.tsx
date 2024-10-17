@@ -4,7 +4,7 @@ import { CustomOptionType, ElementType } from "../../../types/inputTypes";
 import { cn } from "@/utils";
 import { selectKesimValue } from "@/utils/Pirlanta.Utils";
 import { ClassValue } from "clsx";
-import React, { useId, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 
 type SelectElementProps = React.InputHTMLAttributes<HTMLSelectElement> & {
   err?: string | null;
@@ -32,14 +32,29 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
   ) => {
     const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
     const [selectedValue, setSelectedValue] = useState<string>("");
+    const [customOptionValues, setCustomOptionValues] = useState<
+      CustomOptionType[] | null
+    >(null);
 
-    const options = item.isExtra ? extraOptions : item.options;
+    const options = item.isExtra
+      ? extraOptions
+      : customOptionValues
+        ? customOptionValues
+        : item.options;
     const id = useId();
 
     const selectedExtraValue = selectKesimValue({
       selectedValue,
       options,
     });
+
+    useEffect(() => {
+      const process = async () => {
+        const result = await item.customOptions();
+        setCustomOptionValues(result);
+      };
+      process();
+    }, [item.customOptions]);
 
     return (
       <div className={cn("w-full", outerClass && outerClass)}>
