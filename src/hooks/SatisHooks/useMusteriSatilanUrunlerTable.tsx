@@ -3,11 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ResponseResult } from "../../../types/responseTypes";
-import {
-  CustomDataListType,
-  CustomerPurchatedProducts,
-  ProductType,
-} from "../../../types/types";
+import { CustomerPurchatedProducts } from "../../../types/types";
 import { formatToCurrency } from "@/utils";
 import { GetCustomerPursahedList } from "@/Services/Customer.Service";
 import { CustomerSaledProductsHeaderType } from "@/types/Satis";
