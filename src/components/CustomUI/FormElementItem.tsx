@@ -9,6 +9,7 @@ import CustomFileSelect from "./CustomFileSelect";
 import { UseFormGetValues } from "react-hook-form";
 import CustomTextArea from "./CustomTextArea";
 import { CustomRadioButtonList } from "./CustomRadioButtonList";
+import { CustomPhoneNumberText } from "./CustomPhoneNumberText";
 
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -218,6 +219,30 @@ export default function FormElementItem({
           name={item.name}
           item={item}
           setValue={setValue}
+          {...rest}
+        />
+      );
+    }
+    case "tel": {
+      return (
+        <CustomPhoneNumberText
+          {...register(item.name, {
+            required:
+              !isDisabled && item.required ? item.requiredMessage : false,
+            ...item.extraValidations,
+          })}
+          value={val}
+          err={err}
+          key={item.name}
+          outerClass={cn(
+            item?.span && `col-span-${item.span.toString()}`,
+            item.colStart && `col-start-${item.colStart}`,
+            item.colEnd && `col-end-${item.colEnd}`,
+            item.rowSpan && `row-span-${item.rowSpan}`,
+          )}
+          setValue={setValue}
+          item={item}
+          disabled={(!isAdd && item.isCodeRelated) || isDisabled}
           {...rest}
         />
       );

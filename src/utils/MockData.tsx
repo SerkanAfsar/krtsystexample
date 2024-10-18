@@ -293,7 +293,7 @@ export const AddTedarikciSections: Array<FormSectionType> = [
       },
       {
         name: "phone",
-        type: "text",
+        type: "tel",
         title: "Tedarikçi Telefonu",
         placeholder: "Tedarikçi Telefonu Giriniz...",
         required: true,
@@ -397,7 +397,7 @@ export const AddTedarikciSections: Array<FormSectionType> = [
       },
       {
         name: "authorized_phone",
-        type: "text",
+        type: "tel",
         title: "Yetkili Telefonu",
         placeholder: "Yetkili Telefonu Giriniz...",
         required: true,
@@ -450,7 +450,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
       },
       {
         name: "phone",
-        type: "text",
+        type: "tel",
         title: "Müşteri Telefonu",
         placeholder: "Müşteri Telefonu Giriniz...",
         required: true,
@@ -616,7 +616,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
       },
       {
         name: "authorized_phone",
-        type: "text",
+        type: "tel",
         title: "Yetkili Telefonu",
         placeholder: "Yetkili Telefonu Giriniz...",
         required: true,

@@ -8,6 +8,7 @@ import {
 import { GetWorkOrdersList } from "@/Services/WorkOrder.Services";
 import { ProductListType } from "../../../../types/types";
 import { WorkOrderType } from "../../../../types/WorkOrder.types";
+import { CustomPhoneNumberText } from "@/components/CustomUI/CustomPhoneNumberText";
 
 export default async function Home() {
   const [pirlantaData, renklitasData, sadeData, mucevherData, isEmriResult] =
