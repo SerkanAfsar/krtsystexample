@@ -16,6 +16,13 @@ export type ProductType = {
   menstrual_status?: string;
   product_cost?: { [key: string]: string | number | undefined };
   quantity?: number | null;
+  supplier?: TedarikciType;
+};
+
+export type CustomerPurchatedProducts = {
+  id: number;
+  name: string;
+  purchased_products: ProductType[];
 };
 
 export type ProductListType = {

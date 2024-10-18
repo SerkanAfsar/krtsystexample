@@ -9,6 +9,10 @@ import {
   AddCustomerApiService,
   UpdateCustomerApiService,
 } from "@/ApiServices/Customer.ApiService";
+import CustomTabs, { TabSectionType } from "@/components/CustomUI/CustomTabs";
+import useMusteriSatilanUrunlerTable from "@/hooks/SatisHooks/useMusteriSatilanUrunlerTable";
+import CustomDatatable from "@/components/CustomUI/CustomDatatable";
+import { CustomerSaledProductsHeader } from "@/types/Satis";
 
 export default function MusteriDetayContainer({
   musteriItemData,
@@ -20,6 +24,8 @@ export default function MusteriDetayContainer({
   const tedarikciItem: Partial<MusteriType> = musteriItemData ?? {};
   const [activeStep, setActiveStep] = useState<number>(0);
   const [data, setData] = useState<Partial<MusteriType>>(tedarikciItem);
+  const { activeData, activePage, totalPageCount, setActivePage, error } =
+    useMusteriSatilanUrunlerTable({ customerId: musteriItemData?.id || 0 });
 
   const newData: any = AddMusteriSections.reduce((acc, next) => {
     const elems = next.elements.reduce((acc2, next2) => {
@@ -47,18 +53,68 @@ export default function MusteriDetayContainer({
     {},
   );
 
-  return (
-    <CustomForm
-      setData={setData}
-      activeStep={activeStep}
-      setActiveStep={setActiveStep}
-      sections={AddMusteriSections.filter((a) => a.groupNumber == activeStep)}
-      data={{ ...data, area: data.area == "Domestic" ? "Yurtiçi" : "Yurtdışı" }}
-      stepCount={1}
-      isAdd={isAdd}
-      serviceFunction={isAdd ? AddCustomerApiService : UpdateCustomerApiService}
-      filteredData={filteredData}
-      redirectUrl="/Admin/Firmalar/Musteriler/MusteriListesi"
-    />
-  );
+  const sections: TabSectionType[] = [
+    {
+      colName: "Müşteri Bilgileri",
+      component: (
+        <CustomForm
+          setData={setData}
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+          sections={AddMusteriSections.filter(
+            (a) => a.groupNumber == activeStep,
+          )}
+          data={{
+            ...data,
+            area: data.area == "Domestic" ? "Yurtiçi" : "Yurtdışı",
+          }}
+          stepCount={1}
+          isAdd={isAdd}
+          serviceFunction={
+            isAdd ? AddCustomerApiService : UpdateCustomerApiService
+          }
+          filteredData={filteredData}
+          redirectUrl="/Admin/Firmalar/Musteriler/MusteriListesi"
+        />
+      ),
+    },
+    {
+      colName: "Müşteriye Satılan Ürünler",
+      component: musteriItemData?.id ? (
+        <CustomDatatable
+          totalPageCount={totalPageCount}
+          columns={CustomerSaledProductsHeader}
+          data={activeData}
+          activePage={activePage}
+          isFirstLarge={false}
+          setActivePage={setActivePage}
+        />
+      ) : (
+        <div>Deneme</div>
+      ),
+    },
+  ];
+  if (isAdd) {
+    return (
+      <CustomForm
+        setData={setData}
+        activeStep={activeStep}
+        setActiveStep={setActiveStep}
+        sections={AddMusteriSections.filter((a) => a.groupNumber == activeStep)}
+        data={{
+          ...data,
+          area: data.area == "Domestic" ? "Yurtiçi" : "Yurtdışı",
+        }}
+        stepCount={1}
+        isAdd={isAdd}
+        serviceFunction={
+          isAdd ? AddCustomerApiService : UpdateCustomerApiService
+        }
+        filteredData={filteredData}
+        redirectUrl="/Admin/Firmalar/Musteriler/MusteriListesi"
+      />
+    );
+  }
+
+  return <CustomTabs productCode={""} tabs={sections} />;
 }

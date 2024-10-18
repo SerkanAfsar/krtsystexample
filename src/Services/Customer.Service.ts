@@ -1,6 +1,10 @@
 import { BaseService } from ".";
 import { ResponseResult } from "../../types/responseTypes";
-import { CustomDataListType, MusteriType } from "../../types/types";
+import {
+  CustomDataListType,
+  CustomerPurchatedProducts,
+  MusteriType,
+} from "../../types/types";
 
 export const AddCustomerService = async ({
   data,
@@ -112,4 +116,35 @@ export const GetCustomersListForSalesService = async ({
     hasToken: true,
   });
   return result as ResponseResult<MusteriType>;
+};
+
+export const GetCustomerPursahedList = async ({
+  customerId,
+  order_by,
+  page,
+  sort,
+}: {
+  customerId: number;
+  order_by?: string | null;
+  page?: number;
+
+  sort?: "asc" | "desc";
+}): Promise<ResponseResult<CustomerPurchatedProducts>> => {
+  let urlPath: string = "product/customer/purchased-products/";
+
+  urlPath += `?order_by=${order_by ? (sort == "asc" ? `${order_by}` : `-${order_by}`) : "id"}`;
+  if (customerId) {
+    urlPath += `&customer_id=${customerId}`;
+  }
+  if (page) {
+    urlPath += `&page=${page.toString()}`;
+  }
+
+  const result = await BaseService({
+    url: urlPath,
+    bodyData: null,
+    method: "GET",
+    hasToken: true,
+  });
+  return result as ResponseResult<CustomerPurchatedProducts>;
 };

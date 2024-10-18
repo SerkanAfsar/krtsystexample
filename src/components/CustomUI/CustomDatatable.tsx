@@ -82,7 +82,8 @@ const CustomDatatable = ({
                   <div
                     className={cn(
                       "flex items-center",
-                      headerGroup.headers.length - 1 == key && "justify-center",
+                      headerGroup.headers.length - 1 == key &&
+                        "justify-center text-center",
                     )}
                   >
                     <span>{column.render("Header")}</span>
