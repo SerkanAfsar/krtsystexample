@@ -67,7 +67,7 @@ const CustomPhoneNumberText = React.forwardRef<
               onBlur={onBlur}
               onChange={(e) => {
                 if (e.target.value.length <= 14) {
-                  setVal(autoFormatPhoneNumber(e.target.value));
+                  setVal(autoFormatPhoneNumber(e.target.value) || "");
                 }
                 return false;
               }}
