@@ -138,7 +138,6 @@ export default function MucevherEkleContainer() {
       key={1}
       errors={errors}
       register={register}
-      unregister={unregister}
       setActiveStep={setActiveStep}
     />,
   ];

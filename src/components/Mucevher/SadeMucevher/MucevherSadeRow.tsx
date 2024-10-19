@@ -9,7 +9,7 @@ import CustomInput from "@/components/CustomUI/CustomInput";
 
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 
 export default function MucevherSadeRow({
   model,
