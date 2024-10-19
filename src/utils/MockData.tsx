@@ -351,15 +351,15 @@ export const AddTedarikciSections: Array<FormSectionType> = [
         requiredMessage: "Tedarikçi Cari Kodu Boş Bırakılamaz",
         span: 2,
       },
-      {
-        name: "tax_office",
-        type: "text",
-        title: "Vergi Dairesi",
-        placeholder: "Vergi Dairesini Giriniz...",
-        required: true,
-        requiredMessage: "Vergi Dairesi Boş Bırakılamaz",
-        span: 2,
-      },
+      // {
+      //   name: "tax_office",
+      //   type: "text",
+      //   title: "Vergi Dairesi",
+      //   placeholder: "Vergi Dairesini Giriniz...",
+      //   required: true,
+      //   requiredMessage: "Vergi Dairesi Boş Bırakılamaz",
+      //   span: 2,
+      // },
       {
         name: "tax_number",
         type: "text",
@@ -524,6 +524,8 @@ export const AddMusteriSections: Array<FormSectionType> = [
     sectionTitle: "Müşteri Bilgileri",
     groupNumber: 0,
     keyString: "infoSection2",
+    visibleRelativeColumn: "area",
+    visibleRelativeToValue: "Domestic",
     elements: [
       {
         name: "company_type",

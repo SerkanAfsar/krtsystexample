@@ -13,6 +13,7 @@ import { MenseiSelectedOptionsList } from "@/data/RenkliTas.data";
 
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
+import { useState } from "react";
 
 export default function MucevherPirlantaRow({
   model,
@@ -27,6 +28,10 @@ export default function MucevherPirlantaRow({
   errors: FieldErrors<AddMucevherExternalType>;
   index: number;
 }) {
+  const [visible, setVisible] = useState<boolean>(true);
+  if (!visible) {
+    return null;
+  }
   const findSpan = (key: keyof PirlantaModelType): number => {
     return PirlantaHeaders.find((a) => a.accessor == key)?.span || 1;
   };
@@ -138,7 +143,7 @@ export default function MucevherPirlantaRow({
           err={errors.products?.pirlanta?.[index]?.["adet"]?.message}
         />
       </div>
-      <div className={`col-span-${findSpan("fiyat")}`}>
+      <div className={`col-span-${findSpan("fiyat")} flex gap-2`}>
         <CustomInput
           item={{
             name: "fiyat",
@@ -156,6 +161,13 @@ export default function MucevherPirlantaRow({
           disabled={isEdit}
           err={errors.products?.pirlanta?.[index]?.["fiyat"]?.message}
         />
+        <button
+          type="button"
+          onClick={() => setVisible(false)}
+          className="btn rounded-sm bg-red p-3 text-white"
+        >
+          Sil
+        </button>
       </div>
       <div className="hidden">
         <input

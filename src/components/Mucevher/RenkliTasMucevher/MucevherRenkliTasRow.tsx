@@ -15,6 +15,7 @@ import {
 } from "@/app/types/RenkliTas.HeaderType";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
+import { useState } from "react";
 
 export default function MucevherRenkliTasRow({
   model,
@@ -29,6 +30,10 @@ export default function MucevherRenkliTasRow({
   errors: FieldErrors<AddMucevherExternalType>;
   index: number;
 }) {
+  const [visible, setVisible] = useState<boolean>(true);
+  if (!visible) {
+    return null;
+  }
   const findSpan = (key: keyof RenkliTasModelType): number => {
     return RenkliTasHeaders.find((a) => a.accessor == key)?.span || 1;
   };
@@ -143,7 +148,7 @@ export default function MucevherRenkliTasRow({
           disabled={isEdit}
         />
       </div>
-      <div className={`col-span-${findSpan("fiyat")}`}>
+      <div className={`col-span-${findSpan("fiyat")} flex gap-2`}>
         <CustomInput
           item={{
             name: "fiyat",
@@ -161,6 +166,13 @@ export default function MucevherRenkliTasRow({
           // value={formatToCurrency(Number(model.fiyat || 0))}
           disabled={isEdit}
         />
+        <button
+          type="button"
+          onClick={() => setVisible(false)}
+          className="btn rounded-sm bg-red p-3 text-white"
+        >
+          Sil
+        </button>
       </div>
       <div className="hidden">
         <input

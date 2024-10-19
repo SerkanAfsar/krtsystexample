@@ -14,7 +14,7 @@ export type SadeModelType = {
 export type SadeHeaderColumn = {
   header: string;
   accessor: keyof SadeModelType;
-  type: "select" | "number";
+  type: "select" | "number" | "node";
   span: number;
   selectOptions?: CustomOptionType[];
 };

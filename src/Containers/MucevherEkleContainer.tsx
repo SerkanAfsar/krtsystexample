@@ -101,6 +101,7 @@ export default function MucevherEkleContainer() {
   }, [labor_cost, purchase_price, setValue]);
 
   const sadeProducts = watch("products.sade");
+
   const sadeProductsString = JSON.stringify(sadeProducts);
 
   useEffect(() => {
@@ -137,6 +138,7 @@ export default function MucevherEkleContainer() {
       key={1}
       errors={errors}
       register={register}
+      unregister={unregister}
       setActiveStep={setActiveStep}
     />,
   ];

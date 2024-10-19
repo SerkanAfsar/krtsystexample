@@ -9,6 +9,7 @@ import CustomInput from "@/components/CustomUI/CustomInput";
 
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
+import { Dispatch, SetStateAction, useState } from "react";
 
 export default function MucevherSadeRow({
   model,
@@ -23,6 +24,10 @@ export default function MucevherSadeRow({
   register: UseFormRegister<AddMucevherExternalType>;
   errors: FieldErrors<AddMucevherExternalType>;
 }) {
+  const [visible, setVisible] = useState<boolean>(true);
+  if (!visible) {
+    return null;
+  }
   const findSpan = (key: keyof SadeModelType): number => {
     return SadeHeaders.find((a) => a.accessor == key)?.span || 1;
   };
@@ -117,7 +122,7 @@ export default function MucevherSadeRow({
           disabled={true}
         />
       </div>
-      <div className={`col-span-${findSpan("fiyat")}`}>
+      <div className={`col-span-${findSpan("fiyat")} flex gap-3`}>
         <CustomInput
           item={{
             name: "fiyat",
@@ -135,7 +140,15 @@ export default function MucevherSadeRow({
           // value={formatToCurrency(Number(model?.fiyat || 0))}
           disabled={isEdit}
         />
+        <button
+          type="button"
+          onClick={() => setVisible(false)}
+          className="btn rounded-sm bg-red p-3 text-white"
+        >
+          Sil
+        </button>
       </div>
+
       <div className="hidden">
         <input
           type="hidden"
