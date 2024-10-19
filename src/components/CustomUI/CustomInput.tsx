@@ -56,16 +56,22 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
               type={item.type}
               placeholder={item.placeholder ?? undefined}
               name={name}
+              value={value}
               onChange={(e) => {
-                setValue(e.target.value);
+                setValue(
+                  item.type != "email"
+                    ? e.target.value.toUpperCase()
+                    : e.target.value,
+                );
                 onChange && onChange(e);
               }}
               onBlur={onBlur}
               className={cn(
-                "h-full w-full rounded border-[1.5px] border-stone-400 bg-transparent px-5 py-3 pb-[14px] font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary",
+                "h-full w-full rounded border-[1.5px] border-stone-400 bg-transparent px-5 py-3 pb-[14px] font-normal  text-black outline-none transition placeholder:capitalize focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary",
                 className,
                 err && "border-red",
                 item.rightIcon && "pr-[45px]",
+                item.type != "email" && "uppercase",
               )}
               {...rest}
             />

@@ -822,6 +822,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         requiredMessage: "Tedarikçi Değeri Boş Bırakılamaz",
         span: 2,
         customOptions: TedarikciCustomListType,
+        isTedarikci: true,
       },
     ],
   },
@@ -1300,6 +1301,7 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
         requiredMessage: "Tedarikçi Değeri Boş Bırakılamaz",
         span: 2,
         customOptions: TedarikciCustomListType,
+        isTedarikci: true,
       },
       // {
       //   name: "sertifikaDosyasi",

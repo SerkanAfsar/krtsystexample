@@ -13,7 +13,8 @@ type CustomTextAreaProps = React.HTMLAttributes<HTMLTextAreaElement> & {
 const CustomTextArea = React.forwardRef<
   HTMLTextAreaElement,
   CustomTextAreaProps
->(({ className, outerClass, item, err, ...props }, ref) => {
+>(({ className, onChange, onBlur, outerClass, item, err, ...props }, ref) => {
+  const [val, setVal] = React.useState<string>();
   return (
     <div className={cn("w-full", outerClass && outerClass, className)}>
       {item.title && (
@@ -27,9 +28,14 @@ const CustomTextArea = React.forwardRef<
         ref={ref}
         cols={item.cols}
         rows={item.rows}
+        value={val}
+        onChange={(e) => {
+          setVal(e.target.value.toLocaleUpperCase());
+          onChange && onChange(e);
+        }}
         placeholder={item.placeholder || item.title || ""}
         className={cn(
-          "w-full rounded-md border border-stone-400 bg-white px-4.5 py-3 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-boxdark dark:text-white dark:focus:border-primary",
+          "w-full rounded-md border border-stone-400 bg-white px-4.5 py-3 uppercase text-black placeholder:capitalize focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-boxdark dark:text-white dark:focus:border-primary",
           err && "border-red",
           className,
         )}

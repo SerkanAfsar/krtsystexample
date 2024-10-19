@@ -4,6 +4,7 @@ import { CustomOptionType, ElementType } from "../../../types/inputTypes";
 import { cn } from "@/utils";
 import { selectKesimValue } from "@/utils/Pirlanta.Utils";
 import { ClassValue } from "clsx";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useId, useState } from "react";
 
 type SelectElementProps = React.InputHTMLAttributes<HTMLSelectElement> & {
@@ -30,6 +31,7 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
     },
     ref,
   ) => {
+    const router = useRouter();
     const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
     const [selectedValue, setSelectedValue] = useState<string>("");
     const [customOptionValues, setCustomOptionValues] = useState<
@@ -49,12 +51,20 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
     });
 
     useEffect(() => {
-      const process = async () => {
-        const result = await item.customOptions();
-        setCustomOptionValues(result);
-      };
-      process();
-    }, [item.customOptions]);
+      if (item?.customOptions) {
+        const process = async () => {
+          const result = await item.customOptions();
+          setCustomOptionValues(result);
+        };
+        process();
+      }
+    }, [item?.customOptions]);
+
+    useEffect(() => {
+      if (selectedValue === "9999") {
+        router.push("/Admin/Firmalar/Tedarikciler/TedarikciEkle");
+      }
+    }, [selectedValue]);
 
     return (
       <div className={cn("w-full", outerClass && outerClass)}>
@@ -77,7 +87,7 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
                 selectChange && selectChange(e);
               }}
               className={cn(
-                "relative z-20 w-full appearance-none rounded border border-stone-400 bg-transparent px-6 py-3 outline-none transition placeholder:text-sm focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input",
+                "relative z-20 w-full appearance-none rounded border border-stone-400 bg-transparent px-6 py-3 uppercase outline-none transition placeholder:text-sm focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input",
                 rest.disabled && "bg-[#f5f7fd]",
                 isOptionSelected && "text-black dark:text-white",
                 err && "border-red",
@@ -103,6 +113,11 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
                       {item2.titleVal}
                     </option>
                   ))}
+              {item.isTedarikci && (
+                <option value={"9999"} className="text-body dark:text-bodydark">
+                  Yeni Tedarikçi Ekle
+                </option>
+              )}
             </select>
 
             <span className="absolute right-4 top-1/2 z-10 -translate-y-1/2">

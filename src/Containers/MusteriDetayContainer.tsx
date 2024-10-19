@@ -53,6 +53,27 @@ export default function MusteriDetayContainer({
     {},
   );
 
+  if (isAdd) {
+    return (
+      <CustomForm
+        setData={setData}
+        activeStep={activeStep}
+        setActiveStep={setActiveStep}
+        sections={AddMusteriSections.filter((a) => a.groupNumber == activeStep)}
+        data={{
+          ...data,
+          area: data.area == "Domestic" ? "Yurtiçi" : "Yurtdışı",
+        }}
+        stepCount={1}
+        isAdd={isAdd}
+        serviceFunction={
+          isAdd ? AddCustomerApiService : UpdateCustomerApiService
+        }
+        filteredData={filteredData}
+        redirectUrl="/Admin/Firmalar/Musteriler/MusteriListesi"
+      />
+    );
+  }
   const sections: TabSectionType[] = [
     {
       colName: "Müşteri Bilgileri",
@@ -94,27 +115,6 @@ export default function MusteriDetayContainer({
       ),
     },
   ];
-  if (isAdd) {
-    return (
-      <CustomForm
-        setData={setData}
-        activeStep={activeStep}
-        setActiveStep={setActiveStep}
-        sections={AddMusteriSections.filter((a) => a.groupNumber == activeStep)}
-        data={{
-          ...data,
-          area: data.area == "Domestic" ? "Yurtiçi" : "Yurtdışı",
-        }}
-        stepCount={1}
-        isAdd={isAdd}
-        serviceFunction={
-          isAdd ? AddCustomerApiService : UpdateCustomerApiService
-        }
-        filteredData={filteredData}
-        redirectUrl="/Admin/Firmalar/Musteriler/MusteriListesi"
-      />
-    );
-  }
 
   return <CustomTabs productCode={""} tabs={sections} />;
 }

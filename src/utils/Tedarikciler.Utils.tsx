@@ -9,6 +9,7 @@ export const TedarikciCustomListType = (): Promise<CustomOptionType[]> => {
         titleVal: item.name as string,
         valueVal: String(item.id),
       }));
+
       return customOptions;
     })
     .catch((err) => console.log(err));
