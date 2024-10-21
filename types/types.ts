@@ -212,6 +212,12 @@ export type MusteriType = {
   authorized_name?: string;
   authorized_phone?: string;
   authorized_e_mail?: string;
+  posta_kodu?: string;
+  banka_adi?: string;
+  banka_adresi?: string;
+  hesap_no?: string;
+  iban?: string;
+  swift_code?: string;
 };
 
 interface ISatisUrunType {

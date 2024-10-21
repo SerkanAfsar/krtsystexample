@@ -64,8 +64,6 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
     React.useEffect(() => {
       const subscription = watch((value: any) => {
         const returnResult = resultCallBack && resultCallBack(value);
-        unRegisterCallback && unRegisterCallback(unregister);
-        console.log(value);
         setData({ ...value, ...returnResult });
       });
       return () => subscription.unsubscribe();

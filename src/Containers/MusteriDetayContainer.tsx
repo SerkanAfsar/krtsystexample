@@ -21,7 +21,7 @@ export default function MusteriDetayContainer({
   musteriItemData: MusteriType | null;
   isAdd: boolean;
 }) {
-  const musteriItem: MusteriType = musteriItemData ?? {};
+  const musteriItem: MusteriType = musteriItemData ?? { area: "Domestic" };
   const [activeStep, setActiveStep] = useState<number>(0);
   const [data, setData] = useState<MusteriType>(musteriItem);
   const { activeData, activePage, totalPageCount, setActivePage, error } =

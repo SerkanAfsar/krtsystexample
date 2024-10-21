@@ -49,10 +49,11 @@ export default function FormElementItem({
     return null;
   }
 
-  const secondCondition =
-    data && item.relativeTo ? !data[item.relativeTo] : item.disabled;
-
-  const isDisabled = firstCondition || secondCondition;
+  const isDisabled =
+    (data &&
+      item.relativeTo &&
+      data[item.relativeTo] == item.disabledRelative) ||
+    item.disabled;
 
   const val = (data && data[item.name]) || item.value || null;
 
@@ -209,13 +210,13 @@ export default function FormElementItem({
     case "radiobuttonlist": {
       return (
         <CustomRadioButtonList
+          defaultValue={val}
           values={item.checkBoxList as string[]}
           {...register(item.name, {
             required:
               !isDisabled && item.required ? item.requiredMessage : false,
             ...item.extraValidations,
           })}
-          defaultValue={val}
           name={item.name}
           item={item}
           setValue={setValue}

@@ -9,7 +9,6 @@ import { UseFormGetValues } from "react-hook-form";
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   item: ElementType;
-} & {
   err?: string | null;
   outerClass?: ClassValue | null;
   icon?: React.ReactNode;
