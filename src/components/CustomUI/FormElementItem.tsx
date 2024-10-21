@@ -209,13 +209,13 @@ export default function FormElementItem({
     case "radiobuttonlist": {
       return (
         <CustomRadioButtonList
-          defaultValue={val}
           values={item.checkBoxList as string[]}
           {...register(item.name, {
             required:
               !isDisabled && item.required ? item.requiredMessage : false,
             ...item.extraValidations,
           })}
+          defaultValue={val}
           name={item.name}
           item={item}
           setValue={setValue}

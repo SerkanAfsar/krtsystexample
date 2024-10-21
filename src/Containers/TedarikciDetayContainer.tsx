@@ -37,11 +37,6 @@ export default function TedarikciDetayContainer({
 
   const filteredData = Object.values(newData).reduce<Partial<TedarikciType>>(
     (acc: any, next: any) => {
-      if (next["area"] == "Yurtiçi") {
-        next["area"] = "Domestic";
-      } else if (next["area"] == "Yurtdışı") {
-        next["area"] = "Foreign";
-      }
       return { ...acc, ...next };
     },
     { type: "TestData" },
@@ -53,7 +48,7 @@ export default function TedarikciDetayContainer({
       activeStep={activeStep}
       setActiveStep={setActiveStep}
       sections={AddTedarikciSections.filter((a) => a.groupNumber == activeStep)}
-      data={{ ...data, area: data.area == "Domestic" ? "Yurtiçi" : "Yurtdışı" }}
+      data={data}
       stepCount={1}
       isAdd={isAdd}
       serviceFunction={

@@ -2,7 +2,7 @@
 
 import CustomForm from "@/components/CustomUI/CustomForm";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MusteriType } from "../../types/types";
 import { AddMusteriSections } from "@/utils/MockData";
 import {
@@ -21,9 +21,9 @@ export default function MusteriDetayContainer({
   musteriItemData: MusteriType | null;
   isAdd: boolean;
 }) {
-  const tedarikciItem: Partial<MusteriType> = musteriItemData ?? {};
+  const musteriItem: MusteriType = musteriItemData ?? {};
   const [activeStep, setActiveStep] = useState<number>(0);
-  const [data, setData] = useState<Partial<MusteriType>>(tedarikciItem);
+  const [data, setData] = useState<MusteriType>(musteriItem);
   const { activeData, activePage, totalPageCount, setActivePage, error } =
     useMusteriSatilanUrunlerTable({ customerId: musteriItemData?.id || 0 });
 
@@ -41,13 +41,8 @@ export default function MusteriDetayContainer({
     return { ...acc, [next.keyString]: elems };
   }, {});
 
-  const filteredData = Object.values(newData).reduce<Partial<MusteriType>>(
+  const filteredData = Object.values(newData).reduce<MusteriType>(
     (acc: any, next: any) => {
-      if (next["area"] == "Yurtiçi") {
-        next["area"] = "Domestic";
-      } else if (next["area"] == "Yurtdışı") {
-        next["area"] = "Foreign";
-      }
       return { ...acc, ...next };
     },
     {},
@@ -60,16 +55,17 @@ export default function MusteriDetayContainer({
         activeStep={activeStep}
         setActiveStep={setActiveStep}
         sections={AddMusteriSections.filter((a) => a.groupNumber == activeStep)}
-        data={{
-          ...data,
-          area: data.area == "Domestic" ? "Yurtiçi" : "Yurtdışı",
-        }}
+        data={data}
         stepCount={1}
         isAdd={isAdd}
         serviceFunction={
           isAdd ? AddCustomerApiService : UpdateCustomerApiService
         }
-        filteredData={filteredData}
+        filteredData={
+          filteredData.area == "Domestic"
+            ? { ...filteredData, country_code: "" }
+            : { ...filteredData }
+        }
         redirectUrl="/Admin/Firmalar/Musteriler/MusteriListesi"
       />
     );
@@ -85,10 +81,7 @@ export default function MusteriDetayContainer({
           sections={AddMusteriSections.filter(
             (a) => a.groupNumber == activeStep,
           )}
-          data={{
-            ...data,
-            area: data.area == "Domestic" ? "Yurtiçi" : "Yurtdışı",
-          }}
+          data={data}
           stepCount={1}
           isAdd={isAdd}
           serviceFunction={

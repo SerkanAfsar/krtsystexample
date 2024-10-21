@@ -193,25 +193,25 @@ export type TedarikciType = {
 
 export type MusteriType = {
   id?: number;
-  code: string;
-  name: string;
-  phone: string;
-  email: string;
-  area: string;
-  country: string;
-  invoice_address: string;
-  shipping_address: string;
-  company_type: string;
-  company_foundation_date: Date;
-  tax_number: string;
-  bank: string;
-  chamber_of_commerce: string;
-  company_sector: string;
-  sector_year: string;
-  bank_account_info: string;
-  authorized_name: string;
-  authorized_phone: string;
-  authorized_e_mail: string;
+  code?: string;
+  name?: string;
+  phone?: string;
+  email?: string;
+  area?: string;
+  country_code?: string;
+  invoice_address?: string;
+  shipping_address?: string;
+  company_type?: string;
+  company_foundation_date?: Date;
+  tax_number?: string;
+  bank?: string;
+  chamber_of_commerce?: string;
+  company_sector?: string;
+  sector_year?: string;
+  bank_account_info?: string;
+  authorized_name?: string;
+  authorized_phone?: string;
+  authorized_e_mail?: string;
 };
 
 interface ISatisUrunType {

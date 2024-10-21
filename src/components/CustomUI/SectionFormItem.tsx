@@ -17,6 +17,7 @@ export default function SectionFormItem({
   extraOptions,
   getValues,
   isAdd,
+
   ...rest
 }: {
   section: FormSectionType;

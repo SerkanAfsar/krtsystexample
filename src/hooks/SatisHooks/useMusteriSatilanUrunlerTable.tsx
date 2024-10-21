@@ -17,7 +17,7 @@ export default function useMusteriSatilanUrunlerTable({
   const searchParams = useSearchParams();
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<any[]>([]);
-  const [totalPageCount, setTotalPageCount] = useState<number>(1);
+  const [totalPageCount, setTotalPageCount] = useState<number>(0);
 
   const [error, setError] = useState<string | null>(null);
 
@@ -69,11 +69,10 @@ export default function useMusteriSatilanUrunlerTable({
     }).then((resp: ResponseResult<any>) => {
       if (resp?.success) {
         const data = resp.data.results as CustomerPurchatedProducts[];
-        const dataResult: any[] = data[0].purchased_products.map(
-          (item: any, index: number) => {
+        const dataResult: any[] =
+          data[0]?.purchased_products?.map((item: any, index: number) => {
             return ResultObject({ item, index: index });
-          },
-        );
+          }) || [];
         setActiveData(dataResult);
         setTotalPageCount(
           Math.ceil(

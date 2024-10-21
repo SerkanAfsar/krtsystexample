@@ -21,6 +21,7 @@ type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   extraOptions?: CustomOptionType[] | null;
   isAdd: boolean;
   resultCallBack?: any;
+  unRegisterCallback?: any;
 };
 
 const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
@@ -40,6 +41,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       extraOptions,
       resultCallBack,
       isAdd,
+      unRegisterCallback,
       ...rest
     },
     ref,
@@ -51,7 +53,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       setValue,
       setError,
       getValues,
-
+      unregister,
       formState: { errors, isSubmitting },
     } = useForm<any>({
       defaultValues: data,
@@ -62,10 +64,12 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
     React.useEffect(() => {
       const subscription = watch((value: any) => {
         const returnResult = resultCallBack && resultCallBack(value);
+        unRegisterCallback && unRegisterCallback(unregister);
+        console.log(value);
         setData({ ...value, ...returnResult });
       });
       return () => subscription.unsubscribe();
-    }, [watch, setData, resultCallBack]);
+    }, [watch, setData, resultCallBack, unRegisterCallback]);
 
     const onSubmit: SubmitHandler<any> = async (values) => {
       setData((prev: any) => ({ ...prev, values }));
