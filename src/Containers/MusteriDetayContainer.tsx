@@ -2,7 +2,7 @@
 
 import CustomForm from "@/components/CustomUI/CustomForm";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MusteriType } from "../../types/types";
 import { AddMusteriSections } from "@/utils/MockData";
 import {

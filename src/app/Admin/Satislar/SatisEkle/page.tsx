@@ -20,12 +20,11 @@ export default async function SatisEklePage() {
   }
 
   const musteriResultData = musteriResult.data as MusteriType[];
-  const customers: CustomSearchSelectType[] = musteriResultData.map(
-    (item: MusteriType) => ({
-      label: item.name,
+  const customers: CustomSearchSelectType[] =
+    musteriResultData?.map((item: MusteriType) => ({
+      label: item.name as string,
       value: item.id as number,
-    }),
-  );
+    })) || [];
 
   return (
     <DefaultLayout>
