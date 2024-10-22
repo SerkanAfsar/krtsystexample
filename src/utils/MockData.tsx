@@ -311,7 +311,7 @@ export const AddTedarikciSections: Array<FormSectionType> = [
         extraValidations: {
           pattern: {
             value: /\S+@\S+\.\S+/,
-            message: "E-Mail Format/Yazım Hatası!",
+            message: "E-Posta Format/Yazım Hatası!",
           },
         },
       },
@@ -403,15 +403,15 @@ export const AddTedarikciSections: Array<FormSectionType> = [
       {
         name: "authorized_e_mail",
         type: "text",
-        title: "Yetkili E-Mail",
-        placeholder: "Yetkili E-Mail Giriniz...",
+        title: "Yetkili E-Posta",
+        placeholder: "Yetkili E-Posta Giriniz...",
         required: true,
-        requiredMessage: "Yetkili E-Mail Boş Bırakılamaz",
+        requiredMessage: "Yetkili E-Posta Boş Bırakılamaz",
         span: 2,
         extraValidations: {
           pattern: {
             value: /\S+@\S+\.\S+/,
-            message: "E-Mail Format/Yazım Hatası!",
+            message: "E-Posta Format/Yazım Hatası!",
           },
         },
       },
@@ -464,7 +464,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
         extraValidations: {
           pattern: {
             value: /\S+@\S+\.\S+/,
-            message: "E-Mail Format/Yazım Hatası!",
+            message: "E-Posta Format/Yazım Hatası!",
           },
         },
       },
@@ -679,15 +679,15 @@ export const AddMusteriSections: Array<FormSectionType> = [
       {
         name: "authorized_e_mail",
         type: "text",
-        title: "Yetkili E-Mail",
-        placeholder: "Yetkili E-Mail Giriniz...",
+        title: "Yetkili E-Posta",
+        placeholder: "Yetkili E-Posta Giriniz...",
         required: true,
-        requiredMessage: "Yetkili E-Mail Boş Bırakılamaz",
+        requiredMessage: "Yetkili E-Posta Boş Bırakılamaz",
         span: 2,
         extraValidations: {
           pattern: {
             value: /\S+@\S+\.\S+/,
-            message: "E-Mail Format/Yazım Hatası!",
+            message: "E-Posta Format/Yazım Hatası!",
           },
         },
       },
