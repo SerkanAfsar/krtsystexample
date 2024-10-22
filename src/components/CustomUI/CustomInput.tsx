@@ -44,7 +44,10 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
       undefined,
     );
 
-    const { area } = getValues && getValues();
+    const values = getValues && getValues();
+
+    const conValue =
+      item?.maxLenghtCondition && values[item.maxLenghtCondition?.field];
 
     React.useEffect(() => {
       if (item.type != "email" && setFormValues) {
@@ -53,15 +56,15 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
     }, [value]);
 
     React.useEffect(() => {
-      if (item?.maxLenghtCondition && area) {
-        if (area == item?.maxLenghtCondition?.property && setFormValues) {
+      if (item?.maxLenghtCondition && conValue) {
+        if (conValue == item?.maxLenghtCondition?.property && setFormValues) {
           setFormValues(name as string, value?.substring(0, 11));
           setMaxLenght(item?.maxLenghtCondition?.property as number);
         } else {
           setMaxLenght(undefined);
         }
       }
-    }, [item?.maxLenghtCondition, area]);
+    }, [item?.maxLenghtCondition, conValue]);
 
     return (
       <div className={cn("w-full", outerClass && outerClass, className)}>
