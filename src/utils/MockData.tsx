@@ -635,10 +635,10 @@ export const AddMusteriSections: Array<FormSectionType> = [
       {
         name: "iban",
         type: "text",
-        title: "İBAN",
-        placeholder: "İBAN Giriniz",
+        title: "IBAN",
+        placeholder: "IBAN Giriniz",
         required: false,
-        requiredMessage: "İBAN Giriniz",
+        requiredMessage: "IBAN Giriniz",
         span: 2,
       },
       {
