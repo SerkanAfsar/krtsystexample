@@ -1,5 +1,6 @@
 import { BaseService } from ".";
 import { ResponseResult } from "../../types/responseTypes";
+import { ProductListType } from "../../types/types";
 import {
   AddWorOrderType,
   WorkOrderAtolyeType,
@@ -134,6 +135,36 @@ export const GetWorkOrdersList = async ({
   });
 
   return result as any;
+};
+
+export const GetSimpleWorkOrderProductList = async ({
+  work_order_id,
+  page,
+  order_by,
+  sort,
+}: {
+  work_order_id: number;
+  page?: number;
+  order_by?: string | null;
+  sort?: "asc" | "desc";
+}): Promise<ResponseResult<ProductListType>> => {
+  let urlPath: string = "product/work-order/product-list/?";
+  urlPath += `order_by=${order_by ? (sort == "asc" ? `${order_by}` : `-${order_by}`) : "pk"}`;
+  if (page) {
+    urlPath += `&page=${page.toString()}`;
+  }
+  if (work_order_id) {
+    urlPath += `&work_order_id=${work_order_id.toString()}`;
+  }
+
+  const result = await BaseService({
+    url: urlPath,
+    bodyData: null,
+    method: "GET",
+    hasToken: true,
+  });
+
+  return result as ResponseResult<ProductListType>;
 };
 
 export const GetWorkOrderLogsByWorkOrderId = async ({

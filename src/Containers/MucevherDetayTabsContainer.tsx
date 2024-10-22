@@ -1,6 +1,6 @@
 "use client";
 import CustomTabs, { TabSectionType } from "@/components/CustomUI/CustomTabs";
-import IsEmirDetayLoglari from "@/components/IsEmirleri/IsEmirDetayLoglari";
+
 import { AddMucevherExternalType, MucevherDetayType } from "@/types/Mucevher";
 import { useForm } from "react-hook-form";
 import MucevherDetaySectionOne from "@/components/Mucevher/MucevherDetaySectionOne";
@@ -8,6 +8,7 @@ import MucevherDetayContainer, {
   CustomArrType,
 } from "./MucevherDetayContainer";
 import { ProductType } from "../../types/types";
+import IsEmirleriLoglari from "@/components/IsEmirleri/IsEmirLoglari";
 
 export default function MucevherDetayTabsContainer({
   data,
@@ -79,7 +80,7 @@ export default function MucevherDetayTabsContainer({
     {
       colName: data.work_order_logs && "İşçilik",
       component: data.work_order_logs && (
-        <IsEmirDetayLoglari workOrderLogs={data.work_order_logs} />
+        <IsEmirleriLoglari workOrderLogs={data.work_order_logs} />
       ),
     },
   ];

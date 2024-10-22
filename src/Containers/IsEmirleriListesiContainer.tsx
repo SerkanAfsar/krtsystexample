@@ -3,7 +3,7 @@ import { Column } from "react-table";
 import { WorkOrderType } from "../../types/WorkOrder.types";
 import React from "react";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
-import useGetWorkOrderListData from "@/hooks/useGetWorkOrderListData";
+import useGetWorkOrderListData from "@/hooks/WorkOrderHooks/useGetWorkOrderListData";
 import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
 import CustomErrorAlert from "@/components/CustomUI/Alerts/CustomErrorAlert";
 

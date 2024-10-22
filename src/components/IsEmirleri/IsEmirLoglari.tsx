@@ -1,12 +1,11 @@
-import { GetWorkOrderLogsByWorkOrderId } from "@/Services/WorkOrder.Services";
-import React from "react";
+import { formatDate, formatToCurrency } from "@/utils";
 import {
   WorkOrderListType,
   WorkOrderLogType,
 } from "../../../types/WorkOrder.types";
-import { formatDate, formatToCurrency } from "@/utils";
+import { GetWorkOrderLogsByWorkOrderId } from "@/Services/WorkOrder.Services";
 
-export default async function IsEmirDetayLoglari({
+export default async function IsEmirleriLoglari({
   id,
   workOrderLogs,
 }: {
@@ -29,18 +28,16 @@ export default async function IsEmirDetayLoglari({
       logs: workOrderLogs || [],
     };
   }
-
   const newData = resultData.logs?.sort((a, b) => {
     return Number(a.id) - Number(b.id);
   });
-
   return (
     <div className="mb-1 mt-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="border-b border-stroke dark:border-strokedark">
         <div className="flex w-full items-center justify-between p-4 text-lg font-medium text-black dark:text-white">
           <span> Üretim Bilgileri</span>
           <b>
-            Toplam İşçilik :
+            Toplam İşçilik :{" "}
             {`${formatToCurrency(Number(resultData?.total_labor_cost) || 0)} $`}
           </b>
         </div>

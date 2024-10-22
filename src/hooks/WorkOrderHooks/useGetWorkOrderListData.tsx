@@ -5,7 +5,7 @@ import {
 } from "@/utils/WorkOrder.Utils";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FaPencil, FaTrash } from "react-icons/fa6";
-import { WorkOrderType } from "../../types/WorkOrder.types";
+import { WorkOrderType } from "../../../types/WorkOrder.types";
 import { GetWorkOrdersList } from "@/Services/WorkOrder.Services";
 import { useRouter, useSearchParams } from "next/navigation";
 import { DeleteWorkOrderApiService } from "@/ApiServices/WorkOrders.ApiService";
