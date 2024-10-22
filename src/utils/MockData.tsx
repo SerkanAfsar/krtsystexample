@@ -359,6 +359,11 @@ export const AddTedarikciSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Vergi No Boş Bırakılamaz",
         span: 2,
+        maxLenghtCondition: {
+          field: "area",
+          property: "Domestic",
+          maxLenght: 11,
+        },
       },
       {
         name: "bank",

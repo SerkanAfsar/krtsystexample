@@ -15,6 +15,8 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   className?: ClassValue | null;
   showIcon?: boolean;
   getValues?: UseFormGetValues<any>;
+  setFormValues: any;
+  value?: any;
 };
 
 const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
@@ -30,12 +32,36 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
       outerClass,
       err,
       getValues,
+      setFormValues,
       ...rest
     },
     ref,
   ) => {
     const id = React.useId();
-    const [value, setValue] = React.useState<string>();
+
+    const value: string = getValues && getValues(name as string);
+    const [maxLenght, setMaxLenght] = React.useState<number | undefined>(
+      undefined,
+    );
+
+    const { area } = getValues && getValues();
+
+    React.useEffect(() => {
+      if (item.type != "email") {
+        setFormValues(name as string, value?.toUpperCase());
+      }
+    }, [value]);
+
+    React.useEffect(() => {
+      if (item?.maxLenghtCondition && area) {
+        if (area == item?.maxLenghtCondition?.property) {
+          setFormValues(name as string, value?.substring(0, 11));
+          setMaxLenght(item?.maxLenghtCondition?.property as number);
+        } else {
+          setMaxLenght(undefined);
+        }
+      }
+    }, [item?.maxLenghtCondition, area]);
 
     return (
       <div className={cn("w-full", outerClass && outerClass, className)}>
@@ -55,14 +81,13 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
               type={item.type}
               placeholder={item.placeholder ?? undefined}
               name={name}
-              value={value}
               onChange={(e) => {
-                setValue(
-                  item.type != "email"
-                    ? e.target.value.toUpperCase()
-                    : e.target.value,
-                );
-                onChange && onChange(e);
+                if (
+                  !maxLenght ||
+                  (maxLenght && e.target.value.length <= maxLenght)
+                ) {
+                  onChange && onChange(e);
+                }
               }}
               onBlur={onBlur}
               className={cn(
@@ -70,7 +95,6 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
                 className,
                 err && "border-red",
                 item.rightIcon && "pr-[45px]",
-                item.type != "email" && "uppercase",
               )}
               {...rest}
             />
