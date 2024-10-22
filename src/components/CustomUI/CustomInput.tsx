@@ -51,7 +51,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
 
     React.useEffect(() => {
       if (item.type != "email" && setFormValues) {
-        setFormValues(name as string, value?.toUpperCase());
+        setFormValues(name as string, value?.toString().toUpperCase());
       }
     }, [value]);
 
