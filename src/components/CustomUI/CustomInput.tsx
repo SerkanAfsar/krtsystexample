@@ -15,7 +15,7 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   className?: ClassValue | null;
   showIcon?: boolean;
   getValues?: UseFormGetValues<any>;
-  setFormValues: any;
+  setFormValues?: any;
   value?: any;
 };
 
@@ -47,14 +47,14 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
     const { area } = getValues && getValues();
 
     React.useEffect(() => {
-      if (item.type != "email") {
+      if (item.type != "email" && setFormValues) {
         setFormValues(name as string, value?.toUpperCase());
       }
     }, [value]);
 
     React.useEffect(() => {
       if (item?.maxLenghtCondition && area) {
-        if (area == item?.maxLenghtCondition?.property) {
+        if (area == item?.maxLenghtCondition?.property && setFormValues) {
           setFormValues(name as string, value?.substring(0, 11));
           setMaxLenght(item?.maxLenghtCondition?.property as number);
         } else {
