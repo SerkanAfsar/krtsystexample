@@ -11,6 +11,8 @@ import {
   AddProductApiService,
   UpdateProductApiService,
 } from "@/ApiServices/Products.ApiService";
+import CustomModalPage from "@/components/CustomModals/CustomPageModal";
+import TedarikciDetayContainer from "./TedarikciDetayContainer";
 
 const PirlantaDetayContainer = ({
   pirlantaItemData,
@@ -84,21 +86,30 @@ const PirlantaDetayContainer = ({
       : AddStoneSections.length - 1;
 
   return (
-    <CustomForm
-      isAdd={isAdd}
-      setData={setData}
-      activeStep={activeStep}
-      setActiveStep={setActiveStep}
-      sections={AddStoneSections.filter((a) => a.groupNumber == activeStep)}
-      data={data}
-      stepCount={sectionLenght}
-      serviceFunction={isAdd ? AddProductApiService : UpdateProductApiService}
-      filteredData={newData}
-      productCode={pruductCode}
-      extraOptions={extraOptions}
-      resultCallBack={resultCallBack}
-      redirectUrl="/Admin/StokYonetimi/Pirlanta/PirlantaListesi"
-    />
+    <>
+      <CustomModalPage title="Yeni Tedarikçi Ekle">
+        <TedarikciDetayContainer
+          isRedirect={false}
+          isAdd={true}
+          tedarikciItemData={null}
+        />
+      </CustomModalPage>
+      <CustomForm
+        isAdd={isAdd}
+        setData={setData}
+        activeStep={activeStep}
+        setActiveStep={setActiveStep}
+        sections={AddStoneSections.filter((a) => a.groupNumber == activeStep)}
+        data={data}
+        stepCount={sectionLenght}
+        serviceFunction={isAdd ? AddProductApiService : UpdateProductApiService}
+        filteredData={newData}
+        productCode={pruductCode}
+        extraOptions={extraOptions}
+        resultCallBack={resultCallBack}
+        redirectUrl="/Admin/StokYonetimi/Pirlanta/PirlantaListesi"
+      />
+    </>
   );
 };
 

@@ -20,3 +20,5 @@ const PirlantaEkle = () => {
 };
 
 export default PirlantaEkle;
+
+export const dynamic = "force-dynamic";

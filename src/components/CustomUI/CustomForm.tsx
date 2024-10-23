@@ -22,6 +22,7 @@ type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   isAdd: boolean;
   resultCallBack?: any;
   unRegisterCallback?: any;
+  extraCallBack?: any;
 };
 
 const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
@@ -41,7 +42,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       extraOptions,
       resultCallBack,
       isAdd,
-      unRegisterCallback,
+      extraCallBack,
       ...rest
     },
     ref,
@@ -66,7 +67,7 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
         setData({ ...value, ...returnResult });
       });
       return () => subscription.unsubscribe();
-    }, [watch, setData, resultCallBack, unRegisterCallback]);
+    }, [watch, setData, resultCallBack]);
 
     const onSubmit: SubmitHandler<any> = async (values) => {
       setData((prev: any) => ({ ...prev, values }));
@@ -77,8 +78,11 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
           id: id ?? null,
           data: filteredData,
           callBack: () => {
+            extraCallBack && extraCallBack();
             if (redirectUrl) {
               return router.push(redirectUrl);
+            } else {
+              return router.refresh();
             }
           },
         });

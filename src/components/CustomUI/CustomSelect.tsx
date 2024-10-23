@@ -1,10 +1,10 @@
 "use client";
 
+import { useTedarikciModalData } from "@/store/useModalStore";
 import { CustomOptionType, ElementType } from "../../../types/inputTypes";
 import { cn } from "@/utils";
 import { selectKesimValue } from "@/utils/Pirlanta.Utils";
 import { ClassValue } from "clsx";
-import { useRouter } from "next/navigation";
 import React, { useEffect, useId, useState } from "react";
 
 type SelectElementProps = React.InputHTMLAttributes<HTMLSelectElement> & {
@@ -13,7 +13,8 @@ type SelectElementProps = React.InputHTMLAttributes<HTMLSelectElement> & {
   extraOptions?: CustomOptionType[];
   staticOptions?: any;
   showIcon?: boolean;
-} & { item: ElementType };
+  item: ElementType;
+};
 
 const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
   (
@@ -31,12 +32,13 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
     },
     ref,
   ) => {
-    const router = useRouter();
     const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
     const [selectedValue, setSelectedValue] = useState<string>("");
     const [customOptionValues, setCustomOptionValues] = useState<
       CustomOptionType[] | null
     >(null);
+
+    const { tedarikciModal, setTedarikciModalOpen } = useTedarikciModalData();
 
     const options = item.isExtra
       ? extraOptions
@@ -58,13 +60,13 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
         };
         process();
       }
-    }, [item?.customOptions]);
+    }, [item?.customOptions, tedarikciModal]);
 
     useEffect(() => {
       if (selectedValue === "9999") {
-        router.push("/Admin/Firmalar/Tedarikciler/TedarikciEkle");
+        setTedarikciModalOpen();
       }
-    }, [selectedValue]);
+    }, [selectedValue, setTedarikciModalOpen]);
 
     return (
       <div className={cn("w-full", outerClass && outerClass)}>

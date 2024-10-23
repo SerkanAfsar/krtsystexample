@@ -9,17 +9,21 @@ import {
   AddTedarikciApiService,
   UpdateTedarikciApiService,
 } from "@/ApiServices/Suppliers.ApiService";
+import { useTedarikciModalData } from "@/store/useModalStore";
 
 export default function TedarikciDetayContainer({
   tedarikciItemData,
   isAdd,
+  isRedirect,
 }: {
   tedarikciItemData: TedarikciType | null;
   isAdd: boolean;
+  isRedirect?: boolean;
 }) {
   const tedarikciItem: Partial<TedarikciType> = tedarikciItemData ?? {};
   const [activeStep, setActiveStep] = useState<number>(0);
   const [data, setData] = useState<Partial<TedarikciType>>(tedarikciItem);
+  const { setTedarikciModalOpen } = useTedarikciModalData();
 
   const newData: any = AddTedarikciSections.reduce((acc, next) => {
     const elems = next.elements.reduce((acc2, next2) => {
@@ -55,7 +59,10 @@ export default function TedarikciDetayContainer({
         isAdd ? AddTedarikciApiService : UpdateTedarikciApiService
       }
       filteredData={filteredData}
-      redirectUrl="/Admin/Firmalar/Tedarikciler/TedarikciListesi"
+      redirectUrl={
+        isRedirect ? "/Admin/Firmalar/Tedarikciler/TedarikciListesi" : undefined
+      }
+      extraCallBack={setTedarikciModalOpen}
     />
   );
 }
