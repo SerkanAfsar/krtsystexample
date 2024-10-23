@@ -479,7 +479,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
       {
         name: "invoice_address",
         type: "textarea",
-        title: "Müşteri Fatura Adresİ",
+        title: "Müşteri Fatura Adresi",
         placeholder: "Müşteri Fatura Adresi Giriniz...",
         required: false,
         rows: 4,
