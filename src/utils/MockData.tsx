@@ -402,7 +402,7 @@ export const AddTedarikciSections: Array<FormSectionType> = [
       },
       {
         name: "authorized_e_mail",
-        type: "text",
+        type: "email",
         title: "Yetkili E-Posta",
         placeholder: "Yetkili E-Posta Giriniz...",
         required: true,
@@ -678,7 +678,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
       },
       {
         name: "authorized_e_mail",
-        type: "text",
+        type: "email",
         title: "Yetkili E-Posta",
         placeholder: "Yetkili E-Posta Giriniz...",
         required: true,
