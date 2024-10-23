@@ -53,7 +53,6 @@ const CustomForm = React.forwardRef<HTMLFormElement, CustomFormProps>(
       setValue,
       setError,
       getValues,
-      unregister,
       formState: { errors, isSubmitting },
     } = useForm<any>({
       defaultValues: data,
