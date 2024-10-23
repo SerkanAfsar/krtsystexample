@@ -27,21 +27,21 @@ const PirlantaDetayContainer = ({
   const [activeStep, setActiveStep] = useState<number>(0);
   const { tedarikciModal, setTedarikciModalOpen } = useTedarikciModalData();
 
-  const resultCallBack = useCallback((value: any) => {
-    const iskonto = value?.iskonto || 0;
+  // const resultCallBack = useCallback((value: any) => {
+  //   const iskonto = value?.iskonto || 0;
 
-    const rapaportPrice =
-      value.menstrual_status == "Sertifikalı" ? value?.rapaportPrice : 4700;
+  //   const rapaportPrice =
+  //     value.menstrual_status == "Sertifikalı" ? value?.rapaportPrice : 4700;
 
-    const pricePerCarat = (rapaportPrice * (100 - iskonto)) / 100;
-    const newToplamFiyat = pricePerCarat * value?.carat;
+  //   const pricePerCarat = (rapaportPrice * (100 - iskonto)) / 100;
+  //   const newToplamFiyat = pricePerCarat * value?.carat;
 
-    return {
-      pricePerCarat,
+  //   return {
+  //     pricePerCarat,
 
-      // total_cost: newToplamFiyat,
-    };
-  }, []);
+  //     // total_cost: newToplamFiyat,
+  //   };
+  // }, []);
 
   const item: PirlantaCodeItemType = {
     data_boy: data.boy,
@@ -82,6 +82,8 @@ const PirlantaDetayContainer = ({
     },
   );
 
+  console.log(data.total_cost, typeof data.total_cost);
+
   const sectionLenght: number =
     data.menstrual_status == "Sertifikalı"
       ? AddStoneSections.length - 1
@@ -112,7 +114,7 @@ const PirlantaDetayContainer = ({
         filteredData={newData}
         productCode={pruductCode}
         extraOptions={extraOptions}
-        resultCallBack={resultCallBack}
+        // resultCallBack={resultCallBack}
         redirectUrl="/Admin/StokYonetimi/Pirlanta/PirlantaListesi"
       />
     </>

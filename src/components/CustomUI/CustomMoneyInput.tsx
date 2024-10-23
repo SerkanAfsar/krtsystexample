@@ -42,6 +42,9 @@ const CustomMoneyInput = React.forwardRef<
   ) => {
     const id = React.useId();
 
+    const values = getValues && getValues();
+    console.log("deneme is ", values[name]);
+
     return (
       <div className={cn("w-full", outerClass && outerClass, className)}>
         {(item.title || item?.isTopMargin) && (
@@ -61,7 +64,7 @@ const CustomMoneyInput = React.forwardRef<
               decimalsLimit={3}
               placeholder={item.placeholder ?? undefined}
               onValueChange={(value, name, values) =>
-                setFormValues(name, value)
+                setFormValues(name, values?.float)
               }
               className={cn(
                 "h-full w-full rounded border-[1.5px] border-stone-400 bg-transparent px-5 py-3 pb-[14px] font-normal  text-black outline-none transition placeholder:capitalize focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary",
