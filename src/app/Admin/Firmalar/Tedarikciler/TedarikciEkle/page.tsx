@@ -14,7 +14,11 @@ export default function TedarikciEkle() {
         ]}
         pageName="Tedarikçi Ekle"
       />
-      <TedarikciDetayContainer isAdd={true} tedarikciItemData={null} />
+      <TedarikciDetayContainer
+        isRedirect={true}
+        isAdd={true}
+        tedarikciItemData={null}
+      />
     </DefaultLayout>
   );
 }
