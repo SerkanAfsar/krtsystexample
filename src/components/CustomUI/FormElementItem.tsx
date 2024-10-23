@@ -53,7 +53,8 @@ export default function FormElementItem({
     (data &&
       item.relativeTo &&
       data[item.relativeTo] == item.disabledRelative) ||
-    item.disabled;
+    (item.relativeTo && !data[item.relativeTo]);
+  item.disabled;
 
   const val = (data && data[item.name]) || item.value || null;
 

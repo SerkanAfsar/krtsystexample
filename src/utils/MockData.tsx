@@ -521,7 +521,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
     groupNumber: 0,
     keyString: "infoSection2",
     visibleRelativeColumn: "area",
-    visibleRelativeToValue: "Domestic",
+    visibleRelativeToValue: "Foreign",
     elements: [
       {
         name: "company_type",
@@ -603,7 +603,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
     groupNumber: 0,
     keyString: "infoSection4",
     visibleRelativeColumn: "area",
-    visibleRelativeToValue: "Domestic",
+    visibleRelativeToValue: "Foreign",
     elements: [
       {
         name: "banka_adi",
