@@ -175,7 +175,7 @@ export const AddSadeSections: Array<FormSectionType> = [
       },
       {
         name: "iscilik",
-        type: "number",
+        type: "money",
         title: "İşçilik",
         placeholder: "İşçilik Giriniz...",
         required: true,
@@ -1147,7 +1147,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "rapaportPrice",
-        type: "number",
+        type: "money",
         title: "Rapaport Güncel Fiyatı",
         placeholder: "Rapaport Güncel Fiyatı...",
         required: true,
@@ -1160,7 +1160,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "iskonto",
-        type: "number",
+        type: "money",
         title: "İskonto",
         placeholder: "İskonto...",
         required: true,
@@ -1173,7 +1173,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "pricePerCarat",
-        type: "number",
+        type: "money",
         title: "Price Per Carat",
         placeholder: "Price Per Carat...",
         required: false,
@@ -1184,13 +1184,12 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "total_cost",
-        type: "number",
+        type: "money",
         title: "Toplam Fiyat",
         placeholder: "Toplam Fiyat...",
         required: false,
         requiredMessage: "Toplam Fiyat Bırakılamaz",
         relativeTo: "menstrual_status",
-
         rightIcon: "$",
         colStart: "4",
         colEnd: "5",
@@ -1323,7 +1322,7 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
       },
       {
         name: "pricePerCarat",
-        type: "number",
+        type: "money",
         title: "Price Per Carat",
         placeholder: "Price Per Carat...",
         required: true,
@@ -1335,7 +1334,7 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
       },
       {
         name: "total_cost",
-        type: "number",
+        type: "money",
         title: "Toplam Fiyat",
         placeholder: "Toplam Fiyat...",
         required: true,

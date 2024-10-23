@@ -19,6 +19,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useParams } from "next/navigation";
 import { cn } from "@/utils";
 import CustomMucevherSaveModal from "@/components/CustomUI/CustomMucevherSaveModal";
+import { CustomMoneyInput } from "@/components/CustomUI/CustomMoneyInput";
 
 export default function IsEmriBaslatmaContainer({
   workOrderGroups,
@@ -260,7 +261,7 @@ export default function IsEmriBaslatmaContainer({
                   valueAsNumber: true,
                 })}
               />
-              <CustomInput
+              <CustomMoneyInput
                 item={{
                   name: "cost",
                   title: "İşçilik",
@@ -273,7 +274,6 @@ export default function IsEmriBaslatmaContainer({
                   required: "İşçilik Giriniz",
                   valueAsNumber: true,
                 })}
-                step=".01"
                 disabled={isSubmitted}
                 err={errors.cost?.message}
               />

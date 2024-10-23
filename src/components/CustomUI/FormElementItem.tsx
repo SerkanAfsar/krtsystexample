@@ -10,6 +10,7 @@ import { UseFormGetValues } from "react-hook-form";
 import CustomTextArea from "./CustomTextArea";
 import { CustomRadioButtonList } from "./CustomRadioButtonList";
 import { CustomPhoneNumberText } from "./CustomPhoneNumberText";
+import { CustomMoneyInput } from "./CustomMoneyInput";
 
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -73,6 +74,31 @@ export default function FormElementItem({
   const err = errors[item.name]?.message?.toString() ?? null;
 
   switch (item.type) {
+    case "money": {
+      return (
+        <CustomMoneyInput
+          {...register(item.name, {
+            required:
+              !isDisabled && item.required ? item.requiredMessage : false,
+            ...item.extraValidations,
+          })}
+          setFormValues={setValue}
+          err={err}
+          key={item.name}
+          outerClass={cn(
+            item?.span && `col-span-${item.span.toString()}`,
+            item.colStart && `col-start-${item.colStart}`,
+            item.colEnd && `col-end-${item.colEnd}`,
+            item.rowSpan && `row-span-${item.rowSpan}`,
+          )}
+          showIcon={showIconRelativeTo}
+          item={item}
+          getValues={getValues}
+          disabled={(!isAdd && item.isCodeRelated) || isDisabled}
+          {...rest}
+        />
+      );
+    }
     case "text":
     default: {
       return (

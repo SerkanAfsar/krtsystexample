@@ -20,18 +20,11 @@ const CustomSearchSelect = React.forwardRef<
   const basicOptions = customOptions || options;
   const newOptions = newItem ? [...basicOptions, newItem] : [...basicOptions];
 
-  const { setMusteriModalData } = useTedarikciModalData();
-
   return (
     <div>
       <label className="mb-2 block w-full font-bold text-black">{title}</label>
       <Select
-        onChange={(item: any) => {
-          if (item.value == 9999) {
-            setMusteriModalData();
-          }
-          onChange();
-        }}
+        onChange={onChange}
         ref={ref}
         options={newOptions}
         className={cn(className)}

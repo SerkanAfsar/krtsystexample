@@ -10,7 +10,8 @@ export type ElementType = {
     | "textarea"
     | "radiobuttonlist"
     | "file"
-    | "tel";
+    | "tel"
+    | "money";
   title?: string;
   name: string;
   placeholder?: string | null;

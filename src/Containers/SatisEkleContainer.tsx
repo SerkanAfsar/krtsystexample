@@ -65,6 +65,9 @@ export default function SatisEkleContainer({
         customOptions={customers}
         noOptionsMessage={() => "Bulunamadı..."}
         onChange={(item: any) => {
+          if (item?.value == 9999) {
+            setMusteriModalData();
+          }
           setSelectedCustomerId(item ? item.value : undefined);
         }}
         newItem={{ label: "Yeni Müşteri Ekle", value: 9999 }}
