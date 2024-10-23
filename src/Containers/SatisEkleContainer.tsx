@@ -8,6 +8,9 @@ import useGetSatisProductData from "@/hooks/SatisHooks/useGetSatisProductData";
 import { useState } from "react";
 import { SatisModalHeader } from "../../types/types";
 import { AddSellinApiService } from "@/ApiServices/Sellings.ApiService";
+import CustomModalPage from "@/components/CustomModals/CustomPageModal";
+import MusteriDetayContainer from "./MusteriDetayContainer";
+import { useTedarikciModalData } from "@/store/useModalStore";
 
 export type ProductSaleType = {
   products: SatisItemType[];
@@ -29,13 +32,15 @@ export default function SatisEkleContainer({
   const [selectedCustomerId, setSelectedCustomerId] = useState<
     number | undefined
   >(undefined);
-  // const [sales_price, setSalePrice] = useState<number | null>(null);
+
   const { activeData, activePage, totalPageCount, setActivePage, error } =
     useGetSatisProductData({
       selectedValues,
       setSelectedValues,
     });
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { setMusteriModalData, musteriModalData } = useTedarikciModalData();
 
   const resultData: ProductSaleType = {
     customer_id: selectedCustomerId as number,
@@ -57,11 +62,12 @@ export default function SatisEkleContainer({
         placeholder="Müşteri Seçiniz"
         title="Müşteri Seçiniz"
         isClearable={true}
-        options={customers}
+        customOptions={customers}
         noOptionsMessage={() => "Bulunamadı..."}
         onChange={(item: any) => {
           setSelectedCustomerId(item ? item.value : undefined);
         }}
+        newItem={{ label: "Yeni Müşteri Ekle", value: 9999 }}
       />
 
       <div className="block w-full">
@@ -71,13 +77,26 @@ export default function SatisEkleContainer({
         {error ? (
           error
         ) : (
-          <CustomDatatable
-            totalPageCount={totalPageCount}
-            columns={SatisModalHeader}
-            data={activeData}
-            activePage={activePage}
-            setActivePage={setActivePage}
-          />
+          <>
+            <CustomModalPage
+              title="Yeni Müşteri Ekle"
+              modalDataValue={musteriModalData}
+              setModalDataValue={setMusteriModalData}
+            >
+              <MusteriDetayContainer
+                isRedirect={false}
+                isAdd={true}
+                musteriItemData={null}
+              />
+            </CustomModalPage>
+            <CustomDatatable
+              totalPageCount={totalPageCount}
+              columns={SatisModalHeader}
+              data={activeData}
+              activePage={activePage}
+              setActivePage={setActivePage}
+            />
+          </>
         )}
         <button
           type="button"

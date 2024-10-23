@@ -29,6 +29,7 @@ export default async function TedarikciEkle({
           pageName="Müşteri  Güncelle"
         />
         <MusteriDetayContainer
+          isRedirect={true}
           isAdd={false}
           musteriItemData={result.data as MusteriType}
         />

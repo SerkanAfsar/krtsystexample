@@ -15,7 +15,11 @@ export default function TedarikciEkle() {
         pageName="Müşteri Ekle"
       />
 
-      <MusteriDetayContainer isAdd={true} musteriItemData={null} />
+      <MusteriDetayContainer
+        isRedirect={true}
+        isAdd={true}
+        musteriItemData={null}
+      />
     </DefaultLayout>
   );
 }

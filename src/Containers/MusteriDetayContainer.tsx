@@ -13,19 +13,24 @@ import CustomTabs, { TabSectionType } from "@/components/CustomUI/CustomTabs";
 import useMusteriSatilanUrunlerTable from "@/hooks/SatisHooks/useMusteriSatilanUrunlerTable";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import { CustomerSaledProductsHeader } from "@/types/Satis";
+import { useTedarikciModalData } from "@/store/useModalStore";
 
 export default function MusteriDetayContainer({
   musteriItemData,
   isAdd,
+  isRedirect = true,
 }: {
   musteriItemData: MusteriType | null;
   isAdd: boolean;
+  isRedirect: boolean;
 }) {
   const musteriItem: MusteriType = musteriItemData ?? { area: "Domestic" };
   const [activeStep, setActiveStep] = useState<number>(0);
   const [data, setData] = useState<MusteriType>(musteriItem);
   const { activeData, activePage, totalPageCount, setActivePage, error } =
     useMusteriSatilanUrunlerTable({ customerId: musteriItemData?.id || 0 });
+
+  const { musteriModalData, setMusteriModalData } = useTedarikciModalData();
 
   const newData: any = AddMusteriSections.reduce((acc, next) => {
     const elems = next.elements.reduce((acc2, next2) => {
@@ -66,7 +71,10 @@ export default function MusteriDetayContainer({
             ? { ...filteredData, country_code: "" }
             : { ...filteredData }
         }
-        redirectUrl="/Admin/Firmalar/Musteriler/MusteriListesi"
+        extraCallBack={setMusteriModalData}
+        redirectUrl={
+          isRedirect ? "/Admin/Firmalar/Musteriler/MusteriListesi" : undefined
+        }
       />
     );
   }

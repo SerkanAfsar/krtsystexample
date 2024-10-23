@@ -1,3 +1,4 @@
+import { useTedarikciModalData } from "@/store/useModalStore";
 import { cn } from "@/utils";
 import React from "react";
 import Select from "react-select";
@@ -12,15 +13,27 @@ const CustomSearchSelect = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof Select> & {
     title: string;
     onChange: any;
+    newItem?: any;
+    customOptions: any;
   }
->(({ className, title, onChange, ...props }, ref) => {
+>(({ className, title, customOptions, newItem, onChange, ...props }, ref) => {
+  const basicOptions = customOptions || options;
+  const newOptions = newItem ? [...basicOptions, newItem] : [...basicOptions];
+
+  const { setMusteriModalData } = useTedarikciModalData();
+
   return (
     <div>
       <label className="mb-2 block w-full font-bold text-black">{title}</label>
       <Select
-        onChange={onChange}
+        onChange={(item: any) => {
+          if (item.value == 9999) {
+            setMusteriModalData();
+          }
+          onChange();
+        }}
         ref={ref}
-        options={props.options || options}
+        options={newOptions}
         className={cn(className)}
         {...props}
       />

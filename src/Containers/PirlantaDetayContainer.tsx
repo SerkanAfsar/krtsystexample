@@ -13,6 +13,7 @@ import {
 } from "@/ApiServices/Products.ApiService";
 import CustomModalPage from "@/components/CustomModals/CustomPageModal";
 import TedarikciDetayContainer from "./TedarikciDetayContainer";
+import { useTedarikciModalData } from "@/store/useModalStore";
 
 const PirlantaDetayContainer = ({
   pirlantaItemData,
@@ -24,6 +25,7 @@ const PirlantaDetayContainer = ({
   const diamondItem: AddDiamondType = pirlantaItemData ?? {};
   const [data, setData] = useState<AddDiamondType>(diamondItem);
   const [activeStep, setActiveStep] = useState<number>(0);
+  const { tedarikciModal, setTedarikciModalOpen } = useTedarikciModalData();
 
   const resultCallBack = useCallback((value: any) => {
     const iskonto = value?.iskonto || 0;
@@ -87,7 +89,11 @@ const PirlantaDetayContainer = ({
 
   return (
     <>
-      <CustomModalPage title="Yeni Tedarikçi Ekle">
+      <CustomModalPage
+        title="Yeni Tedarikçi Ekle"
+        modalDataValue={tedarikciModal}
+        setModalDataValue={setTedarikciModalOpen}
+      >
         <TedarikciDetayContainer
           isRedirect={false}
           isAdd={true}

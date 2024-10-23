@@ -14,11 +14,11 @@ import { useTedarikciModalData } from "@/store/useModalStore";
 export default function TedarikciDetayContainer({
   tedarikciItemData,
   isAdd,
-  isRedirect,
+  isRedirect = true,
 }: {
   tedarikciItemData: TedarikciType | null;
   isAdd: boolean;
-  isRedirect?: boolean;
+  isRedirect: boolean;
 }) {
   const tedarikciItem: Partial<TedarikciType> = tedarikciItemData ?? {};
   const [activeStep, setActiveStep] = useState<number>(0);
