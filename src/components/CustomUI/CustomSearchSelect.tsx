@@ -1,4 +1,3 @@
-import { useTedarikciModalData } from "@/store/useModalStore";
 import { cn } from "@/utils";
 import React from "react";
 import Select from "react-select";
