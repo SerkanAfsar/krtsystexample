@@ -27,6 +27,7 @@ export default async function TedarikciEkle({
           pageName="Tedarikçi Güncelle"
         />
         <TedarikciDetayContainer
+          isRedirect={true}
           isAdd={false}
           tedarikciItemData={result.data as TedarikciType}
         />
