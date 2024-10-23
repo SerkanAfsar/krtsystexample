@@ -2,7 +2,7 @@
 import CustomForm from "@/components/CustomUI/CustomForm";
 import { AddStoneSections } from "@/utils/MockData";
 import { AddDiamondType } from "../../types/formTypes";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
 import usePirlantaCode, {
   PirlantaCodeItemType,

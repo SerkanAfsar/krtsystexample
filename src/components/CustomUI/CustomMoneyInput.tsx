@@ -43,7 +43,6 @@ const CustomMoneyInput = React.forwardRef<
     const id = React.useId();
 
     const values = getValues && getValues();
-    console.log("deneme is ", values[name]);
 
     return (
       <div className={cn("w-full", outerClass && outerClass, className)}>
