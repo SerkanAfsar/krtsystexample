@@ -99,3 +99,6 @@ mücevher detayda --> üretim iş emrinden geleni işçilik textbox a yazdır
 
 
 
+
+pırlanta ekle sertifikalıda ---> price per carat ve toplam fiyat hesaplanıp disabled olucak
+pırlanta ekle sertifikasızda---> price per carat disabled olucak ve hesaplanıcak , total price elle girilecek

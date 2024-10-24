@@ -54,8 +54,8 @@ export default function FormElementItem({
     (data &&
       item.relativeTo &&
       data[item.relativeTo] == item.disabledRelative) ||
-    (item.relativeTo && !data[item.relativeTo]);
-  item.disabled;
+    (item.relativeTo && !data[item.relativeTo]) ||
+    item.disabled;
 
   const val = (data && data[item.name]) || item.value || null;
 
@@ -91,10 +91,11 @@ export default function FormElementItem({
             item.colEnd && `col-end-${item.colEnd}`,
             item.rowSpan && `row-span-${item.rowSpan}`,
           )}
+          value={val}
           showIcon={showIconRelativeTo}
           item={item}
           getValues={getValues}
-          disabled={(!isAdd && item.isCodeRelated) || isDisabled}
+          disabled={isDisabled}
           {...rest}
         />
       );

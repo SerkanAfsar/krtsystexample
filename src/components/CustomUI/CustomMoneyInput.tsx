@@ -27,22 +27,18 @@ const CustomMoneyInput = React.forwardRef<
     {
       item,
       className,
-      showIcon = true,
-      onChange,
-      onBlur,
       name,
       icon,
       outerClass,
       err,
       getValues,
+      value,
       setFormValues,
       ...rest
     },
     ref,
   ) => {
     const id = React.useId();
-
-    const values = getValues && getValues();
 
     return (
       <div className={cn("w-full", outerClass && outerClass, className)}>
@@ -61,6 +57,7 @@ const CustomMoneyInput = React.forwardRef<
               name={name}
               ref={ref}
               decimalsLimit={3}
+              value={value}
               placeholder={item.placeholder ?? undefined}
               onValueChange={(value, name, values) =>
                 setFormValues(name, values?.float)
