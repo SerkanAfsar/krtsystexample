@@ -14,6 +14,8 @@ type SelectElementProps = React.InputHTMLAttributes<HTMLSelectElement> & {
   staticOptions?: any;
   showIcon?: boolean;
   item: ElementType;
+  title?: string;
+  getValues?: any;
 };
 
 const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
@@ -28,6 +30,8 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
       outerClass,
       staticOptions,
       showIcon = true,
+      getValues,
+      title,
       ...rest
     },
     ref,
@@ -70,12 +74,12 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
 
     return (
       <div className={cn("w-full", outerClass && outerClass)}>
-        {(item.title || item?.isTopMargin) && (
+        {(title || item.title || item?.isTopMargin) && (
           <label
             htmlFor={id}
             className="mb-3 block h-5 text-sm font-medium text-black dark:text-white"
           >
-            {item.title}
+            {title || item.title}
           </label>
         )}
         <div className="flex items-center justify-between gap-1">

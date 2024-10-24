@@ -16,6 +16,7 @@ export default function SectionFormItem({
   productCode,
   extraOptions,
   getValues,
+  unregister,
   isAdd,
 
   ...rest
@@ -30,6 +31,7 @@ export default function SectionFormItem({
   productCode?: string | null;
   extraOptions?: CustomOptionType[] | null;
   getValues: UseFormGetValues<any>;
+  unregister?: any;
 }) {
   return (
     <div className="mb-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">

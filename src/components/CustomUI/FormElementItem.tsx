@@ -59,6 +59,12 @@ export default function FormElementItem({
 
   const val = (data && data[item.name]) || item.value || null;
 
+  const title =
+    (item.titleRelativeField &&
+      data[item.titleRelativeField] == item.titleRelativeValue &&
+      item.secondTitle) ||
+    item.title;
+
   const colSpan =
     item.spesificRelatedItem &&
     item.relativeTo &&
@@ -184,6 +190,7 @@ export default function FormElementItem({
           disabled={(!isAdd && item.isCodeRelated) || isDisabled}
           staticOptions={item.staticOptions}
           showIcon={showIconRelativeTo}
+          title={title}
           {...rest}
         />
       );

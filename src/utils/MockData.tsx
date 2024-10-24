@@ -776,6 +776,9 @@ export const AddStoneSections: Array<FormSectionType> = [
         relativeTo: "menstrual_status",
         span: 2,
         spesificRelatedItem: "Sertifikasız",
+        titleRelativeField: "menstrual_status",
+        titleRelativeValue: "Sertifikasız",
+        secondTitle: "Renk Aralığı",
       },
       {
         name: "renk2",
@@ -801,6 +804,9 @@ export const AddStoneSections: Array<FormSectionType> = [
         span: 2,
         options: PirlantaBerraklikData,
         spesificRelatedItem: "Sertifikasız",
+        titleRelativeField: "menstrual_status",
+        titleRelativeValue: "Sertifikasız",
+        secondTitle: "Berraklık Aralığı",
       },
       {
         name: "berraklik2",
