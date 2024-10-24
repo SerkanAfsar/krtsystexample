@@ -249,6 +249,12 @@ export default function FormElementItem({
           item={item}
           setValue={setValue}
           {...rest}
+          outerClass={cn(
+            item?.span && `col-span-${item.span.toString()}`,
+            item.colStart && `col-start-${item.colStart}`,
+            item.colEnd && `col-end-${item.colEnd}`,
+            item.rowSpan && `row-span-${item.rowSpan}`,
+          )}
         />
       );
     }

@@ -25,6 +25,9 @@ const config: Config = {
     {
       pattern: /row-span-./,
     },
+    {
+      pattern: /mt-./,
+    },
   ],
   darkMode: "class",
   theme: {

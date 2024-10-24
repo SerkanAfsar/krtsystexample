@@ -706,8 +706,8 @@ export const AddStoneSections: Array<FormSectionType> = [
     extraElements: [
       {
         name: "fromsingleormixed",
-        type: "customButtonGroup",
-        title: "Tip",
+        type: "radiobuttonlist",
+        title: "",
         checkBoxList: ["From Single", "From Mixed"],
         required: true,
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
@@ -715,6 +715,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         span: 4,
         value: "From Single",
         isCodeRelated: true,
+        mt: 12,
       },
       {
         name: "frommixedItem",
