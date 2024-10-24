@@ -38,13 +38,11 @@ const CustomMoneyInput = React.forwardRef<
     },
     ref,
   ) => {
-    const id = React.useId();
-
     return (
       <div className={cn("w-full", outerClass && outerClass, className)}>
         {(item.title || item?.isTopMargin) && (
           <label
-            htmlFor={id}
+            htmlFor={name}
             className="mb-3 block text-sm font-medium text-black dark:text-white"
           >
             {item.title}
@@ -53,15 +51,13 @@ const CustomMoneyInput = React.forwardRef<
         <div className="flex gap-1">
           <div className="relative flex-1">
             <CurrencyInput
-              id={id}
+              id={name}
               name={name}
               ref={ref}
-              decimalsLimit={3}
-              value={value}
+              decimalsLimit={2}
               placeholder={item.placeholder ?? undefined}
-              onValueChange={(value, name, values) =>
-                setFormValues(name, values?.float)
-              }
+              onValueChange={(value, name) => setFormValues(name, value)}
+              value={value}
               className={cn(
                 "h-full w-full rounded border-[1.5px] border-stone-400 bg-transparent px-5 py-3 pb-[14px] font-normal  text-black outline-none transition placeholder:capitalize focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary",
                 className,

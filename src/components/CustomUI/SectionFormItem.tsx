@@ -66,6 +66,7 @@ export default function SectionFormItem({
                 setError={setError}
                 isAdd={isAdd}
                 getValues={getValues}
+                unregister={unregister}
                 {...rest}
               />
             );

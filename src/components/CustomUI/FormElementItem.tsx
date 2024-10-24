@@ -27,6 +27,7 @@ export default function FormElementItem({
   extraOptions,
   isAdd,
   getValues,
+  unregister,
   ...rest
 }: {
   item: ElementType;
@@ -37,6 +38,7 @@ export default function FormElementItem({
   setError: any;
   extraOptions?: CustomOptionType[] | null;
   isAdd: boolean;
+  unregister?: any;
   getValues: UseFormGetValues<any>;
 }) {
   const firstCondition =
@@ -47,12 +49,17 @@ export default function FormElementItem({
     undefined;
 
   if (firstCondition) {
+    const values = getValues && getValues();
+    if (values[item.name]) {
+      unregister && unregister(item.name);
+    }
     return null;
   }
 
   const isDisabled =
     (data &&
       item.relativeTo &&
+      item.disabledRelative &&
       data[item.relativeTo] == item.disabledRelative) ||
     (item.relativeTo && !data[item.relativeTo]) ||
     item.disabled;

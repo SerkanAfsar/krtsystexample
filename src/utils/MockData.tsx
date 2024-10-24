@@ -175,7 +175,7 @@ export const AddSadeSections: Array<FormSectionType> = [
       },
       {
         name: "iscilik",
-        type: "money",
+        type: "number",
         title: "İşçilik",
         placeholder: "İşçilik Giriniz...",
         required: true,
@@ -915,7 +915,6 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Sertifika No Giriniz...",
         required: true,
         requiredMessage: "Sertifika No Değeri Boş Bırakılamaz",
-        disabled: true,
         span: 3,
         isLinkedWithIcon: true,
         rightIcon: <FaGlobe />,
@@ -928,7 +927,6 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Sertifika Tarihi Giriniz...",
         required: true,
         requiredMessage: "Sertifika Tarihi Değeri Boş Bırakılamaz",
-        disabled: true,
         relativeTo: "sertifika",
         span: 3,
       },
@@ -940,7 +938,6 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Sertifika Dosyası Seçiniz...",
         required: false,
         requiredMessage: "Sertifika No Değeri Boş Bırakılamaz",
-        disabled: true,
         span: 3,
       },
       {
@@ -949,7 +946,6 @@ export const AddStoneSections: Array<FormSectionType> = [
         title: "Propotion",
         placeholder: "Propotion Seçiniz...",
         required: true,
-        disabled: true,
         span: 3,
         relativeTo: "sertifika",
         requiredMessage: "Propotion Boş Bırakılamaz",
@@ -983,7 +979,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         relativeTo: "sertifika",
         placeholder: "Polish Seçiniz...",
         required: true,
-        disabled: true,
+
         requiredMessage: "Polish Boş Bırakılamaz",
         span: 3,
         options: [
@@ -1011,7 +1007,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         title: "Symmetry",
         placeholder: "Symmetry Seçiniz...",
         required: true,
-        disabled: true,
+
         relativeTo: "sertifika",
         span: 3,
         requiredMessage: "Symmetry Boş Bırakılamaz",
@@ -1042,7 +1038,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         relativeTo: "sertifika",
         span: 3,
-        disabled: true,
+
         requiredMessage: "Fluorescence Boş Bırakılamaz",
         options: [
           {
@@ -1075,7 +1071,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         relativeTo: "sertifika",
         requiredMessage: "Min Değeri Boş Bırakılamaz",
-        disabled: true,
+
         span: 4,
       },
       {
@@ -1085,7 +1081,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Max Giriniz...",
         required: true,
         requiredMessage: "Max Değeri Boş Bırakılamaz",
-        disabled: true,
+
         relativeTo: "sertifika",
         span: 4,
       },
@@ -1097,7 +1093,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         relativeTo: "sertifika",
         requiredMessage: "Height Değeri Boş Bırakılamaz",
-        disabled: true,
+
         span: 4,
       },
       {
@@ -1107,7 +1103,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Table Giriniz...",
         required: true,
         requiredMessage: "Table Değeri Boş Bırakılamaz",
-        disabled: true,
+
         relativeTo: "sertifika",
         span: 4,
         rightIcon: "%",
@@ -1119,7 +1115,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "Total Depth Giriniz...",
         required: true,
         requiredMessage: "Total Depth Değeri Boş Bırakılamaz",
-        disabled: true,
+
         relativeTo: "sertifika",
         span: 4,
         rightIcon: "%",
@@ -1132,7 +1128,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         relativeTo: "sertifika",
         requiredMessage: "Girdle Değeri Boş Bırakılamaz",
-        disabled: true,
+
         span: 4,
       },
     ],
@@ -1187,7 +1183,6 @@ export const AddStoneSections: Array<FormSectionType> = [
         requiredMessage: "İskonto Boş Bırakılamaz",
         disabled: true,
         rightIcon: "$",
-
         span: 1,
       },
       {

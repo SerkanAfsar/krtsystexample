@@ -29,17 +29,20 @@ const PirlantaDetayContainer = ({
 
   const resultCallBack = useCallback(
     (value: any) => {
-      const iskonto = value?.iskonto || 0;
+      const iskonto = value?.iskonto?.toString().replace(",", ".") || 0;
 
       const rapaportPrice =
-        value.menstrual_status == "Sertifikalı" ? value?.rapaportPrice : 4700;
+        value.menstrual_status == "Sertifikalı" && value?.rapaportPrice
+          ? Number(value?.rapaportPrice.toString().replace(",", "."))
+          : 4700;
 
       const pricePerCarat = (rapaportPrice * (100 - iskonto)) / 100;
-      const newToplamFiyat = pricePerCarat * value?.carat;
+      const total_cost = pricePerCarat * Number(value?.carat);
+
       if (data.menstrual_status == "Sertifikalı") {
         return {
-          pricePerCarat,
-          total_cost: newToplamFiyat,
+          pricePerCarat: Number(pricePerCarat.toFixed(2)),
+          total_cost: Number(total_cost.toFixed(2)),
         };
       } else {
         return {
