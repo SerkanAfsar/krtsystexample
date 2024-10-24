@@ -84,7 +84,7 @@ export default function usePirlantaCode({
             caratValue: data_carat,
           });
 
-          if (data_fromsingleormixed == "From Single") {
+          if (data_fromsingleormixed == "Tektaş") {
             if (!data_kesim || !data_carat) {
               return;
             }

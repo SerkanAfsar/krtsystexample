@@ -47,7 +47,6 @@ const PirlantaDetayContainer = ({
       } else {
         return {
           pricePerCarat,
-          total_cost: null,
         };
       }
     },
@@ -85,7 +84,7 @@ const PirlantaDetayContainer = ({
     {
       menstrual_status:
         data.menstrual_status == "Sertifikalı" ? "Single" : "Mixed",
-      total_cost: data.total_cost,
+      total_cost: Number(data.total_cost?.toString().replace(",", ".")),
       type: "Diamond",
       buy_date: data.buy_date,
       code: pruductCode,
