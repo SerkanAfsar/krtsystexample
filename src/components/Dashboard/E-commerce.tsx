@@ -26,24 +26,27 @@ const ECommerce = ({
   workorderCount,
   isEmriData,
 }: {
-  pirlantaCount: number;
-  renkliTasCount: number;
-  sadeCount: number;
-  mucevherCount: number;
-  workorderCount: number;
+  pirlantaCount?: any;
+  renkliTasCount?: any;
+  sadeCount?: any;
+  mucevherCount?: any;
+  workorderCount?: any;
   isEmriData: WorkOrderType[];
 }) => {
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="İş Emiri" total={workorderCount.toString()}>
+        <CardDataStats
+          title="İş Emiri"
+          total={workorderCount?.toString() || undefined}
+        >
           {/* <MdWork size={"25px"} /> */}
           <GiStakeHammer size={"25px"} />
         </CardDataStats>
         <CardDataStats
           title="Tamamlanmış İş Emiri"
           total={isEmriData
-            .filter((a) => a.status == "Completed")
+            ?.filter((a) => a.status == "Completed")
             .length.toString()}
         >
           {/* <MdWork size={"25px"} /> */}
@@ -52,7 +55,7 @@ const ECommerce = ({
         <CardDataStats
           title="Aktif İş Emiri"
           total={isEmriData
-            .filter((a) => a.status == "Pending")
+            ?.filter((a) => a.status == "Pending")
             .length.toString()}
         >
           {/* <MdWork size={"25px"} /> */}
@@ -61,7 +64,7 @@ const ECommerce = ({
         <CardDataStats
           title="İptal Edilmiş İş Emiri"
           total={isEmriData
-            .filter((a) => a.status == "Cancelled")
+            ?.filter((a) => a.status == "Cancelled")
             .length.toString()}
         >
           {/* <MdWork size={"25px"} /> */}
@@ -79,19 +82,19 @@ const ECommerce = ({
           <GiCutDiamond size={"25px"} />
         </CardDataStats>
 
-        <CardDataStats title="Pırlanta" total={pirlantaCount.toString()}>
+        <CardDataStats title="Pırlanta" total={pirlantaCount?.toString()}>
           <GiDiamondTrophy size={"25px"} />
         </CardDataStats>
-        <CardDataStats title="Renkli Taş" total={renkliTasCount.toString()}>
+        <CardDataStats title="Renkli Taş" total={renkliTasCount?.toString()}>
           {/* <GiStonePile size={"25px"} /> */}
           <GiGems size={"25px"} />
         </CardDataStats>
-        <CardDataStats title="Sade" total={sadeCount.toString()}>
+        <CardDataStats title="Sade" total={sadeCount?.toString()}>
           {/* <GiDiamondTrophy size={"25px"} /> */}
           {/* <FaRing size={"25px"} /> */}
           <LiaRingSolid size={"25px"} />
         </CardDataStats>
-        <CardDataStats title="Mücevher" total={mucevherCount.toString()}>
+        <CardDataStats title="Mücevher" total={mucevherCount?.toString()}>
           {/* <GiDiamondTrophy  /> */}
           {/* <GiStonePile size={"25px"} /> */}
           <GiCrystalEarrings size={"25px"} />

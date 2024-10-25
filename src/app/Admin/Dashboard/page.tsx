@@ -34,10 +34,18 @@ export default async function Home() {
       GetWorkOrdersList({ page: 1, order_by: "pk" }),
     ]);
 
-  const pirlantaResult = pirlantaData.data as ProductListType;
-  const renklitasResult = renklitasData.data as ProductListType;
-  const sadeResult = sadeData.data as ProductListType;
-  const mucevherResult = mucevherData.data as ProductListType;
+  const pirlantaResult = pirlantaData.success
+    ? (pirlantaData.data as ProductListType)
+    : null;
+  const renklitasResult = renklitasData.success
+    ? (renklitasData.data as ProductListType)
+    : null;
+  const sadeResult = sadeData.success
+    ? (sadeData.data as ProductListType)
+    : null;
+  const mucevherResult = mucevherData.success
+    ? (mucevherData.data as ProductListType)
+    : null;
 
   const isEmriData = isEmriResult?.results as WorkOrderType[];
 
@@ -46,10 +54,10 @@ export default async function Home() {
       <DefaultLayout>
         <ECommerce
           workorderCount={isEmriResult.count}
-          pirlantaCount={pirlantaResult.count}
-          renkliTasCount={renklitasResult.count}
-          sadeCount={sadeResult.count}
-          mucevherCount={mucevherResult.count}
+          pirlantaCount={pirlantaResult?.count}
+          renkliTasCount={renklitasResult?.count}
+          sadeCount={sadeResult?.count}
+          mucevherCount={mucevherResult?.count}
           isEmriData={isEmriData}
         />
       </DefaultLayout>
