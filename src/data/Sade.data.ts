@@ -153,7 +153,15 @@ export const SadeModelTurleri: CustomOptionType[] = [
     valueVal: "Zincir",
     extraValue: "ZN",
   },
-];
+].sort((a, b) => {
+  if (a.titleVal < b.titleVal) {
+    return -1;
+  }
+  if (a.titleVal > b.titleVal) {
+    return 1;
+  }
+  return 0;
+});
 
 export const AltinRengiData: CustomOptionType[] = [
   {

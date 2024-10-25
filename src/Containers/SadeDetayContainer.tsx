@@ -33,7 +33,7 @@ export default function SadeDetayContainer({
   });
 
   useEffect(() => {
-    setData((prev: any) => ({ ...prev, code: sadeCode }));
+    setData((prev: any) => ({ ...prev, code: sadeCode, sadeKodu: sadeCode }));
   }, [sadeCode]);
 
   const getBase64 = (file: any): any => {
@@ -76,7 +76,7 @@ export default function SadeDetayContainer({
     if (value.ayar && value.gram) {
       switch (value.ayar) {
         case "18": {
-          const result = (825 / 24) * parseFloat(value.gram);
+          const result = (825 / 1000) * parseFloat(value.gram);
           return result.toFixed(2);
         }
         case "750": {
@@ -84,7 +84,7 @@ export default function SadeDetayContainer({
           return result.toFixed(2);
         }
         case "14": {
-          const result = (645 / 24) * parseFloat(value.gram);
+          const result = (645 / 1000) * parseFloat(value.gram);
           return result.toFixed(2);
         }
         case "585": {
@@ -111,11 +111,10 @@ export default function SadeDetayContainer({
     ({ hasGrami, iscilik }: { hasGrami?: string; iscilik: number }) => {
       if (hasGrami && iscilik) {
         const totalCost = Number(hasGrami) * gramAltinKur + Number(iscilik);
-
         return totalCost.toFixed(2);
       }
     },
-    [],
+    [gramAltinKur],
   );
 
   const updateData = useCallback(
