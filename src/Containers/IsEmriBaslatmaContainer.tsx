@@ -261,7 +261,7 @@ export default function IsEmriBaslatmaContainer({
                   valueAsNumber: true,
                 })}
               />
-              <CustomMoneyInput
+              <CustomInput
                 item={{
                   name: "cost",
                   title: "İşçilik",
