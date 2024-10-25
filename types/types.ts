@@ -175,20 +175,20 @@ export const PirlantaModalHeaders: (Column<IData> & { isHidden?: boolean })[] =
 
 export type TedarikciType = {
   id?: number;
-  e_mail: string;
-  authorized_e_mail: string;
-  code: string;
-  type: string;
-  name: string;
-  phone: string;
-  address: string;
-  area: string;
-  currenc_code: string;
-  tax_office: string;
-  tax_number: string;
-  bank: string;
-  authorized_name: string;
-  authorized_phone: string;
+  e_mail?: string;
+  authorized_e_mail?: string;
+  code?: string;
+  type?: string;
+  name?: string;
+  phone?: string;
+  address?: string;
+  area?: string;
+  currenc_code?: string;
+  tax_office?: string;
+  tax_number?: string;
+  bank?: string;
+  authorized_name?: string;
+  authorized_phone?: string;
 };
 
 export type MusteriType = {

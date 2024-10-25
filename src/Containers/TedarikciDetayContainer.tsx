@@ -20,14 +20,15 @@ export default function TedarikciDetayContainer({
   isAdd: boolean;
   isRedirect: boolean;
 }) {
-  const tedarikciItem: Partial<TedarikciType> = tedarikciItemData ?? {};
+  const tedarikciItem: TedarikciType = tedarikciItemData ?? {};
   const [activeStep, setActiveStep] = useState<number>(0);
-  const [data, setData] = useState<Partial<TedarikciType>>(tedarikciItem);
+  const [data, setData] = useState<TedarikciType>(tedarikciItem);
   const { setTedarikciModalOpen } = useTedarikciModalData();
 
   const newData: any = AddTedarikciSections.reduce((acc, next) => {
     const elems = next.elements.reduce((acc2, next2) => {
       const name = next2.name as keyof TedarikciType;
+
       if (data[name]) {
         return {
           ...acc2,
@@ -39,7 +40,7 @@ export default function TedarikciDetayContainer({
     return { ...acc, [next.keyString]: elems };
   }, {});
 
-  const filteredData = Object.values(newData).reduce<Partial<TedarikciType>>(
+  const filteredData = Object.values(newData).reduce<TedarikciType>(
     (acc: any, next: any) => {
       return { ...acc, ...next };
     },
