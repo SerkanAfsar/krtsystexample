@@ -75,12 +75,18 @@ export default function SadeDetayContainer({
   const hasGramHesapla = useCallback((value: any) => {
     if (value.ayar && value.gram) {
       switch (value.ayar) {
-        case "18":
+        case "18": {
+          const result = (825 / 24) * parseFloat(value.gram);
+          return result.toFixed(2);
+        }
         case "750": {
           const result = (18 / 24) * parseFloat(value.gram);
           return result.toFixed(2);
         }
-        case "14":
+        case "14": {
+          const result = (645 / 24) * parseFloat(value.gram);
+          return result.toFixed(2);
+        }
         case "585": {
           const result = (14 / 24) * parseFloat(value.gram);
           return result.toFixed(2);
