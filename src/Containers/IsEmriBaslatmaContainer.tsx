@@ -19,7 +19,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useParams } from "next/navigation";
 import { cn } from "@/utils";
 import CustomMucevherSaveModal from "@/components/CustomUI/CustomMucevherSaveModal";
-import { CustomMoneyInput } from "@/components/CustomUI/CustomMoneyInput";
 
 export default function IsEmriBaslatmaContainer({
   workOrderGroups,
