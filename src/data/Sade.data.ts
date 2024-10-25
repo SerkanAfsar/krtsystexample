@@ -637,4 +637,12 @@ export const AtolyeListesi: CustomOptionType[] = [
     valueVal: "OSMAN (ATK)",
     extraValue: "286",
   },
-];
+].sort((a, b) => {
+  if (a.titleVal < b.titleVal) {
+    return -1;
+  }
+  if (a.titleVal > b.titleVal) {
+    return 1;
+  }
+  return 0;
+});

@@ -77,31 +77,31 @@ export default function SadeDetayContainer({
       switch (value.ayar) {
         case "18": {
           const result = (825 / 1000) * parseFloat(value.gram);
-          return result.toFixed(2);
+          return result.toFixed(3);
         }
         case "750": {
           const result = (18 / 24) * parseFloat(value.gram);
-          return result.toFixed(2);
+          return result.toFixed(3);
         }
         case "14": {
           const result = (645 / 1000) * parseFloat(value.gram);
-          return result.toFixed(2);
+          return result.toFixed(3);
         }
         case "585": {
           const result = (14 / 24) * parseFloat(value.gram);
-          return result.toFixed(2);
+          return result.toFixed(3);
         }
         case "8": {
           const result = (8 / 24) * parseFloat(value.gram);
-          return result.toFixed(2);
+          return result.toFixed(3);
         }
         case "22": {
           const result = (22 / 24) * parseFloat(value.gram);
-          return result.toFixed(2);
+          return result.toFixed(3);
         }
         case "24": {
           const result = (24 / 24) * parseFloat(value.gram);
-          return result.toFixed(2);
+          return result.toFixed(3);
         }
       }
     }
