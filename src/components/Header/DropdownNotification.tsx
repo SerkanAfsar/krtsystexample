@@ -1,12 +1,52 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { WorkOrderNotificationType } from "../../../types/WorkOrder.types";
+import {
+  GetWorkOrderNotificationListService,
+  PostWorkOrderNotificationReadService,
+} from "@/Services/WorkOrder.Services";
+import { ResponseResult } from "../../../types/responseTypes";
+import { cn } from "@/utils";
+import { toast } from "react-toastify";
 
 const DropdownNotification = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [notifying, setNotifying] = useState(true);
 
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
+
+  const [notificationList, setNotificationList] = useState<
+    WorkOrderNotificationType[]
+  >([]);
+
+  const updateNotification = useCallback(
+    ({ notification_id }: { notification_id: number }) => {
+      PostWorkOrderNotificationReadService({ notification_id })
+        .then((resp) => {
+          if (!resp.success) {
+            return toast.error(resp?.error?.[0]?.toString(), {
+              position: "top-right",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    [],
+  );
+
+  useEffect(() => {
+    GetWorkOrderNotificationListService()
+      .then((resp: ResponseResult<WorkOrderNotificationType>) => {
+        if (resp.success) {
+          setNotificationList(resp.data as WorkOrderNotificationType[]);
+        } else {
+          console.log("Norification err", resp.error);
+        }
+      })
+      .catch((err) => console.log("Notification List Service err ", err));
+  }, []);
 
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -38,7 +78,6 @@ const DropdownNotification = () => {
       <Link
         ref={trigger}
         onClick={() => {
-          setNotifying(false);
           setDropdownOpen(!dropdownOpen);
         }}
         href="#"
@@ -46,7 +85,11 @@ const DropdownNotification = () => {
       >
         <span
           className={`absolute -top-0.5 right-0 z-1 h-2 w-2 rounded-full bg-meta-1 ${
-            notifying === false ? "hidden" : "inline"
+            notificationList &&
+            notificationList.length &&
+            notificationList.some((a) => a.is_read == false)
+              ? "inline"
+              : "hidden"
           }`}
         >
           <span className="absolute -z-1 inline-flex h-full w-full animate-ping rounded-full bg-meta-1 opacity-75"></span>
@@ -66,85 +109,50 @@ const DropdownNotification = () => {
           />
         </svg>
       </Link>
+      {notificationList.length != 0 && (
+        <div
+          ref={dropdown}
+          onFocus={() => setDropdownOpen(true)}
+          onBlur={() => setDropdownOpen(false)}
+          className={`absolute -right-27 mt-2.5 flex h-auto w-75 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark sm:right-0 sm:w-80 ${
+            dropdownOpen === true ? "block" : "hidden"
+          }`}
+        >
+          <div className="px-4.5 py-3">
+            <h5 className="text-sm font-medium text-bodydark2">Bildirimler</h5>
+          </div>
 
-      <div
-        ref={dropdown}
-        onFocus={() => setDropdownOpen(true)}
-        onBlur={() => setDropdownOpen(false)}
-        className={`absolute -right-27 mt-2.5 flex h-90 w-75 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark sm:right-0 sm:w-80 ${
-          dropdownOpen === true ? "block" : "hidden"
-        }`}
-      >
-        <div className="px-4.5 py-3">
-          <h5 className="text-sm font-medium text-bodydark2">Notification</h5>
+          <ul className="flex h-fit flex-col overflow-y-auto">
+            {notificationList.map((item: WorkOrderNotificationType, index) => (
+              <li
+                key={index}
+                className={cn(
+                  !item.is_read && "bg-slate-200 !text-black underline",
+                )}
+              >
+                <Link
+                  onClick={async () =>
+                    await updateNotification({ notification_id: item.id })
+                  }
+                  className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
+                  href={`/Admin/IsEmirleri/UretimBaslatma/${item.work_order}`}
+                >
+                  <p className="text-sm">
+                    <span className="block w-full text-black dark:text-white">
+                      {item.title}
+                    </span>{" "}
+                    {item.description}
+                  </p>
+
+                  <p className="text-xs">
+                    {new Date(item.created_at).toLocaleDateString()}
+                  </p>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
-
-        <ul className="flex h-auto flex-col overflow-y-auto">
-          <li>
-            <Link
-              className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-              href="#"
-            >
-              <p className="text-sm">
-                <span className="text-black dark:text-white">
-                  Edit your information in a swipe
-                </span>{" "}
-                Sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim.
-              </p>
-
-              <p className="text-xs">12 May, 2025</p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-              href="#"
-            >
-              <p className="text-sm">
-                <span className="text-black dark:text-white">
-                  It is a long established fact
-                </span>{" "}
-                that a reader will be distracted by the readable.
-              </p>
-
-              <p className="text-xs">24 Feb, 2025</p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-              href="#"
-            >
-              <p className="text-sm">
-                <span className="text-black dark:text-white">
-                  There are many variations
-                </span>{" "}
-                of passages of Lorem Ipsum available, but the majority have
-                suffered
-              </p>
-
-              <p className="text-xs">04 Jan, 2025</p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-              href="#"
-            >
-              <p className="text-sm">
-                <span className="text-black dark:text-white">
-                  There are many variations
-                </span>{" "}
-                of passages of Lorem Ipsum available, but the majority have
-                suffered
-              </p>
-
-              <p className="text-xs">01 Dec, 2024</p>
-            </Link>
-          </li>
-        </ul>
-      </div>
+      )}
     </li>
   );
 };

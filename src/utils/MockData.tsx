@@ -262,6 +262,16 @@ export const AddSadeSections: Array<FormSectionType> = [
         relativeTo: "type",
         span: 3,
       },
+      {
+        name: "stoneCount",
+        type: "number",
+        title: "Taş Adedi",
+        placeholder: "Taş Adedini Giriniz...",
+        required: false,
+        requiredMessage: "Giriş Tarihi Değeri Boş Bırakılamaz",
+        relativeTo: "type",
+        span: 3,
+      },
     ],
   },
 ];

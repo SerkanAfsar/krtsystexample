@@ -59,7 +59,7 @@ export default async function UretimBaslatma({ params }: { params: Params }) {
             url: "/Admin/IsEmirleri/UretimIsEmirleriListesi",
           },
         ]}
-        pageName={`${workOrderData.product_temp_code} İş Emri Bilgileri- ${workOrderData.status === "Completed" ? "(Tamamlanmış)" : ""}`}
+        pageName={`${workOrderData.product_temp_code} İş Emri Bilgileri ${workOrderData.status === "Completed" ? " - (Tamamlanmış)" : ""}`}
       />
       <IsEmriBaslatmaContainer
         userId={userId}

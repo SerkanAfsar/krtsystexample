@@ -47,8 +47,6 @@ export default function TedarikciDetayContainer({
     { type: "TestData" },
   );
 
-  console.log(JSON.stringify(filteredData));
-
   return (
     <CustomForm
       setData={setData}

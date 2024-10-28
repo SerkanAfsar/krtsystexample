@@ -85,3 +85,12 @@ export type WorkOrderListType = {
 export type WorkOrderQueueType = {
   next_order: string;
 };
+
+export type WorkOrderNotificationType = {
+  id: number;
+  title: string;
+  description: string;
+  is_read: boolean;
+  created_at: string;
+  work_order: number;
+};

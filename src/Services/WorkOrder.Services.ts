@@ -5,6 +5,7 @@ import {
   AddWorOrderType,
   WorkOrderAtolyeType,
   WorkOrderListType,
+  WorkOrderNotificationType,
   WorkOrderPeopleList,
   WorkOrderQueueType,
   WorkOrderTeamGroupType,
@@ -233,4 +234,32 @@ export const FinishWorkOrderById = async ({
   });
 
   return result as ResponseResult<string>;
+};
+
+export const GetWorkOrderNotificationListService = async (): Promise<
+  ResponseResult<WorkOrderNotificationType>
+> => {
+  const result = await BaseService({
+    url: "product/user/notifications/",
+    method: "GET",
+    hasToken: true,
+    bodyData: null,
+  });
+
+  return result as ResponseResult<WorkOrderNotificationType>;
+};
+
+export const PostWorkOrderNotificationReadService = async ({
+  notification_id,
+}: {
+  notification_id: number;
+}): Promise<ResponseResult<any>> => {
+  const result = await BaseService({
+    url: "product/user/mark-as-read/",
+    method: "POST",
+    hasToken: true,
+    bodyData: { notification_id },
+  });
+
+  return result as ResponseResult<any>;
 };
