@@ -7,7 +7,7 @@ export type PirlantaListType = {
   sertifika?: string;
   renk?: string;
   berraklik?: string;
-  proposion?: string;
+  cut?: string;
   polish?: string;
   symmetry?: string;
   fluorescence?: string;
@@ -43,8 +43,8 @@ export const PirlantaListHeaders: Column<
     accessor: "berraklik",
   },
   {
-    Header: "Proportion",
-    accessor: "proposion",
+    Header: "Cut",
+    accessor: "cut",
   },
   {
     Header: "Polish",
