@@ -5,12 +5,13 @@ import { CustomSearchSelect } from "@/components/CustomUI/CustomSearchSelect";
 import { useRouter } from "next/navigation";
 
 import useGetSatisProductData from "@/hooks/SatisHooks/useGetSatisProductData";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { SatisModalHeader } from "../../types/types";
 import { AddSellinApiService } from "@/ApiServices/Sellings.ApiService";
 import CustomModalPage from "@/components/CustomModals/CustomPageModal";
 import MusteriDetayContainer from "./MusteriDetayContainer";
 import { useTedarikciModalData } from "@/store/useModalStore";
+import { toast } from "react-toastify";
 
 export type ProductSaleType = {
   products: SatisItemType[];
@@ -47,7 +48,27 @@ export default function SatisEkleContainer({
     products: selectedValues,
   };
 
+  const handleCheckValueValidation = useCallback((items: SatisItemType[]) => {
+    let result = true;
+    items.forEach((item: SatisItemType) => {
+      if (!item.sales_price || item.sales_price == 0) {
+        toast.error(`${item.codeName} Kodlu Ürünün Fiyatını Giriniz`);
+        result = false;
+        return;
+      } else if (item.hasCarat && (!item.used_carat || item.used_carat === 0)) {
+        toast.error(`${item.codeName} Kodlu Ürünün Karat Değerini Giriniz`);
+        result = false;
+        return;
+      }
+    });
+    return result;
+  }, []);
+
   const handleSubmit = async () => {
+    const result = handleCheckValueValidation(selectedValues);
+    if (!result) {
+      return false;
+    }
     setIsLoading(true);
     await AddSellinApiService({
       data: resultData,

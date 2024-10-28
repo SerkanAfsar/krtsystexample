@@ -69,6 +69,7 @@ export default function SadeDetayContainer({
       code: sadeCode,
       total_cost: Number(data.total_cost),
       image,
+      menstrual_status: "Single",
     },
   );
 

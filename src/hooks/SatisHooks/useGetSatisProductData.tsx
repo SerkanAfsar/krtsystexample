@@ -25,11 +25,18 @@ export default function useGetSatisProductData({
   const inputKaratRefs = useRef<HTMLInputElement[]>([]);
   const inputPriceRefs = useRef<HTMLInputElement[]>([]);
 
-  const handleCheck = (e: React.FormEvent<HTMLInputElement>, index: number) => {
+  const handleCheck = (
+    e: React.FormEvent<HTMLInputElement>,
+    index: number,
+    codeName: string,
+    hasCarat: boolean,
+  ) => {
     const target = e.target as HTMLInputElement;
     const item: any = {
       product_id: Number(target.name),
       used_carat: 0,
+      codeName,
+      hasCarat,
     };
 
     if (target.checked) {
@@ -76,7 +83,9 @@ export default function useGetSatisProductData({
           type="checkbox"
           defaultChecked={condition}
           name={item?.pk?.toString()}
-          onChange={(e) => handleCheck(e, index)}
+          onChange={(e) =>
+            handleCheck(e, index, item.code, item?.menstrual_status == "Mixed")
+          }
         />
       ),
       code: item?.code,
