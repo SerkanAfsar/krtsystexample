@@ -24,11 +24,12 @@ export default function RenkliTasDetayContainer({
 
   const resultCallBack = useCallback((value: any) => {
     const carat = Number(value?.carat || 0);
-    const newResult = value.total_cost / carat;
+    const total_cost = (
+      Number(value?.pricePerCarat?.toString().replace(",", ".") || 1) * carat
+    ).toFixed(2);
 
     return {
-      pricePerCarat: newResult,
-      total_cost: value.total_cost,
+      total_cost,
     };
   }, []);
 

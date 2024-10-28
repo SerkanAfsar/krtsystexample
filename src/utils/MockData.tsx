@@ -828,7 +828,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         span: 2,
 
         placeholder: "Menşei Seçiniz...",
-        required: true,
+        required: false,
         requiredMessage: "Menşei Değeri Boş Bırakılamaz",
         relativeTo: "menstrual_status",
         // showIconRelativeTo: "Sertifikasız",
@@ -1333,7 +1333,7 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
         requiredMessage: "Karat Başına Maliyet Giriniz",
         isCurrency: true,
         rightIcon: "$",
-        disabled: true,
+        disabled: false,
         span: 2,
       },
       {
@@ -1343,7 +1343,7 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
         placeholder: "Toplam Fiyat...",
         required: true,
         requiredMessage: "Toplam Fiyat Boş Bırakılamaz",
-        disabled: false,
+        disabled: true,
         rightIcon: "$",
         span: 2,
       },
