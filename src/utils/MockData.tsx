@@ -23,6 +23,7 @@ import {
 import { GenerateSertificateUrl } from "./Pirlanta.Utils";
 import { CustomOptionType } from "../../types/inputTypes";
 import { TedarikciCustomListType } from "./Tedarikciler.Utils";
+import { SirketTuruOptionList } from "@/data/Musteri.data";
 export const PirlantaSertifikaKodlari: CustomOptionType[] = [
   {
     titleVal: "HRD",
@@ -541,6 +542,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
         required: false,
         requiredMessage: "Şirket Türü Seçiniz",
         span: 2,
+        options: SirketTuruOptionList,
       },
       {
         name: "company_foundation_date",
@@ -1009,6 +1011,10 @@ export const AddStoneSections: Array<FormSectionType> = [
             titleVal: "P",
             valueVal: "P",
           },
+          {
+            titleVal: "Good",
+            valueVal: "Good",
+          },
         ],
       },
       {
@@ -1017,7 +1023,6 @@ export const AddStoneSections: Array<FormSectionType> = [
         title: "Symmetry",
         placeholder: "Symmetry Seçiniz...",
         required: true,
-
         relativeTo: "sertifika",
         span: 3,
         requiredMessage: "Symmetry Boş Bırakılamaz",
@@ -1037,6 +1042,10 @@ export const AddStoneSections: Array<FormSectionType> = [
           {
             titleVal: "P",
             valueVal: "P",
+          },
+          {
+            titleVal: "Good",
+            valueVal: "Good",
           },
         ],
       },
@@ -1224,10 +1233,10 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
     extraElements: [
       {
         name: "fromsingleormixed",
-        type: "customButtonGroup",
+        type: "radiobuttonlist",
         isCodeRelated: true,
         title: "Tip",
-        checkBoxList: ["From Single", "From Mixed"],
+        checkBoxList: ["Tektaş", "Sertifikasız"],
         required: true,
         requiredMessage: "Karat Değeri Boş Bırakılamaz",
         checkBoxSetValueItem: "fromsingleormixed",
@@ -1242,7 +1251,7 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Kesim Boş Bırakılamaz",
         relativeTo: "fromsingleormixed",
-        visibleRelative: "From Mixed",
+        visibleRelative: "Sertifikasız",
         isExtra: true,
         span: 4,
       },
