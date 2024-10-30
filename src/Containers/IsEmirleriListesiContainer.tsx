@@ -1,6 +1,6 @@
 "use client";
 import { Column } from "react-table";
-import { WorkOrderType } from "../../types/WorkOrder.types";
+import { WorkOrderType } from "../types/WorkOrder.types";
 import React from "react";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import useGetWorkOrderListData from "@/hooks/WorkOrderHooks/useGetWorkOrderListData";

@@ -4,8 +4,8 @@ import { useCallback, useEffect, useState } from "react";
 
 import { GetSimpleWorkOrderProductList } from "@/Services/WorkOrder.Services";
 import { useSearchParams } from "next/navigation";
-import { ResponseResult } from "../../../types/responseTypes";
-import { ProductListType, ProductType } from "../../../types/types";
+import { ResponseResult } from "../../types/responseTypes";
+import { ProductListType, ProductType } from "../../types/types";
 import { formatToCurrency, ProductTypesIntl } from "@/utils";
 
 export default function useSimpleWorkOrderProductList({

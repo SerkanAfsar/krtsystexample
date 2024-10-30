@@ -1,7 +1,7 @@
 import { cn } from "@/utils";
 import { ClassValue } from "clsx";
 import * as React from "react";
-import { ElementType } from "../../../types/inputTypes";
+import { ElementType } from "../../types/inputTypes";
 
 type CustomTextAreaProps = React.HTMLAttributes<HTMLTextAreaElement> & {
   placeholder?: string;

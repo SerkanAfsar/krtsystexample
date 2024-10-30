@@ -5,9 +5,9 @@ import {
   WorkOrderPeopleList,
   WorkOrderTeamGroupType,
   WorkOrderType,
-} from "../../types/WorkOrder.types";
+} from "../types/WorkOrder.types";
 import CustomSelect from "@/components/CustomUI/CustomSelect";
-import { CustomOptionType } from "../../types/inputTypes";
+import { CustomOptionType } from "../types/inputTypes";
 import { useEffect, useState } from "react";
 import {
   AddWorkOrderLogService,

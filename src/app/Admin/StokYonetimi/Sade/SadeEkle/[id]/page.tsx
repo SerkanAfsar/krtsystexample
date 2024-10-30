@@ -2,7 +2,7 @@ import SadeDetayContainer from "@/Containers/SadeDetayContainer";
 import { GetProductService } from "@/Services/Product.Services";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import { ProductType } from "../../../../../../../types/types";
+import { ProductType } from "../../../../../../types/types";
 import { notFound } from "next/navigation";
 import { getGramAltinKuru } from "@/utils/Sade.Utils";
 

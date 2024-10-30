@@ -2,7 +2,7 @@
 
 import CustomForm from "@/components/CustomUI/CustomForm";
 import useRenkliTasCode from "@/hooks/CodeHooks/useRenkliTasCode";
-import { IRenkliTasType } from "../../types/formTypes";
+import { IRenkliTasType } from "../types/formTypes";
 import { RenkliTasListesiData } from "@/data/RenkliTas.data";
 import { AddRenkliTasSections } from "@/utils/MockData";
 import { useState, useCallback } from "react";

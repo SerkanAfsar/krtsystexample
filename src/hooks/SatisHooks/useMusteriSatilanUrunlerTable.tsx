@@ -2,11 +2,11 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { ResponseResult } from "../../../types/responseTypes";
-import { CustomerPurchatedProducts } from "../../../types/types";
+import { ResponseResult } from "../../types/responseTypes";
+import { CustomerPurchatedProducts } from "../../types/types";
 import { formatToCurrency } from "@/utils";
 import { GetCustomerPursahedList } from "@/Services/Customer.Service";
-import { CustomerSaledProductsHeaderType } from "@/types/Satis";
+
 import Image from "next/image";
 
 export default function useMusteriSatilanUrunlerTable({
@@ -24,12 +24,7 @@ export default function useMusteriSatilanUrunlerTable({
   const order_by = searchParams.get("order_by");
   const sort = (searchParams.get("sort") as "asc" | "desc") || undefined;
 
-  const ResultObject = ({
-    item,
-  }: {
-    item: any;
-    index: number;
-  }): CustomerSaledProductsHeaderType => {
+  const ResultObject = ({ item }: { item: any; index: number }): any => {
     const totalCarat =
       item?.product?.properties?.totalCarat ||
       item?.product?.properties?.remaining_carat;
@@ -76,8 +71,8 @@ export default function useMusteriSatilanUrunlerTable({
         setActiveData(dataResult);
         setTotalPageCount(
           Math.ceil(
-            data[0].purchased_products.length /
-              Number(process.env.NEXT_PUBLIC_DATATABLE_ITEM_COUNT),
+            data[0]?.purchased_products?.length ||
+              0 / Number(process.env.NEXT_PUBLIC_DATATABLE_ITEM_COUNT),
           ),
         );
       } else {

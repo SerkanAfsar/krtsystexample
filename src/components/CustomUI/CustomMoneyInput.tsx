@@ -1,9 +1,10 @@
 import CurrencyInput from "react-currency-input-field";
 import * as React from "react";
-import { ElementType } from "../../../types/inputTypes";
+import { ElementType } from "../../types/inputTypes";
 import { ClassValue } from "clsx";
 import { UseFormGetValues } from "react-hook-form";
 import { cn } from "@/utils";
+import { useState } from "react";
 
 type CustomMoneyInputTpe = React.ComponentPropsWithoutRef<
   typeof CurrencyInput
@@ -33,11 +34,15 @@ const CustomMoneyInput = React.forwardRef<
       err,
       getValues,
       value,
+      onChange,
       setFormValues,
+      onBlur,
       ...rest
     },
     ref,
   ) => {
+    const [val, setVal] = useState<string | undefined>(value);
+
     return (
       <div className={cn("w-full", outerClass && outerClass, className)}>
         {(item.title || item?.isTopMargin) && (
@@ -54,10 +59,15 @@ const CustomMoneyInput = React.forwardRef<
               id={name}
               name={name}
               ref={ref}
+              onChange={onChange}
               decimalsLimit={2}
               placeholder={item.placeholder ?? undefined}
-              onValueChange={(value, name) => setFormValues(name, value)}
-              value={value}
+              onValueChange={(value, name) => {
+                setVal(value);
+                setFormValues && setFormValues(name, value);
+              }}
+              onBlur={onBlur}
+              value={item.isConstant ? value : val}
               className={cn(
                 "h-full w-full rounded border-[1.5px] border-stone-400 bg-transparent px-5 py-3 pb-[14px] font-normal  text-black outline-none transition placeholder:capitalize focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary",
                 className,

@@ -3,11 +3,12 @@ import { DeleteProductApiService } from "@/ApiServices/Products.ApiService";
 import { GetGemProductDatatableService } from "@/Services/Product.Services";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FaPencil, FaTrash } from "react-icons/fa6";
-import { ResponseResult } from "../../types/responseTypes";
-import { ProductListType } from "../../types/types";
+import { ResponseResult } from "../types/responseTypes";
+import { ProductListType } from "../types/types";
 import { useRouter, useSearchParams } from "next/navigation";
-import { MucevherListType } from "@/types/Mucevher";
+
 import Image from "next/image";
+import { MucevherListType } from "@/types/Mucevher";
 
 const InnerConvert = ({
   data,

@@ -6,7 +6,7 @@ import {
   PirlantaModalHeaders,
   RenkliTasModalHeaders,
   SadeModalHeaders,
-} from "../../types/types";
+} from "../types/types";
 
 import usePirlantaModalData from "@/hooks/ModalDataHooks/usePirlantaModalData";
 import useRenkliTasModalData from "@/hooks/ModalDataHooks/useRenkliTasModalData";
@@ -17,7 +17,7 @@ import {
   AddWorOrderType,
   ProductItemsType,
   WorkOrderProductType,
-} from "../../types/WorkOrder.types";
+} from "../types/WorkOrder.types";
 
 import { AddWorkOrderService } from "@/Services/WorkOrder.Services";
 import { toast } from "react-toastify";

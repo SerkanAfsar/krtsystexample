@@ -1,6 +1,6 @@
 import { ApiServiceResult } from "@/utils";
-import { ResponseResult } from "../../types/responseTypes";
-import { WorkOrderQueueType } from "../../types/WorkOrder.types";
+import { ResponseResult } from "../types/responseTypes";
+import { WorkOrderQueueType } from "../types/WorkOrder.types";
 
 export const DeleteWorkOrderApiService = async ({
   id,

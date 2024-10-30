@@ -2,8 +2,8 @@
 
 import CustomForm from "@/components/CustomUI/CustomForm";
 import useSadeCode from "@/hooks/CodeHooks/useSadeCode";
-import { ISadeType } from "../../types/formTypes";
-import { ProductType } from "../../types/types";
+import { ISadeType } from "../types/formTypes";
+import { ProductType } from "../types/types";
 import { AddSadeSections } from "@/utils/MockData";
 import { useCallback, useEffect, useState } from "react";
 import {

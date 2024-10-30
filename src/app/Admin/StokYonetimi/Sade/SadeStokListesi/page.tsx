@@ -2,7 +2,7 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import { ISadeType } from "../../../../../../types/formTypes";
+import { ISadeType } from "../../../../../types/formTypes";
 import { Column } from "react-table";
 import useGetProductData from "@/hooks/useGetProductData";
 import { SadeListHeaders } from "@/types/Sade";

@@ -9,7 +9,7 @@ import { FaTrash } from "react-icons/fa6";
 import {
   ProductItemsType,
   WorkOrderProductType,
-} from "../../../types/WorkOrder.types";
+} from "../../types/WorkOrder.types";
 import Image from "next/image";
 
 export type UrunGruplariModulType = {

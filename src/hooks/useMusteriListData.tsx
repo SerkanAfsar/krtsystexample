@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FaPencil, FaTrash } from "react-icons/fa6";
 import { useRouter, useSearchParams } from "next/navigation";
-import { MusteriType } from "../../types/types";
+import { MusteriType } from "../types/types";
 
 import { GetMusteriDatatableService } from "@/Services/Customer.Service";
 import { DeleteMusteriApiService } from "@/ApiServices/Customer.ApiService";

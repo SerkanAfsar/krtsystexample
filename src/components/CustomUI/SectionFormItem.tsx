@@ -1,10 +1,10 @@
-import { FormSectionType } from "../../../types/formTypes";
+import { FormSectionType } from "../../types/formTypes";
 
 import { cn } from "@/utils";
 
 import FormElementItem from "./FormElementItem";
 import { UseFormGetValues } from "react-hook-form";
-import { CustomOptionType } from "../../../types/inputTypes";
+import { CustomOptionType } from "../../types/inputTypes";
 
 export default function SectionFormItem({
   section,

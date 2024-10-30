@@ -10,11 +10,11 @@ import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import {
   WorkOrderTeamGroupType,
   WorkOrderType,
-} from "../../../../../../types/WorkOrder.types";
+} from "../../../../../types/WorkOrder.types";
 
 import { notFound } from "next/navigation";
-import { ResponseResult } from "../../../../../../types/responseTypes";
-import { UserGroupsType } from "../../../../../../types/types";
+import { ResponseResult } from "../../../../../types/responseTypes";
+import { UserGroupsType } from "../../../../../types/types";
 import { getLoggedUserId } from "@/actions/Auth.actions";
 import IsEmriDetayBilgileri from "@/components/IsEmirleri/IsEmirDetayBilgileri";
 

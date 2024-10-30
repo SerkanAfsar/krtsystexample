@@ -2,8 +2,8 @@
 
 import React, { useState, useCallback, useEffect, useRef } from "react";
 
-import { ProductListType } from "../../../types/types";
-import { ResponseResult } from "../../../types/responseTypes";
+import { ProductListType } from "../../types/types";
+import { ResponseResult } from "../../types/responseTypes";
 import { SeciliUrunType } from "@/components/IsEmirleri/UrunGruplariModul";
 import { formatToCurrency, hasDecimal } from "@/utils";
 import { GetWorkOrderProductListModalService } from "@/Services/WorkOrder.Services";

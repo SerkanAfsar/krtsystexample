@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { WorkOrderNotificationType } from "../../../types/WorkOrder.types";
+import { WorkOrderNotificationType } from "../../types/WorkOrder.types";
 import {
   GetWorkOrderNotificationListService,
   PostWorkOrderNotificationReadService,
 } from "@/Services/WorkOrder.Services";
-import { ResponseResult } from "../../../types/responseTypes";
+import { ResponseResult } from "../../types/responseTypes";
 import { cn } from "@/utils";
 import { toast } from "react-toastify";
 

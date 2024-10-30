@@ -1,5 +1,5 @@
 import { Column } from "react-table";
-import { ProductType } from "../../../types/types";
+import { ProductType } from "../types";
 
 export type CustomerSaledProductsHeaderType = Omit<
   ProductType,
@@ -42,3 +42,23 @@ export const CustomerSaledProductsHeader: Column<CustomerSaledProductsHeaderType
       accessor: "sales_price",
     },
   ];
+
+export type SaleProductType = {
+  product_id: number;
+  used_carat: number;
+  sales_price: number;
+  total_cost?: number;
+  type?: string;
+  code?: string;
+};
+export type SalePayment = {
+  payment_type: "Nakit" | "Kredi Kartı";
+  payment_price: number;
+};
+export type SaleType = {
+  products: SaleProductType[];
+  customer_id: number;
+  payments: SalePayment[];
+  total_payment: number;
+  total_nonpayed: number;
+};

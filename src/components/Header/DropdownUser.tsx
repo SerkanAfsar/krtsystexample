@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { AuthMeType } from "../../../types/types";
-import { ResponseResult } from "../../../types/responseTypes";
+import { AuthMeType } from "../../types/types";
+import { ResponseResult } from "../../types/responseTypes";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);

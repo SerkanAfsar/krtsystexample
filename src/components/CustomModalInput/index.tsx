@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { SeciliUrunType } from "../IsEmirleri/UrunGruplariModul";
 import React from "react";
-import { CustomProps } from "../../../types/CustomUI.Types";
+import { CustomProps } from "../../types/CustomUI.Types";
 import { formatToCurrency } from "@/utils";
 
 const CustomModalInput = React.forwardRef<HTMLInputElement, CustomProps>(

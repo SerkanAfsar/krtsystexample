@@ -20,7 +20,7 @@ const CustomSearchSelect = React.forwardRef<
   const newOptions = newItem ? [...basicOptions, newItem] : [...basicOptions];
 
   return (
-    <div>
+    <div className="w-full">
       <label className="mb-2 block w-full font-bold text-black">{title}</label>
       <Select
         onChange={onChange}

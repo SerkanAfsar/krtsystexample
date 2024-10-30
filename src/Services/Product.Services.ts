@@ -1,7 +1,7 @@
-import { ResponseResult } from "../../types/responseTypes";
+import { ResponseResult } from "../types/responseTypes";
 import { BaseService } from ".";
-import { GetNextOrderType, NextOrderType } from "../../types/inputTypes";
-import { ProductListType, ProductType } from "../../types/types";
+import { GetNextOrderType, NextOrderType } from "../types/inputTypes";
+import { ProductListType, ProductType } from "../types/types";
 import { AddMucevherExternalType, MucevherDetayType } from "@/types/Mucevher";
 
 export const GetProductService = async ({

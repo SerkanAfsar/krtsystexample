@@ -1,6 +1,6 @@
 import { clsx, ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { ResponseResult } from "../../types/responseTypes";
+import { ResponseResult } from "../types/responseTypes";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
 import { tr } from "date-fns/locale";

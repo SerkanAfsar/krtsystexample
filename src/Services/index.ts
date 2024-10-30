@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { ResponseResult } from "../../types/responseTypes";
+import { ResponseResult } from "../types/responseTypes";
 
 type headersType = {
   [key: string]: string;

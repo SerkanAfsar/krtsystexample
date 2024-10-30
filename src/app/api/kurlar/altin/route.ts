@@ -1,4 +1,4 @@
-import { CurrencyType, DovizKurlariType } from "@/types";
+import { CurrencyType, DovizKurlariType } from "@/types/types";
 import { HTMLElement, parse } from "node-html-parser";
 
 export async function GET() {

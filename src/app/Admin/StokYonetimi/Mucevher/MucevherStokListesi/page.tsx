@@ -1,11 +1,11 @@
 "use client";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import { MucevherListesiDataHeaders } from "@/types/Mucevher";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
 import useGemProductData from "@/hooks/useGetGemProductData";
 import CustomErrorAlert from "@/components/CustomUI/Alerts/CustomErrorAlert";
+import { MucevherListesiDataHeaders } from "@/types/Mucevher";
 
 export default function MucevherStokListesi() {
   const {

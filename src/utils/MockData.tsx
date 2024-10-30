@@ -1,4 +1,4 @@
-import { FormSectionType } from "../../types/formTypes";
+import { FormSectionType } from "../types/formTypes";
 import { FaGlobe } from "react-icons/fa6";
 
 import {
@@ -21,7 +21,7 @@ import {
   RenkliTasRenkListesi,
 } from "@/data/RenkliTas.data";
 import { GenerateSertificateUrl } from "./Pirlanta.Utils";
-import { CustomOptionType } from "../../types/inputTypes";
+import { CustomOptionType } from "../types/inputTypes";
 import { TedarikciCustomListType } from "./Tedarikciler.Utils";
 import { SirketTuruOptionList } from "@/data/Musteri.data";
 export const PirlantaSertifikaKodlari: CustomOptionType[] = [
@@ -1203,6 +1203,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         disabled: true,
         rightIcon: "$",
         span: 1,
+        isConstant: true,
       },
       {
         name: "total_cost",
@@ -1217,6 +1218,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         relativeTo: "menstrual_status",
         disabledRelative: "Sertifikalı",
         span: 1,
+        isConstant: true,
       },
     ],
   },
@@ -1365,6 +1367,7 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
         disabled: true,
         rightIcon: "$",
         span: 2,
+        isConstant: true,
       },
       {
         name: "supplier_id",

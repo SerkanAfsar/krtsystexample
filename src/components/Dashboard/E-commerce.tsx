@@ -14,7 +14,7 @@ import {
 import { FaUserFriends } from "react-icons/fa";
 import Kurlar from "../Kurlar";
 
-import { WorkOrderType } from "../../../types/WorkOrder.types";
+import { WorkOrderType } from "../../types/WorkOrder.types";
 import { LiaRingSolid } from "react-icons/lia";
 import { BsBuildings } from "react-icons/bs";
 

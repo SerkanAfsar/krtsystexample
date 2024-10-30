@@ -2,8 +2,8 @@ import RenkliTasDetayContainer from "@/Containers/RenkliTasDetayContainer";
 import { GetProductService } from "@/Services/Product.Services";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import { IRenkliTasType } from "../../../../../../../types/formTypes";
-import { ProductType } from "../../../../../../../types/types";
+import { IRenkliTasType } from "../../../../../../types/formTypes";
+import { ProductType } from "../../../../../../types/types";
 import { notFound } from "next/navigation";
 
 export default async function RenkliTaskGuncelle({

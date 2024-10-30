@@ -2,7 +2,7 @@ import {
   PirlantaBoyKodlari,
   PirlantaKesimKodlariData,
 } from "@/data/Pirlanta.data";
-import { CustomOptionType } from "../../types/inputTypes";
+import { CustomOptionType } from "../types/inputTypes";
 import { UseFormGetValues } from "react-hook-form";
 
 export const selectKesimValue = ({

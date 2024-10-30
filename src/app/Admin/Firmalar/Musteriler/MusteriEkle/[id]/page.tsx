@@ -1,7 +1,7 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import { ResponseResult } from "../../../../../../../types/responseTypes";
-import { MusteriType } from "../../../../../../../types/types";
+import { ResponseResult } from "../../../../../../types/responseTypes";
+import { MusteriType } from "../../../../../../types/types";
 
 import { notFound } from "next/navigation";
 import MusteriDetayContainer from "@/Containers/MusteriDetayContainer";

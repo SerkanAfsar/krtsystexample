@@ -1,5 +1,5 @@
 import { SadeModelTurleri } from "@/data/Sade.data";
-import { CustomOptionType } from "../../../types/inputTypes";
+import { CustomOptionType } from "../../types/inputTypes";
 
 export type SadeModelType = {
   modelTuru: string | null;

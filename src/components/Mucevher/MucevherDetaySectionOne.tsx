@@ -7,7 +7,7 @@ import { CustomRadioButtonList } from "../CustomUI/CustomRadioButtonList";
 import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
 import Image from "next/image";
-import { ProductType } from "../../../types/types";
+import { ProductType } from "../../types/types";
 
 export default function MucevherDetaySectionOne({
   isEdit = false,

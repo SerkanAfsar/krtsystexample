@@ -1,6 +1,6 @@
 import { ApiServiceResult } from "@/utils";
-import { ResponseResult } from "../../types/responseTypes";
-import { MusteriType } from "../../types/types";
+import { ResponseResult } from "../types/responseTypes";
+import { MusteriType } from "../types/types";
 
 export const AddCustomerApiService = async ({
   data,

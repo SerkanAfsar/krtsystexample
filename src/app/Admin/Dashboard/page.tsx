@@ -6,8 +6,8 @@ import {
   GetProductDatatableService,
 } from "@/Services/Product.Services";
 import { GetWorkOrdersList } from "@/Services/WorkOrder.Services";
-import { ProductListType } from "../../../../types/types";
-import { WorkOrderType } from "../../../../types/WorkOrder.types";
+import { ProductListType } from "../../../types/types";
+import { WorkOrderType } from "../../../types/WorkOrder.types";
 
 export default async function Home() {
   const [pirlantaData, renklitasData, sadeData, mucevherData, isEmriResult] =

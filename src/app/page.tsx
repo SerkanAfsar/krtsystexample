@@ -4,7 +4,7 @@ import Image from "next/image";
 import CustomInput from "@/components/CustomUI/CustomInput";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { ElementType, LoginType } from "../../types/inputTypes";
+import { ElementType, LoginType } from "../types/inputTypes";
 import img from "../../public/images/logo.png";
 import { loginServer } from "@/actions/Auth.actions";
 

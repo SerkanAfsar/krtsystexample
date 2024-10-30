@@ -1,6 +1,16 @@
 import React from "react";
 import { Column } from "react-table";
 
+export type CurrencyType = {
+  isim?: string;
+  alis?: string;
+  satis?: string;
+  degisim?: string;
+  zaman?: string;
+};
+
+export type DovizKurlariType = Record<string, CurrencyType>;
+
 export type ProductType = {
   pk?: number;
   code?: string | null;
@@ -196,7 +206,7 @@ export type MusteriType = {
   code?: string;
   name?: string;
   phone?: string;
-  email?: string;
+  e_mail?: string;
   area?: string;
   country_code?: string;
   invoice_address?: string;
@@ -251,16 +261,16 @@ export const SatisModalHeader: (Column<ISatisUrunType> & {
     Header: "Toplam Fiyat",
     accessor: "total_cost",
   },
-  {
-    Header: "Toplam Karat",
-    accessor: "totalCarat",
-  },
+  // {
+  //   Header: "Toplam Karat",
+  //   accessor: "totalCarat",
+  // },
 
-  {
-    Header: "Kullanılan Karat",
-    accessor: "kullanilanKarat",
-    isHidden: true,
-  },
+  // {
+  //   Header: "Kullanılan Karat",
+  //   accessor: "kullanilanKarat",
+  //   isHidden: true,
+  // },
   {
     Header: "Maliyet",
     accessor: "maliyet",

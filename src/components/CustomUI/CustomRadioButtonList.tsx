@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ElementType } from "../../../types/inputTypes";
+import { ElementType } from "../../types/inputTypes";
 import { cn } from "@/utils";
 import { UseFormSetValue } from "react-hook-form";
 import React from "react";

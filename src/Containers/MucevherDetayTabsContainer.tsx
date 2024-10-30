@@ -7,7 +7,7 @@ import MucevherDetaySectionOne from "@/components/Mucevher/MucevherDetaySectionO
 import MucevherDetayContainer, {
   CustomArrType,
 } from "./MucevherDetayContainer";
-import { ProductType } from "../../types/types";
+import { ProductType } from "../types/types";
 import IsEmirleriLoglari from "@/components/IsEmirleri/IsEmirLoglari";
 
 export default function MucevherDetayTabsContainer({

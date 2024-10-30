@@ -1,7 +1,7 @@
-import { LoginType } from "../../types/inputTypes";
+import { LoginType } from "../types/inputTypes";
 import { BaseService } from ".";
-import { ResponseResult } from "../../types/responseTypes";
-import { AuthMeType, AuthType } from "../../types/types";
+import { ResponseResult } from "../types/responseTypes";
+import { AuthMeType, AuthType } from "../types/types";
 
 export const LoginService = async ({
   data,

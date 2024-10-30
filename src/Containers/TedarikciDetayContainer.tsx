@@ -3,7 +3,7 @@
 import CustomForm from "@/components/CustomUI/CustomForm";
 
 import { useState } from "react";
-import { TedarikciType } from "../../types/types";
+import { TedarikciType } from "../types/types";
 import { AddTedarikciSections } from "@/utils/MockData";
 import {
   AddTedarikciApiService,

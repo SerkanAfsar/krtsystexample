@@ -1,5 +1,5 @@
 import { SadeModelTurleri } from "@/data/Sade.data";
-import { CurrencyType } from "@/types";
+import { CurrencyType } from "@/types/types";
 import { HTMLElement, parse } from "node-html-parser";
 
 export const SadeAltinKarsiliklari = (ayar: string): string => {

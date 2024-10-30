@@ -1,6 +1,6 @@
 "use client";
 import MucevherSadeSection from "@/components/Mucevher/SadeMucevher/MucevherSadeSection";
-import { ProductType } from "../../types/types";
+import { ProductType } from "../types/types";
 import React from "react";
 import MucevherPirlantaSection from "@/components/Mucevher/PirlantaMucevher/MucevherPirlantaSection";
 import MucevherRenkliTasSection from "@/components/Mucevher/RenkliTasMucevher/MucevherRenkliTasSection";

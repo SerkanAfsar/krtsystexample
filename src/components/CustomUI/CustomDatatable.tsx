@@ -267,11 +267,11 @@ const CustomDatatable = ({
   return (
     <section
       className={cn(
-        "data-table-common data-table-two !flex h-full w-full flex-col overflow-auto rounded-sm border border-stroke bg-white py-4 shadow-default dark:border-strokedark dark:bg-boxdark",
+        "data-table-common data-table-two  !flex h-full w-full flex-col overflow-auto rounded-sm border border-stroke bg-white py-4 pt-0 shadow-default dark:border-strokedark dark:bg-boxdark",
         className && className,
       )}
     >
-      <div className="sticky inset-0 flex w-full justify-between px-8 pb-4 ">
+      <div className="sticky inset-0  z-9999 flex w-full justify-between rounded-sm bg-white  px-8  pb-4 pt-4 ">
         <div className="w-100">
           <input
             type="text"
@@ -325,7 +325,7 @@ const CustomDatatable = ({
           })}
         </tbody>
       </table>
-      <div className="sticky inset-0 mt-auto flex  w-full justify-between   px-8 pt-5 dark:border-strokedark">
+      <div className="sticky inset-0 z-9999 mt-auto  flex w-full  justify-between bg-white px-8 pt-5 dark:border-strokedark">
         <p className="font-medium">
           Gösterim {activePage} - {totalPageCount} Sayfa
         </p>

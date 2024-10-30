@@ -3,7 +3,7 @@
 import CustomForm from "@/components/CustomUI/CustomForm";
 
 import { useState } from "react";
-import { MusteriType } from "../../types/types";
+import { MusteriType } from "../types/types";
 import { AddMusteriSections } from "@/utils/MockData";
 import {
   AddCustomerApiService,
@@ -12,8 +12,9 @@ import {
 import CustomTabs, { TabSectionType } from "@/components/CustomUI/CustomTabs";
 import useMusteriSatilanUrunlerTable from "@/hooks/SatisHooks/useMusteriSatilanUrunlerTable";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
-import { CustomerSaledProductsHeader } from "@/types/Satis";
+
 import { useTedarikciModalData } from "@/store/useModalStore";
+import { CustomerSaledProductsHeader } from "../types/Satis";
 
 export default function MusteriDetayContainer({
   musteriItemData,

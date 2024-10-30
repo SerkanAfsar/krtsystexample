@@ -1,6 +1,6 @@
 "use client";
-import { ResponseResult } from "../../../types/responseTypes";
-import { ProductListType, ProductType } from "../../../types/types";
+import { ResponseResult } from "../../types/responseTypes";
+import { ProductListType, ProductType } from "../../types/types";
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { SeciliUrunType } from "@/components/IsEmirleri/UrunGruplariModul";
 import { formatToCurrency, hasDecimal } from "@/utils";

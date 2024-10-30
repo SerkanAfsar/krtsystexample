@@ -1,10 +1,11 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import SatisEkleContainer, {
-  CustomSearchSelectType,
-} from "@/Containers/SatisEkleContainer";
+
 import { GetCustomersListForSalesService } from "@/Services/Customer.Service";
-import { MusteriType } from "../../../../../types/types";
+import { MusteriType } from "../../../../types/types";
+import SatisEkleDetayContainer, {
+  CustomSearchSelectType,
+} from "./Containers/SatisEkleDetayContainer";
 
 export type SatisItemType = {
   product_id: number;
@@ -39,8 +40,8 @@ export default async function SatisEklePage() {
         ]}
         pageName="Yeni Satış Ekle "
       />
-      <div className="flex w-full flex-col gap-4 bg-white p-6">
-        <SatisEkleContainer customers={customers} />
+      <div className="flex w-full flex-col gap-4 ">
+        <SatisEkleDetayContainer customers={customers} />
       </div>
     </DefaultLayout>
   );

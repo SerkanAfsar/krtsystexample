@@ -1,11 +1,11 @@
 "use client";
 import * as React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { FormSectionType } from "../../../types/formTypes";
+import { FormSectionType } from "../../types/formTypes";
 import SectionFormItem from "./SectionFormItem";
 
 import { useParams, useRouter } from "next/navigation";
-import { CustomOptionType } from "../../../types/inputTypes";
+import { CustomOptionType } from "../../types/inputTypes";
 
 type CustomFormProps = React.FormHTMLAttributes<HTMLFormElement> & {
   sections?: FormSectionType[];

@@ -2,7 +2,7 @@ import { formatDate, formatToCurrency } from "@/utils";
 import {
   WorkOrderListType,
   WorkOrderLogType,
-} from "../../../types/WorkOrder.types";
+} from "../../types/WorkOrder.types";
 import { GetWorkOrderLogsByWorkOrderId } from "@/Services/WorkOrder.Services";
 
 export default async function IsEmirleriLoglari({

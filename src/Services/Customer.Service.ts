@@ -1,10 +1,10 @@
 import { BaseService } from ".";
-import { ResponseResult } from "../../types/responseTypes";
+import { ResponseResult } from "../types/responseTypes";
 import {
   CustomDataListType,
   CustomerPurchatedProducts,
   MusteriType,
-} from "../../types/types";
+} from "../types/types";
 
 export const AddCustomerService = async ({
   data,

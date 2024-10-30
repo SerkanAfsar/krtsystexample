@@ -1,6 +1,6 @@
 import { BaseService } from ".";
-import { ResponseResult } from "../../types/responseTypes";
-import { ProductListType } from "../../types/types";
+import { ResponseResult } from "../types/responseTypes";
+import { ProductListType } from "../types/types";
 import {
   AddWorOrderType,
   WorkOrderAtolyeType,
@@ -10,7 +10,7 @@ import {
   WorkOrderQueueType,
   WorkOrderTeamGroupType,
   WorkOrderType,
-} from "../../types/WorkOrder.types";
+} from "../types/WorkOrder.types";
 
 export const AddWorkOrderService = async ({
   data,

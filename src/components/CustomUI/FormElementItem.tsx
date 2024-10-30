@@ -1,4 +1,4 @@
-import { CustomOptionType, ElementType } from "../../../types/inputTypes";
+import { CustomOptionType, ElementType } from "../../types/inputTypes";
 import CustomInput from "./CustomInput";
 import CustomButtonGroups from "./CustomButtonGroups";
 import CustomDatePicker from "./CustomDatePicker";

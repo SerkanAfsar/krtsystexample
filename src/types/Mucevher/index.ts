@@ -1,8 +1,9 @@
 import React from "react";
 import { Column } from "react-table";
-import { WorkOrderLogType } from "../../../types/WorkOrder.types";
-import { ProductType } from "../../../types/types";
+
 import { CustomArrType } from "@/Containers/MucevherDetayContainer";
+import { ProductType } from "../types";
+import { WorkOrderLogType } from "../WorkOrder.types";
 
 export type MucevherListType = {
   resim: string | null;

@@ -1,6 +1,6 @@
 "use client";
 
-import { DovizKurlariType } from "@/types";
+import { DovizKurlariType } from "@/types/types";
 import { cn } from "@/utils";
 import { ClassValue } from "clsx";
 import React, { useEffect, useState } from "react";

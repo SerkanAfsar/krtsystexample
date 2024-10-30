@@ -1,6 +1,6 @@
 import { GetAllTedarikciService } from "@/Services/Supplier.Services";
-import { TedarikciType } from "../../types/types";
-import { CustomOptionType } from "../../types/inputTypes";
+import { TedarikciType } from "../types/types";
+import { CustomOptionType } from "../types/inputTypes";
 
 export const TedarikciCustomListType = (): Promise<CustomOptionType[]> => {
   return GetAllTedarikciService()

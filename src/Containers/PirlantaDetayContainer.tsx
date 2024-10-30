@@ -1,7 +1,7 @@
 "use client";
 import CustomForm from "@/components/CustomUI/CustomForm";
 import { AddStoneSections } from "@/utils/MockData";
-import { AddDiamondType } from "../../types/formTypes";
+import { AddDiamondType } from "../types/formTypes";
 import { useCallback, useState } from "react";
 
 import usePirlantaCode, {

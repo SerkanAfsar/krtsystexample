@@ -3,7 +3,7 @@ import { cn } from "@/utils";
 
 import * as React from "react";
 
-import { ElementType } from "../../../types/inputTypes";
+import { ElementType } from "../../types/inputTypes";
 import { ClassValue } from "clsx";
 import { UseFormSetValue } from "react-hook-form";
 

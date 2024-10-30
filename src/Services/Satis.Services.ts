@@ -1,7 +1,7 @@
-import { ProductSaleType } from "@/Containers/SatisEkleContainer";
+import { SaleType } from "@/types/Satis";
 import { BaseService } from ".";
-import { ResponseResult } from "../../types/responseTypes";
-import { CustomDataListType } from "../../types/types";
+import { ResponseResult } from "../types/responseTypes";
+import { CustomDataListType } from "../types/types";
 
 export const GetSatisUrunDatatableService = async ({
   order_by,
@@ -41,8 +41,8 @@ export const GetSatisUrunDatatableService = async ({
 export const AddSatisService = async ({
   data,
 }: {
-  data: ProductSaleType;
-}): Promise<ResponseResult<ProductSaleType>> => {
+  data: SaleType;
+}): Promise<ResponseResult<SaleType>> => {
   const result = await BaseService({
     url: "product/customer/products/sales-product/",
     bodyData: data,
@@ -50,5 +50,5 @@ export const AddSatisService = async ({
     hasToken: true,
   });
 
-  return result as ResponseResult<ProductSaleType>;
+  return result as ResponseResult<SaleType>;
 };

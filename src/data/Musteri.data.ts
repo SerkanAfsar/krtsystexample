@@ -1,4 +1,4 @@
-import { CustomOptionType } from "../../types/inputTypes";
+import { CustomOptionType } from "../types/inputTypes";
 
 export const SirketTuruOptionList: CustomOptionType[] = [
   {

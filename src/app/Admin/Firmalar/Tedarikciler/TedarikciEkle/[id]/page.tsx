@@ -1,8 +1,8 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import TedarikciDetayContainer from "@/Containers/TedarikciDetayContainer";
-import { ResponseResult } from "../../../../../../../types/responseTypes";
-import { TedarikciType } from "../../../../../../../types/types";
+import { ResponseResult } from "../../../../../../types/responseTypes";
+import { TedarikciType } from "../../../../../../types/types";
 import { GetTedarikciService } from "@/Services/Supplier.Services";
 import { notFound } from "next/navigation";
 

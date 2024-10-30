@@ -1,6 +1,6 @@
 import { BaseService } from ".";
-import { ResponseResult } from "../../types/responseTypes";
-import { CustomDataListType, TedarikciType } from "../../types/types";
+import { ResponseResult } from "../types/responseTypes";
+import { CustomDataListType, TedarikciType } from "../types/types";
 
 export const AddTedarikciService = async ({
   data,

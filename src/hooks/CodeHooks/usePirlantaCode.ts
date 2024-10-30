@@ -4,11 +4,11 @@ import {
   GetNextOrderFromSingleDiamondService,
 } from "@/Services/Product.Services";
 
-import { ResponseResult } from "../../../types/responseTypes";
-import { GetNextOrderType } from "../../../types/types";
+import { ResponseResult } from "../../types/responseTypes";
+import { GetNextOrderType } from "../../types/types";
 import { generateDiamondCode } from "@/utils/Pirlanta.Utils";
 import { useState, useEffect } from "react";
-import { CustomOptionType } from "../../../types/inputTypes";
+import { CustomOptionType } from "../../types/inputTypes";
 
 export type PirlantaCodeItemType = {
   data_kesim?: string;

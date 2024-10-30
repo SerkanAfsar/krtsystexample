@@ -2,8 +2,8 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import PirlantaDetayContainer from "@/Containers/PirlantaDetayContainer";
 import { GetProductService } from "@/Services/Product.Services";
-import { AddDiamondType } from "../../../../../../../types/formTypes";
-import { ProductType } from "../../../../../../../types/types";
+import { AddDiamondType } from "../../../../../../types/formTypes";
+import { ProductType } from "../../../../../../types/types";
 import { notFound } from "next/navigation";
 
 const PirlantaGuncelle = async ({ params }: { params: { id: string } }) => {

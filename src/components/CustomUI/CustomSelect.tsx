@@ -1,7 +1,7 @@
 "use client";
 
 import { useTedarikciModalData } from "@/store/useModalStore";
-import { CustomOptionType, ElementType } from "../../../types/inputTypes";
+import { CustomOptionType, ElementType } from "../../types/inputTypes";
 import { cn } from "@/utils";
 import { selectKesimValue } from "@/utils/Pirlanta.Utils";
 import { ClassValue } from "clsx";

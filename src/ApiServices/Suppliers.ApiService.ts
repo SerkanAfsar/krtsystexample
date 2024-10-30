@@ -1,6 +1,6 @@
 import { ApiServiceResult } from "@/utils";
-import { ResponseResult } from "../../types/responseTypes";
-import { TedarikciType } from "../../types/types";
+import { ResponseResult } from "../types/responseTypes";
+import { TedarikciType } from "../types/types";
 
 export const AddTedarikciApiService = async ({
   data,
