@@ -1,10 +1,9 @@
 "use client";
-
 import { SalePayment, SaleType } from "../../../../../types/Satis";
-import SatisMusteriDetay from "../Components/SatisMusteriDetay";
 import { useFieldArray, useForm } from "react-hook-form";
 import SatisDetayUrunler from "../Components/SatisDetayUrunler";
-import SatisOdeme from "../Components/SatisOdeme";
+import SatisDetayMusteri from "../Components/SatisDetayMusteri";
+import SatisDetayOdeme from "../Components/SatisDetayOdeme";
 
 export type CustomSearchSelectType = {
   label: string;
@@ -77,7 +76,7 @@ export default function SatisEkleDetayContainer({
 
   return (
     <>
-      <SatisMusteriDetay setValue={setValue} customers={customers} />
+      <SatisDetayMusteri setValue={setValue} customers={customers} />
       <SatisDetayUrunler
         append={append}
         remove={remove}
@@ -85,8 +84,9 @@ export default function SatisEkleDetayContainer({
         register={register}
         toplamTutar={toplamTutar}
         toplamMaliyet={toplamMaliyet}
+        products={products}
       />
-      <SatisOdeme
+      <SatisDetayOdeme
         fields={paymentFields}
         append={paymentAppend}
         remove={paymentRemove}

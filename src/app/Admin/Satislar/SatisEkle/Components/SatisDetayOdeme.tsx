@@ -3,7 +3,7 @@ import CustomSelect from "@/components/CustomUI/CustomSelect";
 import { SalePayment } from "@/types/Satis";
 import { useCallback } from "react";
 
-export default function SatisOdeme({
+export default function SatisDetayOdeme({
   fields,
   append,
   remove,
@@ -102,7 +102,7 @@ export default function SatisOdeme({
               <button
                 type="button"
                 onClick={() => remove(index)}
-                className="h-full w-20 rounded-md bg-danger p-2 text-white"
+                className="h-full w-20 rounded-md bg-danger p-3 font-bold text-white"
               >
                 Sil
               </button>
@@ -116,7 +116,7 @@ export default function SatisOdeme({
           <button
             type="button"
             onClick={() => append({ payment_type: "", payment_price: null })}
-            className=" col-span-1 rounded-md bg-primary p-2 text-white"
+            className=" col-span-1 rounded-md bg-primary p-3 font-bold text-white"
           >
             Ödeme Al
           </button>

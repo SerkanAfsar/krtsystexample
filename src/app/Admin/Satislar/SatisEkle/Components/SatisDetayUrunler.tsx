@@ -14,6 +14,7 @@ export default function SatisDetayUrunler({
   register,
   toplamTutar,
   toplamMaliyet,
+  products,
 }: {
   fields?: any;
   append: any;
@@ -21,6 +22,7 @@ export default function SatisDetayUrunler({
   register: any;
   toplamTutar: number;
   toplamMaliyet: number;
+  products: SaleProductType[];
 }) {
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const { activeData, activePage, totalPageCount, setActivePage, error } =
@@ -57,6 +59,21 @@ export default function SatisDetayUrunler({
         </div>
 
         {fields.map((item: SaleProductType, index: number) => {
+          const err =
+            products[index].sales_price &&
+            Number(
+              products[index].sales_price
+                .toString()
+                .replace(".", "")
+                .replace(",", "."),
+            ) <
+              Number(
+                products[index].total_cost
+                  ?.toString()
+                  .replace(".", "")
+                  .replace(",", "."),
+              );
+
           return (
             <div
               key={`${item.product_id}_${index}`}
@@ -109,10 +126,11 @@ export default function SatisDetayUrunler({
                   }}
                   {...register(`products.${index}.sales_price`)}
                   value={item.sales_price?.toString()}
+                  err={err ? "Satış Fiyatı Malitetin Altında!" : null}
                 />
 
                 <button
-                  className="flex items-center justify-center rounded-md bg-red p-3 font-bold text-white"
+                  className="flex items-center justify-center self-start rounded-md bg-red p-3 font-bold text-white"
                   onClick={() => remove(index)}
                 >
                   Sil
@@ -122,7 +140,7 @@ export default function SatisDetayUrunler({
           );
         })}
 
-        <div className="block w-full bg-white p-6 py-0">
+        <div className="block w-full bg-white">
           <div className="mb-3 grid w-full grid-cols-4 gap-3  font-bold text-black">
             <div className="col-start-3 col-end-4 w-full justify-start self-end">
               <CustomMoneyInput
@@ -155,7 +173,7 @@ export default function SatisDetayUrunler({
               />
             </div>
             <div
-              className="col-start-4 col-end-5 ml-3 flex h-fit w-full cursor-pointer items-center justify-center self-end rounded-md bg-primary p-3 text-white"
+              className="col-start-4 col-end-5  flex h-fit w-full cursor-pointer items-center justify-center self-end rounded-md bg-primary p-3 text-white"
               onClick={() => setModalOpened(true)}
             >
               Ekle

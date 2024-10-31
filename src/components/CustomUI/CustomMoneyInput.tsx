@@ -85,7 +85,7 @@ const CustomMoneyInput = React.forwardRef<
           </div>
         </div>
         {err && (
-          <span className="mt-2 block w-full text-left text-sm text-red">
+          <span className="mt-2 block w-full text-left text-sm font-normal text-red">
             {err}
           </span>
         )}

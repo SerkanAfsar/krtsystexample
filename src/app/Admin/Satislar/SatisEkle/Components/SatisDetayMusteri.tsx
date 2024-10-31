@@ -10,7 +10,7 @@ import { ResponseResult } from "../../../../../types/responseTypes";
 
 import { CustomSearchSelectType } from "../Containers/SatisEkleDetayContainer";
 
-export default function SatisMusteriDetay({
+export default function SatisDetayMusteri({
   customers,
   setValue,
 }: {
