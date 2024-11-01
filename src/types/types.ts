@@ -3,8 +3,8 @@ import { Column } from "react-table";
 
 export type CurrencyType = {
   isim?: string;
-  alis: number | string;
-  satis: number | string;
+  alis?: string;
+  satis?: string;
   degisim?: string;
   zaman?: string;
 };

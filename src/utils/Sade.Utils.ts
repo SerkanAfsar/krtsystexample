@@ -77,7 +77,7 @@ export const getGramAltinKuru = async () => {
   const gramAltinLi = returnResult(gramAltinElem);
 
   return gramAltinLi?.satis
-    ? Number(gramAltinLi?.satis?.replace(".", "").replace(",", "."))
+    ? Number(gramAltinLi?.satis?.toString().replace(".", "").replace(",", "."))
     : 2200;
 };
 
