@@ -48,7 +48,7 @@ export default function useSadeModalData({
         gram,
         has,
         model,
-        maliyet: `${formatToCurrency(firstPrice)} $`,
+        maliyet: `${formatToCurrency()} $`,
         firstPrice,
         type: "Sade",
         modelTuru,

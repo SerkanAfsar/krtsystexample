@@ -9,6 +9,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import Image from "next/image";
 import { MucevherListType } from "@/types/Mucevher";
+import { formatToCurrency } from "@/utils";
 
 const InnerConvert = ({
   data,
@@ -18,7 +19,6 @@ const InnerConvert = ({
   islemlerArea: any;
 }) => {
   return data.results.map((item) => {
-    console.log(item);
     return {
       resim: item.image && (
         <Image
@@ -34,7 +34,7 @@ const InnerConvert = ({
       totalCarat: item?.properties?.totalCarat,
       totalNumberOfStones: item?.properties?.totalNumberOfStones,
       totalLaborCost: `${item?.properties?.totalLaborCost} $`,
-      priceTag: `${item?.properties?.priceTag} $`,
+      priceTag: `${formatToCurrency(item?.properties?.priceTag as number)} $`,
       tedarikci: null,
       girisTarihi: item?.properties?.productionDate,
       ambar: item?.properties?.wareHouse || null,

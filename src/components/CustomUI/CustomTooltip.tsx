@@ -14,7 +14,7 @@ export default function CustomToolTip({
       <div
         onClick={(e) => setIsActive(true)}
         onMouseLeave={(e) => setIsActive(false)}
-        className="z-1 block  h-full w-full rounded-md  font-medium underline"
+        className="z-1 block h-full w-full  rounded-md  text-[16px] font-medium leading-6 text-[#000]"
       >
         {text}
       </div>

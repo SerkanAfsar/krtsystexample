@@ -71,7 +71,10 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
         {(item.title || item?.isTopMargin) && (
           <label
             htmlFor={id}
-            className="mb-3 block text-sm font-medium text-black dark:text-white"
+            className={cn(
+              "block h-5 text-sm font-medium text-black dark:text-white",
+              item?.isTopMargin ? "mb-1" : "mb-3",
+            )}
           >
             {item.title}
           </label>

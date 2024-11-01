@@ -219,16 +219,16 @@ export const GetNextOrderWorkOrderCode = async ({
 
 export const FinishWorkOrderById = async ({
   work_order_id,
-  ware_house,
+  store_id,
   image,
 }: {
   work_order_id: number;
-  ware_house: string;
+  store_id: number;
   image: string;
 }): Promise<ResponseResult<string>> => {
   const result = await BaseService({
     url: "product/finish-work-order/",
-    bodyData: { work_order_id, ware_house, image },
+    bodyData: { work_order_id, store_id, image },
     method: "POST",
     hasToken: true,
   });

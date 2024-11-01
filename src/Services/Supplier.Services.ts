@@ -1,6 +1,6 @@
 import { BaseService } from ".";
 import { ResponseResult } from "../types/responseTypes";
-import { CustomDataListType, TedarikciType } from "../types/types";
+import { CustomDataListType, ProductType, TedarikciType } from "../types/types";
 
 export const AddTedarikciService = async ({
   data,
@@ -105,4 +105,35 @@ export const UpdateTedarikciService = async ({
   });
 
   return result as ResponseResult<TedarikciType>;
+};
+
+export const GetTedarikciPursahedList = async ({
+  supplier_id,
+  order_by,
+  page,
+  sort,
+}: {
+  supplier_id: number;
+  order_by?: string | null;
+  page?: number;
+
+  sort?: "asc" | "desc";
+}): Promise<ResponseResult<CustomDataListType<ProductType>>> => {
+  let urlPath: string = "product/supplier/product-list/";
+
+  urlPath += `?order_by=${order_by ? (sort == "asc" ? `${order_by}` : `-${order_by}`) : "id"}`;
+  if (supplier_id) {
+    urlPath += `&supplier_id=${supplier_id}`;
+  }
+  if (page) {
+    urlPath += `&page=${page.toString()}`;
+  }
+
+  const result = await BaseService({
+    url: urlPath,
+    bodyData: null,
+    method: "GET",
+    hasToken: true,
+  });
+  return result as ResponseResult<CustomDataListType<ProductType>>;
 };

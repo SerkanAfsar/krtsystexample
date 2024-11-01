@@ -9,11 +9,11 @@ export const cn = (...args: ClassValue[]) => {
   return twMerge(clsx(args));
 };
 
-export const formatToCurrency = (currency: number) => {
+export const formatToCurrency = (currency: number): string => {
   if (currency) {
-    return currency.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+    return new Intl.NumberFormat().format(currency);
   }
-  return 0;
+  return "0";
 };
 
 export const hasDecimal = (val: number): boolean => {

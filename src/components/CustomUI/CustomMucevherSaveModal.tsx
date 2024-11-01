@@ -27,7 +27,7 @@ function CustomMucevherSaveModal({
   const trigger = useRef<any>(null);
   const modal = useRef<any>(null);
   const [img, setImage] = useState<string | ArrayBuffer | undefined>();
-  const [ware_house, setWareHouse] = useState<string>();
+  const [store_id, setStoreId] = useState<number>();
   const [error, setError] = useState<boolean>(false);
 
   const [warehouselist, setWarehouselist] = useState<MagazaType[]>([]);
@@ -71,10 +71,10 @@ function CustomMucevherSaveModal({
   });
 
   useEffect(() => {
-    if (img && ware_house) {
+    if (img && store_id) {
       setError(false);
     }
-  }, [img, ware_house]);
+  }, [img, store_id]);
 
   return (
     <div
@@ -106,12 +106,12 @@ function CustomMucevherSaveModal({
                 options: warehouselist.map((item: MagazaType, index) => {
                   return {
                     titleVal: item.name,
-                    valueVal: item.name,
+                    valueVal: String(item.id),
                   } as CustomOptionType;
                 }),
               }}
-              value={ware_house}
-              onChange={(e) => setWareHouse(e.target.value)}
+              value={store_id}
+              onChange={(e) => setStoreId(Number(e.target.value))}
             />
             <div className="block w-full">
               <label className="mb-3 block h-5 text-sm font-medium text-black dark:text-white">
@@ -185,13 +185,13 @@ function CustomMucevherSaveModal({
           <button
             type="button"
             onClick={async () => {
-              if (!img || !ware_house) {
+              if (!img || !store_id) {
                 setError(true);
                 return;
               }
               await FinishWorkOrderApiService({
                 id: id,
-                ware_house: ware_house as string,
+                store_id,
                 image: img as string,
               });
               router.refresh();

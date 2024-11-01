@@ -3,8 +3,8 @@ import { Column } from "react-table";
 
 export type CurrencyType = {
   isim?: string;
-  alis?: string;
-  satis?: string;
+  alis: number | string;
+  satis: number | string;
   degisim?: string;
   zaman?: string;
 };
@@ -197,8 +197,14 @@ export type TedarikciType = {
   tax_office?: string;
   tax_number?: string;
   bank?: string;
+  bank_address?: string;
+  iban?: string;
+  swift_code?: string;
+  account_no?: string;
   authorized_name?: string;
   authorized_phone?: string;
+  post_code?: string;
+  balance_upper_limit?: string;
 };
 
 export type MusteriType = {

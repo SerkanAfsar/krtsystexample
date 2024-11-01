@@ -10,6 +10,10 @@ import {
   UpdateTedarikciApiService,
 } from "@/ApiServices/Suppliers.ApiService";
 import { useTedarikciModalData } from "@/store/useModalStore";
+import CustomTabs, { TabSectionType } from "@/components/CustomUI/CustomTabs";
+import useTedarikciyeBagliUrunlerTable from "@/hooks/SatisHooks/useTedarikciyeBagliUrunler";
+import CustomDatatable from "@/components/CustomUI/CustomDatatable";
+import { SupplierProductDataTableHeaders } from "@/types/Tedarikci";
 
 export default function TedarikciDetayContainer({
   tedarikciItemData,
@@ -24,6 +28,11 @@ export default function TedarikciDetayContainer({
   const [activeStep, setActiveStep] = useState<number>(0);
   const [data, setData] = useState<TedarikciType>(tedarikciItem);
   const { setTedarikciModalOpen } = useTedarikciModalData();
+
+  const { activeData, activePage, totalPageCount, setActivePage, error } =
+    useTedarikciyeBagliUrunlerTable({
+      tedarikciId: tedarikciItemData?.id || 0,
+    });
 
   const newData: any = AddTedarikciSections.reduce((acc, next) => {
     const elems = next.elements.reduce((acc2, next2) => {
@@ -47,23 +56,79 @@ export default function TedarikciDetayContainer({
     { type: "TestData" },
   );
 
-  return (
-    <CustomForm
-      setData={setData}
-      activeStep={activeStep}
-      setActiveStep={setActiveStep}
-      sections={AddTedarikciSections.filter((a) => a.groupNumber == activeStep)}
-      data={data}
-      stepCount={1}
-      isAdd={isAdd}
-      serviceFunction={
-        isAdd ? AddTedarikciApiService : UpdateTedarikciApiService
-      }
-      filteredData={filteredData}
-      redirectUrl={
-        isRedirect ? "/Admin/Firmalar/Tedarikciler/TedarikciListesi" : undefined
-      }
-      extraCallBack={setTedarikciModalOpen}
-    />
-  );
+  if (isAdd) {
+    return (
+      <CustomForm
+        setData={setData}
+        activeStep={activeStep}
+        setActiveStep={setActiveStep}
+        sections={AddTedarikciSections.filter(
+          (a) => a.groupNumber == activeStep,
+        )}
+        data={data}
+        stepCount={1}
+        isAdd={isAdd}
+        serviceFunction={
+          isAdd ? AddTedarikciApiService : UpdateTedarikciApiService
+        }
+        filteredData={filteredData}
+        redirectUrl={
+          isRedirect
+            ? "/Admin/Firmalar/Tedarikciler/TedarikciListesi"
+            : undefined
+        }
+        extraCallBack={setTedarikciModalOpen}
+      />
+    );
+  }
+
+  const sections: TabSectionType[] = [
+    {
+      colName: "Tedarikçi Bilgileri",
+      component: (
+        <CustomForm
+          setData={setData}
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+          sections={AddTedarikciSections.filter(
+            (a) => a.groupNumber == activeStep,
+          )}
+          data={data}
+          stepCount={1}
+          isAdd={isAdd}
+          serviceFunction={
+            isAdd ? AddTedarikciApiService : UpdateTedarikciApiService
+          }
+          filteredData={filteredData}
+          redirectUrl={
+            isRedirect
+              ? "/Admin/Firmalar/Tedarikciler/TedarikciListesi"
+              : undefined
+          }
+          extraCallBack={setTedarikciModalOpen}
+        />
+      ),
+    },
+    {
+      colName: "Tedarikçiden Satın Alınan Ürünler",
+      component: tedarikciItem?.id && (
+        <>
+          {error ? (
+            <div>{error}</div>
+          ) : (
+            <CustomDatatable
+              totalPageCount={totalPageCount}
+              columns={SupplierProductDataTableHeaders}
+              data={activeData}
+              activePage={activePage}
+              isFirstLarge={false}
+              setActivePage={setActivePage}
+            />
+          )}
+        </>
+      ),
+    },
+  ];
+
+  return <CustomTabs productCode={""} tabs={sections} />;
 }

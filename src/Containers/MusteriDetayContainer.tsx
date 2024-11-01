@@ -31,7 +31,7 @@ export default function MusteriDetayContainer({
   const { activeData, activePage, totalPageCount, setActivePage, error } =
     useMusteriSatilanUrunlerTable({ customerId: musteriItemData?.id || 0 });
 
-  const { musteriModalData, setMusteriModalData } = useTedarikciModalData();
+  const { setMusteriModalData } = useTedarikciModalData();
 
   const newData: any = AddMusteriSections.reduce((acc, next) => {
     const elems = next.elements.reduce((acc2, next2) => {
@@ -103,17 +103,21 @@ export default function MusteriDetayContainer({
     },
     {
       colName: "Müşteriye Satılan Ürünler",
-      component: musteriItemData?.id ? (
-        <CustomDatatable
-          totalPageCount={totalPageCount}
-          columns={CustomerSaledProductsHeader}
-          data={activeData}
-          activePage={activePage}
-          isFirstLarge={false}
-          setActivePage={setActivePage}
-        />
-      ) : (
-        <div>Deneme</div>
+      component: musteriItemData?.id && (
+        <>
+          {error ? (
+            <div>{error}</div>
+          ) : (
+            <CustomDatatable
+              totalPageCount={totalPageCount}
+              columns={CustomerSaledProductsHeader}
+              data={activeData}
+              activePage={activePage}
+              isFirstLarge={false}
+              setActivePage={setActivePage}
+            />
+          )}
+        </>
       ),
     },
   ];

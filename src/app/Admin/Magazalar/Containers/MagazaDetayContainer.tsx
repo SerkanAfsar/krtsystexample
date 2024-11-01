@@ -42,7 +42,7 @@ export default function MagazaDetayContainer({
     },
     Object.assign({}, null),
   );
-  console.log(filteredData);
+
   return (
     <CustomForm
       setData={setData}
