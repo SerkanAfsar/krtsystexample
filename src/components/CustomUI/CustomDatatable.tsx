@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/utils";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   useTable,
   useGlobalFilter,
