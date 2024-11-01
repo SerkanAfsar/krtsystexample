@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FaPencil, FaTrash } from "react-icons/fa6";
 import { useRouter, useSearchParams } from "next/navigation";
-import { MusteriType } from "../types/types";
+import { CustomDataListType, MusteriType } from "../types/types";
 
 import { GetMusteriDatatableService } from "@/Services/Customer.Service";
 import { DeleteMusteriApiService } from "@/ApiServices/Customer.ApiService";
+import { ResponseResult } from "@/types/responseTypes";
 
 export default function useMusteriListData() {
   const router = useRouter();
@@ -26,35 +27,35 @@ export default function useMusteriListData() {
       page: activePage,
       order_by: order_by,
       sort,
-    }).then((resp: any) => {
-      const { error } = resp;
-      if (error) {
-        setError(error[0] || "Hata");
-        return;
+    }).then((resp: ResponseResult<CustomDataListType<MusteriType>>) => {
+      if (resp.success) {
+        const data = resp.data as CustomDataListType<MusteriType>;
+        const dataOneResult: any = data.results.map((item) => {
+          return {
+            code: item.code,
+            name: item.name,
+            phone: item.phone,
+            authorized_name: item.authorized_name,
+            authorized_phone: item.authorized_phone,
+            islemler: islemlerArea({
+              id: item.id as number,
+              productCode: item.name as string,
+            }),
+          };
+        });
+        setActiveData(dataOneResult);
+        setTotalPageCount(
+          Math.ceil(
+            data.count / Number(process.env.NEXT_PUBLIC_DATATABLE_ITEM_COUNT),
+          ),
+        );
+      } else {
+        if (resp.statusCode == 404) {
+          setActivePage(totalPageCount > 1 ? totalPageCount - 1 : 1);
+        } else {
+          setError(resp?.error?.at(0) ?? "Hata");
+        }
       }
-
-      const data = resp.data.results as MusteriType[];
-
-      const dataOneResult: any = data.map((item) => {
-        return {
-          code: item.code,
-          name: item.name,
-          phone: item.phone,
-          authorized_name: item.authorized_name,
-          authorized_phone: item.authorized_phone,
-          islemler: islemlerArea({
-            id: item.id as number,
-            productCode: item.name as string,
-          }),
-        };
-      });
-      setActiveData(dataOneResult);
-      setTotalPageCount(
-        Math.ceil(
-          resp?.data?.count /
-            Number(process.env.NEXT_PUBLIC_DATATABLE_ITEM_COUNT),
-        ),
-      );
     });
   }, [activePage, order_by, sort]);
 

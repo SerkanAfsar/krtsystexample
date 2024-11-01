@@ -43,22 +43,31 @@ export const BaseService = async ({
       headers: headers,
       body: isFormData ? bodyData : bodyData ? JSON.stringify(bodyData) : null,
     });
-
     const result = await response.json();
-    if (isResponseList) {
-      return result;
+    if (response.ok) {
+      if (isResponseList) {
+        return result;
+      } else {
+        return result as ResponseResult<any>;
+      }
     } else {
-      return result as ResponseResult<any>;
+      const errResponse: ResponseResult<any> = {
+        statusCode: response.status,
+        success: false,
+        data: null,
+        error: result
+          ? (Object.values(result).map((err) => err) as string[])
+          : ["Base Error"],
+      };
+      return errResponse;
     }
   } catch (err: unknown) {
     let errMessage;
-
     if (typeof err === "string") {
       errMessage = err.toUpperCase();
     } else if (err instanceof Error) {
       errMessage = err.message;
     }
-
     return {
       statusCode: 500,
       data: null,

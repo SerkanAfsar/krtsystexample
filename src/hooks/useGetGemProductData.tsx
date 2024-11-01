@@ -80,7 +80,11 @@ export default function useGemProductData(redirectUrl: string) {
           ),
         );
       } else {
-        setError((resp.error && resp.error[0]) || "Hata");
+        if (resp.statusCode == 404) {
+          setActivePage(totalPageCount > 1 ? totalPageCount - 1 : 1);
+        } else {
+          setError(resp?.error?.at(0) ?? "Hata");
+        }
       }
     });
   }, [activePage, order_by, sort]);

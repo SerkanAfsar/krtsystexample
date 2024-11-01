@@ -4,6 +4,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { GetMagazaDatatableService } from "@/Services/Magaza.Services";
 import { MagazaType } from "@/types/Magaza";
 import { DeleteMagazaApiService } from "@/ApiServices/Magaza.ApiService";
+import { ResponseResult } from "@/types/responseTypes";
+import { CustomDataListType } from "@/types/types";
 
 export default function useMagazaListesiData() {
   const router = useRouter();
@@ -25,31 +27,33 @@ export default function useMagazaListesiData() {
       page: activePage,
       order_by: order_by,
       sort,
-    }).then((resp: any) => {
-      const { error } = resp;
-      if (error) {
-        setError(error[0] || "Hata");
-        return;
+    }).then((resp: ResponseResult<CustomDataListType<MagazaType>>) => {
+      if (resp.success) {
+        const data = resp.data as CustomDataListType<MagazaType>;
+        const dataOneResult: any = data.results.map((item) => {
+          return {
+            name: item.name,
+            phone: item.phone,
+            address: item.address,
+            islemler: islemlerArea({
+              id: item.id as number,
+              name: item.name as string,
+            }),
+          };
+        });
+        setActiveData(dataOneResult);
+        setTotalPageCount(
+          Math.ceil(
+            data.count / Number(process.env.NEXT_PUBLIC_DATATABLE_ITEM_COUNT),
+          ),
+        );
+      } else {
+        if (resp.statusCode == 404) {
+          setActivePage(totalPageCount > 1 ? totalPageCount - 1 : 1);
+        } else {
+          setError(resp?.error?.at(0) ?? "Hata");
+        }
       }
-      const data = resp.data.results as MagazaType[];
-      const dataOneResult: any = data.map((item) => {
-        return {
-          name: item.name,
-          phone: item.phone,
-          address: item.address,
-          islemler: islemlerArea({
-            id: item.id as number,
-            name: item.name as string,
-          }),
-        };
-      });
-      setActiveData(dataOneResult);
-      setTotalPageCount(
-        Math.ceil(
-          resp?.data?.count /
-            Number(process.env.NEXT_PUBLIC_DATATABLE_ITEM_COUNT),
-        ),
-      );
     });
   }, [activePage, order_by, sort]);
 

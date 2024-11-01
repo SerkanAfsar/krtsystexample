@@ -71,7 +71,7 @@ const InnerConvert = ({
     case "Simple": {
       return data.results.map((item) => {
         return {
-          resim: (
+          resim: item.image ? (
             <LightgalleryItem key={item.pk} src={item.image as string}>
               <Image
                 src={item.image as string}
@@ -86,7 +86,7 @@ const InnerConvert = ({
                 alt={item.code as string}
               />
             </LightgalleryItem>
-          ),
+          ) : null,
           modelKodu: `${SadeModelTurleri.find((a) => a.titleVal == item?.properties?.modelTuru)?.extraValue}${item?.properties?.modelKodu}`,
           modelTuru: item?.properties?.modelTuru,
           code: item?.code,
@@ -151,7 +151,11 @@ export default function useGetProductData(
           ),
         );
       } else {
-        setError(resp?.error?.at(0) ?? "Hata");
+        if (resp.statusCode == 404) {
+          setActivePage(totalPageCount > 1 ? totalPageCount - 1 : 1);
+        } else {
+          setError(resp?.error?.at(0) ?? "Hata");
+        }
       }
     });
   }, [activePage, order_by, sort]);

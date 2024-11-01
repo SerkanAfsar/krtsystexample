@@ -21,7 +21,6 @@ export default async function SatisEklePage() {
   if (!musteriResult.success) {
     throw new Error(musteriResult.error ? musteriResult?.error[0] : "Hata");
   }
-  // console.log(new Intl.NumberFormat().format(3500.12));
 
   const musteriResultData = musteriResult.data as MusteriType[];
   const customers: CustomSearchSelectType[] =

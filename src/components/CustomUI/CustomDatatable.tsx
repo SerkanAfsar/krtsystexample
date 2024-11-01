@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/utils";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   useTable,
   useGlobalFilter,
@@ -19,6 +19,7 @@ const CustomDatatable = ({
   className,
   hasOrder = true,
   isFirstLarge = true,
+  count = 1,
 }: {
   data: any[];
   columns: any;
@@ -28,6 +29,7 @@ const CustomDatatable = ({
   className?: any;
   hasOrder?: boolean;
   isFirstLarge?: boolean;
+  count?: number;
 }) => {
   const router = useRouter();
 
