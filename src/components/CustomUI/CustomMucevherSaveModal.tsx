@@ -3,8 +3,13 @@ import React, { useEffect, useRef, useState } from "react";
 import CustomSelect from "./CustomSelect";
 import CustomImageSelect from "./CustomImageSelect";
 import { FinishWorkOrderApiService } from "@/ApiServices/WorkOrders.ApiService";
-import { AmbarOptionsData } from "@/utils/MockData";
+
 import { useRouter } from "next/navigation";
+import { MagazaType } from "@/types/Magaza";
+
+import { CustomDataListType } from "@/types/types";
+import { CustomOptionType } from "@/types/inputTypes";
+import { GetMagazaDatatableService } from "@/Services/Magaza.Services";
 
 function CustomMucevherSaveModal({
   id,
@@ -24,6 +29,21 @@ function CustomMucevherSaveModal({
   const [img, setImage] = useState<string | ArrayBuffer | undefined>();
   const [ware_house, setWareHouse] = useState<string>();
   const [error, setError] = useState<boolean>(false);
+
+  const [warehouselist, setWarehouselist] = useState<MagazaType[]>([]);
+
+  useEffect(() => {
+    GetMagazaDatatableService({})
+      .then((resp) => {
+        if (resp.success) {
+          const data = resp.data as CustomDataListType<MagazaType>;
+          setWarehouselist(data.results);
+        } else {
+          console.log(resp.error);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -83,7 +103,12 @@ function CustomMucevherSaveModal({
                 required: true,
                 type: "select",
                 title: "Ambar Seçiniz",
-                options: AmbarOptionsData,
+                options: warehouselist.map((item: MagazaType, index) => {
+                  return {
+                    titleVal: item.name,
+                    valueVal: item.name,
+                  } as CustomOptionType;
+                }),
               }}
               value={ware_house}
               onChange={(e) => setWareHouse(e.target.value)}

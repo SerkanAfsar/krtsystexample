@@ -16,6 +16,7 @@ type SelectElementProps = React.InputHTMLAttributes<HTMLSelectElement> & {
   item: ElementType;
   title?: string;
   getValues?: any;
+  firstOptionText?: string;
 };
 
 const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
@@ -32,6 +33,7 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
       showIcon = true,
       getValues,
       title,
+      firstOptionText,
       ...rest
     },
     ref,
@@ -77,7 +79,10 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
         {(title || item.title || item?.isTopMargin) && (
           <label
             htmlFor={id}
-            className="mb-3 block h-5 text-sm font-medium text-black dark:text-white"
+            className={cn(
+              "block h-5 text-sm font-medium text-black dark:text-white",
+              item?.isTopMargin ? "mb-1" : "mb-3",
+            )}
           >
             {title || item.title}
           </label>
@@ -106,7 +111,9 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
                 disabled
                 className="text-body dark:text-bodydark"
               >
-                {item.title} Seçiniz
+                {firstOptionText
+                  ? `${firstOptionText}`
+                  : `${item.title} Seçiniz`}
               </option>
               {staticOptions
                 ? staticOptions()

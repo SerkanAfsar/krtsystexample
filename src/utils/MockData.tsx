@@ -24,6 +24,7 @@ import { GenerateSertificateUrl } from "./Pirlanta.Utils";
 import { CustomOptionType } from "../types/inputTypes";
 import { TedarikciCustomListType } from "./Tedarikciler.Utils";
 import { SirketTuruOptionList } from "@/data/Musteri.data";
+import { MagazaSorumluListData } from "./Magaza.Utils";
 export const PirlantaSertifikaKodlari: CustomOptionType[] = [
   {
     titleVal: "HRD",
@@ -328,7 +329,7 @@ export const AddTedarikciSections: Array<FormSectionType> = [
       },
       {
         name: "area",
-        type: "radiobuttonlist",
+        type: "customButtonGroup",
         title: "Tedarikçi Tipi",
         checkBoxList: ["Domestic", "Foreign"],
         required: true,
@@ -481,7 +482,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
       },
       {
         name: "area",
-        type: "radiobuttonlist",
+        type: "customButtonGroup",
         title: "Müşteri Tipi",
         checkBoxList: ["Domestic", "Foreign"],
         required: true,
@@ -523,6 +524,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
         visibleRelative: "Foreign",
         staticOptions: RenkliTasListesiMenseiList,
         moveToTop: true,
+        isTopMargin: true,
       },
     ],
   },
@@ -838,7 +840,6 @@ export const AddStoneSections: Array<FormSectionType> = [
         type: "select",
         title: "Menşei",
         span: 2,
-
         placeholder: "Menşei Seçiniz...",
         required: false,
         requiredMessage: "Menşei Değeri Boş Bırakılamaz",
@@ -1449,6 +1450,57 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
         requiredMessage: "Sertifika No Değeri Boş Bırakılamaz",
         disabled: true,
         span: 3,
+      },
+    ],
+  },
+];
+
+export const AddMagazaSections: Array<FormSectionType> = [
+  {
+    colsLenght: "12",
+    sectionTitle: "Mağaza Bilgileri",
+    groupNumber: 0,
+    keyString: "properties",
+    elements: [
+      {
+        name: "name",
+        type: "text",
+        title: "Mazağa Adı",
+        required: true,
+        span: 3,
+        placeholder: "Mağaza Adı",
+        requiredMessage: "Mağaza Adı Boş Bırakılamaz",
+      },
+      {
+        name: "phone",
+        type: "tel",
+        title: "Mağaza Telefonu",
+        required: true,
+        span: 3,
+        placeholder: "Mağaza Telefonu",
+        requiredMessage: "Mağaza Telefonu Boş Bırakılamaz",
+      },
+      {
+        name: "address",
+        type: "textarea",
+        rows: 5,
+        title: "Mağaza Adresi",
+        required: true,
+        span: 6,
+        placeholder: "Mağaza Adresi",
+
+        requiredMessage: "Mağaza Adresi Boş Bırakılamaz",
+      },
+      {
+        name: "responsible",
+        type: "select",
+        options: MagazaSorumluListData,
+        title: "Mağaza Sorumlusu",
+        required: false,
+        span: 3,
+        requiredMessage: "Mağaza Sorumlusu Boş Bırakılamaz",
+        isTopMargin: true,
+        moveToTop: true,
       },
     ],
   },

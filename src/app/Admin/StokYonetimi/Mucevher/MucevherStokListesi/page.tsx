@@ -6,6 +6,8 @@ import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
 import useGemProductData from "@/hooks/useGetGemProductData";
 import CustomErrorAlert from "@/components/CustomUI/Alerts/CustomErrorAlert";
 import { MucevherListesiDataHeaders } from "@/types/Mucevher";
+import CustomSelect from "@/components/CustomUI/CustomSelect";
+import { MucevherYazdirmaList } from "@/utils/Mucevher.Utils";
 
 export default function MucevherStokListesi() {
   const {
@@ -35,13 +37,25 @@ export default function MucevherStokListesi() {
       {error ? (
         <CustomErrorAlert title="Hata" description={error} />
       ) : (
-        <CustomDatatable
-          totalPageCount={totalPageCount}
-          columns={MucevherListesiDataHeaders}
-          data={activeData}
-          activePage={activePage}
-          setActivePage={setActivePage}
-        />
+        <div className="flex w-full flex-col gap-3">
+          <CustomSelect
+            item={{
+              name: "name_sec",
+              type: "select",
+              options: MucevherYazdirmaList,
+              required: false,
+            }}
+            firstOptionText="Yazdır"
+            outerClass="self-end w-auto"
+          />
+          <CustomDatatable
+            totalPageCount={totalPageCount}
+            columns={MucevherListesiDataHeaders}
+            data={activeData}
+            activePage={activePage}
+            setActivePage={setActivePage}
+          />
+        </div>
       )}
     </DefaultLayout>
   );

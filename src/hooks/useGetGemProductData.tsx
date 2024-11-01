@@ -18,6 +18,7 @@ const InnerConvert = ({
   islemlerArea: any;
 }) => {
   return data.results.map((item) => {
+    console.log(item);
     return {
       resim: item.image && (
         <Image
@@ -36,7 +37,7 @@ const InnerConvert = ({
       priceTag: `${item?.properties?.priceTag} $`,
       tedarikci: null,
       girisTarihi: item?.properties?.productionDate,
-      ambar: null,
+      ambar: item?.properties?.wareHouse || null,
       islemler: islemlerArea({
         id: item?.pk as number,
         productCode: item?.code,

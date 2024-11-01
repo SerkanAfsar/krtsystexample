@@ -18,11 +18,10 @@ const CustomTextArea = React.forwardRef<
   return (
     <div className={cn("w-full", outerClass && outerClass, className)}>
       {item.title && (
-        <label className="mb-2.5 block  font-medium text-black dark:text-white">
+        <label className="mb-2.5 block text-sm  font-medium text-black dark:text-white">
           {item.title}
         </label>
       )}
-
       <textarea
         {...props}
         ref={ref}

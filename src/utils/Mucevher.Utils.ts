@@ -1,3 +1,4 @@
+import { CustomOptionType } from "@/types/inputTypes";
 import { sadeModelIlkHarf } from "@/utils/Sade.Utils";
 
 export const MucevherCode = (
@@ -41,3 +42,10 @@ export const MucevherCode = (
   }
   return code;
 };
+
+export const MucevherYazdirmaList: CustomOptionType[] = [
+  { titleVal: "6'lı Rapor", valueVal: "6'lı Rapor" },
+  { titleVal: "24'lü Rapor", valueVal: "24'lü Rapor" },
+  { titleVal: "Ana Maliyet", valueVal: "Ana Maliyet" },
+  { titleVal: "P2", valueVal: "P2" },
+];
