@@ -1,11 +1,10 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-
 import { GetCustomersListForSalesService } from "@/Services/Customer.Service";
 import { MusteriType } from "../../../../types/types";
 import SatisEkleDetayContainer, {
   CustomSearchSelectType,
-} from "./Containers/SatisEkleDetayContainer";
+} from "../Containers/SatisEkleDetayContainer";
 
 export type SatisItemType = {
   product_id: number;

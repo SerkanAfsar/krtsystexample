@@ -11,6 +11,7 @@ export default function SatisDetayOdeme({
   toplamOdenenTutar,
   toplamKalanTutar,
   toplamMaliyet,
+  onSubmit,
 }: {
   fields?: any;
   append: any;
@@ -20,6 +21,7 @@ export default function SatisDetayOdeme({
   toplamOdenenTutar: number;
   toplamKalanTutar: string;
   toplamMaliyet: number;
+  onSubmit: any;
 }) {
   const isShow = useCallback(
     (indexNo: number | undefined): boolean => {
@@ -46,6 +48,7 @@ export default function SatisDetayOdeme({
           <div>
             <CustomSelect
               {...register(`payments.${index}.payment_type`)}
+              firstOptionText="Ödeme Yöntemi Seçiniz"
               item={{
                 name: `payments.${index}.payment_type`,
                 required: true,
@@ -173,6 +176,13 @@ export default function SatisDetayOdeme({
           />
         </div>
       </div>
+      <button
+        type="button"
+        onClick={async (e) => await onSubmit()}
+        className="mt-3 w-[260px] self-end rounded-md bg-primary p-3 font-bold text-white"
+      >
+        Satış Kaydet
+      </button>
     </div>
   );
 }

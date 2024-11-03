@@ -131,7 +131,7 @@ export default function FormElementItem({
             item.colStart && `col-start-${item.colStart}`,
             item.colEnd && `col-end-${item.colEnd}`,
             item.rowSpan && `row-span-${item.rowSpan}`,
-            item.moveToTop && "mt-[-100px]",
+            item.moveToTop && "mt-[-115px]",
           )}
           showIcon={showIconRelativeTo}
           item={item}
@@ -193,7 +193,7 @@ export default function FormElementItem({
           err={err}
           outerClass={cn(
             item.span && `col-span-${colSpan}`,
-            item.moveToTop && "mt-[-100px]",
+            item.moveToTop && "mt-[-115px]",
           )}
           getValues={getValues}
           disabled={(!isAdd && item.isCodeRelated) || isDisabled}
@@ -224,7 +224,6 @@ export default function FormElementItem({
           )}
           disabled={(!isAdd && item.isCodeRelated) || isDisabled}
           setError={setError}
-          value={val}
           {...rest}
         />
       );

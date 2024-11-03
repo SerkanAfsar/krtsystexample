@@ -1,4 +1,4 @@
-import { SaleType } from "@/types/Satis";
+import { SaleResponseType, SaleTypeFormResult } from "@/types/Satis";
 import { BaseService } from ".";
 import { ResponseResult } from "../types/responseTypes";
 import { CustomDataListType } from "../types/types";
@@ -41,8 +41,8 @@ export const GetSatisUrunDatatableService = async ({
 export const AddSatisService = async ({
   data,
 }: {
-  data: SaleType;
-}): Promise<ResponseResult<SaleType>> => {
+  data: SaleTypeFormResult;
+}): Promise<ResponseResult<any>> => {
   const result = await BaseService({
     url: "product/customer/products/sales-product/",
     bodyData: data,
@@ -50,5 +50,31 @@ export const AddSatisService = async ({
     hasToken: true,
   });
 
-  return result as ResponseResult<SaleType>;
+  return result as ResponseResult<any>;
+};
+
+export const GetAllSatisList = async ({
+  customer_id,
+  page = 1,
+}: {
+  customer_id?: number;
+  page: number;
+}): Promise<ResponseResult<CustomDataListType<SaleResponseType>>> => {
+  let urlPath: string = "product/customer/order-list/";
+
+  if (page) {
+    urlPath += `?page=${page.toString()}`;
+  }
+  if (customer_id) {
+    urlPath += `&customer_id=${customer_id.toString()}`;
+  }
+
+  const result = await BaseService({
+    url: urlPath,
+    method: "GET",
+    bodyData: null,
+    hasToken: true,
+  });
+
+  return result as ResponseResult<CustomDataListType<SaleResponseType>>;
 };

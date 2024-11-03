@@ -61,13 +61,8 @@ export const ApiServiceResult = ({
 
     callBack && callBack();
   } else {
-    const err =
-      result.error && Array.isArray(result.error)
-        ? result.error[0]
-        : result.error
-          ? result.error
-          : result?.detail || "Hata";
-    return toast.error(err, {
+    const err = result.error ? result.error.at(0) : "Hata";
+    return toast.error(err || "Hata", {
       position: "top-right",
     });
   }

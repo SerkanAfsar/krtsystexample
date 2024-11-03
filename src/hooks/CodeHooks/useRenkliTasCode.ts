@@ -66,7 +66,7 @@ export default function useRenkliTasCode({
               dataRenkliTasCode as string,
             );
           } else {
-            if (data_fromsingleormixed == "From Single") {
+            if (data_fromsingleormixed == "Tektaş") {
               returnSameResult(
                 GetNextOrderFromSingleDiamondService({
                   from_mixed: false,

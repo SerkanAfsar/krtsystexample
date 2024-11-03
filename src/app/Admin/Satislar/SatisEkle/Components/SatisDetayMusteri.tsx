@@ -7,8 +7,7 @@ import { useEffect, useState } from "react";
 import { MusteriType } from "../../../../../types/types";
 import { GetMusteriService } from "@/Services/Customer.Service";
 import { ResponseResult } from "../../../../../types/responseTypes";
-
-import { CustomSearchSelectType } from "../Containers/SatisEkleDetayContainer";
+import { CustomSearchSelectType } from "../../Containers/SatisEkleDetayContainer";
 
 export default function SatisDetayMusteri({
   customers,

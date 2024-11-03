@@ -55,9 +55,7 @@ export const BaseService = async ({
         statusCode: response.status,
         success: false,
         data: null,
-        error: result
-          ? (Object.values(result).map((err) => err) as string[])
-          : ["Base Error"],
+        error: result ? [result] : ["Base Error"],
       };
       return errResponse;
     }

@@ -1,9 +1,13 @@
 "use client";
-import { SalePayment, SaleType } from "../../../../../types/Satis";
+
+import { AddSatisService } from "@/Services/Satis.Services";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 import { useFieldArray, useForm } from "react-hook-form";
-import SatisDetayUrunler from "../Components/SatisDetayUrunler";
-import SatisDetayMusteri from "../Components/SatisDetayMusteri";
-import SatisDetayOdeme from "../Components/SatisDetayOdeme";
+import { SalePayment, SaleType, SaleTypeFormResult } from "@/types/Satis";
+import SatisDetayMusteri from "../SatisEkle/Components/SatisDetayMusteri";
+import SatisDetayUrunler from "../SatisEkle/Components/SatisDetayUrunler";
+import SatisDetayOdeme from "../SatisEkle/Components/SatisDetayOdeme";
 
 export type CustomSearchSelectType = {
   label: string;
@@ -15,13 +19,14 @@ export default function SatisEkleDetayContainer({
 }: {
   customers: CustomSearchSelectType[];
 }) {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     watch,
     setValue,
-    getValues,
     control,
+    getValues,
     formState: { errors, isValid },
   } = useForm<SaleType>({});
 
@@ -42,7 +47,7 @@ export default function SatisEkleDetayContainer({
   const [products, payments] = watch(["products", "payments"]);
 
   const toplamTutar =
-    products?.reduce((acc, next) => {
+    products?.reduce((acc: any, next: any) => {
       return (
         acc +
         Number(
@@ -52,7 +57,7 @@ export default function SatisEkleDetayContainer({
     }, 0) || 0;
 
   const toplamMaliyet =
-    products?.reduce((acc, next) => {
+    products?.reduce((acc: any, next: any) => {
       return (
         acc +
         Number(
@@ -73,6 +78,32 @@ export default function SatisEkleDetayContainer({
     }, 0) || 0;
 
   const toplamKalanTutar = Number(toplamMaliyet - toplamOdenenTutar).toFixed(2);
+
+  const onSubmit = async () => {
+    const data = getValues();
+    const requestData: SaleTypeFormResult = {
+      customer_id: data.customer_id,
+      total_remaining_amount: Number(toplamKalanTutar),
+      total: toplamTutar,
+      total_paid_amount: toplamOdenenTutar,
+      products: data.products.map((item: any) => ({
+        ...item,
+        sales_price: Number(
+          item.sales_price.toString().replace(".", "").replace(",", "."),
+        ),
+      })),
+      payment_details: data.payments.reduce((acc: any, next: any) => {
+        return { ...acc, [next.payment_type]: next.payment_price };
+      }, {}),
+    };
+    const response = await AddSatisService({ data: requestData });
+    if (response.success) {
+      toast.success("Satiş Eklendi", { position: "top-right" });
+      return router.push("/Admin/Satislar/SatisListesi");
+    } else {
+      return toast.error("Hata", { position: "top-right" });
+    }
+  };
 
   return (
     <>
@@ -95,6 +126,7 @@ export default function SatisEkleDetayContainer({
         toplamOdenenTutar={toplamOdenenTutar}
         toplamKalanTutar={toplamKalanTutar}
         toplamMaliyet={toplamMaliyet}
+        onSubmit={onSubmit}
       />
     </>
   );

@@ -1,7 +1,5 @@
 "use client";
-
 import CustomForm from "@/components/CustomUI/CustomForm";
-
 import { useState } from "react";
 import { MusteriType } from "../types/types";
 import { AddMusteriSections } from "@/utils/MockData";
@@ -10,11 +8,10 @@ import {
   UpdateCustomerApiService,
 } from "@/ApiServices/Customer.ApiService";
 import CustomTabs, { TabSectionType } from "@/components/CustomUI/CustomTabs";
-import useMusteriSatilanUrunlerTable from "@/hooks/SatisHooks/useMusteriSatilanUrunlerTable";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
-
 import { useTedarikciModalData } from "@/store/useModalStore";
-import { CustomerSaledProductsHeader } from "../types/Satis";
+import { SatisListesiHeaderColumns } from "../types/Satis";
+import useSatisListData from "@/hooks/useSatisListData";
 
 export default function MusteriDetayContainer({
   musteriItemData,
@@ -29,7 +26,7 @@ export default function MusteriDetayContainer({
   const [activeStep, setActiveStep] = useState<number>(0);
   const [data, setData] = useState<MusteriType>(musteriItem);
   const { activeData, activePage, totalPageCount, setActivePage, error } =
-    useMusteriSatilanUrunlerTable({ customerId: musteriItemData?.id || 0 });
+    useSatisListData({ customer_id: musteriItemData?.id || undefined });
 
   const { setMusteriModalData } = useTedarikciModalData();
 
@@ -110,7 +107,7 @@ export default function MusteriDetayContainer({
           ) : (
             <CustomDatatable
               totalPageCount={totalPageCount}
-              columns={CustomerSaledProductsHeader}
+              columns={SatisListesiHeaderColumns}
               data={activeData}
               activePage={activePage}
               isFirstLarge={false}

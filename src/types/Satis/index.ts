@@ -62,3 +62,57 @@ export type SaleType = {
   total_payment: number;
   total_nonpayed: number;
 };
+
+export type SaleTypeFormResult = {
+  products: SaleProductType[];
+  customer_id: number;
+  payment_details: { [key: string]: number };
+  total_paid_amount: number;
+  total_remaining_amount: number;
+  total: number;
+};
+
+export type SaleResponseType = Omit<
+  SaleTypeFormResult,
+  "customer" | "customer_id"
+> & {
+  customer: {
+    name: string;
+  };
+};
+
+export type SatisListesiHeaderType = {
+  musteri: string;
+  satilanUrunler: string | null;
+  odenen: string;
+  kalan: string;
+  toplamTutar: string;
+  odemeYontemi: string;
+};
+
+export const SatisListesiHeaderColumns: Column<SatisListesiHeaderType>[] = [
+  {
+    Header: "Müşteri",
+    accessor: "musteri",
+  },
+  {
+    Header: "Satılan Ürünler",
+    accessor: "satilanUrunler",
+  },
+  {
+    Header: "Ödenen",
+    accessor: "odenen",
+  },
+  {
+    Header: "Kalan",
+    accessor: "kalan",
+  },
+  {
+    Header: "Toplam Tutar",
+    accessor: "toplamTutar",
+  },
+  {
+    Header: "Ödeme Yöntemi",
+    accessor: "odemeYontemi",
+  },
+];

@@ -65,7 +65,7 @@ export default function useGetWorkOrderListData() {
             <CustomToolTip
               text={`${formatToCurrency(Number(item.total_cost)).toString()} $`}
             >
-              <div className="flex flex-col items-center justify-center gap-1">
+              <div className="flex flex-col  items-center justify-center gap-1">
                 <b>Maliyet</b>
                 <div>
                   Malzeme : {formatToCurrency(Number(item.total_product_cost))}{" "}
