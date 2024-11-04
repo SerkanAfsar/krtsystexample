@@ -50,7 +50,7 @@ export default function SatisDetayUrunler({
           />
         )}
       </CustomModalPage>
-      <div className="block w-full bg-white p-6">
+      <div className="block w-full rounded-md bg-white p-6">
         <div className="mb-3 grid w-full grid-cols-4 gap-3 font-bold text-black">
           <div>Ürün Kodu</div>
           <div>Ürün Tipi</div>
@@ -125,7 +125,7 @@ export default function SatisDetayUrunler({
                     rightIcon: "$",
                   }}
                   {...register(`products.${index}.sales_price`)}
-                  value={item.sales_price?.toString()}
+                  value={item.sales_price}
                   err={err ? "Satış Fiyatı Malitetin Altında!" : null}
                 />
 

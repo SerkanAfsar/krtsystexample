@@ -33,7 +33,7 @@ export default function SatisDetayOdeme({
   );
 
   return (
-    <div className="flex w-full flex-col gap-3 bg-white p-6">
+    <div className="flex w-full flex-col gap-3 rounded-md bg-white p-6">
       <div className="grid w-full grid-cols-4 gap-3 font-bold text-black">
         <div>Ödeme Yöntemi</div>
         <div>Ödenen Tutar</div>

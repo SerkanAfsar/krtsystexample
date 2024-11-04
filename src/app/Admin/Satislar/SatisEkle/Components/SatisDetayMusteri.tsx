@@ -47,7 +47,7 @@ export default function SatisDetayMusteri({
           musteriItemData={null}
         />
       </CustomModalPage>
-      <div className="flex gap-3 bg-white p-6">
+      <div className="flex gap-3 rounded-md bg-white p-6">
         <CustomSearchSelect
           placeholder="Müşteri Seçiniz"
           title="Müşteri Seçiniz"
