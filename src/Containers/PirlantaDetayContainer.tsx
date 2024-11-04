@@ -89,6 +89,7 @@ const PirlantaDetayContainer = ({
       buy_date: data.buy_date,
       code: pruductCode,
       supplier_id: Number(data.supplier_id),
+      store_id: Number(data.store_id),
     },
   );
 

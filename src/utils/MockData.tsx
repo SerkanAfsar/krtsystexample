@@ -24,7 +24,7 @@ import { GenerateSertificateUrl } from "./Pirlanta.Utils";
 import { CustomOptionType } from "../types/inputTypes";
 import { TedarikciCustomListType } from "./Tedarikciler.Utils";
 import { SirketTuruOptionList } from "@/data/Musteri.data";
-import { MagazaSorumluListData } from "./Magaza.Utils";
+import { MagazaCustomListType, MagazaSorumluListData } from "./Magaza.Utils";
 export const PirlantaSertifikaKodlari: CustomOptionType[] = [
   {
     titleVal: "HRD",
@@ -250,7 +250,7 @@ export const AddSadeSections: Array<FormSectionType> = [
         requiredMessage: "Açıklama Değeri Boş Bırakılamaz",
         relativeTo: "type",
         span: 3,
-        rowSpan: 2,
+
         colStart: "4",
         colEnd: "10",
       },
@@ -273,6 +273,19 @@ export const AddSadeSections: Array<FormSectionType> = [
         requiredMessage: "Giriş Tarihi Değeri Boş Bırakılamaz",
         relativeTo: "type",
         span: 3,
+        colStart: "7",
+        colEnd: "10",
+      },
+      {
+        name: "store_id",
+        type: "select",
+        title: "Mağaza",
+        placeholder: "Mağaza Seçiniz...",
+        relativeTo: "type",
+        required: true,
+        requiredMessage: "Mağaza Değeri Boş Bırakılamaz",
+        span: 3,
+        customOptions: MagazaCustomListType,
       },
     ],
   },
@@ -936,13 +949,26 @@ export const AddStoneSections: Array<FormSectionType> = [
         title: "Tedarikçi",
         placeholder: "Tedarikçi Giriniz...",
         relativeTo: "menstrual_status",
-        required: false,
+        required: true,
         requiredMessage: "Tedarikçi Değeri Boş Bırakılamaz",
         span: 2,
         colStart: "10",
         colEnd: "10",
         customOptions: TedarikciCustomListType,
         isTedarikci: true,
+      },
+      {
+        name: "store_id",
+        type: "select",
+        title: "Mağaza",
+        placeholder: "Mağaza Seçiniz...",
+        relativeTo: "menstrual_status",
+        required: true,
+        requiredMessage: "Mağaza Değeri Boş Bırakılamaz",
+        span: 2,
+        colStart: "10",
+        colEnd: "10",
+        customOptions: MagazaCustomListType,
       },
     ],
   },
@@ -1427,6 +1453,19 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
         span: 2,
         customOptions: TedarikciCustomListType,
         isTedarikci: true,
+      },
+      {
+        name: "store_id",
+        type: "select",
+        title: "Mağaza",
+        placeholder: "Mağaza Seçiniz...",
+        relativeTo: "menstrual_status",
+        required: true,
+        requiredMessage: "Mağaza Değeri Boş Bırakılamaz",
+        span: 2,
+        colStart: "10",
+        colEnd: "10",
+        customOptions: MagazaCustomListType,
       },
       // {
       //   name: "sertifikaDosyasi",

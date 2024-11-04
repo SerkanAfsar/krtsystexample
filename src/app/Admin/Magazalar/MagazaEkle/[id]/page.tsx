@@ -21,6 +21,7 @@ export default async function TedarikciEkle({
       throw new Error(result.error ? [0].toString() : "Hata");
     }
   }
+
   return (
     <DefaultLayout>
       <Breadcrumb

@@ -16,6 +16,7 @@ export type IRenkliTasType = {
   total_cost?: number;
   islemler?: React.ReactNode;
   supplier_id?: number;
+  store_id?: number;
 };
 
 export type IDiamondType = {
@@ -31,6 +32,7 @@ export type IDiamondType = {
   fromsingleormixed?: string;
   frommixedItem?: string;
   supplier_id?: number;
+  store_id?: number;
 };
 
 export type ISertifikaType = {
@@ -79,6 +81,7 @@ export type ISadeType = {
   total_cost?: number;
   cost_currency?: string;
   islemler?: React.ReactNode;
+  store_id?: number;
 };
 
 export type FormSectionType = {

@@ -27,6 +27,7 @@ export type ProductType = {
   product_cost?: { [key: string]: string | number | undefined };
   quantity?: number | null;
   supplier?: TedarikciType;
+  store_id?: number;
 };
 
 export type CustomerPurchatedProducts = {
