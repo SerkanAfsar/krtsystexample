@@ -27,17 +27,9 @@ export default function MucevherPirlantaSection({
     return acc + next.span;
   }, 0);
 
-  // const toplamPirlantaPrice = pirlantaProducts?.reduce((acc, next) => {
-  //   return acc + Number(next.product.total_cost || 0);
-  // }, 0);
-
-  // const toplamPirlantaAdet = pirlantaProducts?.reduce((acc, next) => {
-  //   return acc + Number(next.quantity || 0);
-  // }, 0);
-
   return (
-    <div className="my-3 w-full">
-      <b className="mb-1 block text-black">Pırlanta Bilgileri</b>
+    <div className="my-3 flex w-full flex-col gap-3">
+      <b className="mb-1 block text-black underline">Pırlanta Bilgileri</b>
       <div
         className={cn(
           "grid w-full gap-3 rounded-sm bg-gray p-1 text-black",
@@ -80,44 +72,28 @@ export default function MucevherPirlantaSection({
           })}
       </div>
       {!isEdit && (
-        <div className="w-full text-right">
-          <button
-            type="button"
-            className="w-40 rounded-md bg-primary px-4 py-2 text-center text-white"
-            onClick={() => {
-              setPirlantaTempItems((prev: any) => [
-                ...prev,
-                {
-                  adet: null,
-                  berraklik: null,
-                  fiyat: null,
-                  carat: null,
-                  kesim: null,
-                  mensei: null,
-                  renk: null,
-                  type: "Diamond",
-                },
-              ]);
-            }}
-          >
-            Pırlanta Ekle
-          </button>
-        </div>
+        <button
+          type="button"
+          className="block w-40 self-end rounded-md bg-primary px-4 py-2 text-center text-white"
+          onClick={() => {
+            setPirlantaTempItems((prev: any) => [
+              ...prev,
+              {
+                adet: null,
+                berraklik: null,
+                fiyat: null,
+                carat: null,
+                kesim: null,
+                mensei: null,
+                renk: null,
+                type: "Diamond",
+              },
+            ]);
+          }}
+        >
+          Pırlanta Ekle
+        </button>
       )}
-      {/* {isEdit && (
-        <div className="flex w-full justify-end">
-          <div className="float-right flex w-auto flex-col flex-wrap font-bold text-black">
-            <div className="flex">
-              <div>Toplam Pırlanta Fiyat &nbsp;:&nbsp;</div>
-              <div>{formatToCurrency(toplamPirlantaPrice || 0)} $</div>
-            </div>
-            <div className="flex">
-              <div>Toplam Pırlanta Adet &nbsp;:&nbsp;</div>
-              <div>{toplamPirlantaAdet}</div>
-            </div>
-          </div>
-        </div>
-      )} */}
     </div>
   );
 }

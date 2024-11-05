@@ -67,7 +67,6 @@ export default function MucevherSadeRow({
           })}
           value={(model?.gram as number) ?? null}
           err={errors.products?.sade?.[index]?.gram?.message}
-          // value={model?.gram as number}
           disabled={isEdit}
         />
       </div>
@@ -86,7 +85,6 @@ export default function MucevherSadeRow({
           })}
           value={(model?.ayar as string) ?? null}
           err={errors.products?.sade?.[index]?.ayar?.message}
-          // value={model?.ayar as number}
           disabled={isEdit}
         />
       </div>
@@ -122,28 +120,10 @@ export default function MucevherSadeRow({
           })}
           value={(model?.hasGram as number) ?? null}
           err={errors.products?.sade?.[index]?.hasGram?.message}
-          // value={model?.hasGram as number}
           disabled={true}
         />
       </div>
       <div className={`col-span-${findSpan("fiyat")} flex gap-3`}>
-        {/* <CustomInput
-          item={{
-            name: "fiyat",
-            required: true,
-            type: "number",
-            placeholder: "Fiyat",
-            rightIcon: "$",
-          }}
-          {...register(`products.sade.${index}.fiyat`, {
-            required: "Fiyat Giriniz",
-            valueAsNumber: true,
-          })}
-          value={(model?.fiyat as number) ?? null}
-          err={errors.products?.sade?.[index]?.fiyat?.message}
-          // value={formatToCurrency(Number(model?.fiyat || 0))}
-          disabled={isEdit}
-        /> */}
         <CustomMoneyInput
           item={{
             name: "fiyat",
@@ -157,16 +137,17 @@ export default function MucevherSadeRow({
           })}
           value={(model?.fiyat as number) ?? null}
           err={errors.products?.sade?.[index]?.fiyat?.message}
-          // value={formatToCurrency(Number(model?.fiyat || 0))}
           disabled={isEdit}
         />
-        <button
-          type="button"
-          onClick={() => setVisible(false)}
-          className="btn rounded-sm bg-red p-3 text-white"
-        >
-          Sil
-        </button>
+        {!isEdit && (
+          <button
+            type="button"
+            onClick={() => setVisible(false)}
+            className="btn rounded-md bg-red p-3 text-white"
+          >
+            Sil
+          </button>
+        )}
       </div>
 
       <div className="hidden">

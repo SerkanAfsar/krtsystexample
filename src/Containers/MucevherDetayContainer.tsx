@@ -69,8 +69,8 @@ export default function MucevherDetayContainer({
           <hr />
         </>
       )}
-      <div className="grid w-full grid-cols-6  ">
-        <div className="col-span-6 flex flex-col">
+      <div className="grid w-full grid-cols-6">
+        <div className="col-span-6 flex flex-col gap-4">
           <MucevherSadeSection
             register={register}
             sadeProducts={sadeProducts}
@@ -90,28 +90,26 @@ export default function MucevherDetayContainer({
             errors={errors}
           />
         </div>
-        <div className="col-span-6 mt-4 flex">
-          {/* <h2 className=" h-full w-full justify-end text-right  text-xl dark:text-white">
-            Toplam Malzeme Maliyeti :{" "}
-            <span className="text-right font-bold text-black underline dark:text-white">{`${formatToCurrency(toplamPirlantaPrice + toplamRenkliTasPrice + sadeTotalPrice)} $`}</span>
-          </h2> */}
-        </div>
-        <div className="col-span-6 mt-8 block w-full text-right">
-          {!isEdit && (
-            <div className="w-full text-right">
-              <button
-                className="mr-5  border border-primary px-8 py-2 text-black"
-                type="button"
-                onClick={() => setActiveStep && setActiveStep(0)}
-              >
-                Geri
-              </button>
-              <button className="bg-primary px-8 py-2 text-white" type="submit">
-                Kaydet
-              </button>
-            </div>
-          )}
-        </div>
+      </div>
+      <hr className="my-8" />
+      <div className="col-span-6   flex  w-full justify-end">
+        {!isEdit && (
+          <>
+            <button
+              className="mr-5 w-40 rounded-md border border-primary px-4 py-2 text-black"
+              type="button"
+              onClick={() => setActiveStep && setActiveStep(0)}
+            >
+              Geri
+            </button>
+            <button
+              className="block w-40 rounded-md bg-primary px-4 py-2 text-white"
+              type="submit"
+            >
+              Kaydet
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

@@ -140,6 +140,8 @@ export default function MucevherEkleContainer() {
       setValue={setValue}
       getValues={getValues}
       priceTag={priceTag}
+      labor_cost={labor_cost}
+      purchase_price={purchase_price}
     />,
     <MucevherDetayContainer
       productList={null}

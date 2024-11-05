@@ -20,6 +20,8 @@ export default function MucevherDetaySectionOne({
   mainData,
   getValues,
   priceTag,
+  labor_cost,
+  purchase_price,
 }: {
   isEdit?: boolean;
   setValue: UseFormSetValue<AddMucevherExternalType>;
@@ -28,6 +30,8 @@ export default function MucevherDetaySectionOne({
   mainData?: ProductType;
   getValues?: any;
   priceTag?: any;
+  labor_cost?: any;
+  purchase_price?: any;
 }) {
   const [files, setFiles] = useState<FileList | null>(null);
   const [image, setImage] = useState<string | ArrayBuffer | undefined>(
@@ -207,7 +211,11 @@ export default function MucevherDetaySectionOne({
                 {...register("labor_cost", {
                   required: "İşçilik Giriniz",
                 })}
-                value={mainData?.properties?.totalLaborCost as number}
+                value={
+                  isEdit
+                    ? (mainData?.properties?.totalLaborCost as number)
+                    : labor_cost
+                }
                 disabled={isEdit}
               />
             </div>
@@ -224,7 +232,11 @@ export default function MucevherDetaySectionOne({
                 {...register("purchase_price", {
                   required: "Satın Alma Fiyatı Giriniz",
                 })}
-                value={mainData?.properties?.purchasePrice as number}
+                value={
+                  isEdit
+                    ? (mainData?.properties?.purchasePrice as number)
+                    : purchase_price
+                }
                 disabled={isEdit}
               />
             </div>
@@ -332,8 +344,11 @@ export default function MucevherDetaySectionOne({
           </div>
           {!isEdit && (
             <div className="w-full text-right">
-              <button className="bg-primary px-8 py-2 text-white" type="submit">
-                İleri
+              <button
+                className=" inline-block rounded-md bg-primary  px-4 py-3 text-white"
+                type="submit"
+              >
+                Mücevher Ürünleri
               </button>
             </div>
           )}

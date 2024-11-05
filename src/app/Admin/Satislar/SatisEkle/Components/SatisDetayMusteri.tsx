@@ -56,7 +56,6 @@ export default function SatisDetayMusteri({
           styles={{
             control: (baseStyles, state) => ({
               ...baseStyles,
-              // borderColor: state.isFocused ? "grey" : "red",
               height: "49px",
             }),
           }}

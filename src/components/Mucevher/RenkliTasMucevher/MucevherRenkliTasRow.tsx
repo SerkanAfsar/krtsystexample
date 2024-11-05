@@ -55,7 +55,6 @@ export default function MucevherRenkliTasRow({
           firstOptionText="Renkli Taş Seçiniz"
           value={(model?.renkliTas as string) ?? null}
           err={errors.products?.renkliTas?.[index]?.["renkliTas"]?.message}
-          // value={model.renkliTas as string}
           disabled={isEdit}
         />
       </div>
@@ -74,7 +73,6 @@ export default function MucevherRenkliTasRow({
           firstOptionText="Kesim Seçiniz"
           value={(model?.kesim as string) ?? null}
           err={errors.products?.renkliTas?.[index]?.["kesim"]?.message}
-          // value={model.kesim as string}
           disabled={isEdit}
         />
       </div>
@@ -92,7 +90,6 @@ export default function MucevherRenkliTasRow({
           })}
           value={(model?.carat as number) ?? null}
           err={errors.products?.renkliTas?.[index]?.["carat"]?.message}
-          // value={model.karat as number}
           disabled={isEdit}
         />
       </div>
@@ -149,28 +146,10 @@ export default function MucevherRenkliTasRow({
           })}
           value={(model?.adet as number) ?? null}
           err={errors.products?.renkliTas?.[index]?.["adet"]?.message}
-          // value={model.adet as number}
           disabled={isEdit}
         />
       </div>
       <div className={`col-span-${findSpan("fiyat")} flex gap-2`}>
-        {/* <CustomInput
-          item={{
-            name: "fiyat",
-            required: true,
-            type: "number",
-            placeholder: "Fiyat Giriniz",
-            rightIcon: "$",
-          }}
-          {...register(`products.renkliTas.${index}.fiyat`, {
-            required: "Fiyat Giriniz",
-            valueAsNumber: true,
-          })}
-          value={(model?.fiyat as number) ?? null}
-          err={errors.products?.renkliTas?.[index]?.["fiyat"]?.message}
-          // value={formatToCurrency(Number(model.fiyat || 0))}
-          disabled={isEdit}
-        /> */}
         <CustomMoneyInput
           item={{
             name: "fiyat",
@@ -184,16 +163,17 @@ export default function MucevherRenkliTasRow({
           })}
           value={(model?.fiyat as number) ?? null}
           err={errors.products?.renkliTas?.[index]?.["fiyat"]?.message}
-          // value={formatToCurrency(Number(model.fiyat || 0))}
           disabled={isEdit}
         />
-        <button
-          type="button"
-          onClick={() => setVisible(false)}
-          className="btn rounded-sm bg-red p-3 text-white"
-        >
-          Sil
-        </button>
+        {!isEdit && (
+          <button
+            type="button"
+            onClick={() => setVisible(false)}
+            className="btn rounded-md bg-red p-3 text-white"
+          >
+            Sil
+          </button>
+        )}
       </div>
       <div className="hidden">
         <input

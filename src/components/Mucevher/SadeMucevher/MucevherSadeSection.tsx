@@ -23,8 +23,8 @@ export default function MucevherSadeSection({
   }, 0);
 
   return (
-    <div className="mb-3 w-full">
-      <b className="mb-1 block text-black">Sade Bilgileri</b>
+    <div className="mb-3 flex w-full flex-col gap-3">
+      <b className="mb-1 block text-black underline">Sade Bilgileri</b>
       <div
         className={cn(
           "grid w-full gap-3 rounded-sm bg-gray p-1 text-black",
@@ -65,28 +65,26 @@ export default function MucevherSadeSection({
           })}
       </div>
       {!isEdit && (
-        <div className="w-full text-right">
-          <button
-            type="button"
-            className="w-40 rounded-md bg-primary px-4 py-2 text-center text-white"
-            onClick={() => {
-              setSadeTempItems((prev: any) => [
-                ...prev,
-                {
-                  ayar: null,
-                  fiyat: null,
-                  gram: null,
-                  hasGram: null,
-                  modelTuru: null,
-                  renk: null,
-                  type: "Simple",
-                },
-              ]);
-            }}
-          >
-            Sade Ekle
-          </button>
-        </div>
+        <button
+          type="button"
+          className="block w-40 self-end rounded-md bg-primary px-4 py-2 text-center text-white"
+          onClick={() => {
+            setSadeTempItems((prev: any) => [
+              ...prev,
+              {
+                ayar: null,
+                fiyat: null,
+                gram: null,
+                hasGram: null,
+                modelTuru: null,
+                renk: null,
+                type: "Simple",
+              },
+            ]);
+          }}
+        >
+          Sade Ekle
+        </button>
       )}
     </div>
   );

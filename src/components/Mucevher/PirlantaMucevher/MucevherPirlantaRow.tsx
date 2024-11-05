@@ -53,7 +53,6 @@ export default function MucevherPirlantaRow({
           firstOptionText="Kesim Seçiniz"
           value={(model?.kesim as string) ?? null}
           err={errors.products?.pirlanta?.[index]?.["kesim"]?.message}
-          // value={model.kesim as string}
           disabled={isEdit}
         />
       </div>
@@ -69,7 +68,6 @@ export default function MucevherPirlantaRow({
             required: "Karat Giriniz",
           })}
           value={(model?.carat as number) ?? null}
-          // value={model.karat as number}
           disabled={isEdit}
           err={errors.products?.pirlanta?.[index]?.["carat"]?.message}
         />
@@ -88,7 +86,6 @@ export default function MucevherPirlantaRow({
             required: "Berraklık Giriniz",
           })}
           firstOptionText="Berranlık Seçiniz"
-          // value={model.berraklik as string}
           disabled={isEdit}
           err={errors.products?.pirlanta?.[index]?.["berraklik"]?.message}
         />
@@ -164,13 +161,15 @@ export default function MucevherPirlantaRow({
           disabled={isEdit}
           err={errors.products?.pirlanta?.[index]?.["fiyat"]?.message}
         />
-        <button
-          type="button"
-          onClick={() => setVisible(false)}
-          className="btn rounded-sm bg-red p-3 text-white"
-        >
-          Sil
-        </button>
+        {!isEdit && (
+          <button
+            type="button"
+            onClick={() => setVisible(false)}
+            className="btn rounded-md bg-red p-3 text-white"
+          >
+            Sil
+          </button>
+        )}
       </div>
       <div className="hidden">
         <input
