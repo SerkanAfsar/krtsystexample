@@ -28,6 +28,10 @@ export type ProductType = {
   quantity?: number | null;
   supplier?: TedarikciType;
   store_id?: number;
+  store?: any;
+  labor_cost?: number;
+  purchase_price?: number;
+  price_tag?: number;
 };
 
 export type CustomerPurchatedProducts = {

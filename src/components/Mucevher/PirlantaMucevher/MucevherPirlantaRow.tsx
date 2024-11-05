@@ -14,6 +14,7 @@ import { MenseiSelectedOptionsList } from "@/data/RenkliTas.data";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
 import { useState } from "react";
+import { CustomMoneyInput } from "@/components/CustomUI/CustomMoneyInput";
 
 export default function MucevherPirlantaRow({
   model,
@@ -49,6 +50,7 @@ export default function MucevherPirlantaRow({
           {...register(`products.pirlanta.${index}.kesim`, {
             required: "Kesim Giriniz",
           })}
+          firstOptionText="Kesim Seçiniz"
           value={(model?.kesim as string) ?? null}
           err={errors.products?.pirlanta?.[index]?.["kesim"]?.message}
           // value={model.kesim as string}
@@ -85,6 +87,7 @@ export default function MucevherPirlantaRow({
           {...register(`products.pirlanta.${index}.berraklik`, {
             required: "Berraklık Giriniz",
           })}
+          firstOptionText="Berranlık Seçiniz"
           // value={model.berraklik as string}
           disabled={isEdit}
           err={errors.products?.pirlanta?.[index]?.["berraklik"]?.message}
@@ -103,6 +106,7 @@ export default function MucevherPirlantaRow({
           {...register(`products.pirlanta.${index}.renk`, {
             required: "Renk Giriniz",
           })}
+          firstOptionText="Renk Seçiniz"
           disabled={isEdit}
           err={errors.products?.pirlanta?.[index]?.["renk"]?.message}
         />
@@ -119,6 +123,7 @@ export default function MucevherPirlantaRow({
           {...register(`products.pirlanta.${index}.mensei`, {
             required: "Mensei Giriniz",
           })}
+          firstOptionText="Menşei Seçiniz"
           value={(model?.mensei as string) ?? null}
           // value={model.mensei as string}
           disabled={isEdit}
@@ -144,20 +149,18 @@ export default function MucevherPirlantaRow({
         />
       </div>
       <div className={`col-span-${findSpan("fiyat")} flex gap-2`}>
-        <CustomInput
+        <CustomMoneyInput
           item={{
             name: "fiyat",
             required: true,
-            type: "number",
+            type: "money",
             rightIcon: "$",
             placeholder: "Fiyat Giriniz",
           }}
           value={(model?.fiyat as number) ?? null}
           {...register(`products.pirlanta.${index}.fiyat`, {
             required: "Fiyat Giriniz",
-            valueAsNumber: true,
           })}
-          // value={formatToCurrency(Number(model.fiyat || 0))}
           disabled={isEdit}
           err={errors.products?.pirlanta?.[index]?.["fiyat"]?.message}
         />

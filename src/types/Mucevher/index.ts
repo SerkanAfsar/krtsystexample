@@ -59,7 +59,7 @@ export const MucevherListesiDataHeaders: Column<
     accessor: "tedarikci",
   },
   {
-    Header: "Üretim / Giriş Tarihi",
+    Header: "Üretim / Giriş",
     accessor: "girisTarihi",
   },
   {
@@ -88,7 +88,7 @@ export type AddMucevherExternalType = {
   style_no: string;
   labor_cost: number;
   purchase_price: number;
-  price_tag: number | string | null;
+  price_tag: number;
   entry_date: string;
   sale_date: string;
   description: string;
@@ -98,6 +98,7 @@ export type AddMucevherExternalType = {
     pirlanta: { [key: string]: string | number }[];
     renkliTas: { [key: string]: string | number }[];
   };
+  store_id: number;
 };
 
 export type MucevherSadeRegisterType = {

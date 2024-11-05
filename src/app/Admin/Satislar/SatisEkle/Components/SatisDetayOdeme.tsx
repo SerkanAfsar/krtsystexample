@@ -86,7 +86,7 @@ export default function SatisDetayOdeme({
               <button
                 type="button"
                 onClick={() => remove(index)}
-                className="w-20 rounded-md bg-danger p-2 text-white"
+                className=" rounded-md bg-red p-3 px-4 font-bold text-white"
               >
                 Sil
               </button>
@@ -105,7 +105,7 @@ export default function SatisDetayOdeme({
               <button
                 type="button"
                 onClick={() => remove(index)}
-                className="h-full w-20 rounded-md bg-danger p-3 font-bold text-white"
+                className="h-full rounded-md bg-red p-3 px-4 font-bold text-white"
               >
                 Sil
               </button>
@@ -119,7 +119,7 @@ export default function SatisDetayOdeme({
           <button
             type="button"
             onClick={() => append({ payment_type: "", payment_price: null })}
-            className=" col-span-1 rounded-md bg-primary p-3 font-bold text-white"
+            className="col-span-1 rounded-md bg-primary p-3 font-bold text-white"
           >
             Ödeme Al
           </button>
@@ -178,7 +178,7 @@ export default function SatisDetayOdeme({
       </div>
       <button
         type="button"
-        onClick={async (e) => await onSubmit()}
+        onClick={async () => await onSubmit()}
         className="mt-3 w-[260px] self-end rounded-md bg-primary p-3 font-bold text-white"
       >
         Satış Kaydet

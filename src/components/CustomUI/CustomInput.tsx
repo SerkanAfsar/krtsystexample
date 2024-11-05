@@ -64,7 +64,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
           setMaxLenght(undefined);
         }
       }
-    }, [item?.maxLenghtCondition, conValue]);
+    }, [item?.maxLenghtCondition, conValue, setFormValues, value, name]);
 
     return (
       <div className={cn("w-full", outerClass && outerClass, className)}>
@@ -72,8 +72,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
           <label
             htmlFor={id}
             className={cn(
-              "block h-5 text-sm font-medium text-black dark:text-white",
-              item?.isTopMargin ? "mb-1" : "mb-3",
+              "mb-3 block h-5 text-sm font-medium text-black dark:text-white",
             )}
           >
             {item.title}

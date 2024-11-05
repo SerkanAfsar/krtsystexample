@@ -16,6 +16,7 @@ import {
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
 import { useState } from "react";
+import { CustomMoneyInput } from "@/components/CustomUI/CustomMoneyInput";
 
 export default function MucevherRenkliTasRow({
   model,
@@ -51,6 +52,7 @@ export default function MucevherRenkliTasRow({
           {...register(`products.renkliTas.${index}.renkliTas`, {
             required: "Renkli Taş Giriniz",
           })}
+          firstOptionText="Renkli Taş Seçiniz"
           value={(model?.renkliTas as string) ?? null}
           err={errors.products?.renkliTas?.[index]?.["renkliTas"]?.message}
           // value={model.renkliTas as string}
@@ -69,6 +71,7 @@ export default function MucevherRenkliTasRow({
           {...register(`products.renkliTas.${index}.kesim`, {
             required: "Kesim Giriniz",
           })}
+          firstOptionText="Kesim Seçiniz"
           value={(model?.kesim as string) ?? null}
           err={errors.products?.renkliTas?.[index]?.["kesim"]?.message}
           // value={model.kesim as string}
@@ -103,6 +106,7 @@ export default function MucevherRenkliTasRow({
             placeholder: "Renk Seçiniz",
             options: RenkliTasRenkListesi,
           }}
+          firstOptionText="Renk Seçiniz"
           {...register(`products.renkliTas.${index}.renk`, {
             required: "Renk Giriniz",
           })}
@@ -124,6 +128,7 @@ export default function MucevherRenkliTasRow({
           {...register(`products.renkliTas.${index}.mensei`, {
             required: "Menşei Giriniz",
           })}
+          firstOptionText="Menşei Seçiniz"
           value={(model?.mensei as string) ?? null}
           err={errors.products?.renkliTas?.[index]?.["mensei"]?.message}
           // value={model.mensei as string}
@@ -149,7 +154,7 @@ export default function MucevherRenkliTasRow({
         />
       </div>
       <div className={`col-span-${findSpan("fiyat")} flex gap-2`}>
-        <CustomInput
+        {/* <CustomInput
           item={{
             name: "fiyat",
             required: true,
@@ -160,6 +165,22 @@ export default function MucevherRenkliTasRow({
           {...register(`products.renkliTas.${index}.fiyat`, {
             required: "Fiyat Giriniz",
             valueAsNumber: true,
+          })}
+          value={(model?.fiyat as number) ?? null}
+          err={errors.products?.renkliTas?.[index]?.["fiyat"]?.message}
+          // value={formatToCurrency(Number(model.fiyat || 0))}
+          disabled={isEdit}
+        /> */}
+        <CustomMoneyInput
+          item={{
+            name: "fiyat",
+            required: true,
+            type: "money",
+            placeholder: "Fiyat Giriniz",
+            rightIcon: "$",
+          }}
+          {...register(`products.renkliTas.${index}.fiyat`, {
+            required: "Fiyat Giriniz",
           })}
           value={(model?.fiyat as number) ?? null}
           err={errors.products?.renkliTas?.[index]?.["fiyat"]?.message}

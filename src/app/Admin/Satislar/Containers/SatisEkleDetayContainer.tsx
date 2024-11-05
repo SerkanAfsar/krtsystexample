@@ -81,6 +81,29 @@ export default function SatisEkleDetayContainer({
 
   const onSubmit = async () => {
     const data = getValues();
+    if (!data.customer_id) {
+      return toast.error("Müşteri Seçiniz", {
+        position: "top-right",
+      });
+    }
+    if (data.products.length == 0) {
+      return toast.error("Ürün Seçiniz", {
+        position: "top-right",
+      });
+    }
+    if (data.products.some((a) => !a.sales_price)) {
+      return toast.error("Ürün Satış Fiyatlarını Eksiksiz Giriniz", {
+        position: "top-right",
+      });
+    }
+    if (
+      data.payments.length > 0 &&
+      data.payments.some((a) => !a.payment_price)
+    ) {
+      return toast.error("Ödeme Tutarları Eksiksiz Giriniz", {
+        position: "top-right",
+      });
+    }
     const requestData: SaleTypeFormResult = {
       customer_id: data.customer_id,
       total_remaining_amount: Number(toplamKalanTutar),

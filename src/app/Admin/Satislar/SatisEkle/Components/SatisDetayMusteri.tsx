@@ -53,6 +53,14 @@ export default function SatisDetayMusteri({
           title="Müşteri Seçiniz"
           isClearable={true}
           customOptions={customers}
+          styles={{
+            control: (baseStyles, state) => ({
+              ...baseStyles,
+              // borderColor: state.isFocused ? "grey" : "red",
+              height: "49px",
+            }),
+          }}
+          className="!border-stone-400"
           noOptionsMessage={() => "Bulunamadı..."}
           onChange={(item: any) => {
             if (item?.value == 9999) {

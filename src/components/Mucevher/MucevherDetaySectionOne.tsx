@@ -8,6 +8,9 @@ import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
 import Image from "next/image";
 import { ProductType } from "../../types/types";
+import CustomSelect from "../CustomUI/CustomSelect";
+import { MagazaCustomListType } from "@/utils/Magaza.Utils";
+import { CustomMoneyInput } from "../CustomUI/CustomMoneyInput";
 
 export default function MucevherDetaySectionOne({
   isEdit = false,
@@ -15,12 +18,16 @@ export default function MucevherDetaySectionOne({
   errors,
   setValue,
   mainData,
+  getValues,
+  priceTag,
 }: {
   isEdit?: boolean;
   setValue: UseFormSetValue<AddMucevherExternalType>;
   errors: FieldErrors<AddMucevherExternalType>;
   register: UseFormRegister<AddMucevherExternalType>;
   mainData?: ProductType;
+  getValues?: any;
+  priceTag?: any;
 }) {
   const [files, setFiles] = useState<FileList | null>(null);
   const [image, setImage] = useState<string | ArrayBuffer | undefined>(
@@ -48,7 +55,7 @@ export default function MucevherDetaySectionOne({
     } else {
       setImage(undefined);
     }
-  }, [files]);
+  }, [files, isEdit]);
 
   return (
     <div className="mb-1 rounded-sm   bg-white   dark:border-strokedark dark:bg-boxdark">
@@ -188,57 +195,71 @@ export default function MucevherDetaySectionOne({
               />
             </div>
             <div>
-              <CustomInput
+              <CustomMoneyInput
                 item={{
                   name: "labor_cost",
                   required: false,
-                  type: "number",
+                  type: "money",
                   placeholder: "İşçilik",
                   rightIcon: "$",
                 }}
                 err={errors.labor_cost?.message}
                 {...register("labor_cost", {
                   required: "İşçilik Giriniz",
-                  valueAsNumber: true,
                 })}
-                value={mainData?.properties?.styleNo}
+                value={mainData?.properties?.totalLaborCost as number}
                 disabled={isEdit}
               />
             </div>
             <div>
-              <CustomInput
+              <CustomMoneyInput
                 item={{
                   name: "purchase_price",
                   required: false,
-                  type: "number",
+                  type: "money",
                   placeholder: "Satın Alma Fiyatı",
                   rightIcon: "$",
                 }}
                 err={errors.purchase_price?.message}
                 {...register("purchase_price", {
                   required: "Satın Alma Fiyatı Giriniz",
-                  valueAsNumber: true,
                 })}
-                value={mainData?.properties?.purchase_price}
+                value={mainData?.properties?.purchasePrice as number}
                 disabled={isEdit}
               />
             </div>
             <div>
-              <CustomInput
+              <CustomMoneyInput
                 item={{
                   name: "price_tag",
                   required: false,
-                  type: "text",
+                  type: "money",
                   placeholder: "Etiket Fiyatı",
                   rightIcon: "$",
+                  isConstant: true,
                 }}
-                {...register("price_tag", {
-                  required: "Etiket Fiyatı Giriniz",
+                value={
+                  isEdit ? (mainData?.properties?.priceTag as number) : priceTag
+                }
+                disabled={true}
+              />
+            </div>
+            <div className="col-start-2 col-end-4">
+              <CustomSelect
+                item={{
+                  name: "store_id",
+                  required: true,
+                  type: "select",
+                  title: "Mağaza",
+                  customOptions: MagazaCustomListType,
+                }}
+                getValues={getValues}
+                {...register("store_id", {
+                  required: "Mağaza Seçiniz",
                   valueAsNumber: true,
                 })}
-                value={mainData?.properties?.price_tag}
-                err={errors.price_tag?.message}
-                disabled={true}
+                value={mainData?.store?.id as number}
+                err={errors.store_id?.message}
               />
             </div>
             <div className="col-start-4 col-end-5">
@@ -257,6 +278,7 @@ export default function MucevherDetaySectionOne({
                 disabled={isEdit}
               />
             </div>
+
             <div className="col-start-5 col-end-6">
               <CustomDatePicker
                 item={{

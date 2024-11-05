@@ -36,13 +36,14 @@ const columns: Column<
     accessor: "last_process_date",
   },
   {
-    Header: "Maliyet",
-    accessor: "totalProductColumn",
-  },
-  {
     Header: "Durum",
     accessor: "status",
   },
+  {
+    Header: "Maliyet",
+    accessor: "totalProductColumn",
+  },
+
   {
     Header: "İşlemler",
     accessor: "islemler",

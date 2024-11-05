@@ -70,7 +70,7 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
           const result = await item.customOptions();
           setCustomOptionValues(result);
           const values = getValues && getValues();
-          name && setSelectedValue(values[name]);
+          setSelectedValue((name && values[name]) || value);
           setIsLoaded(true);
         };
 

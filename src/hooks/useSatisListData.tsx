@@ -4,7 +4,7 @@ import { ResponseResult } from "@/types/responseTypes";
 import { CustomDataListType } from "@/types/types";
 import { GetAllSatisList } from "@/Services/Satis.Services";
 import { SaleResponseType, SatisListesiHeaderType } from "@/types/Satis";
-import { formatToCurrency } from "@/utils";
+import { formatDate, formatToCurrency } from "@/utils";
 
 export default function useSatisListData({
   customer_id,
@@ -26,6 +26,7 @@ export default function useSatisListData({
         const data = resp.data as CustomDataListType<SaleResponseType>;
         const dataOneResult: SatisListesiHeaderType[] = data.results.map(
           (item: SaleResponseType) => {
+            const date = formatDate(item.created_at);
             return {
               kalan: `${formatToCurrency(item.total_remaining_amount)} $`,
               musteri: item.customer?.name,
@@ -35,6 +36,12 @@ export default function useSatisListData({
               odenen: `${formatToCurrency(item.total_paid_amount)} $`,
               satilanUrunler: null,
               toplamTutar: `${formatToCurrency(item.total)} $`,
+              satisTarihi: (
+                <div className="flex flex-col items-start justify-start leading-6">
+                  <span>{date.primary}</span>
+                  <span>{date.secondary}</span>
+                </div>
+              ),
             };
           },
         );

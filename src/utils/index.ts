@@ -31,6 +31,13 @@ export const formatDate = (value: string) => {
   };
 };
 
+export const stringToMoney = (value: string): number => {
+  if (value) {
+    return Number(value.toString().replace(".", "").replace(",", "."));
+  }
+  return 0;
+};
+
 export const ApiServiceResult = ({
   result,
   message,

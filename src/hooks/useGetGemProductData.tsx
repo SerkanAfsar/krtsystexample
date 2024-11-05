@@ -37,7 +37,7 @@ const InnerConvert = ({
       priceTag: `${formatToCurrency(item?.properties?.priceTag as number)} $`,
       tedarikci: null,
       girisTarihi: item?.properties?.productionDate,
-      ambar: item?.properties?.wareHouse || null,
+      ambar: item?.store?.name || null,
       islemler: islemlerArea({
         id: item?.pk as number,
         productCode: item?.code,
@@ -87,7 +87,7 @@ export default function useGemProductData(redirectUrl: string) {
         }
       }
     });
-  }, [activePage, order_by, sort]);
+  }, [activePage, order_by, sort, totalPageCount]);
 
   useEffect(() => {
     updateData();

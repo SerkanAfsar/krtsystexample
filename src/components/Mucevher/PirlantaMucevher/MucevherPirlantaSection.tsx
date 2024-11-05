@@ -54,16 +54,6 @@ export default function MucevherPirlantaSection({
         className={cn("my-3 grid gap-3", `grid-cols-${pirlantaHeaderColSum}`)}
       >
         {pirlantaProducts?.map((item, index) => {
-          // const newItem: PirlantaModelType = {
-          //   carat: item.product.properties?.carat as number,
-          //   mensei: item.product.properties?.mensei as string,
-          //   berraklik: item.product.properties?.berraklik as string,
-          //   adet: item.quantity as number,
-          //   kesim: item.product.properties?.kesim as string,
-          //   renk: item.product.properties?.renk as string,
-          //   fiyat: item.product.total_cost as number,
-          // };
-
           return (
             <MucevherPirlantaRow
               index={index}

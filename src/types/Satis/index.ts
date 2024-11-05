@@ -1,5 +1,6 @@
 import { Column } from "react-table";
 import { ProductType } from "../types";
+import React from "react";
 
 export type CustomerSaledProductsHeaderType = Omit<
   ProductType,
@@ -79,6 +80,7 @@ export type SaleResponseType = Omit<
   customer: {
     name: string;
   };
+  created_at: string;
 };
 
 export type SatisListesiHeaderType = {
@@ -87,7 +89,8 @@ export type SatisListesiHeaderType = {
   odenen: string;
   kalan: string;
   toplamTutar: string;
-  odemeYontemi: string;
+  odemeYontemi: React.ReactNode;
+  satisTarihi: React.ReactNode;
 };
 
 export const SatisListesiHeaderColumns: Column<SatisListesiHeaderType>[] = [
@@ -110,6 +113,10 @@ export const SatisListesiHeaderColumns: Column<SatisListesiHeaderType>[] = [
   {
     Header: "Toplam Tutar",
     accessor: "toplamTutar",
+  },
+  {
+    Header: "Satış Tarihi",
+    accessor: "satisTarihi",
   },
   {
     Header: "Ödeme Yöntemi",

@@ -10,6 +10,7 @@ import CustomInput from "@/components/CustomUI/CustomInput";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
 import { useState } from "react";
+import { CustomMoneyInput } from "@/components/CustomUI/CustomMoneyInput";
 
 export default function MucevherSadeRow({
   model,
@@ -43,6 +44,7 @@ export default function MucevherSadeRow({
             placeholder: "Model Türü Seçiniz",
             options: SadeModelTurleri,
           }}
+          firstOptionText="Model Türü Seçiniz"
           {...register(`products.sade.${index}.modelTuru`, {
             required: "Model Türü Giriniz",
           })}
@@ -78,6 +80,7 @@ export default function MucevherSadeRow({
             placeholder: "Ayar",
             options: AltinAyarData,
           }}
+          firstOptionText="Ayar Seçiniz"
           {...register(`products.sade.${index}.ayar`, {
             required: "Ayar Giriniz",
           })}
@@ -99,6 +102,7 @@ export default function MucevherSadeRow({
           {...register(`products.sade.${index}.altinRengi`, {
             required: "Altın Rengi Giriniz",
           })}
+          firstOptionText="Altın Rengi Seçiniz"
           value={(model?.altinRengi as string) ?? null}
           err={errors.products?.sade?.[index]?.altinRengi?.message}
           disabled={isEdit}
@@ -123,7 +127,7 @@ export default function MucevherSadeRow({
         />
       </div>
       <div className={`col-span-${findSpan("fiyat")} flex gap-3`}>
-        <CustomInput
+        {/* <CustomInput
           item={{
             name: "fiyat",
             required: true,
@@ -134,6 +138,22 @@ export default function MucevherSadeRow({
           {...register(`products.sade.${index}.fiyat`, {
             required: "Fiyat Giriniz",
             valueAsNumber: true,
+          })}
+          value={(model?.fiyat as number) ?? null}
+          err={errors.products?.sade?.[index]?.fiyat?.message}
+          // value={formatToCurrency(Number(model?.fiyat || 0))}
+          disabled={isEdit}
+        /> */}
+        <CustomMoneyInput
+          item={{
+            name: "fiyat",
+            required: true,
+            type: "number",
+            placeholder: "Fiyat",
+            rightIcon: "$",
+          }}
+          {...register(`products.sade.${index}.fiyat`, {
+            required: "Fiyat Giriniz",
           })}
           value={(model?.fiyat as number) ?? null}
           err={errors.products?.sade?.[index]?.fiyat?.message}

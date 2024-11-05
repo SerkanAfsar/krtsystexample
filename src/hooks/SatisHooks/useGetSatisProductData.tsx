@@ -18,6 +18,7 @@ export default function useGetSatisProductData({
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<any[]>([]);
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   const [error, setError] = useState<string | null>(null);
 
@@ -25,23 +26,28 @@ export default function useGetSatisProductData({
   const sort = (searchParams.get("sort") as "asc" | "desc") || undefined;
 
   const ResultObject = ({ item }: { item: any; index: number }) => {
+    const isSelected = selectedIds.indexOf(Number(item.pk)) > -1;
     return {
       sec: (
         <button
           type="button"
-          className="flex items-center justify-center rounded-md bg-green-800 p-2 text-white"
-          onClick={() =>
-            append({
-              product_id: Number(item.pk),
-              used_carat: 0,
-              total_cost: Number(item?.total_cost) || 0,
-              type: ProductTypesIntl(item?.type),
-              code: item?.code,
-              sales_price: null,
-            })
-          }
+          disabled={isSelected}
+          className="flex w-[100px] items-center justify-center rounded-md bg-green-800 p-2 text-white disabled:bg-red"
+          onClick={() => {
+            if (selectedIds.indexOf(Number(item.pk)) == -1) {
+              setSelectedIds((prev) => [...prev, Number(item.pk)]);
+              append({
+                product_id: Number(item.pk),
+                used_carat: 0,
+                total_cost: Number(item?.total_cost) || 0,
+                type: ProductTypesIntl(item?.type),
+                code: item?.code,
+                sales_price: null,
+              });
+            }
+          }}
         >
-          Ekle
+          {isSelected ? "Eklendi" : "Ekle"}
         </button>
       ),
       code: item?.code,
@@ -83,7 +89,7 @@ export default function useGetSatisProductData({
         setError((resp.error && resp.error[0]) || "Hata");
       }
     });
-  }, [activePage, order_by, sort]);
+  }, [activePage, order_by, sort, selectedIds]);
 
   useEffect(() => {
     updateData();
@@ -95,5 +101,6 @@ export default function useGetSatisProductData({
     totalPageCount,
     setActivePage,
     error,
+    setSelectedIds,
   };
 }

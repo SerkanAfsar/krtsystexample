@@ -5,6 +5,7 @@ import { CustomMoneyInput } from "@/components/CustomUI/CustomMoneyInput";
 import useGetSatisProductData from "@/hooks/SatisHooks/useGetSatisProductData";
 import { SaleProductType } from "@/types/Satis";
 import { SatisModalHeader } from "@/types/types";
+import { cn } from "@/utils";
 import { useState } from "react";
 
 export default function SatisDetayUrunler({
@@ -25,11 +26,17 @@ export default function SatisDetayUrunler({
   products: SaleProductType[];
 }) {
   const [modalOpened, setModalOpened] = useState<boolean>(false);
-  const { activeData, activePage, totalPageCount, setActivePage, error } =
-    useGetSatisProductData({
-      append,
-      remove,
-    });
+  const {
+    activeData,
+    activePage,
+    totalPageCount,
+    setActivePage,
+    error,
+    setSelectedIds,
+  } = useGetSatisProductData({
+    append,
+    remove,
+  });
 
   return (
     <>
@@ -59,20 +66,11 @@ export default function SatisDetayUrunler({
         </div>
 
         {fields.map((item: SaleProductType, index: number) => {
+          const { sales_price, total_cost } = products[index];
           const err =
-            products[index].sales_price &&
-            Number(
-              products[index].sales_price
-                .toString()
-                .replace(".", "")
-                .replace(",", "."),
-            ) <
-              Number(
-                products[index].total_cost
-                  ?.toString()
-                  .replace(".", "")
-                  .replace(",", "."),
-              );
+            sales_price &&
+            Number(sales_price.toString().replace(".", "").replace(",", ".")) <
+              Number(total_cost);
 
           return (
             <div
@@ -98,6 +96,15 @@ export default function SatisDetayUrunler({
                   placeholder: "Ürün Tipi",
                   type: "text",
                 }}
+                className={cn(
+                  "self-start !rounded-md !text-white",
+
+                  item.type == "Renkli Taş"
+                    ? "!bg-red"
+                    : item.type == "Pırlanta"
+                      ? "!bg-blue-700"
+                      : "!bg-green-600",
+                )}
                 disabled={true}
                 value={item.type}
               />
@@ -107,7 +114,7 @@ export default function SatisDetayUrunler({
                   disabled: true,
                   name: "txt_maliyet",
                   required: false,
-                  placeholder: "Ürün Maliyeti",
+                  placeholder: "Satış Fiyatı",
                   type: "money",
                   rightIcon: "$",
                 }}
@@ -119,7 +126,7 @@ export default function SatisDetayUrunler({
                   item={{
                     name: `products.${index}.sales_price`,
                     required: true,
-                    placeholder: "Ürün Maliyeti",
+                    placeholder: "Satış Fiyatı",
                     type: "money",
                     isChanging: true,
                     rightIcon: "$",
@@ -131,7 +138,12 @@ export default function SatisDetayUrunler({
 
                 <button
                   className="flex items-center justify-center self-start rounded-md bg-red p-3 font-bold text-white"
-                  onClick={() => remove(index)}
+                  onClick={() => {
+                    setSelectedIds((prev: any) =>
+                      prev.filter((a: number) => a != Number(item.product_id)),
+                    );
+                    remove(index);
+                  }}
                 >
                   Sil
                 </button>
@@ -153,7 +165,7 @@ export default function SatisDetayUrunler({
                   disabled: true,
                   rightIcon: "$",
                 }}
-                value={toplamTutar.toString()}
+                value={toplamTutar}
                 disabled={true}
               />
             </div>
@@ -168,7 +180,7 @@ export default function SatisDetayUrunler({
                   disabled: true,
                   rightIcon: "$",
                 }}
-                value={toplamMaliyet.toString()}
+                value={toplamMaliyet}
                 disabled={true}
               />
             </div>

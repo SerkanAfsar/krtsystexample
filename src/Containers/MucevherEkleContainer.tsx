@@ -10,7 +10,7 @@ import { WorkOrderQueueApiService } from "@/ApiServices/WorkOrders.ApiService";
 import { PostGemProductService } from "@/Services/Product.Services";
 import { toast } from "react-toastify";
 import { MucevherCode } from "@/utils/Mucevher.Utils";
-import { formatToCurrency } from "@/utils";
+import { stringToMoney } from "@/utils";
 import { SadeHasGramHesapla } from "@/utils/Sade.Utils";
 
 export default function MucevherEkleContainer() {
@@ -21,6 +21,7 @@ export default function MucevherEkleContainer() {
     handleSubmit,
     watch,
     setValue,
+    getValues,
     formState: { errors, isValid },
   } = useForm<AddMucevherExternalType>({});
 
@@ -48,17 +49,31 @@ export default function MucevherEkleContainer() {
         const reqData: any = {
           ...data,
           code,
+          store_id: Number(data.store_id),
+          price_tag: stringToMoney(priceTag.toString()),
           model: data?.products?.sade?.[0]?.modelTuru || null,
           total_carat,
           entry_date: "01/01/2025",
           sale_date: "02/01/2025",
           total_number_of_stones,
+          purchase_price: stringToMoney(purchase_price.toString()),
+          labor_cost: stringToMoney(labor_cost.toString()),
           products: [
-            ...(data?.products?.pirlanta || []),
-            ...(data?.products?.renkliTas || []),
-            ...(data?.products?.sade || []),
+            ...(data?.products?.pirlanta?.map((item) => ({
+              ...item,
+              fiyat: stringToMoney(item.fiyat.toString()),
+            })) || []),
+            ...(data?.products?.renkliTas?.map((item) => ({
+              ...item,
+              fiyat: stringToMoney(item.fiyat.toString()),
+            })) || []),
+            ...(data?.products?.sade?.map((item) => ({
+              ...item,
+              fiyat: stringToMoney(item.fiyat.toString()),
+            })) || []),
           ],
         };
+
         const response = await PostGemProductService({ body: reqData });
 
         if (response.statusCode == 200) {
@@ -89,16 +104,9 @@ export default function MucevherEkleContainer() {
 
   const [labor_cost, purchase_price] = watch(["labor_cost", "purchase_price"]);
 
-  useEffect(() => {
-    if (labor_cost && purchase_price) {
-      setValue(
-        "price_tag",
-        formatToCurrency(Number(Number(labor_cost)) + Number(purchase_price)),
-      );
-    } else {
-      setValue("price_tag", null);
-    }
-  }, [labor_cost, purchase_price, setValue]);
+  const priceTag =
+    stringToMoney(labor_cost?.toString()) +
+    stringToMoney(purchase_price?.toString());
 
   const sadeProducts = watch("products.sade");
 
@@ -130,6 +138,8 @@ export default function MucevherEkleContainer() {
       isEdit={false}
       key={0}
       setValue={setValue}
+      getValues={getValues}
+      priceTag={priceTag}
     />,
     <MucevherDetayContainer
       productList={null}
