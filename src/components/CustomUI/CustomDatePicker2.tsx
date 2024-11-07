@@ -4,7 +4,7 @@ import { ElementType } from "@/types/inputTypes";
 import { cn } from "@/utils";
 import { ClassValue } from "clsx";
 import React, { useEffect, useState } from "react";
-import DatePicker, { DatePickerProps } from "react-date-picker";
+import DatePicker from "react-date-picker";
 
 type ValuePiece = Date | null;
 
