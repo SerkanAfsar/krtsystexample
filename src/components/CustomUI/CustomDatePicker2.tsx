@@ -5,6 +5,7 @@ import { cn } from "@/utils";
 import { ClassValue } from "clsx";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-date-picker";
+import { format } from "date-fns";
 
 type ValuePiece = Date | null;
 
@@ -17,13 +18,12 @@ type InputProps = Omit<
     setValue?: any;
     item: ElementType;
   },
-  "onFocus"
+  "onFocus" | "onChange"
 >;
 
 const CustomDatePicker2 = ({
   item,
   className,
-  onChange: deneme,
   onBlur,
   name,
   outerClass,
@@ -39,8 +39,9 @@ const CustomDatePicker2 = ({
   );
 
   useEffect(() => {
-    setValue && setValue(name, value);
-  }, [value]);
+    setValue &&
+      setValue(name, item.format ? format(value as Date, item.format) : value);
+  }, [value, name, setValue, item?.format]);
 
   return (
     <div className={cn("w-full", outerClass && outerClass)}>
@@ -65,6 +66,7 @@ const CustomDatePicker2 = ({
         onBlur={onBlur}
         onChange={onChange}
         value={value}
+        format={item?.format || null}
         disabled={rest.disabled}
       />
       {err && (

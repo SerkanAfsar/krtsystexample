@@ -612,6 +612,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Şirket Kuruluş Tarihi Boş Bırakılamaz",
         span: 2,
+        format: "yyyy-MM-dd",
       },
       {
         name: "tax_number",
