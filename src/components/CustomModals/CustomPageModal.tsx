@@ -1,20 +1,24 @@
+import { cn } from "@/utils";
+
 export default function CustomModalPage({
   title,
   children,
   modalDataValue,
   setModalDataValue,
+  className,
 }: {
   title: string;
   children: React.ReactNode;
   modalDataValue: boolean;
   setModalDataValue: any;
+  className?: string;
 }) {
   if (!modalDataValue) {
     return null;
   }
   return (
     <div
-      className="fixed inset-0 z-9999  bg-black/70"
+      className={cn("fixed inset-0 z-9999  bg-black/70", className)}
       onClick={() => setModalDataValue()}
     >
       <div

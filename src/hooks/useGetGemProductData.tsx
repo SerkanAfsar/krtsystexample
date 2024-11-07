@@ -4,48 +4,13 @@ import { GetGemProductDatatableService } from "@/Services/Product.Services";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FaPencil, FaTrash } from "react-icons/fa6";
 import { ResponseResult } from "../types/responseTypes";
-import { ProductListType } from "../types/types";
+import { ProductListType, ProductType } from "../types/types";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import Image from "next/image";
 import { MucevherListType } from "@/types/Mucevher";
 import { formatToCurrency } from "@/utils";
 import { useUserStore } from "@/store/useUserStore";
-
-const InnerConvert = ({
-  data,
-  islemlerArea,
-}: {
-  data: ProductListType;
-  islemlerArea: any;
-}) => {
-  return data.results.map((item) => {
-    return {
-      resim: item.image && (
-        <Image
-          src={item.image as string}
-          width={60}
-          height={50}
-          alt={item.code as string}
-        />
-      ),
-      code: item?.code,
-      model: item?.properties?.model,
-      sade: item?.properties?.simple,
-      totalCarat: item?.properties?.totalCarat,
-      totalNumberOfStones: item?.properties?.totalNumberOfStones,
-      totalLaborCost: `${item?.properties?.totalLaborCost} $`,
-      priceTag: `${formatToCurrency(item?.properties?.priceTag as number)} $`,
-      tedarikci: null,
-      girisTarihi: item?.properties?.productionDate,
-      ambar: item?.store?.name || null,
-      islemler: islemlerArea({
-        id: item?.pk as number,
-        productCode: item?.code,
-      }),
-    };
-  }) as MucevherListType[];
-};
 
 export default function useGemProductData(redirectUrl: string) {
   const router = useRouter();
@@ -57,9 +22,71 @@ export default function useGemProductData(redirectUrl: string) {
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const itemRef = useRef<any | null>(null);
+  const [selectedItemsforPrint, setSelectedItemsForPrint] = useState<
+    ProductType[]
+  >([]);
+
+  const InnerConvert = ({
+    data,
+    islemlerArea,
+  }: {
+    data: ProductListType;
+    islemlerArea: any;
+  }) => {
+    return data.results.map((item) => {
+      const condition = selectedItemsforPrint.some((a) => a.pk == item.pk);
+      return {
+        checkBox: (
+          <input
+            type="checkbox"
+            onChange={(e) => handleCheck(e, item)}
+            defaultChecked={condition}
+            name={item?.pk?.toString()}
+          />
+        ),
+        resim: item.image && (
+          <Image
+            src={item.image as string}
+            width={60}
+            height={50}
+            alt={item.code as string}
+          />
+        ),
+        code: item?.code,
+        model: item?.properties?.model,
+        sade: item?.properties?.simple,
+        totalCarat: item?.properties?.totalCarat,
+        totalNumberOfStones: item?.properties?.totalNumberOfStones,
+        totalLaborCost: `${item?.properties?.totalLaborCost} $`,
+        priceTag: `${formatToCurrency(item?.properties?.priceTag as number)} $`,
+        tedarikci: null,
+        girisTarihi: item?.properties?.productionDate,
+        ambar: item?.store?.name || null,
+        islemler: islemlerArea({
+          id: item?.pk as number,
+          productCode: item?.code,
+        }),
+      };
+    }) as MucevherListType[];
+  };
 
   const order_by = searchParams.get("order_by");
   const sort = (searchParams.get("sort") as "asc" | "desc") || undefined;
+
+  const handleCheck = (
+    e: React.FormEvent<HTMLInputElement>,
+    item: ProductType,
+  ) => {
+    const target = e.target as HTMLInputElement;
+
+    if (target.checked) {
+      setSelectedItemsForPrint((prev: ProductType[]) => [...prev, item]);
+    } else {
+      setSelectedItemsForPrint((prev: ProductType[]) =>
+        prev.filter((a) => a.pk != item.pk),
+      );
+    }
+  };
 
   const { user } = useUserStore();
 
@@ -144,5 +171,6 @@ export default function useGemProductData(redirectUrl: string) {
     showConfirmDelete,
     item: itemRef.current,
     error,
+    selectedItemsforPrint,
   };
 }

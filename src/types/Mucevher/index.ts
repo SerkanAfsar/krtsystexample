@@ -6,6 +6,7 @@ import { ProductType } from "../types";
 import { WorkOrderLogType } from "../WorkOrder.types";
 
 export type MucevherListType = {
+  checkBox?: React.ReactNode;
   resim: string | null;
   code: string | null;
   model: string | null;
@@ -22,6 +23,10 @@ export type MucevherListType = {
 export const MucevherListesiDataHeaders: Column<
   MucevherListType & { islemler: React.ReactNode }
 >[] = [
+  {
+    Header: "Seç",
+    accessor: "checkBox",
+  },
   {
     Header: "Resim",
     accessor: "resim",
