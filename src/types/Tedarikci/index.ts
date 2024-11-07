@@ -26,10 +26,10 @@ export const SupplierProductDataTableHeaders: Column<SupplierProductHeaderType>[
       Header: "Alış Tarihi",
       accessor: "buy_date",
     },
-    {
-      Header: "Adet",
-      accessor: "quantity",
-    },
+    // {
+    //   Header: "Adet",
+    //   accessor: "quantity",
+    // },
     {
       Header: "Karat",
       accessor: "remaining_count",

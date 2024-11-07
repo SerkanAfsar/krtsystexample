@@ -4,13 +4,17 @@ import { useState } from "react";
 export default function CustomToolTip({
   children,
   text,
+  className,
 }: {
   children: React.ReactNode;
   text: string;
+  className?: string;
 }) {
   const [isActive, setIsActive] = useState<boolean>(false);
   return (
-    <div className="relative block h-full w-full cursor-pointer  ">
+    <div
+      className={cn("relative block h-full w-full cursor-pointer", className)}
+    >
       <div
         onClick={(e) => setIsActive(true)}
         onMouseLeave={(e) => setIsActive(false)}
@@ -20,7 +24,7 @@ export default function CustomToolTip({
       </div>
       <div
         className={cn(
-          "absolute bottom-[30px] left-1/4 z-0 block -translate-x-1/2 whitespace-nowrap rounded bg-black px-4.5 py-1.5 text-sm font-medium text-white opacity-100",
+          "absolute bottom-[30px] left-[50%]  z-0 block -translate-x-1/2 whitespace-nowrap rounded bg-black px-4.5 py-1.5 text-sm font-medium text-white opacity-100",
           isActive ? "block" : "hidden",
         )}
       >

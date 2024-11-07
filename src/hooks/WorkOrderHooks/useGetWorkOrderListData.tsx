@@ -1,4 +1,4 @@
-import { formatDate, formatToCurrency } from "@/utils";
+import { formatDate, formatToCurrency, stringToMoney } from "@/utils";
 import {
   ConvertWorkOrderStatus,
   WorkOrderStatusType,
@@ -10,6 +10,7 @@ import { GetWorkOrdersList } from "@/Services/WorkOrder.Services";
 import { useRouter, useSearchParams } from "next/navigation";
 import { DeleteWorkOrderApiService } from "@/ApiServices/WorkOrders.ApiService";
 import CustomToolTip from "@/components/CustomUI/CustomTooltip";
+import { useUserStore } from "@/store/useUserStore";
 
 export default function useGetWorkOrderListData() {
   const router = useRouter();
@@ -63,16 +64,16 @@ export default function useGetWorkOrderListData() {
 
           totalProductColumn: (
             <CustomToolTip
-              text={`${formatToCurrency(Number(item.total_cost)).toString()} $`}
+              text={`${stringToMoney(item.total_cost?.toString() || "")} $`}
             >
               <div className="flex flex-col  items-center justify-center gap-1">
                 <b>Maliyet</b>
                 <div>
-                  Malzeme : {formatToCurrency(Number(item.total_product_cost))}{" "}
-                  $
+                  Malzeme :{" "}
+                  {stringToMoney(item.total_product_cost.toString() || "")} $
                 </div>
                 <div>
-                  İşçilik : {formatToCurrency(Number(item.labor_cost))} $
+                  İşçilik : {stringToMoney(item.labor_cost?.toString() || "")} $
                 </div>
               </div>
             </CustomToolTip>
@@ -93,6 +94,8 @@ export default function useGetWorkOrderListData() {
     });
   }, [activePage, order_by, sort]);
 
+  const { user } = useUserStore();
+
   useEffect(() => {
     updateData();
   }, [updateData]);
@@ -107,17 +110,19 @@ export default function useGetWorkOrderListData() {
               router.push(`/Admin/IsEmirleri/UretimBaslatma/${id}`)
             }
           />
-          <FaTrash
-            className="cursor-pointer"
-            onClick={async () => {
-              setShowConfirmDelete(true);
-              itemRef.current = { id, productCode };
-            }}
-          />
+          {user?.groups.some((a) => a.name == "Üretim Müdürü") && (
+            <FaTrash
+              className="cursor-pointer"
+              onClick={async () => {
+                setShowConfirmDelete(true);
+                itemRef.current = { id, productCode };
+              }}
+            />
+          )}
         </div>
       );
     },
-    [router],
+    [router, user],
   );
 
   useEffect(() => {

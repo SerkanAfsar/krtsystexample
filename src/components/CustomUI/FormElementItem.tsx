@@ -11,6 +11,7 @@ import CustomTextArea from "./CustomTextArea";
 import { CustomRadioButtonList } from "./CustomRadioButtonList";
 import { CustomPhoneNumberText } from "./CustomPhoneNumberText";
 import { CustomMoneyInput } from "./CustomMoneyInput";
+import CustomDatePicker2 from "./CustomDatePicker2";
 
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -165,7 +166,20 @@ export default function FormElementItem({
         required: item.required,
       });
       return (
-        <CustomDatePicker
+        // <CustomDatePicker
+        //   {...register(item.name, {
+        //     required:
+        //       !isDisabled && item.required ? item.requiredMessage : false,
+        //   })}
+        //   key={item.name}
+        //   item={item}
+        //   setValue={setValue}
+        //   err={err}
+        //   outerClass={cn(item.span && `col-span-${item.span.toString()}`)}
+        //   disabled={(!isAdd && item.isCodeRelated) || isDisabled}
+        //   {...rest}
+        // />
+        <CustomDatePicker2
           {...register(item.name, {
             required:
               !isDisabled && item.required ? item.requiredMessage : false,
@@ -174,6 +188,7 @@ export default function FormElementItem({
           item={item}
           setValue={setValue}
           err={err}
+          value={val}
           outerClass={cn(item.span && `col-span-${item.span.toString()}`)}
           disabled={(!isAdd && item.isCodeRelated) || isDisabled}
           {...rest}

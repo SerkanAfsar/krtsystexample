@@ -10,6 +10,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { MucevherListType } from "@/types/Mucevher";
 import { formatToCurrency } from "@/utils";
+import { useUserStore } from "@/store/useUserStore";
 
 const InnerConvert = ({
   data,
@@ -60,6 +61,8 @@ export default function useGemProductData(redirectUrl: string) {
   const order_by = searchParams.get("order_by");
   const sort = (searchParams.get("sort") as "asc" | "desc") || undefined;
 
+  const { user } = useUserStore();
+
   const updateData = useCallback(() => {
     setActiveData([]);
     GetGemProductDatatableService({
@@ -101,17 +104,19 @@ export default function useGemProductData(redirectUrl: string) {
             className="cursor-pointer"
             onClick={() => router.push(`${redirectUrl}${id}`)}
           />
-          <FaTrash
-            className="cursor-pointer"
-            onClick={async () => {
-              setShowConfirmDelete(true);
-              itemRef.current = { id, productCode };
-            }}
-          />
+          {user?.groups.some((a) => a.name == "Üretim Müdürü") && (
+            <FaTrash
+              className="cursor-pointer"
+              onClick={async () => {
+                setShowConfirmDelete(true);
+                itemRef.current = { id, productCode };
+              }}
+            />
+          )}
         </div>
       );
     },
-    [router, redirectUrl],
+    [router, redirectUrl, user],
   );
 
   useEffect(() => {

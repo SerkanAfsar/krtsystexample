@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { AuthMeType } from "../../types/types";
-import { ResponseResult } from "../../types/responseTypes";
+
+import { useUserStore } from "@/store/useUserStore";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
-  const [data, setData] = useState<AuthMeType>();
 
   // close on click outside
   useEffect(() => {
@@ -36,15 +35,10 @@ const DropdownUser = () => {
     return () => document.removeEventListener("keydown", keyHandler);
   });
 
+  const { user, get } = useUserStore();
+
   useEffect(() => {
-    const service = async () => {
-      const response = await fetch("/api/auth");
-      const result = (await response.json()) as ResponseResult<AuthMeType>;
-      if (result.success) {
-        setData(result.data as AuthMeType);
-      }
-    };
-    service();
+    get();
   }, []);
 
   return (
@@ -57,13 +51,13 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            {data?.username}
+            {user?.username}
           </span>
-          <span className="block text-sm">{data?.email}</span>
+          <span className="block text-sm">{user?.email}</span>
         </span>
         <span className="h-12 w-12 rounded-full">
           <div className="flex h-full w-full items-center justify-center rounded-[50%] bg-primary text-base font-bold text-white">
-            {data?.username?.substring(0, 1)}
+            {user?.username?.substring(0, 1)}
           </div>
         </span>
         <svg
@@ -115,7 +109,7 @@ const DropdownUser = () => {
                   fill=""
                 />
               </svg>
-              My Profile
+              Profilim
             </Link>
           </li>
           <li>
@@ -136,7 +130,7 @@ const DropdownUser = () => {
                   fill=""
                 />
               </svg>
-              My Contacts
+              Link 2
             </Link>
           </li>
           <li>
@@ -161,7 +155,7 @@ const DropdownUser = () => {
                   fill=""
                 />
               </svg>
-              Account Settings
+              Hesap Bilgilerim
             </Link>
           </li>
         </ul>
@@ -183,7 +177,7 @@ const DropdownUser = () => {
               fill=""
             />
           </svg>
-          Log Out
+          Güvenli Çıkış
         </button>
       </div>
       {/* <!-- Dropdown End --> */}

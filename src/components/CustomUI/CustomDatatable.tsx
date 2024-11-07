@@ -84,9 +84,7 @@ const CustomDatatable = ({
                   <div
                     className={cn(
                       "flex items-center",
-                      column.Header == "Maliyet"
-                        ? "!justify-end pr-10"
-                        : "text-left",
+                      // column.Header == "Maliyet" ? " pl-5" : "text-left",
                       headerGroup.headers.length - 1 == key &&
                         "justify-center text-center",
                     )}
@@ -317,20 +315,18 @@ const CustomDatatable = ({
                     <td
                       className={cn(
                         "z-20 !align-middle text-sm font-thin last:sticky last:inset-0 last:z-30  last:bg-gray-3",
-                        // cell.column.Header == "Maliyet"
-                        //   ? " w-[200px] text-right"
-                        //   : "text-left",
                       )}
                       {...cell.getCellProps()}
                       key={`cell-${key}`}
                     >
-                      {cell.column.Header == "Maliyet" ? (
+                      {/* {cell.column.Header == "Maliyet" ? (
                         <div className="block w-[120px] pr-3  text-right">
                           {cell.render("Cell")}
                         </div>
                       ) : (
-                        cell.render("Cell")
-                      )}
+                      
+                      )} */}
+                      {cell.render("Cell")}
                     </td>
                   );
                 })}

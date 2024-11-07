@@ -10,7 +10,6 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   outerClass?: ClassValue | null;
   err?: string | null;
   setValue?: any;
-} & {
   item: ElementType;
 };
 

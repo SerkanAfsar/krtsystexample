@@ -58,10 +58,11 @@ export default function SatisDetayUrunler({
         )}
       </CustomModalPage>
       <div className="block w-full rounded-md bg-white p-6">
-        <div className="mb-3 grid w-full grid-cols-4 gap-3 font-bold text-black">
+        <div className="mb-3 grid w-full grid-cols-5 gap-3 font-bold text-black">
           <div>Ürün Kodu</div>
           <div>Ürün Tipi</div>
           <div>Maliyet</div>
+          <div>Etiket Fiyatı</div>
           <div>Ürün Satış Fiyatı</div>
         </div>
 
@@ -75,7 +76,7 @@ export default function SatisDetayUrunler({
           return (
             <div
               key={`${item.product_id}_${index}`}
-              className="mb-3 grid w-full grid-cols-4 gap-3 font-bold text-black"
+              className="mb-3 grid w-full grid-cols-5 gap-3 font-bold text-black"
             >
               <CustomInput
                 item={{
@@ -121,6 +122,18 @@ export default function SatisDetayUrunler({
                 disabled={true}
                 value={item.total_cost}
               />
+              <CustomMoneyInput
+                item={{
+                  disabled: true,
+                  name: "txt_etiketFiyati",
+                  required: false,
+                  placeholder: "Etiket Fiyatı",
+                  type: "money",
+                  rightIcon: "$",
+                }}
+                disabled={true}
+                value={Number((item.total_cost as number) * 4.55).toFixed(2)}
+              />
               <div className="flex w-full gap-3">
                 <CustomMoneyInput
                   item={{
@@ -153,39 +166,37 @@ export default function SatisDetayUrunler({
         })}
 
         <div className="block w-full bg-white">
-          <div className="mb-3 grid w-full grid-cols-4 gap-3  font-bold text-black">
-            <div className="col-start-3 col-end-4 w-full justify-start self-end">
-              <CustomMoneyInput
-                item={{
-                  title: "Toplam Tutar",
-                  name: "total_deneme",
-                  type: "money",
-                  required: false,
-                  isConstant: true,
-                  disabled: true,
-                  rightIcon: "$",
-                }}
-                value={toplamTutar}
-                disabled={true}
-              />
-            </div>
-            <div className="col-start-4 col-end-5 w-full justify-start self-end">
-              <CustomMoneyInput
-                item={{
-                  title: "Toplam Satış Fiyatı",
-                  name: "total_deneme",
-                  type: "money",
-                  required: false,
-                  isConstant: true,
-                  disabled: true,
-                  rightIcon: "$",
-                }}
-                value={toplamMaliyet}
-                disabled={true}
-              />
-            </div>
+          <div className="mb-3 grid w-full grid-cols-5 gap-3  font-bold text-black">
+            <CustomMoneyInput
+              item={{
+                title: "Toplam Tutar",
+                name: "total_deneme",
+                type: "money",
+                required: false,
+                isConstant: true,
+                disabled: true,
+                rightIcon: "$",
+              }}
+              className={"col-start-3 col-end-4"}
+              value={toplamTutar}
+              disabled={true}
+            />
+            <CustomMoneyInput
+              item={{
+                title: "Toplam Satış Fiyatı",
+                name: "total_deneme",
+                type: "money",
+                required: false,
+                isConstant: true,
+                disabled: true,
+                rightIcon: "$",
+              }}
+              className={"col-start-5 col-end-6"}
+              value={toplamMaliyet}
+              disabled={true}
+            />
             <div
-              className="col-start-4 col-end-5  flex h-fit w-full cursor-pointer items-center justify-center self-end rounded-md bg-primary p-3 text-white"
+              className="col-start-5 col-end-6  flex h-fit w-full cursor-pointer items-center justify-center self-end rounded-md bg-primary p-3 text-white"
               onClick={() => setModalOpened(true)}
             >
               Ekle

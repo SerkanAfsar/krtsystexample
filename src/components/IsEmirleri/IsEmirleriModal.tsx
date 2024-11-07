@@ -26,8 +26,8 @@ export default function IsEmirleriModal({
     tableFunction({ setSelectedValues, selectedValues });
 
   return (
-    <div className="fixed  inset-0 z-999 flex h-full w-full items-center justify-center bg-black bg-opacity-80">
-      <div className="flex h-[90%] w-9/12 animate-modalAnimation flex-col items-center justify-start gap-3 rounded-lg bg-white p-3 dark:bg-graydark">
+    <div className="fixed inset-0 z-999 flex h-full w-full items-center justify-center bg-black bg-opacity-80">
+      <div className="flex h-[90%] w-[90%] animate-modalAnimation flex-col items-center justify-start gap-3 rounded-lg bg-white p-3 dark:bg-graydark">
         <div className="flex w-full items-center justify-center">
           <h3 className="ml-auto text-lg font-bold dark:text-white">{title}</h3>
           <IoMdCloseCircle

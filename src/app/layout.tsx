@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr">
-      <body suppressHydrationWarning={true}>
+      <body suppressHydrationWarning>
         <LightgalleryProvider
           lightgallerySettings={{
             thumbnail: false,
