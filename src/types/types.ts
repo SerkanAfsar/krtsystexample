@@ -32,7 +32,6 @@ export type ProductType = {
   labor_cost?: number;
   purchase_price?: number;
   price_tag?: number;
-  totalNumberOfStones?: number;
 };
 
 export type CustomerPurchatedProducts = {
