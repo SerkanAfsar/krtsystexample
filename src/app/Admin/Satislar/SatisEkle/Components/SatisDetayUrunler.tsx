@@ -26,6 +26,15 @@ export default function SatisDetayUrunler({
   products: SaleProductType[];
 }) {
   const [modalOpened, setModalOpened] = useState<boolean>(false);
+  const filterList: any = [
+    { title: "Mücevher", value: "Gem" },
+    { title: "Renkli Taş", value: "ColoredStone" },
+    { title: "Pırlanta", value: "Diamond" },
+  ];
+  const [selectedFilter, setSelectedFilter] = useState<any>({
+    title: "Mücevher",
+    value: "Gem",
+  });
   const {
     activeData,
     activePage,
@@ -36,6 +45,7 @@ export default function SatisDetayUrunler({
   } = useGetSatisProductData({
     append,
     remove,
+    type: selectedFilter.value || "Gem",
   });
 
   return (
@@ -54,6 +64,9 @@ export default function SatisDetayUrunler({
             data={activeData}
             activePage={activePage}
             setActivePage={setActivePage}
+            filterList={filterList}
+            setSelectedFilter={setSelectedFilter}
+            selectedFilter={selectedFilter}
           />
         )}
       </CustomModalPage>

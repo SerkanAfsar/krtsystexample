@@ -10,9 +10,11 @@ import { formatToCurrency, ProductTypesIntl } from "@/utils";
 export default function useGetSatisProductData({
   append,
   remove,
+  type = "Gem",
 }: {
   append: any;
   remove: any;
+  type?: any;
 }) {
   const searchParams = useSearchParams();
   const [activePage, setActivePage] = useState<number>(1);
@@ -71,25 +73,27 @@ export default function useGetSatisProductData({
       page: activePage,
       order_by: order_by,
       sort,
+      type,
     }).then((resp: ResponseResult<any>) => {
       if (resp?.success) {
         const data = resp.data as CustomDataListType<any>;
-        const dataResult: any[] = data.results.map(
+        const dataResult: any[] = data?.results?.map(
           (item: any, index: number) => {
             return ResultObject({ item, index: index });
           },
         );
+
         setActiveData(dataResult);
         setTotalPageCount(
           Math.ceil(
-            data.count / Number(process.env.NEXT_PUBLIC_DATATABLE_ITEM_COUNT),
+            data?.count / Number(process.env.NEXT_PUBLIC_DATATABLE_ITEM_COUNT),
           ),
         );
       } else {
         setError((resp.error && resp.error[0]) || "Hata");
       }
     });
-  }, [activePage, order_by, sort, selectedIds]);
+  }, [activePage, order_by, sort, selectedIds, type]);
 
   useEffect(() => {
     updateData();

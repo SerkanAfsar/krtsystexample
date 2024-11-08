@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/utils";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   useTable,
   useGlobalFilter,
@@ -20,6 +20,9 @@ const CustomDatatable = ({
   hasOrder = true,
   isFirstLarge = true,
   count = 1,
+  filterList,
+  selectedFilter,
+  setSelectedFilter,
 }: {
   data: any[];
   columns: any;
@@ -30,6 +33,9 @@ const CustomDatatable = ({
   hasOrder?: boolean;
   isFirstLarge?: boolean;
   count?: number;
+  filterList?: any;
+  selectedFilter?: any;
+  setSelectedFilter?: any;
 }) => {
   const router = useRouter();
 
@@ -62,6 +68,11 @@ const CustomDatatable = ({
 
   const { globalFilter, pageIndex, pageSize } = state;
 
+  useEffect(() => {
+    if (selectedFilter) {
+      setActivePage(1);
+    }
+  }, [selectedFilter, setActivePage]);
   const arrOptions: number[] = new Array(totalPageCount)
     .fill(0)
     .map((item, index) => index);
@@ -270,11 +281,11 @@ const CustomDatatable = ({
   return (
     <section
       className={cn(
-        "data-table-common data-table-two  !flex h-full w-full flex-col overflow-auto rounded-sm border border-stroke bg-white py-4 pt-0 shadow-default dark:border-strokedark dark:bg-boxdark",
+        "data-table-common data-table-two !flex h-full w-full flex-col overflow-auto rounded-sm border border-stroke bg-white  pt-0 shadow-default dark:border-strokedark dark:bg-boxdark",
         className && className,
       )}
     >
-      <div className="sticky inset-0  z-9999 flex w-full justify-between rounded-sm bg-white  px-8  pb-4 pt-4 ">
+      <div className="sticky inset-0  z-999 flex w-full items-center justify-between rounded-sm bg-white  px-8  pb-4 pt-4 ">
         <div className="w-100">
           <input
             type="text"
@@ -284,6 +295,22 @@ const CustomDatatable = ({
             placeholder="Arama..."
           />
         </div>
+        {filterList && (
+          <div className="ml-3 mr-auto flex gap-2">
+            {filterList.map((item: any, index: number) => (
+              <div
+                className={cn(
+                  "curs h-full cursor-pointer  rounded-md bg-primary p-3 font-bold text-white",
+                  selectedFilter.value == item.value && "bg-green-700",
+                )}
+                onClick={() => setSelectedFilter(item)}
+                key={index}
+              >
+                {item.title}
+              </div>
+            ))}
+          </div>
+        )}
 
         <div className="flex items-center font-medium">
           <select
@@ -302,7 +329,7 @@ const CustomDatatable = ({
       </div>
       <table
         {...getTableProps()}
-        className="datatable-table min-w-full table-fixed  !border-collapse overflow-auto break-words !border-t border-stroke px-4 dark:border-strokedark md:px-8"
+        className="datatable-table min-w-full table-fixed !border-collapse overflow-auto break-words !border-t border-stroke px-4 pb-0 dark:border-strokedark md:px-8"
       >
         {headers()}
         <tbody {...getTableBodyProps()}>
@@ -335,7 +362,7 @@ const CustomDatatable = ({
           })}
         </tbody>
       </table>
-      <div className="sticky inset-0 z-9999 mt-auto  flex w-full  justify-between bg-white px-8 pt-5 dark:border-strokedark">
+      <div className="sticky inset-0  z-999 flex w-full items-center justify-between   bg-white px-8 py-5  dark:border-strokedark">
         <p className="font-medium">
           Gösterim {activePage} - {totalPageCount} Sayfa
         </p>
