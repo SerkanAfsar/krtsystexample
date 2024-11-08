@@ -8,6 +8,7 @@ import { SalePayment, SaleType, SaleTypeFormResult } from "@/types/Satis";
 import SatisDetayMusteri from "../SatisEkle/Components/SatisDetayMusteri";
 import SatisDetayUrunler from "../SatisEkle/Components/SatisDetayUrunler";
 import SatisDetayOdeme from "../SatisEkle/Components/SatisDetayOdeme";
+import { stringToMoney } from "@/utils";
 
 export type CustomSearchSelectType = {
   label: string;
@@ -76,6 +77,10 @@ export default function SatisEkleDetayContainer({
         )
       );
     }, 0) || 0;
+  const toplamKarat =
+    products?.reduce((acc: any, next: any) => {
+      return acc + Number(next.used_carat);
+    }, 0) || 0;
 
   const toplamKalanTutar = Number(toplamMaliyet - toplamOdenenTutar).toFixed(2);
 
@@ -111,20 +116,21 @@ export default function SatisEkleDetayContainer({
       total_paid_amount: toplamOdenenTutar,
       products: data.products.map((item: any) => ({
         ...item,
-        sales_price: Number(
-          item.sales_price.toString().replace(".", "").replace(",", "."),
-        ),
+        sales_price: stringToMoney(item.sales_price),
       })),
       payment_details: data.payments.reduce((acc: any, next: any) => {
         return { ...acc, [next.payment_type]: next.payment_price };
       }, {}),
     };
     const response = await AddSatisService({ data: requestData });
+
     if (response.success) {
       toast.success("Satiş Eklendi", { position: "top-right" });
       return router.push("/Admin/Satislar/SatisListesi");
     } else {
-      return toast.error("Hata", { position: "top-right" });
+      return toast.error(response.error?.at(0) || "Hata", {
+        position: "top-right",
+      });
     }
   };
 
@@ -139,6 +145,7 @@ export default function SatisEkleDetayContainer({
         toplamTutar={toplamTutar}
         toplamMaliyet={toplamMaliyet}
         products={products}
+        toplamKarat={toplamKarat}
       />
       <SatisDetayOdeme
         fields={paymentFields}

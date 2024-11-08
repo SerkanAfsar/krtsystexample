@@ -16,6 +16,7 @@ export default function SatisDetayUrunler({
   toplamTutar,
   toplamMaliyet,
   products,
+  toplamKarat,
 }: {
   fields?: any;
   append: any;
@@ -24,6 +25,7 @@ export default function SatisDetayUrunler({
   toplamTutar: number;
   toplamMaliyet: number;
   products: SaleProductType[];
+  toplamKarat: number;
 }) {
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const filterList: any = [
@@ -71,12 +73,13 @@ export default function SatisDetayUrunler({
         )}
       </CustomModalPage>
       <div className="block w-full rounded-md bg-white p-6">
-        <div className="mb-3 grid w-full grid-cols-5 gap-3 font-bold text-black">
-          <div>Ürün Kodu</div>
-          <div>Ürün Tipi</div>
-          <div>Maliyet</div>
-          <div>Etiket Fiyatı</div>
-          <div>Ürün Satış Fiyatı</div>
+        <div className="mb-3 grid w-full grid-cols-11 gap-3 font-bold text-black">
+          <div className="col-span-2">Ürün Kodu</div>
+          <div className="col-span-1">Ürün Tipi</div>
+          <div className="col-span-1">Karat</div>
+          <div className="col-span-2">Maliyet</div>
+          <div className="col-span-2">Etiket Fiyatı</div>
+          <div className="col-span-3">Ürün Satış Fiyatı</div>
         </div>
 
         {fields.map((item: SaleProductType, index: number) => {
@@ -89,7 +92,7 @@ export default function SatisDetayUrunler({
           return (
             <div
               key={`${item.product_id}_${index}`}
-              className="mb-3 grid w-full grid-cols-5 gap-3 font-bold text-black"
+              className="grid w-full grid-cols-11 gap-3 border-b border-x-graydark py-5 font-bold text-black"
             >
               <CustomInput
                 item={{
@@ -100,8 +103,10 @@ export default function SatisDetayUrunler({
                   type: "text",
                 }}
                 disabled={true}
+                className={"col-span-2"}
                 value={item.code}
               />
+
               <CustomInput
                 item={{
                   disabled: true,
@@ -111,8 +116,7 @@ export default function SatisDetayUrunler({
                   type: "text",
                 }}
                 className={cn(
-                  "self-start !rounded-md !text-white",
-
+                  "col-span-1 self-start !rounded-md !text-white",
                   item.type == "Renkli Taş"
                     ? "!bg-red"
                     : item.type == "Pırlanta"
@@ -121,6 +125,22 @@ export default function SatisDetayUrunler({
                 )}
                 disabled={true}
                 value={item.type}
+              />
+              <CustomInput
+                item={{
+                  disabled: true,
+                  name: "used_carat",
+                  required: true,
+                  placeholder: "Karat Değeri",
+                  type: "number",
+                  min: 0,
+                }}
+                min={0}
+                {...register(`products.${index}.used_carat`, {
+                  valueAsNumber: true,
+                })}
+                className="col-span-1"
+                disabled={item.type == "Mücevher"}
               />
 
               <CustomMoneyInput
@@ -132,6 +152,7 @@ export default function SatisDetayUrunler({
                   type: "money",
                   rightIcon: "$",
                 }}
+                className={"col-span-2"}
                 disabled={true}
                 value={item.total_cost}
               />
@@ -144,10 +165,11 @@ export default function SatisDetayUrunler({
                   type: "money",
                   rightIcon: "$",
                 }}
+                className={"col-span-2"}
                 disabled={true}
                 value={Number((item.total_cost as number) * 4.55).toFixed(2)}
               />
-              <div className="flex w-full gap-3">
+              <div className="col-span-3 flex w-full gap-3">
                 <CustomMoneyInput
                   item={{
                     name: `products.${index}.sales_price`,
@@ -179,7 +201,22 @@ export default function SatisDetayUrunler({
         })}
 
         <div className="block w-full bg-white">
-          <div className="mb-3 grid w-full grid-cols-5 gap-3  font-bold text-black">
+          <div className="mb-3 grid w-full grid-cols-11 gap-3 py-5  font-bold text-black">
+            <CustomInput
+              item={{
+                disabled: true,
+                name: "toplam_karat",
+                required: true,
+                placeholder: "Karat Değeri",
+                type: "number",
+                min: 0,
+                title: "Toplam Karat",
+              }}
+              min={0}
+              className={"col-start-4 col-end-5"}
+              value={toplamKarat}
+              disabled={true}
+            />
             <CustomMoneyInput
               item={{
                 title: "Toplam Tutar",
@@ -190,8 +227,22 @@ export default function SatisDetayUrunler({
                 disabled: true,
                 rightIcon: "$",
               }}
-              className={"col-start-3 col-end-4"}
+              className={"col-start-5 col-end-7"}
               value={toplamTutar}
+              disabled={true}
+            />
+            <CustomMoneyInput
+              item={{
+                title: "Toplam Etiket Fiyatı",
+                name: "total_etiketFiyati",
+                type: "money",
+                required: false,
+                isConstant: true,
+                disabled: true,
+                rightIcon: "$",
+              }}
+              className={"col-start-7 col-end-9"}
+              value={Number(toplamTutar) * 4.55}
               disabled={true}
             />
             <CustomMoneyInput
@@ -204,12 +255,12 @@ export default function SatisDetayUrunler({
                 disabled: true,
                 rightIcon: "$",
               }}
-              className={"col-start-5 col-end-6"}
+              className={"col-start-9 col-end-12"}
               value={toplamMaliyet}
               disabled={true}
             />
             <div
-              className="col-start-5 col-end-6  flex h-fit w-full cursor-pointer items-center justify-center self-end rounded-md bg-primary p-3 text-white"
+              className="col-start-9 col-end-12  flex h-fit w-full cursor-pointer items-center justify-center self-end rounded-md bg-primary p-3 text-white"
               onClick={() => setModalOpened(true)}
             >
               Ekle
