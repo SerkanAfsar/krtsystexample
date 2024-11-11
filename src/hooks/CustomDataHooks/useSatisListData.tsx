@@ -4,7 +4,7 @@ import { ResponseResult } from "@/types/responseTypes";
 import { CustomDataListType } from "@/types/types";
 import { GetAllSatisList } from "@/Services/Satis.Services";
 import { SaleResponseType, SatisListesiHeaderType } from "@/types/Satis";
-import { dolarFormat, formatDate, formatToCurrency } from "@/utils";
+import { dolarFormat, formatDate } from "@/utils";
 
 export default function useSatisListData({
   customer_id,

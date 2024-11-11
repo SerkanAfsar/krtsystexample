@@ -9,7 +9,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import Image from "next/image";
 import { MucevherListType } from "@/types/Mucevher";
-import { dolarFormat, formatToCurrency } from "@/utils";
+import { dolarFormat } from "@/utils";
 import { useUserStore } from "@/store/useUserStore";
 
 export default function useGemProductData(redirectUrl: string) {
