@@ -9,7 +9,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import Image from "next/image";
 import { MucevherListType } from "@/types/Mucevher";
-import { formatToCurrency } from "@/utils";
+import { dolarFormat, formatToCurrency } from "@/utils";
 import { useUserStore } from "@/store/useUserStore";
 
 export default function useGemProductData(redirectUrl: string) {
@@ -57,8 +57,8 @@ export default function useGemProductData(redirectUrl: string) {
         sade: item?.properties?.simple,
         totalCarat: item?.properties?.totalCarat,
         totalNumberOfStones: item?.properties?.totalNumberOfStones,
-        totalLaborCost: `${item?.properties?.totalLaborCost} $`,
-        priceTag: `${formatToCurrency(item?.properties?.priceTag as number)} $`,
+        totalLaborCost: dolarFormat(item?.properties?.totalLaborCost as number),
+        priceTag: dolarFormat(item?.properties?.priceTag as number),
         tedarikci: null,
         girisTarihi: item?.properties?.productionDate,
         ambar: item?.store?.name || null,

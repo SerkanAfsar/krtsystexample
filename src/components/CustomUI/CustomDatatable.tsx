@@ -285,7 +285,7 @@ const CustomDatatable = ({
         className && className,
       )}
     >
-      <div className="sticky inset-0  z-999 flex w-full items-center justify-between rounded-sm bg-white  px-8  pb-4 pt-4 ">
+      <div className="sticky inset-0  z-99 flex w-full items-center justify-between rounded-sm bg-white  px-8  pb-4 pt-4 ">
         <div className="w-100">
           <input
             type="text"

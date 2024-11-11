@@ -1,4 +1,4 @@
-import { formatDate, stringToMoney } from "@/utils";
+import { dolarFormat, formatDate, stringToMoney } from "@/utils";
 import {
   ConvertWorkOrderStatus,
   WorkOrderStatusType,
@@ -39,7 +39,6 @@ export default function useGetWorkOrderListData() {
         return;
       }
       const data = resp.results as WorkOrderType[];
-
       const dataOneResult: any = data.map((item) => {
         const sonIslemTarihi = formatDate(item.last_process_date as string);
         return {
@@ -63,17 +62,18 @@ export default function useGetWorkOrderListData() {
           ) : null,
 
           totalProductColumn: (
-            <CustomToolTip
-              text={`${stringToMoney(item.total_cost?.toString() || "")} $`}
-            >
+            <CustomToolTip text={dolarFormat(item.total_cost as number)}>
               <div className="flex flex-col  items-center justify-center gap-1">
                 <b>Maliyet</b>
                 <div>
                   Malzeme :{" "}
-                  {stringToMoney(item.total_product_cost.toString() || "")} $
+                  {/* {stringToMoney(item.total_product_cost.toString() || "")} $
+                   */}
+                  {dolarFormat(Number(item.total_product_cost))}
                 </div>
                 <div>
-                  İşçilik : {stringToMoney(item.labor_cost?.toString() || "")} $
+                  {/* İşçilik : {stringToMoney(item.labor_cost?.toString() || "")} $ */}
+                  İşçilik: {dolarFormat(Number(item.labor_cost))}
                 </div>
               </div>
             </CustomToolTip>

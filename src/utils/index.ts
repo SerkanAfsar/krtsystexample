@@ -38,6 +38,18 @@ export const stringToMoney = (value: string): number => {
   return 0;
 };
 
+export const dolarFormat = (value: number) => {
+  if (value) {
+    return (
+      new Intl.NumberFormat("us-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(value) + " $"
+    );
+  }
+  return "0 $";
+};
+
 export const ApiServiceResult = ({
   result,
   message,

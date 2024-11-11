@@ -13,6 +13,7 @@ import { useRef, useState } from "react";
 import { ProductType } from "@/types/types";
 import { useReactToPrint } from "react-to-print";
 import Image from "next/image";
+import { dolarFormat } from "@/utils";
 
 export default function MucevherStokListesi() {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -137,32 +138,33 @@ export default function MucevherStokListesi() {
                             </tr>
                             <tr>
                               <td className="border border-slate-300 bg-yellow-300 p-3 font-bold text-red">
-                                ETİKET:{" "}
-                                {new Intl.NumberFormat("us-US", {
+                                ETİKET: {dolarFormat(etiketFiyati)}
+                                {/* {new Intl.NumberFormat("us-US", {
                                   minimumFractionDigits: 2,
                                   maximumFractionDigits: 2,
                                 }).format(etiketFiyati)}{" "}
-                                $
+                                $ */}
                               </td>
                             </tr>
                             <tr>
                               <td className="border border-slate-300 p-3 font-bold text-green-600">
                                 TOPTAN SATIŞ:{" "}
-                                {new Intl.NumberFormat("us-US", {
+                                {/* {new Intl.NumberFormat("us-US", {
                                   minimumFractionDigits: 2,
                                   maximumFractionDigits: 2,
-                                }).format(toptanSatis)}{" "}
-                                $
+                                }).format(toptanSatis)}{" "} */}
+                                {dolarFormat(toptanSatis)}
                               </td>
                             </tr>
                             <tr>
                               <td className="border border-slate-300 p-3 font-bold text-blue-500">
                                 Atölye Maliyeti:{" "}
-                                {new Intl.NumberFormat("us-US", {
+                                {/* {new Intl.NumberFormat("us-US", {
                                   minimumFractionDigits: 2,
                                   maximumFractionDigits: 2,
                                 }).format(Number(item.total_cost))}{" "}
-                                $
+                                $ */}
+                                {dolarFormat(item.total_cost as number)}
                               </td>
                             </tr>
                           </tbody>
