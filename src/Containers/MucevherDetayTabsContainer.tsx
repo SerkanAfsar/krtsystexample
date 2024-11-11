@@ -20,6 +20,7 @@ export default function MucevherDetayTabsContainer({
   const {
     register,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm<AddMucevherExternalType>();
 
@@ -59,6 +60,7 @@ export default function MucevherDetayTabsContainer({
         <MucevherDetaySectionOne
           register={register}
           setValue={setValue}
+          getValues={getValues}
           errors={errors}
           isEdit={isEdit}
           mainData={data.product as ProductType}

@@ -1,8 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import CustomDatePicker from "../CustomUI/CustomDatePicker";
 import CustomInput from "../CustomUI/CustomInput";
-
 import { CustomRadioButtonList } from "../CustomUI/CustomRadioButtonList";
 import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
@@ -11,6 +9,7 @@ import { ProductType } from "../../types/types";
 import CustomSelect from "../CustomUI/CustomSelect";
 import { MagazaCustomListType } from "@/utils/Magaza.Utils";
 import { CustomMoneyInput } from "../CustomUI/CustomMoneyInput";
+import CustomDatePicker2 from "../CustomUI/CustomDatePicker2";
 
 export default function MucevherDetaySectionOne({
   isEdit = false,
@@ -168,146 +167,136 @@ export default function MucevherDetaySectionOne({
             <div>Etiket Fiyatı</div>
           </div>
           <div className="grid grid-cols-5 gap-2">
-            <div>
-              <CustomInput
-                item={{
-                  name: "reference_no",
-                  required: false,
-                  type: "text",
-                  placeholder: "Referans No",
-                }}
-                {...register("reference_no", {
-                  required: "Referans No Giriniz",
-                })}
-                value={mainData?.properties?.referenceNo}
-                disabled={isEdit}
-                err={errors.reference_no?.message}
-              />
-            </div>
-            <div>
-              <CustomInput
-                item={{
-                  name: "style_no",
-                  required: false,
-                  type: "text",
-                  placeholder: "Style No",
-                }}
-                {...register("style_no", { required: "Style No Giriniz" })}
-                value={mainData?.properties?.styleNo}
-                err={errors.style_no?.message}
-                disabled={isEdit}
-              />
-            </div>
-            <div>
-              <CustomMoneyInput
-                item={{
-                  name: "labor_cost",
-                  required: false,
-                  type: "money",
-                  placeholder: "İşçilik",
-                  rightIcon: "$",
-                }}
-                err={errors.labor_cost?.message}
-                {...register("labor_cost", {
-                  required: "İşçilik Giriniz",
-                })}
-                value={
-                  isEdit
-                    ? (mainData?.properties?.totalLaborCost as number)
-                    : labor_cost
-                }
-                disabled={isEdit}
-              />
-            </div>
-            <div>
-              <CustomMoneyInput
-                item={{
-                  name: "purchase_price",
-                  required: false,
-                  type: "money",
-                  placeholder: "Satın Alma Fiyatı",
-                  rightIcon: "$",
-                }}
-                err={errors.purchase_price?.message}
-                {...register("purchase_price", {
-                  required: "Satın Alma Fiyatı Giriniz",
-                })}
-                value={
-                  isEdit
-                    ? (mainData?.properties?.purchasePrice as number)
-                    : purchase_price
-                }
-                disabled={isEdit}
-              />
-            </div>
-            <div>
-              <CustomMoneyInput
-                item={{
-                  name: "price_tag",
-                  required: false,
-                  type: "money",
-                  placeholder: "Etiket Fiyatı",
-                  rightIcon: "$",
-                  isConstant: true,
-                }}
-                value={
-                  isEdit ? (mainData?.properties?.priceTag as number) : priceTag
-                }
-                disabled={true}
-              />
-            </div>
-            <div className="col-start-2 col-end-4">
-              <CustomSelect
-                item={{
-                  name: "store_id",
-                  required: true,
-                  type: "select",
-                  title: "Mağaza",
-                  customOptions: MagazaCustomListType,
-                }}
-                getValues={getValues}
-                {...register("store_id", {
-                  required: "Mağaza Seçiniz",
-                  valueAsNumber: true,
-                })}
-                value={mainData?.store?.id as number}
-                err={errors.store_id?.message}
-              />
-            </div>
-            <div className="col-start-4 col-end-5">
-              <CustomDatePicker
-                item={{
-                  name: "entry_date",
-                  required: true,
-                  type: "datepicker",
-                  title: "Giriş Tarihi",
-                }}
-                value={mainData?.properties?.productionDate}
-                {...register("entry_date", {
-                  required: "Giriş Tarihi Seçiniz",
-                })}
-                err={errors.entry_date?.message}
-                disabled={isEdit}
-              />
-            </div>
+            <CustomInput
+              item={{
+                name: "reference_no",
+                required: false,
+                type: "text",
+                placeholder: "Referans No",
+              }}
+              {...register("reference_no", {
+                required: "Referans No Giriniz",
+              })}
+              value={mainData?.properties?.referenceNo}
+              disabled={isEdit}
+              err={errors.reference_no?.message}
+            />
+            <CustomInput
+              item={{
+                name: "style_no",
+                required: false,
+                type: "text",
+                placeholder: "Style No",
+              }}
+              {...register("style_no", { required: "Style No Giriniz" })}
+              value={mainData?.properties?.styleNo}
+              err={errors.style_no?.message}
+              disabled={isEdit}
+            />
+            <CustomMoneyInput
+              item={{
+                name: "labor_cost",
+                required: false,
+                type: "money",
+                placeholder: "İşçilik",
+                rightIcon: "$",
+              }}
+              err={errors.labor_cost?.message}
+              {...register("labor_cost", {
+                required: "İşçilik Giriniz",
+              })}
+              value={
+                isEdit
+                  ? (mainData?.properties?.totalLaborCost as number)
+                  : labor_cost
+              }
+              disabled={isEdit}
+            />
+            <CustomMoneyInput
+              item={{
+                name: "purchase_price",
+                required: false,
+                type: "money",
+                placeholder: "Satın Alma Fiyatı",
+                rightIcon: "$",
+              }}
+              err={errors.purchase_price?.message}
+              {...register("purchase_price", {
+                required: "Satın Alma Fiyatı Giriniz",
+              })}
+              value={
+                isEdit
+                  ? (mainData?.properties?.purchasePrice as number)
+                  : purchase_price
+              }
+              disabled={isEdit}
+            />
+            <CustomMoneyInput
+              item={{
+                name: "price_tag",
+                required: false,
+                type: "money",
+                placeholder: "Etiket Fiyatı",
+                rightIcon: "$",
+                isConstant: true,
+              }}
+              value={
+                isEdit ? (mainData?.properties?.priceTag as number) : priceTag
+              }
+              disabled={true}
+            />
 
-            <div className="col-start-5 col-end-6">
-              <CustomDatePicker
-                item={{
-                  name: "sale_date",
-                  required: true,
-                  type: "datepicker",
-                  title: "Çıkış Tarihi",
-                }}
-                {...register("sale_date", {
-                  required: "Çıkış Tarihi Seçiniz",
-                })}
-                value={mainData?.properties?.saleDate}
-                err={errors.sale_date?.message}
-                disabled={isEdit}
-                setValue={null}
-              />
-            </div>
+            <CustomSelect
+              item={{
+                name: "store_id",
+                required: true,
+                type: "select",
+                title: "Mağaza",
+                customOptions: MagazaCustomListType,
+              }}
+              outerClass="col-start-2 col-end-4"
+              disabled={isEdit}
+              getValues={getValues}
+              {...register("store_id", {
+                required: "Mağaza Seçiniz",
+                valueAsNumber: true,
+              })}
+              value={mainData?.store?.id as number}
+              err={errors.store_id?.message}
+            />
+
+            <CustomDatePicker2
+              item={{
+                name: "entry_date",
+                required: true,
+                type: "datepicker",
+                title: "Giriş Tarihi",
+              }}
+              setValue={setValue}
+              value={mainData?.properties?.productionDate}
+              {...register("entry_date", {
+                required: "Giriş Tarihi Seçiniz",
+              })}
+              err={errors.entry_date?.message}
+              disabled={isEdit}
+            />
+
+            <CustomDatePicker2
+              item={{
+                name: "sale_date",
+                required: true,
+                type: "datepicker",
+                title: "Çıkış Tarihi",
+              }}
+              {...register("sale_date", {
+                required: "Çıkış Tarihi Seçiniz",
+              })}
+              value={mainData?.properties?.saleDate}
+              err={errors.sale_date?.message}
+              disabled={isEdit}
+              setValue={setValue}
+            />
+
             <div className="col-start-1 col-end-6">
               <div className="flex w-full flex-col items-start gap-2">
                 <label className="mb-1 block text-sm font-medium text-black dark:text-white">

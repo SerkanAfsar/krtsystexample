@@ -50,7 +50,8 @@ const CustomRadioButtonList = React.forwardRef<
                   id={value}
                   name={name}
                   value={value}
-                  checked={selectedValue == value}
+                  defaultChecked={selectedValue == value}
+                  // onChange={() => setSelectedValue(value)}
                   {...props}
                   ref={ref}
                 />

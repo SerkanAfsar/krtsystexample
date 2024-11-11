@@ -162,7 +162,7 @@ export default function useGetProductData(
 
   useEffect(() => {
     updateData();
-  }, [updateData]);
+  }, [activePage, updateData]);
 
   const islemlerArea = useCallback(
     ({ id, productCode }: { id: number; productCode: string }) => {

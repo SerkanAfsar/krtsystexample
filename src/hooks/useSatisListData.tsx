@@ -63,10 +63,6 @@ export default function useSatisListData({
 
   useEffect(() => {
     updateData();
-  }, [updateData]);
-
-  useEffect(() => {
-    updateData();
   }, [activePage, updateData]);
 
   return {

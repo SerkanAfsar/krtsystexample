@@ -58,7 +58,7 @@ const CustomDatePicker2 = ({
         className={cn(
           className,
           "z-999 block h-[50px] w-full rounded-md text-black disabled:cursor-default",
-          rest?.disabled && "bg-[#f5f7fd] ",
+
           err && "border-red",
         )}
         id={id}

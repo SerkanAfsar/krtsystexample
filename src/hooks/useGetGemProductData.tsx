@@ -93,7 +93,7 @@ export default function useGemProductData(redirectUrl: string) {
   const updateData = useCallback(() => {
     setActiveData([]);
     GetGemProductDatatableService({
-      page: activePage,
+      page: 2,
       order_by: order_by,
       sort,
     }).then((resp: ResponseResult<ProductListType>) => {
@@ -110,6 +110,7 @@ export default function useGemProductData(redirectUrl: string) {
           ),
         );
       } else {
+        console.log("err", resp);
         if (resp.statusCode == 404) {
           setActivePage(totalPageCount > 1 ? totalPageCount - 1 : 1);
         } else {
@@ -121,7 +122,7 @@ export default function useGemProductData(redirectUrl: string) {
 
   useEffect(() => {
     updateData();
-  }, [updateData]);
+  }, [activePage, updateData]);
 
   const islemlerArea = useCallback(
     ({ id, productCode }: { id: number; productCode: string }) => {

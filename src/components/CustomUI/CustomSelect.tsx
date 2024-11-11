@@ -93,7 +93,7 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
 
         setDisabledIndex(indexNo as number);
       }
-    }, [selectedValue, item.firstRelated, options, values[item?.firstRelated]]);
+    }, [selectedValue, item.firstRelated, options, values]);
 
     return (
       <div className={cn("w-full", outerClass && outerClass)}>
@@ -148,7 +148,9 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
                             key={index}
                             value={item2.valueVal}
                             disabled={
-                              disabledIndex != 0 && index < disabledIndex
+                              !!disabledIndex &&
+                              disabledIndex != 0 &&
+                              index < disabledIndex
                             }
                             className="disabled:bg-slate-400 disabled:text-boxdark  dark:text-bodydark"
                           >

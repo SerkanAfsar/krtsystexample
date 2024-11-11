@@ -166,19 +166,6 @@ export default function FormElementItem({
         required: item.required,
       });
       return (
-        // <CustomDatePicker
-        //   {...register(item.name, {
-        //     required:
-        //       !isDisabled && item.required ? item.requiredMessage : false,
-        //   })}
-        //   key={item.name}
-        //   item={item}
-        //   setValue={setValue}
-        //   err={err}
-        //   outerClass={cn(item.span && `col-span-${item.span.toString()}`)}
-        //   disabled={(!isAdd && item.isCodeRelated) || isDisabled}
-        //   {...rest}
-        // />
         <CustomDatePicker2
           {...register(item.name, {
             required:
