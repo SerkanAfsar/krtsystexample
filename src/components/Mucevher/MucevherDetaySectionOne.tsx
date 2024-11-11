@@ -273,7 +273,7 @@ export default function MucevherDetaySectionOne({
                 title: "Giriş Tarihi",
               }}
               setValue={setValue}
-              value={mainData?.properties?.productionDate}
+              // value={mainData?.properties?.productionDate}
               {...register("entry_date", {
                 required: "Giriş Tarihi Seçiniz",
               })}
@@ -291,7 +291,7 @@ export default function MucevherDetaySectionOne({
               {...register("sale_date", {
                 required: "Çıkış Tarihi Seçiniz",
               })}
-              value={mainData?.properties?.saleDate}
+              // value={mainData?.properties?.saleDate}
               err={errors.sale_date?.message}
               disabled={isEdit}
               setValue={setValue}

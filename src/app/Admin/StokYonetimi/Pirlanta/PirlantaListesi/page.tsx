@@ -4,7 +4,7 @@ import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import Link from "next/link";
 import { useCallback } from "react";
-import useGetProductData from "@/hooks/useGetProductData";
+import useGetProductData from "@/hooks/CustomDataHooks/useGetProductData";
 import { PirlantaListHeaders } from "@/types/Pirlanta";
 
 import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";

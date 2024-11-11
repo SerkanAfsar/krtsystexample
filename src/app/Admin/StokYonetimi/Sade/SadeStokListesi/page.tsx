@@ -4,7 +4,7 @@ import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { ISadeType } from "../../../../../types/formTypes";
 import { Column } from "react-table";
-import useGetProductData from "@/hooks/useGetProductData";
+import useGetProductData from "@/hooks/CustomDataHooks/useGetProductData";
 import { SadeListHeaders } from "@/types/Sade";
 import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
 import CustomErrorAlert from "@/components/CustomUI/Alerts/CustomErrorAlert";

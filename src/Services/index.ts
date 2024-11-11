@@ -55,7 +55,10 @@ export const BaseService = async ({
         statusCode: response.status,
         success: false,
         data: null,
-        error: result ? [result.error[0]] : ["Base Error"],
+        error:
+          result && result.error
+            ? [result.error[0]]
+            : [Object.values(result).at(0)],
       };
       return errResponse;
     }

@@ -11,7 +11,7 @@ import CustomTabs, { TabSectionType } from "@/components/CustomUI/CustomTabs";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import { useTedarikciModalData } from "@/store/useModalStore";
 import { SatisListesiHeaderColumns } from "../types/Satis";
-import useSatisListData from "@/hooks/useSatisListData";
+import useSatisListData from "@/hooks/CustomDataHooks/useSatisListData";
 
 export default function MusteriDetayContainer({
   musteriItemData,

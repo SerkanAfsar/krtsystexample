@@ -1,17 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FaPencil, FaTrash } from "react-icons/fa6";
 import { useRouter, useSearchParams } from "next/navigation";
-import { CustomDataListType, MusteriType } from "../types/types";
-
-import { GetMusteriDatatableService } from "@/Services/Customer.Service";
-import { DeleteMusteriApiService } from "@/ApiServices/Customer.ApiService";
+import { CustomDataListType, TedarikciType } from "@/types/types";
+import { GetTedarikciDatatableService } from "@/Services/Supplier.Services";
+import { DeleteTedarikciApiService } from "@/ApiServices/Suppliers.ApiService";
 import { ResponseResult } from "@/types/responseTypes";
 
-export default function useMusteriListData() {
+export default function useTedarikciListData() {
   const router = useRouter();
   const params = useSearchParams();
   const [activePage, setActivePage] = useState<number>(1);
-  const [activeData, setActiveData] = useState<MusteriType[]>([]);
+  const [activeData, setActiveData] = useState<TedarikciType[]>([]);
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
@@ -23,13 +22,14 @@ export default function useMusteriListData() {
 
   const updateData = useCallback(() => {
     setActiveData([]);
-    GetMusteriDatatableService({
+    GetTedarikciDatatableService({
       page: activePage,
       order_by: order_by,
       sort,
-    }).then((resp: ResponseResult<CustomDataListType<MusteriType>>) => {
+    }).then((resp: ResponseResult<CustomDataListType<TedarikciType>>) => {
       if (resp.success) {
-        const data = resp.data as CustomDataListType<MusteriType>;
+        const data = resp.data as CustomDataListType<TedarikciType>;
+
         const dataOneResult: any = data.results.map((item) => {
           return {
             code: item.code,
@@ -70,7 +70,7 @@ export default function useMusteriListData() {
           <FaPencil
             className="cursor-pointer"
             onClick={() =>
-              router.push(`/Admin/Firmalar/Musteriler/MusteriEkle/${id}`)
+              router.push(`/Admin/Firmalar/Tedarikciler/TedarikciEkle/${id}`)
             }
           />
           <FaTrash
@@ -92,7 +92,7 @@ export default function useMusteriListData() {
 
   useEffect(() => {
     if (confirmDelete && itemRef && itemRef.current) {
-      DeleteMusteriApiService({
+      DeleteTedarikciApiService({
         id: itemRef.current.id as number,
         callBack: updateData,
       });

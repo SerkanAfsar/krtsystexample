@@ -4,7 +4,7 @@ import React from "react";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
 import CustomErrorAlert from "@/components/CustomUI/Alerts/CustomErrorAlert";
-import useTedarikciListData from "@/hooks/useTedarikciListData";
+import useTedarikciListData from "@/hooks/CustomDataHooks/useTedarikciListData";
 
 const columns: Column<{
   code: string;

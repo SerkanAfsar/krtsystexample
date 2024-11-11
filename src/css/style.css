@@ -15,7 +15,7 @@ body {
   }
 }
 .react-date-picker__wrapper {
-  @apply rounded-md pl-4 text-black;
+  @apply rounded-md !border-stone-400 pl-2 text-black;
 }
 
 @layer components {

@@ -57,7 +57,7 @@ const CustomDatePicker2 = ({
       <DatePicker
         className={cn(
           className,
-          "z-999 block h-[50px] w-full rounded-md text-black disabled:cursor-default",
+          "z-999 !flex  h-[50px] w-full rounded-md !pr-0 text-black disabled:cursor-default",
 
           err && "border-red",
         )}

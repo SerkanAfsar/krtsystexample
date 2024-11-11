@@ -4,7 +4,7 @@ import React from "react";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
 import CustomErrorAlert from "@/components/CustomUI/Alerts/CustomErrorAlert";
-import useMusteriListData from "@/hooks/useMusteriListData";
+import useMusteriListData from "@/hooks/CustomDataHooks/useMusteriListData";
 
 const columns: Column<{
   code: string;

@@ -109,8 +109,6 @@ export const GetGemProductDatatableService = async ({
     urlPath += `&page=${page.toString()}`;
   }
 
-  console.log("url path is ", urlPath);
-
   const result = await BaseService({
     url: urlPath,
     method: "GET",

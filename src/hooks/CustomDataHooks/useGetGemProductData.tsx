@@ -3,8 +3,8 @@ import { DeleteProductApiService } from "@/ApiServices/Products.ApiService";
 import { GetGemProductDatatableService } from "@/Services/Product.Services";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FaPencil, FaTrash } from "react-icons/fa6";
-import { ResponseResult } from "../types/responseTypes";
-import { ProductListType, ProductType } from "../types/types";
+import { ResponseResult } from "../../types/responseTypes";
+import { ProductListType, ProductType } from "../../types/types";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import Image from "next/image";
@@ -93,7 +93,7 @@ export default function useGemProductData(redirectUrl: string) {
   const updateData = useCallback(() => {
     setActiveData([]);
     GetGemProductDatatableService({
-      page: 2,
+      page: activePage,
       order_by: order_by,
       sort,
     }).then((resp: ResponseResult<ProductListType>) => {
@@ -110,7 +110,6 @@ export default function useGemProductData(redirectUrl: string) {
           ),
         );
       } else {
-        console.log("err", resp);
         if (resp.statusCode == 404) {
           setActivePage(totalPageCount > 1 ? totalPageCount - 1 : 1);
         } else {
@@ -122,7 +121,7 @@ export default function useGemProductData(redirectUrl: string) {
 
   useEffect(() => {
     updateData();
-  }, [activePage, updateData]);
+  }, [updateData]);
 
   const islemlerArea = useCallback(
     ({ id, productCode }: { id: number; productCode: string }) => {

@@ -5,7 +5,7 @@ import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
 import CustomErrorAlert from "@/components/CustomUI/Alerts/CustomErrorAlert";
 
-import useMagazaListesiData from "@/hooks/useMagazaListesiData";
+import useMagazaListesiData from "@/hooks/CustomDataHooks/useMagazaListesiData";
 
 const columns: Column<{
   name: string;

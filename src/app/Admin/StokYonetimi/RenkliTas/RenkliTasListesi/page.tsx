@@ -5,7 +5,7 @@ import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 
 import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
-import useGetProductData from "@/hooks/useGetProductData";
+import useGetProductData from "@/hooks/CustomDataHooks/useGetProductData";
 import { RenklitasListHeaders } from "@/types/RenkliTas";
 import Link from "next/link";
 import { useCallback } from "react";

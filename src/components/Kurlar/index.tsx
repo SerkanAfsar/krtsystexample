@@ -34,7 +34,7 @@ export default function Kurlar({
   }, [apiUrl]);
 
   if (!stateItem) {
-    return <div>Yükleniyor...</div>;
+    return null;
   }
   return (
     <div

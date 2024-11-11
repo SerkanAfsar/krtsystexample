@@ -3,7 +3,7 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
-import useGemProductData from "@/hooks/useGetGemProductData";
+import useGemProductData from "@/hooks/CustomDataHooks/useGetGemProductData";
 import CustomErrorAlert from "@/components/CustomUI/Alerts/CustomErrorAlert";
 import { MucevherListesiDataHeaders } from "@/types/Mucevher";
 import CustomSelect from "@/components/CustomUI/CustomSelect";

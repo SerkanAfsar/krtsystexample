@@ -1,7 +1,7 @@
 "use client";
 import CustomErrorAlert from "@/components/CustomUI/Alerts/CustomErrorAlert";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
-import useSatisListData from "@/hooks/useSatisListData";
+import useSatisListData from "@/hooks/CustomDataHooks/useSatisListData";
 import { SatisListesiHeaderColumns } from "@/types/Satis";
 
 export default function SatisListesiContainer() {

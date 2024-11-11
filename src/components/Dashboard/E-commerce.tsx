@@ -24,6 +24,9 @@ const ECommerce = ({
   sadeCount,
   mucevherCount,
   workorderCount,
+  musteriCount,
+  tedarikciCount,
+  magazaCount,
   isEmriData,
 }: {
   pirlantaCount?: any;
@@ -31,6 +34,9 @@ const ECommerce = ({
   sadeCount?: any;
   mucevherCount?: any;
   workorderCount?: any;
+  musteriCount?: any;
+  tedarikciCount?: any;
+  magazaCount?: any;
   isEmriData: WorkOrderType[];
 }) => {
   return (
@@ -40,7 +46,6 @@ const ECommerce = ({
           title="İş Emiri"
           total={workorderCount?.toString() || undefined}
         >
-          {/* <MdWork size={"25px"} /> */}
           <GiStakeHammer size={"25px"} />
         </CardDataStats>
         <CardDataStats
@@ -49,7 +54,6 @@ const ECommerce = ({
             ?.filter((a) => a.status == "Completed")
             .length.toString()}
         >
-          {/* <MdWork size={"25px"} /> */}
           <GiStakeHammer size={"25px"} />
         </CardDataStats>
         <CardDataStats
@@ -58,7 +62,6 @@ const ECommerce = ({
             ?.filter((a) => a.status == "Pending")
             .length.toString()}
         >
-          {/* <MdWork size={"25px"} /> */}
           <GiStakeHammer size={"25px"} />
         </CardDataStats>
         <CardDataStats
@@ -67,7 +70,6 @@ const ECommerce = ({
             ?.filter((a) => a.status == "Cancelled")
             .length.toString()}
         >
-          {/* <MdWork size={"25px"} /> */}
           <GiStakeHammer size={"25px"} />
         </CardDataStats>
         <CardDataStats
@@ -86,27 +88,35 @@ const ECommerce = ({
           <GiDiamondTrophy size={"25px"} />
         </CardDataStats>
         <CardDataStats title="Renkli Taş" total={renkliTasCount?.toString()}>
-          {/* <GiStonePile size={"25px"} /> */}
           <GiGems size={"25px"} />
         </CardDataStats>
         <CardDataStats title="Sade" total={sadeCount?.toString()}>
-          {/* <GiDiamondTrophy size={"25px"} /> */}
-          {/* <FaRing size={"25px"} /> */}
           <LiaRingSolid size={"25px"} />
         </CardDataStats>
         <CardDataStats title="Mücevher" total={mucevherCount?.toString()}>
-          {/* <GiDiamondTrophy  /> */}
-          {/* <GiStonePile size={"25px"} /> */}
           <GiCrystalEarrings size={"25px"} />
         </CardDataStats>
-        <CardDataStats title="Müşteri" total="0">
+        <CardDataStats
+          title="Müşteri"
+          total={musteriCount?.toString() || undefined}
+        >
           <FaUserFriends size={"25px"} />
         </CardDataStats>
-        <CardDataStats title="Tedarikçi" total="0">
+        <CardDataStats
+          title="Tedarikçi"
+          total={tedarikciCount?.toString() || undefined}
+        >
           {/* <FaUserFriends size={"25px"} /> */}
           <BsBuildings size={"25px"} />
         </CardDataStats>
-        <div></div>
+        <CardDataStats
+          title="Mağaza"
+          total={magazaCount?.toString() || undefined}
+        >
+          {/* <FaUserFriends size={"25px"} /> */}
+          <BsBuildings size={"25px"} />
+        </CardDataStats>
+
         <Kurlar
           className="col-span-2"
           apiUrl="/api/kurlar/doviz"
