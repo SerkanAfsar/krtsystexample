@@ -47,9 +47,10 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
     const [customOptionValues, setCustomOptionValues] = useState<
       CustomOptionType[]
     >([]);
+    const [disabledIndex, setDisabledIndex] = useState<number>(0);
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
-
     const { tedarikciModal, setTedarikciModalOpen } = useTedarikciModalData();
+    const values = getValues && getValues();
 
     const options = item.isExtra
       ? extraOptions
@@ -69,7 +70,7 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
           setIsLoaded(false);
           const result = await item.customOptions();
           setCustomOptionValues(result);
-          const values = getValues && getValues();
+
           setSelectedValue((name && values[name]) || value);
           setIsLoaded(true);
         };
@@ -83,6 +84,16 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
         setTedarikciModalOpen();
       }
     }, [selectedValue, setTedarikciModalOpen]);
+
+    useEffect(() => {
+      if (item.firstRelated && values[item?.firstRelated]) {
+        const indexNo = options?.findIndex(
+          (a) => a.titleVal == values[item.firstRelated],
+        );
+
+        setDisabledIndex(indexNo as number);
+      }
+    }, [selectedValue, item.firstRelated, options, values[item?.firstRelated]]);
 
     return (
       <div className={cn("w-full", outerClass && outerClass)}>
@@ -131,15 +142,20 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
                   </option>
                   {staticOptions
                     ? staticOptions()
-                    : options?.map((item2, index) => (
-                        <option
-                          key={index}
-                          value={item2.valueVal}
-                          className="text-body dark:text-bodydark"
-                        >
-                          {item2.titleVal}
-                        </option>
-                      ))}
+                    : options?.map((item2, index) => {
+                        return (
+                          <option
+                            key={index}
+                            value={item2.valueVal}
+                            disabled={
+                              disabledIndex != 0 && index < disabledIndex
+                            }
+                            className="disabled:bg-slate-400 disabled:text-boxdark  dark:text-bodydark"
+                          >
+                            {item2.titleVal}
+                          </option>
+                        );
+                      })}
                   {item.isTedarikci && (
                     <option
                       value={"9999"}

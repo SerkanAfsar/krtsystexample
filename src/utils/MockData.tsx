@@ -865,6 +865,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         relativeTo: "menstrual_status",
         visibleRelative: "Sertifikasız",
         isTopMargin: true,
+        firstRelated: "renk",
       },
       {
         name: "berraklik",
@@ -893,6 +894,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         options: PirlantaBerraklikData,
         visibleRelative: "Sertifikasız",
         isTopMargin: true,
+        firstRelated: "berraklik",
       },
       {
         name: "mensei",
