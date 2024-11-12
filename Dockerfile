@@ -1,8 +1,23 @@
-FROM node:18
+# Use the official Node.js image as the base  
+FROM node:19.5.0-alpine
 
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-EXPOSE 3000
-CMD npm run dev
+# Set the working directory inside the container  
+WORKDIR /app  
+
+# Copy package.json and package-lock.json to the container  
+COPY package*.json ./   
+
+# Install dependencies  
+RUN npm install --force 
+
+# Copy the app source code to the container  
+COPY . .  
+
+# Build the Next.js app  
+RUN npm run build  
+
+# Expose the port the app will run on  
+EXPOSE 3000  
+
+# Start the app  
+CMD ["npm", "start"]
