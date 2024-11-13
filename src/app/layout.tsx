@@ -27,7 +27,6 @@ export default function RootLayout({
             />
           </Suspense>
         </div>
-
         <ToastContainer />
       </body>
     </html>
