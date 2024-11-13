@@ -9,7 +9,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { SadeListType } from "@/types/Sade";
 import { RenkliTasListType } from "@/types/RenkliTas";
 import { PirlantaListType } from "@/types/Pirlanta";
-import { LightgalleryItem } from "react-lightgallery";
+// import { LightgalleryItem } from "react-lightgallery";
 import Image from "next/image";
 import { SadeModelTurleri } from "@/data/Sade.data";
 
@@ -72,20 +72,21 @@ const InnerConvert = ({
       return data.results.map((item) => {
         return {
           resim: item.image ? (
-            <LightgalleryItem key={item.pk} src={item.image as string}>
-              <Image
-                src={item.image as string}
-                width={40}
-                height={40}
-                style={{
-                  width: "60px",
-                  cursor: "pointer",
-                  height: "auto",
-                  maxHeight: "60px",
-                }}
-                alt={item.code as string}
-              />
-            </LightgalleryItem>
+            // <LightgalleryItem key={item.pk} src={item.image as string}>
+
+            // </LightgalleryItem>
+            <Image
+              src={item.image as string}
+              width={40}
+              height={40}
+              style={{
+                width: "60px",
+                cursor: "pointer",
+                height: "auto",
+                maxHeight: "60px",
+              }}
+              alt={item.code as string}
+            />
           ) : null,
           modelKodu: `${SadeModelTurleri.find((a) => a.titleVal == item?.properties?.modelTuru)?.extraValue}${item?.properties?.modelKodu}`,
           modelTuru: item?.properties?.modelTuru,
