@@ -9,11 +9,11 @@ import { MucevherListesiDataHeaders } from "@/types/Mucevher";
 import CustomSelect from "@/components/CustomUI/CustomSelect";
 import { MucevherYazdirmaList } from "@/utils/Mucevher.Utils";
 import CustomModalPage from "@/components/CustomModals/CustomPageModal";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { ProductType } from "@/types/types";
 import { useReactToPrint } from "react-to-print";
 import Image from "next/image";
-import { dolarFormat } from "@/utils";
+import { cn, dolarFormat } from "@/utils";
 
 export default function MucevherStokListesi() {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -76,111 +76,33 @@ export default function MucevherStokListesi() {
             setModalDataValue={setShowModal}
             className="z-99999"
           >
-            {selectedType == MucevherYazdirmaList[0].valueVal && (
-              <>
-                <button
-                  onClick={() => reactToPrintFn()}
-                  className="mb-5 block w-full rounded-md bg-primary p-3 text-center font-bold uppercase text-white"
-                >
-                  YAZDIR
-                </button>
-                <div
+            <>
+              <button
+                onClick={() => reactToPrintFn()}
+                className="mb-5 block w-full rounded-md bg-primary p-3 text-center font-bold uppercase text-white"
+              >
+                YAZDIR
+              </button>
+              {selectedType && (
+                <AltiliSecenekSection
                   ref={contentRef}
-                  className="flex flex-wrap items-start justify-start gap-6"
-                >
-                  {selectedItemsforPrint.map(
-                    (item: ProductType, index: number) => {
-                      const etiketFiyati = Number(item.total_cost) * 4.55;
-                      const toptanSatis = Number(item.total_cost) * 1.26;
-                      return (
-                        <table
-                          key={index}
-                          className=" table w-60 border-collapse flex-col text-center  text-sm"
-                        >
-                          <tbody className="[&>td]:p-3">
-                            <tr>
-                              <td className="flex h-50 justify-center border border-slate-300 p-3 text-center font-bold">
-                                {item.image && (
-                                  <Image
-                                    src={item.image as string}
-                                    width={400}
-                                    height={240}
-                                    alt={item.code as string}
-                                    style={{ height: "160px", width: "auto" }}
-                                  />
-                                )}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td className="border border-slate-300 p-3 font-bold">
-                                Kod {" :  "} {item.code}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td className="border border-slate-300 p-3 font-bold">
-                                B.Gr {" :  "} {item?.properties?.simple}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td className="border border-slate-300 p-3">
-                                DIOMAND & STONES {" :  "}
-                              </td>
-                            </tr>
-
-                            <tr>
-                              <td className="border border-slate-300 p-3">
-                                Taş Toplamları {" : "}
-                                <span className="font-bold">
-                                  {item.properties?.totalNumberOfStones} Adet{" "}
-                                  {item.properties?.totalCarat} Ct.
-                                </span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td className="border border-slate-300 bg-yellow-300 p-3 font-bold text-red">
-                                ETİKET: {dolarFormat(etiketFiyati)}
-                                {/* {new Intl.NumberFormat("us-US", {
-                                  minimumFractionDigits: 2,
-                                  maximumFractionDigits: 2,
-                                }).format(etiketFiyati)}{" "}
-                                $ */}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td className="border border-slate-300 p-3 font-bold text-green-600">
-                                TOPTAN SATIŞ:{" "}
-                                {/* {new Intl.NumberFormat("us-US", {
-                                  minimumFractionDigits: 2,
-                                  maximumFractionDigits: 2,
-                                }).format(toptanSatis)}{" "} */}
-                                {dolarFormat(toptanSatis)}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td className="border border-slate-300 p-3 font-bold text-blue-500">
-                                Atölye Maliyeti:{" "}
-                                {/* {new Intl.NumberFormat("us-US", {
-                                  minimumFractionDigits: 2,
-                                  maximumFractionDigits: 2,
-                                }).format(Number(item.total_cost))}{" "}
-                                $ */}
-                                {dolarFormat(item.total_cost as number)}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      );
-                    },
-                  )}
-                </div>
-                <button
-                  onClick={() => reactToPrintFn()}
-                  className="mt-5 block w-full rounded-md bg-primary p-3 text-center font-bold uppercase text-white"
-                >
-                  YAZDIR
-                </button>
-              </>
-            )}
+                  type={
+                    selectedType as
+                      | "6'lı Rapor"
+                      | "24'lü Rapor"
+                      | "Ana Maliyet"
+                      | "P2"
+                  }
+                  selectedItemsforPrint={selectedItemsforPrint}
+                />
+              )}
+              <button
+                onClick={() => reactToPrintFn()}
+                className="mt-5 block w-full rounded-md bg-primary p-3 text-center font-bold uppercase text-white"
+              >
+                YAZDIR
+              </button>
+            </>
           </CustomModalPage>
           <CustomDatatable
             totalPageCount={totalPageCount}
@@ -194,3 +116,135 @@ export default function MucevherStokListesi() {
     </DefaultLayout>
   );
 }
+
+const AltiliSecenekSection = React.forwardRef<
+  HTMLDivElement,
+  React.HtmlHTMLAttributes<HTMLDivElement> & {
+    selectedItemsforPrint: ProductType[];
+    type: "6'lı Rapor" | "24'lü Rapor" | "Ana Maliyet" | "P2";
+  }
+>(({ selectedItemsforPrint, type, ...rest }, ref) => {
+  return (
+    <div
+      ref={ref}
+      {...rest}
+      className={cn(
+        "!flex flex-wrap items-start justify-start",
+        type == "6'lı Rapor" && "gap-6",
+        type == "24'lü Rapor" && "gap-3",
+      )}
+    >
+      {selectedItemsforPrint.map((item: ProductType, index: number) => {
+        const etiketFiyati = Number(item.total_cost) * 4.55;
+        const toptanSatis = Number(item.total_cost) * 1.26;
+        const renkliTaslar = item?.product_inside?.filter(
+          (a: any) => a.type == "ColoredStone",
+        );
+        const pirlantaTaslar = item?.product_inside?.filter(
+          (a) => a.type == "Diamond",
+        );
+        return (
+          <table
+            key={index}
+            className={cn(
+              "table border-collapse flex-col text-center   ",
+              type == "6'lı Rapor" && "w-60 text-sm [&_td]:p-2.5",
+              type == "24'lü Rapor" && "h-60 w-30 text-xs [&_td]:p-1",
+            )}
+          >
+            <tbody>
+              {type == "6'lı Rapor" && (
+                <tr>
+                  <td className="border  border-slate-300  font-bold text-blue-500">
+                    Atölye Maliyeti: {dolarFormat(item.total_cost as number)}
+                  </td>
+                </tr>
+              )}
+
+              <tr>
+                <td className="border border-slate-300 font-bold">
+                  Kod {" : "} {item.code}
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className={cn(
+                    "border border-y-0 border-slate-300",
+                    type == "6'lı Rapor" && "h-50",
+                    type == "24'lü Rapor" && "h-30",
+                  )}
+                >
+                  {item.image && (
+                    <div className="flex h-full w-full items-center justify-center [&>img]:max-h-44  [&>img]:w-auto">
+                      <Image
+                        src={item.image as string}
+                        width={400}
+                        height={240}
+                        alt={item.code as string}
+                      />
+                    </div>
+                  )}
+                </td>
+              </tr>
+
+              <tr>
+                <td className="border border-slate-300  font-bold">
+                  B.Gr {" :  "} {item?.properties?.simple}
+                </td>
+              </tr>
+
+              <tr>
+                <td className="h-10 border border-slate-300 text-xs">
+                  {renkliTaslar?.map((item, index) => (
+                    <span key={index} className="text-xs">
+                      {item.product_code} {item.used_carat} {" - "}
+                    </span>
+                  ))}
+                </td>
+              </tr>
+
+              <tr>
+                <td className="h-10 border border-slate-300 text-xs">
+                  {pirlantaTaslar?.map((item, index) => (
+                    <span key={index} className="text-xs">
+                      {item.product_code} {item.used_carat} {" - "}
+                    </span>
+                  ))}
+                </td>
+              </tr>
+              {type == "6'lı Rapor" && (
+                <>
+                  <tr>
+                    <td className="border border-slate-300 ">
+                      Taş Toplamları {" : "}
+                      <span className="font-bold">
+                        {item.properties?.totalNumberOfStones} Adet{" "}
+                        {Number(item.properties?.totalCarat)
+                          .toFixed(2)
+                          .replace(".", ",")}{" "}
+                        Ct.
+                      </span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td className="border border-slate-300  font-bold text-green-600">
+                      TOPTAN SATIŞ: {dolarFormat(toptanSatis)}
+                    </td>
+                  </tr>
+                </>
+              )}
+
+              <tr>
+                <td className="border border-slate-300  font-bold text-red">
+                  Etiket: {dolarFormat(etiketFiyati)}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        );
+      })}
+    </div>
+  );
+});
+AltiliSecenekSection.displayName = "AltiliSecenekSection";

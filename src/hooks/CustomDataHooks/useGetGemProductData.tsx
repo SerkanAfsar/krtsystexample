@@ -35,6 +35,7 @@ export default function useGemProductData(redirectUrl: string) {
   }) => {
     return data.results.map((item) => {
       const condition = selectedItemsforPrint.some((a) => a.pk == item.pk);
+
       return {
         checkBox: (
           <input
@@ -99,6 +100,7 @@ export default function useGemProductData(redirectUrl: string) {
     }).then((resp: ResponseResult<ProductListType>) => {
       if (resp?.success) {
         const data = resp.data as ProductListType;
+
         const dataOneResult = InnerConvert({
           data,
           islemlerArea,

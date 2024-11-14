@@ -32,6 +32,7 @@ export type ProductType = {
   labor_cost?: number;
   purchase_price?: number;
   price_tag?: number;
+  product_inside?: [{ [key: string]: string | number }];
 };
 
 export type CustomerPurchatedProducts = {
