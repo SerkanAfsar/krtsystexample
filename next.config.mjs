@@ -8,8 +8,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "atillakaratstorage.blob.core.windows.net",
+        protocol: "http",
+        hostname: "karatstorage.blob.core.windows.net",
       },
     ],
   },
