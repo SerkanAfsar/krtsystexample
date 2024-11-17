@@ -46,7 +46,6 @@ const InnerConvert = ({
     }
     case "Diamond": {
       return data.results.map((item) => {
-        console.log(item);
         return {
           berraklik: item?.properties?.berraklik,
           carat: item?.properties?.carat,
