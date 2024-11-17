@@ -66,6 +66,7 @@ export default function MucevherPirlantaRow({
           }}
           {...register(`products.pirlanta.${index}.carat`, {
             required: "Karat Giriniz",
+            valueAsNumber: true,
           })}
           value={(model?.carat as number) ?? null}
           disabled={isEdit}
@@ -165,7 +166,7 @@ export default function MucevherPirlantaRow({
           <button
             type="button"
             onClick={() => setVisible(false)}
-            className="btn rounded-md bg-red p-3 text-white"
+            className="btn self-start rounded-md bg-red p-3 text-white"
           >
             Sil
           </button>

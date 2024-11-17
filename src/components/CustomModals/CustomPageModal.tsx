@@ -18,12 +18,12 @@ export default function CustomModalPage({
   }
   return (
     <div
-      className={cn("fixed inset-0 z-9999  bg-black/70", className)}
-      onClick={() => setModalDataValue()}
+      className={cn(" fixed inset-0 z-999  bg-black/70", className)}
+      // onClick={() => setModalDataValue()}
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="shadown-md absolute left-[50%] top-[50%]  h-[90%] w-[90%] -translate-x-[50%] -translate-y-[50%]  rounded-md  bg-white "
+        className="shadown-md pointer-events-auto absolute left-[50%] top-[50%]  h-[90%] w-[90%] -translate-x-[50%] -translate-y-[50%]  rounded-md  bg-white "
       >
         <div className="flex h-full w-full flex-col">
           <div className="border-b p-4 shadow-md">

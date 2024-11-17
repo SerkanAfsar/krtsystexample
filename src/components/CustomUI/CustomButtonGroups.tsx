@@ -6,6 +6,7 @@ import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 
 type HtmlDivProps = React.HtmlHTMLAttributes<HTMLDivElement> & {
   checkBoxList: string[];
+  itemLanguageList?: string[];
   setValue: UseFormSetValue<any>;
   outerClass: ClassValue;
   register: UseFormRegister<any>;
@@ -16,7 +17,16 @@ type HtmlDivProps = React.HtmlHTMLAttributes<HTMLDivElement> & {
 
 const CustomButtonGroups = React.forwardRef<HTMLDivElement, HtmlDivProps>(
   (
-    { checkBoxList, setValue, value, outerClass, name, disabled, ...rest },
+    {
+      checkBoxList,
+      itemLanguageList,
+      setValue,
+      value,
+      outerClass,
+      name,
+      disabled,
+      ...rest
+    },
     ref,
   ) => {
     const [selected, setSelected] = React.useState<string>(value);
@@ -50,7 +60,9 @@ const CustomButtonGroups = React.forwardRef<HTMLDivElement, HtmlDivProps>(
                 "border-primary bg-primary text-white dark:border-stone-400 dark:bg-white  dark:text-black hover:dark:border-stone-400",
             )}
           >
-            {checkBoxList[0].toLocaleUpperCase()}
+            {itemLanguageList
+              ? itemLanguageList[0].toLocaleLowerCase()
+              : checkBoxList[0].toLocaleUpperCase()}
           </div>
           <div
             onClick={() => setSelected(checkBoxList[checkBoxList.length - 1])}
@@ -60,7 +72,11 @@ const CustomButtonGroups = React.forwardRef<HTMLDivElement, HtmlDivProps>(
                 "border-primary bg-primary text-white dark:border-stone-400  dark:bg-white dark:text-black dark:hover:border-stone-400",
             )}
           >
-            {checkBoxList[checkBoxList.length - 1].toLocaleUpperCase()}
+            {itemLanguageList
+              ? itemLanguageList[
+                  itemLanguageList.length - 1
+                ].toLocaleUpperCase()
+              : checkBoxList[checkBoxList.length - 1].toLocaleUpperCase()}
           </div>
         </div>
       </div>

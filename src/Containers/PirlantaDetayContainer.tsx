@@ -14,6 +14,7 @@ import {
 import CustomModalPage from "@/components/CustomModals/CustomPageModal";
 import TedarikciDetayContainer from "./TedarikciDetayContainer";
 import { useTedarikciModalData } from "@/store/useModalStore";
+import { stringToMoney } from "@/utils";
 
 const PirlantaDetayContainer = ({
   pirlantaItemData,
@@ -29,11 +30,11 @@ const PirlantaDetayContainer = ({
 
   const resultCallBack = useCallback(
     (value: any) => {
-      const iskonto = value?.iskonto?.toString().replace(",", ".") || 0;
+      const iskonto = stringToMoney(value?.iskonto) || 0;
 
       const rapaportPrice =
         value.menstrual_status == "Sertifikalı" && value?.rapaportPrice
-          ? Number(value?.rapaportPrice.toString().replace(",", "."))
+          ? stringToMoney(value?.rapaportPrice)
           : 4700;
 
       const pricePerCarat = (rapaportPrice * (100 - iskonto)) / 100;

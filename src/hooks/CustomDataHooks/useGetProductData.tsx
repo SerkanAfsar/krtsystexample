@@ -12,6 +12,7 @@ import { PirlantaListType } from "@/types/Pirlanta";
 // import { LightgalleryItem } from "react-lightgallery";
 import Image from "next/image";
 import { SadeModelTurleri } from "@/data/Sade.data";
+import { dolarFormat } from "@/utils";
 
 const InnerConvert = ({
   data,
@@ -50,7 +51,7 @@ const InnerConvert = ({
           carat: item?.properties?.carat,
           code: item?.code,
           fluorescence: item?.product_certificate?.fluorescence,
-          kesim: item?.properties?.kesim,
+          cut: item?.properties?.kesim,
           max: item?.product_certificate?.max,
           min: item?.product_certificate?.min,
           polish: item?.product_certificate?.polish,
@@ -59,7 +60,9 @@ const InnerConvert = ({
           sertifikaNo: item?.product_certificate?.sertifikaNo,
           renk: item?.properties?.renk,
           symmetry: item?.product_certificate?.symmetry,
-          paraportFiyatı: undefined,
+          paraportFiyatı: item?.product_cost?.rapaportPrice
+            ? dolarFormat(Number(item?.product_cost?.rapaportPrice))
+            : undefined,
           height: item?.product_certificate?.height,
           islemler: islemlerArea({
             id: item?.pk as number,
@@ -72,9 +75,6 @@ const InnerConvert = ({
       return data.results.map((item) => {
         return {
           resim: item.image ? (
-            // <LightgalleryItem key={item.pk} src={item.image as string}>
-
-            // </LightgalleryItem>
             <Image
               src={item.image as string}
               width={40}

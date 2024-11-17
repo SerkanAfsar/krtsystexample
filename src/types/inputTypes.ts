@@ -26,6 +26,7 @@ export type ElementType = {
   value?: string;
   isCurrency?: boolean;
   checkBoxList?: string[];
+  itemLanguageList?: string[];
   checkBoxSetValueItem?: string;
   pattern?: string;
   simgeturu?: "caratType";

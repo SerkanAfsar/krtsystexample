@@ -207,6 +207,18 @@ export const PirlantaBerraklikData: CustomOptionType[] = [
     titleVal: "I3",
     valueVal: "I3",
   },
+  {
+    titleVal: "VVS",
+    valueVal: "VVS",
+  },
+  {
+    titleVal: "VS",
+    valueVal: "VS",
+  },
+  {
+    titleVal: "SI",
+    valueVal: "SI",
+  },
 ];
 
 export const PirlantaElekData: CustomOptionType[] = [

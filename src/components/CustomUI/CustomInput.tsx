@@ -50,7 +50,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
       item?.maxLenghtCondition && values[item.maxLenghtCondition?.field];
 
     React.useEffect(() => {
-      if (item.type != "email" && setFormValues) {
+      if (item.type != "email" && item.type != "number" && setFormValues) {
         setFormValues(name as string, value?.toString().toUpperCase());
       }
     }, [value]);
@@ -84,6 +84,8 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
               id={id}
               ref={ref}
               type={item.type}
+              min={0}
+              step="any"
               placeholder={item.placeholder ?? undefined}
               name={name}
               onChange={(e) => {
