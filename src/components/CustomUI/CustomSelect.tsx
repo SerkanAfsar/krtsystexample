@@ -65,12 +65,11 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
     });
 
     useEffect(() => {
-      if (item?.customOptions) {
+      if (item?.customOptions && !tedarikciModal) {
         const process = async () => {
           setIsLoaded(false);
           const result = await item.customOptions();
           setCustomOptionValues(result);
-
           setSelectedValue((name && values[name]) || value);
           setIsLoaded(true);
         };

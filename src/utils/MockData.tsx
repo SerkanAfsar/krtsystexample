@@ -543,6 +543,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
         type: "customButtonGroup",
         title: "Müşteri Tipi",
         checkBoxList: ["Domestic", "Foreign"],
+        itemLanguageList: ["Perakende", "Toptan"],
         required: true,
         span: 2,
       },

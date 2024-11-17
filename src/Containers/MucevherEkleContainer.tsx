@@ -35,7 +35,7 @@ export default function MucevherEkleContainer() {
             ...(data?.products?.renkliTas || []),
             ...(data?.products?.pirlanta || []),
           ].reduce((acc, next) => {
-            return acc + Number(next.carat);
+            return acc + Number(next?.carat || 0);
           }, 0) || 0;
 
         const total_number_of_stones =
@@ -43,7 +43,7 @@ export default function MucevherEkleContainer() {
             ...(data?.products?.renkliTas || []),
             ...(data?.products?.pirlanta || []),
           ].reduce((acc, next) => {
-            return acc + Number(next.adet);
+            return acc + Number(next?.adet || 0);
           }, 0) || 0;
 
         const reqData: any = {
@@ -52,7 +52,7 @@ export default function MucevherEkleContainer() {
           store_id: Number(data.store_id),
           price_tag: stringToMoney(priceTag.toString()),
           model: data?.products?.sade?.[0]?.modelTuru || null,
-          total_carat,
+          total_carat: Number(total_carat.toFixed(3)),
           entry_date: "01/01/2025",
           sale_date: "02/01/2025",
           total_number_of_stones,
@@ -73,13 +73,16 @@ export default function MucevherEkleContainer() {
             })) || []),
           ],
         };
-
+        console.log("reqdata is ", reqData);
+        return;
         const response = await PostGemProductService({ body: reqData });
 
         if (response.statusCode == 200) {
           return toast.success("Mücevher Eklendi", { position: "top-right" });
         } else {
-          return toast.error("Bir Hata Oluştu", { position: "top-right" });
+          return toast.error(response.error ?? "Bir Hata Oluştu", {
+            position: "top-right",
+          });
         }
       }
     }

@@ -143,7 +143,7 @@ export default function MucevherSadeRow({
           <button
             type="button"
             onClick={() => setVisible(false)}
-            className="btn rounded-md bg-red p-3 text-white"
+            className="btn self-start rounded-md bg-red p-3 text-white"
           >
             Sil
           </button>

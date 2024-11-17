@@ -119,6 +119,7 @@ export default function FormElementItem({
       return (
         <CustomInput
           {...register(item.name, {
+            valueAsNumber: item.type == "number",
             required:
               !isDisabled && item.required ? item.requiredMessage : false,
             ...item.extraValidations,
@@ -151,6 +152,7 @@ export default function FormElementItem({
           key={item.name}
           title={item.title}
           checkBoxList={item.checkBoxList || ["DATA YOK"]}
+          itemLanguageList={item.itemLanguageList}
           setValue={setValue}
           outerClass={cn(item.span ? `col-span-${item.span}` : `col-span-full`)}
           register={register}

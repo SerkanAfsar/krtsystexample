@@ -10,6 +10,9 @@ import {
   AddProductApiService,
   UpdateProductApiService,
 } from "@/ApiServices/Products.ApiService";
+import CustomModalPage from "@/components/CustomModals/CustomPageModal";
+import TedarikciDetayContainer from "./TedarikciDetayContainer";
+import { useTedarikciModalData } from "@/store/useModalStore";
 
 export default function RenkliTasDetayContainer({
   renkliTasItemData,
@@ -21,6 +24,7 @@ export default function RenkliTasDetayContainer({
   const renkliTasItem: IRenkliTasType = renkliTasItemData ?? {};
   const [activeStep, setActiveStep] = useState<number>(0);
   const [data, setData] = useState<IRenkliTasType>(renkliTasItem);
+  const { tedarikciModal, setTedarikciModalOpen } = useTedarikciModalData();
 
   const resultCallBack = useCallback((value: any) => {
     const carat = Number(value?.carat || 0);
@@ -84,20 +88,35 @@ export default function RenkliTasDetayContainer({
       : AddRenkliTasSections.length - 1;
 
   return (
-    <CustomForm
-      setData={setData}
-      activeStep={activeStep}
-      setActiveStep={setActiveStep}
-      sections={AddRenkliTasSections.filter((a) => a.groupNumber == activeStep)}
-      data={data}
-      stepCount={sectionLenght}
-      productCode={renkliTasCode}
-      isAdd={isAdd}
-      resultCallBack={resultCallBack}
-      serviceFunction={isAdd ? AddProductApiService : UpdateProductApiService}
-      filteredData={newData}
-      extraOptions={extraOptions}
-      redirectUrl="/Admin/StokYonetimi/RenkliTas/RenkliTasListesi"
-    />
+    <>
+      <CustomModalPage
+        title="Yeni Tedarikçi Ekle"
+        modalDataValue={tedarikciModal}
+        setModalDataValue={setTedarikciModalOpen}
+      >
+        <TedarikciDetayContainer
+          isRedirect={false}
+          isAdd={true}
+          tedarikciItemData={null}
+        />
+      </CustomModalPage>
+      <CustomForm
+        setData={setData}
+        activeStep={activeStep}
+        setActiveStep={setActiveStep}
+        sections={AddRenkliTasSections.filter(
+          (a) => a.groupNumber == activeStep,
+        )}
+        data={data}
+        stepCount={sectionLenght}
+        productCode={renkliTasCode}
+        isAdd={isAdd}
+        resultCallBack={resultCallBack}
+        serviceFunction={isAdd ? AddProductApiService : UpdateProductApiService}
+        filteredData={newData}
+        extraOptions={extraOptions}
+        redirectUrl="/Admin/StokYonetimi/RenkliTas/RenkliTasListesi"
+      />
+    </>
   );
 }
