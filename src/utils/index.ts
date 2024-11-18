@@ -31,7 +31,7 @@ export const formatDate = (value: string) => {
   };
 };
 
-export const stringToMoney = (value: string): number => {
+export const stringToMoney = (value: string | number): number => {
   if (value) {
     return Number(value.toString().replace(".", "").replace(",", "."));
   }

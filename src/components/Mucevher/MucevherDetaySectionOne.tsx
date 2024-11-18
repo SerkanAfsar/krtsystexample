@@ -21,6 +21,7 @@ export default function MucevherDetaySectionOne({
   priceTag,
   labor_cost,
   purchase_price,
+  unregister,
 }: {
   isEdit?: boolean;
   setValue: UseFormSetValue<AddMucevherExternalType>;
@@ -31,6 +32,7 @@ export default function MucevherDetaySectionOne({
   priceTag?: any;
   labor_cost?: any;
   purchase_price?: any;
+  unregister?: any;
 }) {
   const [files, setFiles] = useState<FileList | null>(null);
   const [image, setImage] = useState<string | ArrayBuffer | undefined>(

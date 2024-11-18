@@ -62,7 +62,7 @@ const CustomMoneyInput = React.forwardRef<
               onChange={onChange}
               decimalsLimit={2}
               placeholder={item.placeholder ?? undefined}
-              onValueChange={(value, name) => {
+              onValueChange={(value, name, values) => {
                 setVal(value);
                 setFormValues && setFormValues(name, value);
               }}

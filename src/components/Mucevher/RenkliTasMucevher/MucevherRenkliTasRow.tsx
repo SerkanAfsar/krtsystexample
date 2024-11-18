@@ -15,14 +15,16 @@ import {
 } from "@/app/types/RenkliTas.HeaderType";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
-import { useState } from "react";
+
 import { CustomMoneyInput } from "@/components/CustomUI/CustomMoneyInput";
+import { stringToMoney } from "@/utils";
 
 export default function MucevherRenkliTasRow({
   model,
   isEdit = false,
   register,
   errors,
+  removeRenkliTas,
   index,
 }: {
   model: RenkliTasModelType;
@@ -30,11 +32,8 @@ export default function MucevherRenkliTasRow({
   register: UseFormRegister<AddMucevherExternalType>;
   errors: FieldErrors<AddMucevherExternalType>;
   index: number;
+  removeRenkliTas?: any;
 }) {
-  const [visible, setVisible] = useState<boolean>(true);
-  if (!visible) {
-    return null;
-  }
   const findSpan = (key: keyof RenkliTasModelType): number => {
     return RenkliTasHeaders.find((a) => a.accessor == key)?.span || 1;
   };
@@ -161,14 +160,20 @@ export default function MucevherRenkliTasRow({
           {...register(`products.renkliTas.${index}.fiyat`, {
             required: "Fiyat Giriniz",
           })}
-          value={(model?.fiyat as number) ?? null}
+          value={
+            model?.fiyat
+              ? !isEdit
+                ? stringToMoney(model.fiyat).toString()
+                : (model?.fiyat as number)
+              : undefined
+          }
           err={errors.products?.renkliTas?.[index]?.["fiyat"]?.message}
           disabled={isEdit}
         />
         {!isEdit && (
           <button
             type="button"
-            onClick={() => setVisible(false)}
+            onClick={() => removeRenkliTas(index)}
             className="btn self-start rounded-md bg-red p-3 text-white"
           >
             Sil

@@ -99,9 +99,9 @@ export type AddMucevherExternalType = {
   description: string;
   image: string;
   products: {
-    sade: { [key: string]: string | number }[];
-    pirlanta: { [key: string]: string | number }[];
-    renkliTas: { [key: string]: string | number }[];
+    sade: { [key: string]: string | number | null }[];
+    pirlanta: { [key: string]: string | number | null }[];
+    renkliTas: { [key: string]: string | number | null }[];
   };
   store_id: number;
 };

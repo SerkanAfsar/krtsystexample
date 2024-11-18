@@ -9,8 +9,9 @@ import CustomInput from "@/components/CustomUI/CustomInput";
 
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
-import { useState } from "react";
+
 import { CustomMoneyInput } from "@/components/CustomUI/CustomMoneyInput";
+import { stringToMoney } from "@/utils";
 
 export default function MucevherSadeRow({
   model,
@@ -18,17 +19,15 @@ export default function MucevherSadeRow({
   register,
   index,
   errors,
+  removeSade,
 }: {
   model?: SadeModelType;
   isEdit: boolean;
   index: number;
   register: UseFormRegister<AddMucevherExternalType>;
   errors: FieldErrors<AddMucevherExternalType>;
+  removeSade?: any;
 }) {
-  const [visible, setVisible] = useState<boolean>(true);
-  if (!visible) {
-    return null;
-  }
   const findSpan = (key: keyof SadeModelType): number => {
     return SadeHeaders.find((a) => a.accessor == key)?.span || 1;
   };
@@ -97,12 +96,12 @@ export default function MucevherSadeRow({
             placeholder: "Altın Rengi",
             options: AltinRengiData,
           }}
-          {...register(`products.sade.${index}.altinRengi`, {
+          {...register(`products.sade.${index}.renk`, {
             required: "Altın Rengi Giriniz",
           })}
           firstOptionText="Altın Rengi Seçiniz"
           value={(model?.altinRengi as string) ?? null}
-          err={errors.products?.sade?.[index]?.altinRengi?.message}
+          err={errors.products?.sade?.[index]?.renk?.message}
           disabled={isEdit}
         />
       </div>
@@ -135,14 +134,20 @@ export default function MucevherSadeRow({
           {...register(`products.sade.${index}.fiyat`, {
             required: "Fiyat Giriniz",
           })}
-          value={(model?.fiyat as number) ?? null}
+          value={
+            model?.fiyat
+              ? !isEdit
+                ? stringToMoney(model.fiyat).toString()
+                : (model?.fiyat as number)
+              : undefined
+          }
           err={errors.products?.sade?.[index]?.fiyat?.message}
           disabled={isEdit}
         />
         {!isEdit && (
           <button
             type="button"
-            onClick={() => setVisible(false)}
+            onClick={() => removeSade(index)}
             className="btn self-start rounded-md bg-red p-3 text-white"
           >
             Sil

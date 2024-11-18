@@ -7,25 +7,28 @@ import {
 import MucevherPirlantaRow from "./MucevherPirlantaRow";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
-import { useState } from "react";
 
 export default function MucevherPirlantaSection({
-  pirlantaProducts,
   isEdit,
   register,
   errors,
+  fieldsPirlanta,
+  appendPirlanta,
+  removePirlanta,
+  dataList,
 }: {
-  pirlantaProducts: PirlantaModelType[] | null;
   isEdit: boolean;
   register: UseFormRegister<AddMucevherExternalType>;
   errors: FieldErrors<AddMucevherExternalType>;
+  fieldsPirlanta?: any;
+  appendPirlanta?: any;
+  removePirlanta?: any;
+  dataList?: any;
 }) {
-  const [pirlantaTempItems, setPirlantaTempItems] = useState<
-    PirlantaModelType[]
-  >([]);
   const pirlantaHeaderColSum = PirlantaHeaders.reduce((acc, next) => {
     return acc + next.span;
   }, 0);
+  const mainArr = isEdit ? dataList : fieldsPirlanta;
 
   return (
     <div className="my-3 flex w-full flex-col gap-3">
@@ -45,50 +48,35 @@ export default function MucevherPirlantaSection({
       <div
         className={cn("my-3 grid gap-3", `grid-cols-${pirlantaHeaderColSum}`)}
       >
-        {pirlantaProducts?.map((item, index) => {
+        {mainArr?.map((item: PirlantaModelType, index: number) => {
           return (
             <MucevherPirlantaRow
               index={index}
               isEdit={isEdit}
-              key={index}
+              key={`${item.type}_${item.fiyat}_${item.carat}_${item.adet}_${index}`}
               model={item}
               errors={errors}
               register={register}
+              removePirlanta={removePirlanta}
             />
           );
         })}
-        {!isEdit &&
-          pirlantaTempItems.map((item, index) => {
-            return (
-              <MucevherPirlantaRow
-                register={register}
-                key={index}
-                index={index}
-                isEdit={isEdit}
-                model={item}
-                errors={errors}
-              />
-            );
-          })}
       </div>
       {!isEdit && (
         <button
           type="button"
           className="block w-40 self-end rounded-md bg-primary px-4 py-2 text-center text-white"
           onClick={() => {
-            setPirlantaTempItems((prev: any) => [
-              ...prev,
-              {
-                adet: null,
-                berraklik: null,
-                fiyat: null,
-                carat: null,
-                kesim: null,
-                mensei: null,
-                renk: null,
-                type: "Diamond",
-              },
-            ]);
+            appendPirlanta({
+              adet: null,
+              berraklik: null,
+              fiyat: null,
+              carat: null,
+              kesim: null,
+              mensei: null,
+              renk: null,
+              type: "Diamond",
+            });
           }}
         >
           Pırlanta Ekle

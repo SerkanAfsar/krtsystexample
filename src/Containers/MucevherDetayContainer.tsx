@@ -30,6 +30,15 @@ export default function MucevherDetayContainer({
   register,
   errors,
   setActiveStep,
+  fieldsPirlanta,
+  appendPirlanta,
+  removePirlanta,
+  fieldsRenkliTas,
+  appendRenkliTas,
+  removeRenkliTas,
+  fieldsSade,
+  appendSade,
+  removeSade,
 }: {
   productList: CustomArrType | null;
   code?: string;
@@ -38,6 +47,15 @@ export default function MucevherDetayContainer({
   register: UseFormRegister<AddMucevherExternalType>;
   errors: FieldErrors<AddMucevherExternalType>;
   setActiveStep?: any;
+  fieldsPirlanta?: any;
+  appendPirlanta?: any;
+  removePirlanta?: any;
+  fieldsRenkliTas?: any;
+  appendRenkliTas?: any;
+  removeRenkliTas?: any;
+  fieldsSade?: any;
+  appendSade?: any;
+  removeSade?: any;
 }) {
   const sadeProducts =
     (productList?.filter((a) => a.type == "Simple") as SadeModelType[]) || null;
@@ -72,27 +90,37 @@ export default function MucevherDetayContainer({
       <div className="grid w-full grid-cols-6">
         <div className="col-span-6 flex flex-col gap-4">
           <MucevherSadeSection
+            dataList={sadeProducts}
             register={register}
-            sadeProducts={sadeProducts}
             isEdit={isEdit}
             errors={errors}
+            fieldsSade={fieldsSade}
+            appendSade={appendSade}
+            removeSade={removeSade}
           />
           <MucevherPirlantaSection
-            pirlantaProducts={pirlantaProducts}
             isEdit={isEdit}
             register={register}
             errors={errors}
+            dataList={pirlantaProducts}
+            fieldsPirlanta={fieldsPirlanta}
+            appendPirlanta={appendPirlanta}
+            removePirlanta={removePirlanta}
           />
           <MucevherRenkliTasSection
-            renkliTasProducts={renkliTasProducts}
             isEdit={isEdit}
             register={register}
             errors={errors}
+            dataList={renkliTasProducts}
+            fieldsRenkliTas={fieldsRenkliTas}
+            appendRenkliTas={appendRenkliTas}
+            removeRenkliTas={removeRenkliTas}
           />
         </div>
       </div>
-      <hr className="my-8" />
-      <div className="col-span-6   flex  w-full justify-end">
+      {!isEdit && <hr className="my-8" />}
+
+      <div className="col-span-6 flex  w-full justify-end">
         {!isEdit && (
           <>
             <button

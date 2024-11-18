@@ -10,11 +10,10 @@ import {
   PirlantaRenkData,
 } from "@/data/Pirlanta.data";
 import { MenseiSelectedOptionsList } from "@/data/RenkliTas.data";
-
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
-import { useState } from "react";
 import { CustomMoneyInput } from "@/components/CustomUI/CustomMoneyInput";
+import { stringToMoney } from "@/utils";
 
 export default function MucevherPirlantaRow({
   model,
@@ -22,20 +21,19 @@ export default function MucevherPirlantaRow({
   register,
   errors,
   index,
+  removePirlanta,
 }: {
   model: PirlantaModelType;
   isEdit: boolean;
   register: UseFormRegister<AddMucevherExternalType>;
   errors: FieldErrors<AddMucevherExternalType>;
   index: number;
+  removePirlanta?: any;
 }) {
-  const [visible, setVisible] = useState<boolean>(true);
-  if (!visible) {
-    return null;
-  }
   const findSpan = (key: keyof PirlantaModelType): number => {
     return PirlantaHeaders.find((a) => a.accessor == key)?.span || 1;
   };
+  console.log(model.fiyat?.toString().replace(".", "").replace(",", "."));
   return (
     <>
       <div className={`col-span-${findSpan("kesim")}`}>
@@ -141,7 +139,6 @@ export default function MucevherPirlantaRow({
             required: "Adet Giriniz",
             valueAsNumber: true,
           })}
-          // value={model.adet as number}
           disabled={isEdit}
           err={errors.products?.pirlanta?.[index]?.["adet"]?.message}
         />
@@ -155,7 +152,13 @@ export default function MucevherPirlantaRow({
             rightIcon: "$",
             placeholder: "Fiyat Giriniz",
           }}
-          value={(model?.fiyat as number) ?? null}
+          value={
+            model?.fiyat
+              ? !isEdit
+                ? stringToMoney(model.fiyat).toString()
+                : (model?.fiyat as number)
+              : undefined
+          }
           {...register(`products.pirlanta.${index}.fiyat`, {
             required: "Fiyat Giriniz",
           })}
@@ -165,7 +168,7 @@ export default function MucevherPirlantaRow({
         {!isEdit && (
           <button
             type="button"
-            onClick={() => setVisible(false)}
+            onClick={() => removePirlanta(index)}
             className="btn self-start rounded-md bg-red p-3 text-white"
           >
             Sil

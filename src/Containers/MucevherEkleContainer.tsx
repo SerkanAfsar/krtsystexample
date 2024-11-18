@@ -3,7 +3,7 @@
 import MucevherDetaySectionOne from "@/components/Mucevher/MucevherDetaySectionOne";
 import { AddMucevherExternalType } from "@/types/Mucevher";
 import { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import MucevherDetayContainer from "./MucevherDetayContainer";
 
 import { WorkOrderQueueApiService } from "@/ApiServices/WorkOrders.ApiService";
@@ -22,8 +22,36 @@ export default function MucevherEkleContainer() {
     watch,
     setValue,
     getValues,
+    control,
     formState: { errors, isValid },
   } = useForm<AddMucevherExternalType>({});
+
+  const {
+    fields: fieldsPirlanta,
+    append: appendPirlanta,
+    remove: removePirlanta,
+  } = useFieldArray({
+    control,
+    name: "products.pirlanta",
+  });
+
+  const {
+    fields: fieldsRenkliTas,
+    append: appendRenkliTas,
+    remove: removeRenkliTas,
+  } = useFieldArray({
+    control,
+    name: "products.renkliTas",
+  });
+
+  const {
+    fields: fieldsSade,
+    append: appendSade,
+    remove: removeSade,
+  } = useFieldArray({
+    control,
+    name: "products.sade",
+  });
 
   const onSubmit: SubmitHandler<AddMucevherExternalType> = async (data) => {
     if (activeStep == 0) {
@@ -61,28 +89,30 @@ export default function MucevherEkleContainer() {
           products: [
             ...(data?.products?.pirlanta?.map((item) => ({
               ...item,
-              fiyat: stringToMoney(item.fiyat.toString()),
+              fiyat: stringToMoney(item.fiyat as string),
             })) || []),
             ...(data?.products?.renkliTas?.map((item) => ({
               ...item,
-              fiyat: stringToMoney(item.fiyat.toString()),
+              fiyat: stringToMoney(item.fiyat as string),
             })) || []),
             ...(data?.products?.sade?.map((item) => ({
               ...item,
-              fiyat: stringToMoney(item.fiyat.toString()),
+              fiyat: stringToMoney(item.fiyat as string),
             })) || []),
           ],
         };
-        console.log("reqdata is ", reqData);
-        return;
+
         const response = await PostGemProductService({ body: reqData });
 
         if (response.statusCode == 200) {
           return toast.success("Mücevher Eklendi", { position: "top-right" });
         } else {
-          return toast.error(response.error ?? "Bir Hata Oluştu", {
-            position: "top-right",
-          });
+          return toast.error(
+            response.error ? response.error.at(0) : "Bir Hata Oluştu",
+            {
+              position: "top-right",
+            },
+          );
         }
       }
     }
@@ -112,14 +142,12 @@ export default function MucevherEkleContainer() {
     stringToMoney(purchase_price?.toString());
 
   const sadeProducts = watch("products.sade");
-
   const sadeProductsString = JSON.stringify(sadeProducts);
 
   useEffect(() => {
-    if (sadeProducts) {
+    if (sadeProducts && sadeProducts[0]) {
       for (let index = 0; index < sadeProducts.length; index++) {
         const { gram, ayar } = sadeProducts[index];
-
         if (gram) {
           setValue(
             `products.sade.${index}.hasGram`,
@@ -127,6 +155,7 @@ export default function MucevherEkleContainer() {
           );
         }
       }
+
       const { gram, ayar } = sadeProducts[0];
       if (gram && ayar) {
         setValue("simple", `${gram}gr ${ayar}k`);
@@ -147,10 +176,19 @@ export default function MucevherEkleContainer() {
       purchase_price={purchase_price}
     />,
     <MucevherDetayContainer
-      productList={null}
       isEdit={false}
       showTitle={false}
+      productList={null}
       key={1}
+      fieldsPirlanta={fieldsPirlanta}
+      appendPirlanta={appendPirlanta}
+      removePirlanta={removePirlanta}
+      fieldsRenkliTas={fieldsRenkliTas}
+      appendRenkliTas={appendRenkliTas}
+      removeRenkliTas={removeRenkliTas}
+      fieldsSade={fieldsSade}
+      appendSade={appendSade}
+      removeSade={removeSade}
       errors={errors}
       register={register}
       setActiveStep={setActiveStep}

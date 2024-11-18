@@ -7,25 +7,29 @@ import {
 import MucevherRenkliTasRow from "./MucevherRenkliTasRow";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
-import { useState } from "react";
 
 export default function MucevherRenkliTasSection({
-  renkliTasProducts,
   isEdit,
   register,
   errors,
+  fieldsRenkliTas,
+  appendRenkliTas,
+  removeRenkliTas,
+  dataList,
 }: {
-  renkliTasProducts: RenkliTasModelType[] | null;
   isEdit: boolean;
   register: UseFormRegister<AddMucevherExternalType>;
   errors: FieldErrors<AddMucevherExternalType>;
+  fieldsRenkliTas?: any;
+  appendRenkliTas?: any;
+  removeRenkliTas?: any;
+  dataList?: any;
 }) {
-  const [renkliTasTempItems, setRenkliTasTempItems] = useState<
-    RenkliTasModelType[]
-  >([]);
   const renkliTasHeaderColSum = RenkliTasHeaders.reduce((acc, next) => {
     return acc + next.span;
   }, 0);
+
+  const mainArr = isEdit ? dataList : fieldsRenkliTas;
 
   return (
     <div className="my-3 flex w-full flex-col gap-3">
@@ -45,31 +49,19 @@ export default function MucevherRenkliTasSection({
       <div
         className={cn("my-3 grid gap-3", `grid-cols-${renkliTasHeaderColSum}`)}
       >
-        {renkliTasProducts?.map((item, index) => {
+        {mainArr?.map((item: RenkliTasModelType, index: number) => {
           return (
             <MucevherRenkliTasRow
               register={register}
               errors={errors}
               isEdit={isEdit}
-              key={index}
+              key={`${item.adet}_${item.carat}_${item.fiyat}_${item.renkliTas}_${index}`}
               index={index}
               model={item}
+              removeRenkliTas={removeRenkliTas}
             />
           );
         })}
-        {!isEdit &&
-          renkliTasTempItems.map((item, index) => {
-            return (
-              <MucevherRenkliTasRow
-                register={register}
-                errors={errors}
-                isEdit={isEdit}
-                index={index}
-                key={index}
-                model={item}
-              />
-            );
-          })}
       </div>
 
       {!isEdit && (
@@ -77,19 +69,16 @@ export default function MucevherRenkliTasSection({
           type="button"
           className="block w-40 self-end rounded-md bg-primary px-4 py-2 text-center text-white"
           onClick={() => {
-            setRenkliTasTempItems((prev: any) => [
-              ...prev,
-              {
-                adet: null,
-                fiyat: null,
-                carat: null,
-                kesim: null,
-                mensei: null,
-                renk: null,
-                renkliTas: null,
-                type: "ColoredStone",
-              },
-            ]);
+            appendRenkliTas({
+              adet: null,
+              fiyat: null,
+              carat: null,
+              kesim: null,
+              mensei: null,
+              renk: null,
+              renkliTas: null,
+              type: "ColoredStone",
+            });
           }}
         >
           Renkli Taş Ekle
