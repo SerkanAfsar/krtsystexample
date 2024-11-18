@@ -11,10 +11,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "karatstorage.blob.core.windows.net",
       },
-      {
-        protocol: "https",
-        hostname: "atillakaratstorage.blob.core.windows.net",
-      },
+      // {
+      //   protocol: "https",
+      //   hostname: "atillakaratstorage.blob.core.windows.net",
+      // },
     ],
   },
 };
