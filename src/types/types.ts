@@ -210,7 +210,7 @@ export type TedarikciType = {
   authorized_name?: string;
   authorized_phone?: string;
   post_code?: string;
-  balance_upper_limit?: string;
+  balance_upper_limit?: number;
 };
 
 export type MusteriType = {

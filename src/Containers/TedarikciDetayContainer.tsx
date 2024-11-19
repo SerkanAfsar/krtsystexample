@@ -14,6 +14,7 @@ import CustomTabs, { TabSectionType } from "@/components/CustomUI/CustomTabs";
 import useTedarikciyeBagliUrunlerTable from "@/hooks/SatisHooks/useTedarikciyeBagliUrunler";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import { SupplierProductDataTableHeaders } from "@/types/Tedarikci";
+import { stringToMoney } from "@/utils";
 
 export default function TedarikciDetayContainer({
   tedarikciItemData,
@@ -41,7 +42,10 @@ export default function TedarikciDetayContainer({
       if (data[name]) {
         return {
           ...acc2,
-          [name]: next2.type == "number" ? Number(data[name]) : data[name],
+          [name]:
+            next2.type == "number" || next2.type == "money"
+              ? stringToMoney(data[name])
+              : data[name],
         };
       }
       return { ...acc2 };
@@ -53,7 +57,9 @@ export default function TedarikciDetayContainer({
     (acc: any, next: any) => {
       return { ...acc, ...next };
     },
-    { type: "TestData" },
+    {
+      type: "deneme",
+    },
   );
 
   if (isAdd) {

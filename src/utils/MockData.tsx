@@ -345,8 +345,10 @@ export const AddTedarikciSections: Array<FormSectionType> = [
         type: "customButtonGroup",
         title: "Tedarikçi Tipi",
         checkBoxList: ["Domestic", "Foreign"],
+        itemLanguageList: ["YERLİ", "YABANCI"],
         required: true,
         span: 2,
+        isFull: true,
       },
       {
         name: "post_code",
@@ -453,6 +455,15 @@ export const AddTedarikciSections: Array<FormSectionType> = [
     keyString: "infoSection3",
     elements: [
       {
+        name: "balance_upper_limit",
+        type: "money",
+        title: "Bakiye Üst Limit",
+        placeholder: "Bakiye Üst Limit Giriniz...",
+        required: true,
+        requiredMessage: "Bakiye Üst Limit Boş Bırakılamaz",
+        span: 2,
+      },
+      {
         name: "authorized_name",
         type: "text",
         title: "Yetkili Ad/Soyad",
@@ -546,6 +557,7 @@ export const AddMusteriSections: Array<FormSectionType> = [
         itemLanguageList: ["Perakende", "Toptan"],
         required: true,
         span: 2,
+        isFull: true,
       },
       {
         name: "invoice_address",
@@ -957,8 +969,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Mağaza Değeri Boş Bırakılamaz",
         span: 2,
-        colStart: "10",
-        colEnd: "10",
+
         customOptions: MagazaCustomListType,
       },
       {
@@ -970,8 +981,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Tedarikçi Değeri Boş Bırakılamaz",
         span: 2,
-        colStart: "10",
-        colEnd: "10",
+
         customOptions: TedarikciCustomListType,
         isTedarikci: true,
       },
@@ -1058,6 +1068,10 @@ export const AddStoneSections: Array<FormSectionType> = [
           {
             titleVal: "-",
             valueVal: "-",
+          },
+          {
+            titleVal: "Good",
+            valueVal: "Good",
           },
         ],
       },

@@ -104,6 +104,7 @@ export type AddMucevherExternalType = {
     renkliTas: { [key: string]: string | number | null }[];
   };
   store_id: number;
+  supplier_id?: number;
 };
 
 export type MucevherSadeRegisterType = {

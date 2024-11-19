@@ -124,6 +124,8 @@ export default function MucevherEkleContainer() {
     "products.renkliTas",
   ]);
 
+  const { ayar, modelTuru } = sade?.length ? sade[0] : {};
+
   useEffect(() => {
     const resultCode = MucevherCode(pirlanta, sade, renkliTas);
     const process = async () => {
@@ -133,7 +135,7 @@ export default function MucevherEkleContainer() {
     if (resultCode) {
       process();
     }
-  }, [pirlanta, sade, renkliTas]);
+  }, [pirlanta?.length, ayar, modelTuru, renkliTas?.length]);
 
   const [labor_cost, purchase_price] = watch(["labor_cost", "purchase_price"]);
 

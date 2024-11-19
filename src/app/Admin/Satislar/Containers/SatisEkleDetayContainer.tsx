@@ -49,12 +49,7 @@ export default function SatisEkleDetayContainer({
 
   const toplamTutar =
     products?.reduce((acc: any, next: any) => {
-      return (
-        acc +
-        Number(
-          next.total_cost?.toString().replace(".", "").replace(",", ".") || 0,
-        )
-      );
+      return acc + Number(next.total_cost || 0);
     }, 0) || 0;
 
   const toplamMaliyet =
@@ -83,6 +78,17 @@ export default function SatisEkleDetayContainer({
     }, 0) || 0;
 
   const toplamKalanTutar = Number(toplamMaliyet - toplamOdenenTutar).toFixed(2);
+
+  const toplamEtiketFiyati =
+    products?.reduce((acc: any, next: any) => {
+      return (
+        acc +
+        Number(
+          next.sales_price?.toString().replace(".", "").replace(",", ".") || 0,
+        ) *
+          4.55
+      );
+    }, 0) || 0;
 
   const onSubmit = async () => {
     const data = getValues();

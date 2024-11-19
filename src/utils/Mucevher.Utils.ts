@@ -7,38 +7,38 @@ export const MucevherCode = (
   renkliTasArr: any[] | undefined,
 ) => {
   let code = "";
-  if (pirlantaArr && pirlantaArr?.length > 0 && renkliTasArr?.length == 0) {
+  if (pirlantaArr && pirlantaArr.length) {
     code = "D";
   }
   if (
     pirlantaArr &&
-    pirlantaArr.length > 0 &&
+    pirlantaArr.length &&
     renkliTasArr &&
-    renkliTasArr.length > 0
+    renkliTasArr.length
   ) {
     code = "M";
   }
-  if (
-    pirlantaArr &&
-    pirlantaArr.length == 0 &&
-    renkliTasArr &&
-    renkliTasArr.length > 0
-  ) {
-    code = "M";
-  }
-  if (
-    pirlantaArr &&
-    pirlantaArr.length == 0 &&
-    renkliTasArr &&
-    renkliTasArr.length == 1
-  ) {
-    const item = renkliTasArr[0]?.type;
-    code = `${item}`;
-  }
-  if (sadeArr && sadeArr.length > 0) {
+  // if (pirlantaArr && !pirlantaArr.length && renkliTasArr) {
+  //   code = "M";
+  // }
+  // if (
+  //   pirlantaArr &&
+  //   pirlantaArr.length &&
+  //   renkliTasArr &&
+  //   renkliTasArr.length &&
+  //   renkliTasArr[0]?.type
+  // ) {
+  //   const item = renkliTasArr[0]?.type;
+  //   code = `${item}`;
+  // }
+  if (sadeArr && sadeArr.length && sadeArr[0].modelTuru) {
     const item = sadeArr[0];
-    code += item?.ayar;
-    code += sadeModelIlkHarf(item?.modelTuru);
+    if (item.ayar) {
+      code += item?.ayar;
+    }
+    if (item.modelTuru) {
+      code += sadeModelIlkHarf(item?.modelTuru);
+    }
   }
   return code;
 };

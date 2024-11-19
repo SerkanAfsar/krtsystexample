@@ -33,7 +33,7 @@ export default function MucevherPirlantaRow({
   const findSpan = (key: keyof PirlantaModelType): number => {
     return PirlantaHeaders.find((a) => a.accessor == key)?.span || 1;
   };
-  console.log(model.fiyat?.toString().replace(".", "").replace(",", "."));
+
   return (
     <>
       <div className={`col-span-${findSpan("kesim")}`}>

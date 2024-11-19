@@ -154,7 +154,7 @@ export default function SatisDetayUrunler({
                 }}
                 className={"col-span-2"}
                 disabled={true}
-                value={item.total_cost}
+                value={item.total_cost?.toFixed(2)}
               />
               <CustomMoneyInput
                 item={{
@@ -228,7 +228,7 @@ export default function SatisDetayUrunler({
                 rightIcon: "$",
               }}
               className={"col-start-5 col-end-7"}
-              value={toplamTutar}
+              value={toplamTutar.toFixed(2)}
               disabled={true}
             />
             <CustomMoneyInput

@@ -157,6 +157,7 @@ export default function FormElementItem({
           outerClass={cn(item.span ? `col-span-${item.span}` : `col-span-full`)}
           register={register}
           name={item.name}
+          isFull={item.isFull}
           value={val}
           disabled={(!isAdd && item.isCodeRelated) || isDisabled}
           {...rest}
