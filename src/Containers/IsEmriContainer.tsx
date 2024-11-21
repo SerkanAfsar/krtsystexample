@@ -11,7 +11,7 @@ import {
 import usePirlantaModalData from "@/hooks/ModalDataHooks/usePirlantaModalData";
 import useRenkliTasModalData from "@/hooks/ModalDataHooks/useRenkliTasModalData";
 import useSadeModalData from "@/hooks/ModalDataHooks/useSadeModalData";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { formatToCurrency } from "@/utils";
 import {
   AddWorOrderType,
@@ -89,23 +89,37 @@ export default function IsEmriContainer() {
     }),
   );
 
-  const resultCode = useMemo(() => {
-    const pirlantaArr = values.find((a) => a.title == "Pırlanta")?.products;
-    const renkliTasArr = values.find((a) => a.title == "Renkli Taş")?.products;
-    const sadeArr = values.find((a) => a.title == "Sade")?.products;
-    const result = MucevherCode(pirlantaArr, sadeArr, renkliTasArr);
-    return result;
-  }, [values]);
+  const pirlantaArr = values.find((a) => a.title == "Pırlanta")?.products;
+  const renkliTasArr = values.find((a) => a.title == "Renkli Taş")?.products;
+  const sadeArr = values.find((a) => a.title == "Sade")?.products;
+
+  const { ayar, modelTuru } = sadeArr?.length ? sadeArr[0] : {};
+  const { name: type } = renkliTasArr?.length ? renkliTasArr[0] : {};
+
+  const isCondition = pirlantaArr?.some((a) => a.renk == "BLACK");
 
   useEffect(() => {
-    const process = async () => {
+    const resultCode = MucevherCode(pirlantaArr, sadeArr, renkliTasArr);
+    const process = async ({ resultCode }: { resultCode: string }) => {
       const result = await WorkOrderQueueApiService({ code: resultCode });
       setIsEmriCode(`${resultCode}-${result}`);
     };
     if (resultCode) {
-      process();
+      process({ resultCode });
+    } else {
+      setIsEmriCode("");
     }
-  }, [resultCode]);
+  }, [
+    pirlantaArr,
+    renkliTasArr,
+    sadeArr,
+    renkliTasArr?.length,
+    ayar,
+    modelTuru,
+    renkliTasArr?.length,
+    type,
+    isCondition,
+  ]);
 
   const lastItems = values.reduce<WorkOrderProductType[]>((acc, next) => {
     return [...acc, ...next.products];

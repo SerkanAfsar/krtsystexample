@@ -31,9 +31,9 @@ export const MucevherCode = (
   } else if (
     renkliTasArr &&
     renkliTasArr.length &&
-    renkliTasArr[0]?.renkliTas
+    (renkliTasArr[0]?.renkliTas || renkliTasArr[0]?.name)
   ) {
-    const item = renkliTasArr[0]?.renkliTas;
+    const item = renkliTasArr[0]?.renkliTas || renkliTasArr[0]?.name;
 
     if (item == "Ruby") {
       code = "R";

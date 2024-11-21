@@ -39,7 +39,7 @@ export default function UrunGruplariModul({
       product_id: Number(item.pk),
       quantity: item.adet ? Number(item.adet) : 1,
       used_carat: item.used_carat ? Number(item.used_carat) : 0,
-      name: item.name ? item.name : null,
+      name: (item.name as string) ?? null,
       price:
         item.firstPrice && item.type != "Sade" && item.used_carat
           ? Number(item.firstPrice) * (item.used_carat as number)
@@ -47,6 +47,7 @@ export default function UrunGruplariModul({
       type: item.type ? String(item.type) : undefined,
       ayar: item.ayar ? String(item.ayar) : null,
       modelTuru: item.modelTuru ? String(item.modelTuru) : null,
+      renk: (item.renk as string) ?? null,
     }));
 
     setValues((prev: ProductItemsType[]) => {

@@ -8,6 +8,8 @@ export type WorkOrderProductType = {
   type?: string | null;
   ayar?: string | null;
   modelTuru?: string | null;
+  renk?: string | null;
+  name?: string | null;
 };
 
 export type ProductItemsType = {
