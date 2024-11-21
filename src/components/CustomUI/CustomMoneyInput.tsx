@@ -66,6 +66,8 @@ const CustomMoneyInput = React.forwardRef<
                 setVal(value);
                 setFormValues && setFormValues(name, value);
               }}
+              decimalSeparator=","
+              disableGroupSeparators={true}
               onBlur={onBlur}
               value={item.isConstant ? value : val}
               className={cn(

@@ -265,7 +265,9 @@ export default function MucevherDetaySectionOne({
                 }}
                 className={"col-span-2"}
                 value={
-                  isEdit ? (mainData?.properties?.priceTag as number) : priceTag
+                  isEdit
+                    ? (mainData?.properties?.priceTag as number)
+                    : Number(Number(priceTag).toFixed(2))
                 }
                 disabled={true}
               />

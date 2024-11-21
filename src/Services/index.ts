@@ -44,6 +44,7 @@ export const BaseService = async ({
       body: isFormData ? bodyData : bodyData ? JSON.stringify(bodyData) : null,
     });
     const result = await response.json();
+
     if (response.ok) {
       if (isResponseList) {
         return result;
@@ -57,9 +58,12 @@ export const BaseService = async ({
         data: null,
         error:
           result && result.error
-            ? [result.error[0]]
+            ? Array.isArray(result.error)
+              ? [result.error[0]]
+              : [result.error]
             : [Object.values(result).at(0)],
       };
+
       return errResponse;
     }
   } catch (err: unknown) {
