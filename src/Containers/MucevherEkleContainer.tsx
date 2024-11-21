@@ -58,6 +58,11 @@ export default function MucevherEkleContainer() {
       setActiveStep(1);
     } else {
       if (isValid) {
+        if (!sade.length) {
+          return toast.error("Sade Eklemeden Mücevher Ekleyemezsiniz!", {
+            position: "top-right",
+          });
+        }
         const total_carat =
           [
             ...(data?.products?.renkliTas || []),
@@ -125,6 +130,9 @@ export default function MucevherEkleContainer() {
   ]);
 
   const { ayar, modelTuru } = sade?.length ? sade[0] : {};
+  const { renkliTas: type } = renkliTas?.length ? renkliTas[0] : {};
+
+  const isCondition = pirlanta?.some((a) => a.renk == "BLACK");
 
   useEffect(() => {
     const resultCode = MucevherCode(pirlanta, sade, renkliTas);
@@ -134,8 +142,10 @@ export default function MucevherEkleContainer() {
     };
     if (resultCode) {
       process();
+    } else {
+      setCode("");
     }
-  }, [pirlanta?.length, ayar, modelTuru, renkliTas?.length]);
+  }, [pirlanta?.length, ayar, modelTuru, renkliTas?.length, type, isCondition]);
 
   const [labor_cost, purchase_price] = watch(["labor_cost", "purchase_price"]);
 

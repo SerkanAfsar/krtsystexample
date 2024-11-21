@@ -8,29 +8,44 @@ export const MucevherCode = (
 ) => {
   let code = "";
   if (pirlantaArr && pirlantaArr.length) {
-    code = "D";
+    if (pirlantaArr && pirlantaArr.some((a) => a.renk == "BLACK")) {
+      code = "B";
+    } else {
+      code = "D";
+    }
   }
+
   if (
+    pirlantaArr &&
+    pirlantaArr?.length &&
+    pirlantaArr.some((a) => a.renk == "BLACK")
+  ) {
+    code = "B";
+  } else if (
     pirlantaArr &&
     pirlantaArr.length &&
     renkliTasArr &&
     renkliTasArr.length
   ) {
     code = "M";
+  } else if (
+    renkliTasArr &&
+    renkliTasArr.length &&
+    renkliTasArr[0]?.renkliTas
+  ) {
+    const item = renkliTasArr[0]?.renkliTas;
+
+    if (item == "Ruby") {
+      code = "R";
+    } else if (item == "Emerald") {
+      code = "E";
+    } else if (item == "Sapphire") {
+      code = "S";
+    } else {
+      code = "Y";
+    }
   }
-  // if (pirlantaArr && !pirlantaArr.length && renkliTasArr) {
-  //   code = "M";
-  // }
-  // if (
-  //   pirlantaArr &&
-  //   pirlantaArr.length &&
-  //   renkliTasArr &&
-  //   renkliTasArr.length &&
-  //   renkliTasArr[0]?.type
-  // ) {
-  //   const item = renkliTasArr[0]?.type;
-  //   code = `${item}`;
-  // }
+
   if (sadeArr && sadeArr.length && sadeArr[0].modelTuru) {
     const item = sadeArr[0];
     if (item.ayar) {
