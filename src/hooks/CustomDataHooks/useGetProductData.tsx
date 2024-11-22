@@ -13,6 +13,7 @@ import { PirlantaListType } from "@/types/Pirlanta";
 import Image from "next/image";
 import { SadeModelTurleri } from "@/data/Sade.data";
 import { dolarFormat } from "@/utils";
+import Link from "next/link";
 
 const InnerConvert = ({
   data,
@@ -169,10 +170,9 @@ export default function useGetProductData(
     ({ id, productCode }: { id: number; productCode: string }) => {
       return (
         <div className="flex w-full items-center justify-center  gap-6">
-          <FaPencil
-            className="cursor-pointer"
-            onClick={() => router.push(`${redirectUrl}${id}`)}
-          />
+          <Link href={`${redirectUrl}${id}`} title="Link">
+            <FaPencil className="cursor-pointer" />
+          </Link>
           <FaTrash
             className="cursor-pointer"
             onClick={async () => {

@@ -19,12 +19,12 @@ const columns: Column<{
     accessor: "name",
   },
   {
-    Header: "Müşteri Telefonu",
+    Header: "Mağaza Telefonu",
     accessor: "phone",
   },
 
   {
-    Header: "Müşteri Adresi",
+    Header: "Mağaza Adresi",
     accessor: "address",
   },
 

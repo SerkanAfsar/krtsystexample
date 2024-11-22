@@ -156,7 +156,8 @@ const AltiliSecenekSection = React.forwardRef<
               {type == "6'lı Rapor" && (
                 <tr>
                   <td className="border  border-slate-300  font-bold text-blue-500">
-                    Atölye Maliyeti: {dolarFormat(item.total_cost as number)}
+                    Atölye Maliyeti:{" "}
+                    {dolarFormat(item.total_cost as number).replace("$", "")}
                   </td>
                 </tr>
               )}
@@ -229,7 +230,7 @@ const AltiliSecenekSection = React.forwardRef<
 
                   <tr>
                     <td className="border border-slate-300  font-bold text-green-600">
-                      TOPTAN SATIŞ: {dolarFormat(toptanSatis)}
+                      TOPTAN SATIŞ: {dolarFormat(toptanSatis).replace("$", "")}
                     </td>
                   </tr>
                 </>
@@ -237,7 +238,7 @@ const AltiliSecenekSection = React.forwardRef<
 
               <tr>
                 <td className="border border-slate-300  font-bold text-red">
-                  Etiket: {dolarFormat(etiketFiyati)}
+                  Etiket: {dolarFormat(etiketFiyati).replace("$", "")}
                 </td>
               </tr>
             </tbody>

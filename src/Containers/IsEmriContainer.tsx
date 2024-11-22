@@ -140,10 +140,23 @@ export default function IsEmriContainer() {
       (a: WorkOrderProductType) => a.type == "Sade",
     );
     if (!condition) {
-      return toast.error("Üretimde En Az 1 Adet Sade Seçilmesi zorunludur!", {
+      return toast.error("Üretimde En Az 1 Adet Sade Seçilmesi Zorunludur!", {
         position: "top-right",
       });
     }
+
+    if (!pirlantaArr?.length && !renkliTasArr?.length) {
+      return toast.error("Üretimde En Az 1 Adet Taş Seçilmesi Zorunludur!", {
+        position: "top-right",
+      });
+    }
+
+    if (!description) {
+      return toast.error("Üretimde İş Emri Açıklaması Girilmesi Zorunludur!", {
+        position: "top-right",
+      });
+    }
+
     const result: any = await AddWorkOrderService({ data: lastData });
 
     if (result?.success) {

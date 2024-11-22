@@ -341,7 +341,7 @@ const CustomDatatable = ({
                   return (
                     <td
                       className={cn(
-                        "z-20 !align-middle text-sm font-thin last:sticky last:inset-0 last:z-30  last:bg-gray-3",
+                        "z-20 !align-middle text-sm font-thin last:sticky last:inset-0 last:z-30 last:bg-gray-3  last:text-center",
                       )}
                       {...cell.getCellProps()}
                       key={`cell-${key}`}

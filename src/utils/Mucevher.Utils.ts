@@ -49,7 +49,13 @@ export const MucevherCode = (
   if (sadeArr && sadeArr.length && sadeArr[0].modelTuru) {
     const item = sadeArr[0];
     if (item.ayar) {
-      code += item?.ayar;
+      if (item.ayar == 750) {
+        code += "18";
+      } else if (item.ayar == 585) {
+        code += "14";
+      } else {
+        code += item?.ayar;
+      }
     }
     if (item.modelTuru) {
       code += sadeModelIlkHarf(item?.modelTuru);

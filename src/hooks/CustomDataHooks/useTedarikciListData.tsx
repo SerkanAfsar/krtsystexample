@@ -5,6 +5,7 @@ import { CustomDataListType, TedarikciType } from "@/types/types";
 import { GetTedarikciDatatableService } from "@/Services/Supplier.Services";
 import { DeleteTedarikciApiService } from "@/ApiServices/Suppliers.ApiService";
 import { ResponseResult } from "@/types/responseTypes";
+import Link from "next/link";
 
 export default function useTedarikciListData() {
   const router = useRouter();
@@ -67,12 +68,12 @@ export default function useTedarikciListData() {
     ({ id, productCode }: { id: number; productCode: string }) => {
       return (
         <div className="flex items-center justify-center  gap-6">
-          <FaPencil
-            className="cursor-pointer"
-            onClick={() =>
-              router.push(`/Admin/Firmalar/Tedarikciler/TedarikciEkle/${id}`)
-            }
-          />
+          <Link
+            href={`/Admin/Firmalar/Tedarikciler/TedarikciEkle/${id}`}
+            title="Link"
+          >
+            <FaPencil className="cursor-pointer" />
+          </Link>
           <FaTrash
             className="cursor-pointer"
             onClick={async () => {

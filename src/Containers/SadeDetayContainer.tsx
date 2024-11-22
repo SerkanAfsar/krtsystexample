@@ -67,7 +67,7 @@ export default function SadeDetayContainer({
       type: "Simple",
       cost_currency: data.cost_currency,
       code: sadeCode,
-      total_cost: Number(data.total_cost),
+      total_cost: Number(Number(data.total_cost).toFixed(2)),
       image,
       menstrual_status: "Single",
       store_id: Number(data.store_id),
@@ -112,8 +112,7 @@ export default function SadeDetayContainer({
   const totalCoastHesapla = useCallback(
     ({ hasGrami, iscilik }: { hasGrami?: string; iscilik: number }) => {
       if (hasGrami && iscilik) {
-        const totalCost = Number(hasGrami) * gramAltinKur + Number(iscilik);
-        return totalCost.toFixed(2);
+        return Number(hasGrami) * gramAltinKur + iscilik;
       }
     },
     [gramAltinKur],
@@ -122,9 +121,13 @@ export default function SadeDetayContainer({
   const updateData = useCallback(
     (value: any) => {
       const hasGrami = hasGramHesapla(value);
+
       return {
         hasGrami,
-        total_cost: totalCoastHesapla({ hasGrami, iscilik: value.iscilik }),
+        total_cost: totalCoastHesapla({
+          hasGrami,
+          iscilik: value.iscilik,
+        }),
       };
     },
     [hasGramHesapla, totalCoastHesapla],

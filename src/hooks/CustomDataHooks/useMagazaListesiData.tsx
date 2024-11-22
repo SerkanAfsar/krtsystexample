@@ -6,6 +6,7 @@ import { MagazaType } from "@/types/Magaza";
 import { DeleteMagazaApiService } from "@/ApiServices/Magaza.ApiService";
 import { ResponseResult } from "@/types/responseTypes";
 import { CustomDataListType } from "@/types/types";
+import Link from "next/link";
 
 export default function useMagazaListesiData() {
   const router = useRouter();
@@ -65,10 +66,9 @@ export default function useMagazaListesiData() {
     ({ id, name }: { id: number; name: string }) => {
       return (
         <div className="flex items-center justify-center  gap-6">
-          <FaPencil
-            className="cursor-pointer"
-            onClick={() => router.push(`/Admin/Magazalar/MagazaEkle/${id}`)}
-          />
+          <Link href={`/Admin/Magazalar/MagazaEkle/${id}`} title="Link">
+            <FaPencil className="cursor-pointer" />
+          </Link>
           <FaTrash
             className="cursor-pointer"
             onClick={async () => {

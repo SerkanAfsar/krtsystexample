@@ -106,3 +106,9 @@ pırlanta ekle sertifikasızda---> price per carat disabled olucak ve hesaplanı
 
 renkli taş eklediğimizde ruby ise R emerald E sapphire S diğerleri için Y 
 pırlantanın rengi black ise B
+
+
+
+şu anki toplam fiyat sola kaydırılıcak. yurdışı seçilenler toplam fiyata 10% eklicez. PO-->Kutucuğun başlığı
+
+karatla*pricepercarat=toplamfiyat

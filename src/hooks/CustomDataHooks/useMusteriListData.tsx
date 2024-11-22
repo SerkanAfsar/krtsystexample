@@ -5,6 +5,7 @@ import { CustomDataListType, MusteriType } from "@/types/types";
 import { GetMusteriDatatableService } from "@/Services/Customer.Service";
 import { DeleteMusteriApiService } from "@/ApiServices/Customer.ApiService";
 import { ResponseResult } from "@/types/responseTypes";
+import Link from "next/link";
 
 export default function useMusteriListData() {
   const router = useRouter();
@@ -66,12 +67,12 @@ export default function useMusteriListData() {
     ({ id, productCode }: { id: number; productCode: string }) => {
       return (
         <div className="flex items-center justify-center  gap-6">
-          <FaPencil
-            className="cursor-pointer"
-            onClick={() =>
-              router.push(`/Admin/Firmalar/Musteriler/MusteriEkle/${id}`)
-            }
-          />
+          <Link
+            href={`/Admin/Firmalar/Musteriler/MusteriEkle/${id}`}
+            title="Link"
+          >
+            <FaPencil className="cursor-pointer" />
+          </Link>
           <FaTrash
             className="cursor-pointer"
             onClick={async () => {

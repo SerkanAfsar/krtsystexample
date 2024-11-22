@@ -11,6 +11,7 @@ import Image from "next/image";
 import { MucevherListType } from "@/types/Mucevher";
 import { dolarFormat } from "@/utils";
 import { useUserStore } from "@/store/useUserStore";
+import Link from "next/link";
 
 export default function useGemProductData(redirectUrl: string) {
   const router = useRouter();
@@ -129,10 +130,9 @@ export default function useGemProductData(redirectUrl: string) {
     ({ id, productCode }: { id: number; productCode: string }) => {
       return (
         <div className="flex items-center justify-center  gap-6">
-          <FaPencil
-            className="cursor-pointer"
-            onClick={() => router.push(`${redirectUrl}${id}`)}
-          />
+          <Link href={`${redirectUrl}${id}`} title="Link">
+            <FaPencil className="cursor-pointer" />
+          </Link>
           {user?.groups.some((a) => a.name == "Üretim Müdürü") && (
             <FaTrash
               className="cursor-pointer"
