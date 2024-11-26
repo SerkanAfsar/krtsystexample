@@ -43,6 +43,13 @@ const CustomMoneyInput = React.forwardRef<
   ) => {
     const [val, setVal] = useState<string | undefined>(value);
 
+    const allValues = getValues && getValues();
+
+    const isDeneme =
+      item.isConstantCondition &&
+      allValues[item.isConstantCondition["field"]] ==
+        item.isConstantCondition["val"];
+
     return (
       <div className={cn("w-full", outerClass && outerClass, className)}>
         {(item.title || item?.isTopMargin) && (
@@ -69,7 +76,7 @@ const CustomMoneyInput = React.forwardRef<
               decimalSeparator=","
               disableGroupSeparators={true}
               onBlur={onBlur}
-              value={item.isConstant ? value : val}
+              value={item.isConstant || isDeneme ? value : val}
               className={cn(
                 "h-full w-full rounded border-[1.5px] border-stone-400 bg-transparent px-5 py-3 pb-[14px] font-normal  text-black outline-none transition placeholder:capitalize focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary",
                 className,

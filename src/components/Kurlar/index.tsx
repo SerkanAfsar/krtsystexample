@@ -19,7 +19,7 @@ export default function Kurlar({
   const [stateItem, setStateItem] = useState<DovizKurlariType>();
   useEffect(() => {
     const process = async () => {
-      const response = await fetch(apiUrl, { cache: "no-store" });
+      const response = await fetch(apiUrl, { cache: "no-cache" });
       const result = await response.json();
 
       setStateItem(result);

@@ -1,7 +1,10 @@
+"use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 import { useUserStore } from "@/store/useUserStore";
+import { cookies } from "next/headers";
+import { logOutAction } from "@/actions/Auth.actions";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -86,7 +89,7 @@ const DropdownUser = () => {
           dropdownOpen === true ? "block" : "hidden"
         }`}
       >
-        <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
+        <ul className="flex flex-col gap-3.5 border-b border-stroke px-6 py-4 dark:border-strokedark">
           <li>
             <Link
               href="/profile"
@@ -112,7 +115,7 @@ const DropdownUser = () => {
               Profilim
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               href="#"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
@@ -132,8 +135,8 @@ const DropdownUser = () => {
               </svg>
               Link 2
             </Link>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <Link
               href="/pages/settings"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
@@ -157,9 +160,14 @@ const DropdownUser = () => {
               </svg>
               Hesap Bilgilerim
             </Link>
-          </li>
+          </li> */}
         </ul>
-        <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+        <button
+          onClick={async () => {
+            await logOutAction();
+          }}
+          className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+        >
           <svg
             className="fill-current"
             width="22"

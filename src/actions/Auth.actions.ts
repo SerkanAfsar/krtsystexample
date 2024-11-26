@@ -44,3 +44,9 @@ export const getLoggedUserId = async () => {
   }
   return 0;
 };
+
+export const logOutAction = async () => {
+  "use server";
+  await cookies().delete("jwt");
+  redirect("/");
+};

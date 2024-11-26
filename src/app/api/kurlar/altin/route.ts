@@ -4,7 +4,7 @@ import { HTMLElement, parse } from "node-html-parser";
 export async function GET() {
   try {
     const response = await fetch("https://bigpara.hurriyet.com.tr/altin/", {
-      cache: "no-store",
+      cache: "no-cache",
     });
     const result = await response.text();
     const text = parse(result);

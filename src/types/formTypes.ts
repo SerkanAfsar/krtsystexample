@@ -58,6 +58,7 @@ export type IPirlantaPricingType = {
   iskonto?: number;
   pricePerCarat?: Number;
   total_cost?: number;
+  poPrice?: number;
 };
 
 export type AddDiamondType = IDiamondType &

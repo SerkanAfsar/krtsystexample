@@ -33,25 +33,36 @@ const PirlantaDetayContainer = ({
       const iskonto = stringToMoney(value?.iskonto) || 0;
 
       const rapaportPrice =
-        value.menstrual_status == "Sertifikalı" && value?.rapaportPrice
+        value.menstrual_status == "Sertifikalı"
           ? stringToMoney(value?.rapaportPrice)
           : 4700;
 
-      const pricePerCarat = (rapaportPrice * (100 - iskonto)) / 100;
-      const total_cost = pricePerCarat * Number(value?.carat);
+      const pricePerCarat =
+        value.menstrual_status == "Sertifikalı"
+          ? ((rapaportPrice * (100 - iskonto)) / 100).toFixed(2)
+          : Number(
+              value.pricePerCarat
+                ?.toString()
+                ?.replace(".", "")
+                .replace(",", "."),
+            ).toFixed(2);
 
-      if (data.menstrual_status == "Sertifikalı") {
-        return {
-          pricePerCarat: Number(pricePerCarat.toFixed(2)),
-          total_cost: Number(total_cost.toFixed(2)),
-        };
-      } else {
-        return {
-          pricePerCarat,
-        };
-      }
+      const total_costOne = Number(pricePerCarat) * Number(value?.carat);
+
+      const totalCoastResult =
+        value.menstrual_status == "Sertifikalı"
+          ? total_costOne.toFixed(2)
+          : (Number(total_costOne) * 1.1).toFixed(2);
+
+      const poPrice = (Number(pricePerCarat) * Number(value.carat)).toFixed(2);
+
+      return {
+        pricePerCarat: Number(pricePerCarat),
+        total_cost: Number(totalCoastResult),
+        poPrice: Number(poPrice),
+      };
     },
-    [data.menstrual_status],
+    [data.pricePerCarat, data.menstrual_status, data.iskonto],
   );
 
   const item: PirlantaCodeItemType = {
