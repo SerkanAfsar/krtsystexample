@@ -1,9 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-
 import { useUserStore } from "@/store/useUserStore";
-import { cookies } from "next/headers";
 import { logOutAction } from "@/actions/Auth.actions";
 
 const DropdownUser = () => {
