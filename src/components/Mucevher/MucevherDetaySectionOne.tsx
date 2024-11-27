@@ -11,9 +11,6 @@ import { MagazaCustomListType } from "@/utils/Magaza.Utils";
 import { CustomMoneyInput } from "../CustomUI/CustomMoneyInput";
 import CustomDatePicker2 from "../CustomUI/CustomDatePicker2";
 import { TedarikciCustomListType } from "@/utils/Tedarikciler.Utils";
-import CustomModalPage from "../CustomModals/CustomPageModal";
-import TedarikciDetayContainer from "@/Containers/TedarikciDetayContainer";
-import { useTedarikciModalData } from "@/store/useModalStore";
 
 export default function MucevherDetaySectionOne({
   isEdit = false,
