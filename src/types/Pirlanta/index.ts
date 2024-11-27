@@ -11,11 +11,15 @@ export type PirlantaListType = {
   polish?: string;
   symmetry?: string;
   fluorescence?: string;
+  sertifikaTarihi?: string;
+  proposion?: string;
   min?: string;
   max?: string;
   height?: string;
   sertifikaNo?: string;
   paraportFiyatı?: string;
+  ppc?: number;
+  total_coast?: string;
 };
 
 export const PirlantaListHeaders: Column<
@@ -26,58 +30,122 @@ export const PirlantaListHeaders: Column<
     accessor: "code",
   },
   {
-    Header: "Kesim",
-    accessor: "kesim",
+    Header: "-",
+    columns: [
+      {
+        Header: "Kesim",
+        accessor: "kesim",
+      },
+      {
+        Header: "Karat",
+        accessor: "carat",
+      },
+
+      {
+        Header: "Renk",
+        accessor: "renk",
+      },
+      {
+        Header: "Berraklık",
+        accessor: "berraklik",
+      },
+    ],
   },
+  // {
+  //   Header: "Cut",
+  //   accessor: "cut",
+  // },
+  // {
+  //   Header: "Polish",
+  //   accessor: "polish",
+  // },
+  // {
+  //   Header: "Symmetry",
+  //   accessor: "symmetry",
+  // },
+  // {
+  //   Header: "Floruence",
+  //   accessor: "fluorescence",
+  // },
   {
-    Header: "Karat",
-    accessor: "carat",
+    Header: "FINISH",
+    columns: [
+      {
+        Header: "Proportion",
+        accessor: "proposion",
+      },
+      {
+        Header: "Polish",
+        accessor: "polish",
+      },
+      {
+        Header: "Symmetry",
+        accessor: "symmetry",
+      },
+      {
+        Header: "Fluorescence",
+        accessor: "fluorescence",
+      },
+    ],
   },
 
   {
-    Header: "Renk",
-    accessor: "renk",
+    Header: "MEASURMENTS",
+    columns: [
+      {
+        Header: "Min",
+        accessor: "min",
+      },
+      {
+        Header: "Max",
+        accessor: "max",
+      },
+      {
+        Header: "Height",
+        accessor: "height",
+      },
+    ],
+  },
+
+  {
+    Header: "SERTİFİKA",
+    columns: [
+      {
+        Header: "Sertifika No",
+        accessor: "sertifikaNo",
+      },
+      {
+        Header: "Sertifika Tarihi",
+        accessor: "sertifikaTarihi",
+      },
+    ],
   },
   {
-    Header: "Berraklık",
-    accessor: "berraklik",
+    Header: "FİYAT",
+    columns: [
+      // {
+      //   Header: "Sertifika No",
+      //   accessor: "sertifikaNo",
+      // },
+      // {
+      //   Header: "Sertifika Tarihi",
+      //   accessor: "sertifika",
+      // },
+      {
+        Header: "Rapaport",
+        accessor: "paraportFiyatı",
+      },
+      {
+        Header: "PPC",
+        accessor: "ppc",
+      },
+      {
+        Header: "Toplam",
+        accessor: "total_coast",
+      },
+    ],
   },
-  {
-    Header: "Cut",
-    accessor: "cut",
-  },
-  {
-    Header: "Polish",
-    accessor: "polish",
-  },
-  {
-    Header: "Symmetry",
-    accessor: "symmetry",
-  },
-  {
-    Header: "Floruence",
-    accessor: "fluorescence",
-  },
-  {
-    Header: "Min",
-    accessor: "min",
-  },
-  {
-    Header: "Max",
-    accessor: "max",
-  },
-  {
-    Header: "Height",
-    accessor: "height",
-  },
-  {
-    Header: "Sertifika",
-    accessor: "sertifika",
-  },
-  {
-    Header: "Rapaport",
-    accessor: "paraportFiyatı",
-  },
+
   {
     Header: "İşlemler",
     accessor: "islemler",

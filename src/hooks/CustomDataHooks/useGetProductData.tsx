@@ -14,6 +14,8 @@ import Image from "next/image";
 import { SadeModelTurleri } from "@/data/Sade.data";
 import { dolarFormat } from "@/utils";
 import Link from "next/link";
+import { formatDate } from "date-fns";
+import { tr } from "date-fns/locale";
 
 const InnerConvert = ({
   data,
@@ -58,8 +60,16 @@ const InnerConvert = ({
           polish: item?.product_certificate?.polish,
           proposion: item?.product_certificate?.propotion,
           sertifika: sertifikaFunc(item),
-          sertifikaNo: item?.product_certificate?.sertifikaNo,
+          sertifikaNo: sertifikaFunc(item),
+          sertifikaTarihi: item.product_certificate?.sertifikaTarihi
+            ? formatDate(
+                item.product_certificate?.sertifikaTarihi as string,
+                "dd MMMM yyyy",
+                { locale: tr },
+              )
+            : null,
           renk: item?.properties?.renk,
+          kesim: item?.properties?.kesim,
           symmetry: item?.product_certificate?.symmetry,
           paraportFiyatı: item?.product_cost?.rapaportPrice
             ? dolarFormat(Number(item?.product_cost?.rapaportPrice))
@@ -69,6 +79,12 @@ const InnerConvert = ({
             id: item?.pk as number,
             productCode: item?.code,
           }),
+          total_coast: item?.product_cost?.total_cost
+            ? dolarFormat(Number(item?.product_cost?.total_cost))
+            : undefined,
+          ppc: item?.product_cost?.pricePerCarat
+            ? dolarFormat(Number(item?.product_cost?.pricePerCarat))
+            : undefined,
         };
       }) as PirlantaListType[];
     }

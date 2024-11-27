@@ -86,7 +86,11 @@ const CustomDatatable = ({
               return (
                 <th
                   className={cn(
-                    key == 0 && isFirstLarge ? "w-40" : "w-42.5 last:w-30",
+                    // key == 0 && isFirstLarge ? "w-40" : "w-42.5 last:w-30",
+                    "h-full w-40 whitespace-nowrap",
+                    "!border !border-slate-400",
+                    column.columns?.length && "w-[460px]",
+
                     "last:sticky last:inset-0 last:z-30 last:bg-gray-3",
                   )}
                   {...column.getHeaderProps()}
@@ -94,14 +98,19 @@ const CustomDatatable = ({
                 >
                   <div
                     className={cn(
-                      "flex items-center",
+                      "flex h-full items-center",
+                      column.columns?.length && "justify-center",
                       // column.Header == "Maliyet" ? " pl-5" : "text-left",
                       headerGroup.headers.length - 1 == key &&
                         "justify-center text-center",
                     )}
                   >
-                    <span>{column.render("Header")}</span>
-                    {headerGroup.headers.length - 1 != key && (
+                    <span>
+                      {column.render("Header") == "-"
+                        ? ""
+                        : column.render("Header")}
+                    </span>
+                    {!column.headers?.length && (
                       <div className="ml-2 inline-flex flex-col space-y-[2px]">
                         <span
                           className="inline-block cursor-pointer"
@@ -341,7 +350,7 @@ const CustomDatatable = ({
                   return (
                     <td
                       className={cn(
-                        "z-20 !align-middle text-sm font-thin last:sticky last:inset-0 last:z-30 last:bg-gray-3  last:text-center",
+                        "z-20 border border-slate-400 !align-middle text-sm font-thin last:sticky last:inset-0 last:z-30 last:bg-gray-3  last:text-center",
                       )}
                       {...cell.getCellProps()}
                       key={`cell-${key}`}

@@ -42,7 +42,6 @@ export default function MucevherDetaySectionOne({
   const [image, setImage] = useState<string | ArrayBuffer | undefined>(
     mainData?.image,
   );
-  const { tedarikciModal, setTedarikciModalOpen } = useTedarikciModalData();
 
   const getBase64 = (file: any): any => {
     if (file && file[0]) {
@@ -69,17 +68,6 @@ export default function MucevherDetaySectionOne({
 
   return (
     <>
-      <CustomModalPage
-        title="Yeni Tedarikçi Ekle"
-        modalDataValue={tedarikciModal}
-        setModalDataValue={setTedarikciModalOpen}
-      >
-        <TedarikciDetayContainer
-          isRedirect={false}
-          isAdd={true}
-          tedarikciItemData={null}
-        />
-      </CustomModalPage>
       <div className="mb-1 rounded-sm   bg-white   dark:border-strokedark dark:bg-boxdark">
         <div className="grid grid-cols-5 gap-5">
           <div className="col-span-1 mt-8">
@@ -277,6 +265,7 @@ export default function MucevherDetaySectionOne({
                   required: true,
                   type: "select",
                   title: "Tedarikçi",
+                  isTedarikci: true,
                   customOptions: TedarikciCustomListType,
                 }}
                 outerClass="col-start-1 col-end-4"

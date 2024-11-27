@@ -12,10 +12,14 @@ import { toast } from "react-toastify";
 import { MucevherCode } from "@/utils/Mucevher.Utils";
 import { stringToMoney } from "@/utils";
 import { SadeHasGramHesapla } from "@/utils/Sade.Utils";
+import CustomModalPage from "@/components/CustomModals/CustomPageModal";
+import TedarikciDetayContainer from "./TedarikciDetayContainer";
+import { useTedarikciModalData } from "@/store/useModalStore";
 
 export default function MucevherEkleContainer() {
   const [activeStep, setActiveStep] = useState<number>(0);
   const [code, setCode] = useState<string>("");
+  const { tedarikciModal, setTedarikciModalOpen } = useTedarikciModalData();
   const {
     register,
     handleSubmit,
@@ -207,22 +211,35 @@ export default function MucevherEkleContainer() {
     />,
   ];
   return (
-    <div className="mb-5 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
-      <div className="flex w-full flex-col items-start justify-start border-b border-stroke pb-4 dark:border-strokedark">
-        <div className="float-right flex w-full items-center justify-between">
-          <div></div>
-          <b className="mr-4 text-black dark:text-white">
-            Mücevher Kodu : {code}
-          </b>
+    <>
+      <CustomModalPage
+        title="Yeni Tedarikçi Ekle"
+        modalDataValue={tedarikciModal}
+        setModalDataValue={setTedarikciModalOpen}
+      >
+        <TedarikciDetayContainer
+          isRedirect={false}
+          isAdd={true}
+          tedarikciItemData={null}
+        />
+      </CustomModalPage>
+      <div className="mb-5 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div className="flex w-full flex-col items-start justify-start border-b border-stroke pb-4 dark:border-strokedark">
+          <div className="float-right flex w-full items-center justify-between">
+            <div></div>
+            <b className="mr-4 text-black dark:text-white">
+              Mücevher Kodu : {code}
+            </b>
+          </div>
+          <hr />
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex w-full flex-col gap-3"
+          >
+            {components[activeStep]}
+          </form>
         </div>
-        <hr />
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex w-full flex-col gap-3"
-        >
-          {components[activeStep]}
-        </form>
       </div>
-    </div>
+    </>
   );
 }

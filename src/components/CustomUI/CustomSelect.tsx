@@ -6,6 +6,7 @@ import { cn } from "@/utils";
 import { selectKesimValue } from "@/utils/Pirlanta.Utils";
 import { ClassValue } from "clsx";
 import React, { useEffect, useId, useState } from "react";
+import { PirlantaBoyKodlari } from "@/data/Pirlanta.data";
 
 type SelectElementProps = React.InputHTMLAttributes<HTMLSelectElement> & {
   err?: string | null;
@@ -63,6 +64,31 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
       selectedValue,
       options,
     });
+
+    useEffect(() => {
+      if (item?.isRelatedCarat) {
+        if (!values["carat"]) {
+          setSelectedValue("");
+        }
+        const deger = Number(values["carat"]);
+        if (deger >= 6) {
+          setSelectedValue(
+            PirlantaBoyKodlari[PirlantaBoyKodlari.length - 1].valueVal,
+          );
+        } else {
+          PirlantaBoyKodlari.forEach((kod) => {
+            const val = kod.valueVal.split("-");
+            const firstDeger = Number(val[0]);
+            const lastDeger = Number(val[1]);
+
+            if (firstDeger <= deger && deger <= lastDeger) {
+              setSelectedValue(kod.valueVal);
+              return;
+            }
+          });
+        }
+      }
+    }, [item?.isRelatedCarat, values["carat"]]);
 
     useEffect(() => {
       if (item?.customOptions && !tedarikciModal) {

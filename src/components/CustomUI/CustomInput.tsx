@@ -121,11 +121,14 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
               </Link>
             )}
           </div>
-          {item.simgeturu == "caratType" && value && showIcon && (
-            <div className="flex h-full  items-center justify-center rounded-sm bg-primary px-2 py-3 text-white">
-              {caratType(parseFloat(value))}
-            </div>
-          )}
+          {item.simgeturu == "caratType" &&
+            !isNaN(Number(value)) &&
+            value &&
+            showIcon && (
+              <div className="flex h-full  items-center justify-center rounded-sm bg-primary px-2 py-3 text-white">
+                {caratType(Number(value))}
+              </div>
+            )}
         </div>
 
         {err && (
