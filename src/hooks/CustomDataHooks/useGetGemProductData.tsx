@@ -39,12 +39,15 @@ export default function useGemProductData(redirectUrl: string) {
 
       return {
         checkBox: (
-          <input
-            type="checkbox"
-            onChange={(e) => handleCheck(e, item)}
-            defaultChecked={condition}
-            name={item?.pk?.toString()}
-          />
+          <div className="flex w-full items-center justify-center ">
+            <input
+              type="checkbox"
+              onChange={(e) => handleCheck(e, item)}
+              defaultChecked={condition}
+              name={item?.pk?.toString()}
+              className="h-3.5 w-3.5"
+            />
+          </div>
         ),
         resim: item.image && (
           <Image

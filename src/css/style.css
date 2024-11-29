@@ -338,7 +338,7 @@ span.flatpickr-weekday,
 
 .data-table-common .datatable-table > tbody > tr > td:first-child,
 .data-table-common .datatable-table > thead > tr > th:first-child {
-  @apply pl-8;
+  @apply pl-4;
 }
 
 .data-table-common .datatable-table > tbody > tr > td:last-child,
