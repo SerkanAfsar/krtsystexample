@@ -5,16 +5,40 @@ import { CustomDataListType } from "@/types/types";
 import { GetAllSatisList } from "@/Services/Satis.Services";
 import { SaleResponseType, SatisListesiHeaderType } from "@/types/Satis";
 import { dolarFormat, formatDate } from "@/utils";
+import { FaPencil } from "react-icons/fa6";
+import Link from "next/link";
 
 export default function useSatisListData({
   customer_id,
+  redirectUrl,
 }: {
   customer_id?: number;
+  redirectUrl: string;
 }) {
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<SatisListesiHeaderType[]>([]);
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
   const [error, setError] = useState<string | null>(null);
+
+  const islemlerArea = useCallback(
+    ({ id }: { id: number }) => {
+      return (
+        <div className="flex w-full items-center justify-center  gap-6">
+          <Link href={`${redirectUrl}${id}`} title="Link">
+            <FaPencil className="cursor-pointer" />
+          </Link>
+          {/* <FaTrash
+            className="cursor-pointer"
+            onClick={async () => {
+              setShowConfirmDelete(true);
+              itemRef.current = { id, productCode };
+            }}
+          /> */}
+        </div>
+      );
+    },
+    [redirectUrl],
+  );
 
   const updateData = useCallback(() => {
     setActiveData([]);
@@ -42,6 +66,7 @@ export default function useSatisListData({
                   <span>{date.secondary}</span>
                 </div>
               ),
+              islemler: islemlerArea({ id: item.id as number }),
             };
           },
         );

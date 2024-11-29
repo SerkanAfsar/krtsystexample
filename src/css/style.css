@@ -346,10 +346,10 @@ span.flatpickr-weekday,
 }
 
 .data-table-common .datatable-table > thead > tr:last-child > th {
-  @apply !border-b border-stroke  dark:border-strokedark;
+  @apply border !border-stroke    dark:border-strokedark;
 }
 
-.data-table-common .datatable-table > thead > tr:last-child > th input {
+input {
   @apply h-[34px] w-full  rounded border border-stroke bg-transparent px-3 text-sm outline-none focus:border-primary dark:border-strokedark dark:bg-meta-4 dark:focus:border-primary;
 }
 

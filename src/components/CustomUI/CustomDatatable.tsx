@@ -88,7 +88,7 @@ const CustomDatatable = ({
                   className={cn(
                     // key == 0 && isFirstLarge ? "w-40" : "w-42.5 last:w-30",
                     "h-full w-40 whitespace-nowrap",
-                    "!border !border-slate-400",
+                    "!border border-stroke",
                     column.columns?.length && "w-[460px]",
 
                     "last:sticky last:inset-0 last:z-30 last:bg-gray-3",

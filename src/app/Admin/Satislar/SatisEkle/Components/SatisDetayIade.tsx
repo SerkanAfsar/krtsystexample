@@ -3,27 +3,17 @@ import CustomSelect from "@/components/CustomUI/CustomSelect";
 import { SalePayment } from "@/types/Satis";
 import { useCallback } from "react";
 
-export default function SatisDetayOdeme({
+export default function SatisDetayIade({
   fields,
   append,
   remove,
   register,
-  toplamOdenenTutar,
-  toplamKalanTutar,
-  toplamMaliyet,
-
-  isEdit,
 }: {
   fields?: any;
   append: any;
   remove: any;
   register: any;
   setValue: any;
-  toplamOdenenTutar: number;
-  toplamKalanTutar: string;
-  toplamMaliyet: number;
-
-  isEdit?: boolean;
 }) {
   const isShow = useCallback(
     (indexNo: number | undefined): boolean => {
@@ -37,30 +27,29 @@ export default function SatisDetayOdeme({
   return (
     <div className="flex flex-col gap-5 rounded-md bg-white p-6">
       <h2 className="block w-full text-left text-xl font-bold text-[#000]">
-        Ödeme Bilgileri
+        İade Bilgileri
       </h2>
       <div className="flex w-full flex-col gap-3 rounded-md bg-white">
         <div className="grid w-full grid-cols-4 gap-3 font-bold text-black">
-          <div>Ödeme Yöntemi</div>
-          <div>Ödenen Tutar</div>
+          <div>İade Yöntemi</div>
+          <div>İade Tutar</div>
           <div></div>
           <div>İşlemler</div>
         </div>
         {fields.map((item: SalePayment, index: number) => (
           <div
-            key={`payment_${index.toString()}_${item.payment_price}_${item.payment_type}`}
+            key={`refund_${index.toString()}_${item.payment_price}_${item.payment_type}`}
             className="grid w-full grid-cols-4 gap-3  text-black"
           >
             <div>
               <CustomSelect
-                {...register(`payments.${index}.payment_type`)}
-                firstOptionText="Ödeme Yöntemi Seçiniz"
+                {...register(`refund_details.${index}.payment_type`)}
+                firstOptionText="İade Yöntemi Seçiniz"
                 disabled={item.isExist}
                 item={{
-                  name: `payments.${index}.payment_type`,
+                  name: `refund_details.${index}.payment_type`,
                   required: true,
                   type: "select",
-
                   options: [
                     {
                       titleVal: "Nakit",
@@ -77,15 +66,15 @@ export default function SatisDetayOdeme({
             <div>
               <CustomMoneyInput
                 item={{
-                  name: `payments.${index}.payment_price`,
+                  name: `refund_details.${index}.payment_price`,
                   required: true,
-                  placeholder: "Ödenen Tutar",
+                  placeholder: "İade Tutar",
                   type: "money",
                   isChanging: true,
                   rightIcon: "$",
                 }}
                 disabled={item.isExist}
-                {...register(`payments.${index}.payment_price`)}
+                {...register(`refund_details.${index}.payment_price`)}
                 value={item.payment_price?.toString()}
               />
             </div>
@@ -109,7 +98,7 @@ export default function SatisDetayOdeme({
                   }
                   className="flex-1 rounded-md bg-primary p-2 text-white"
                 >
-                  Ödeme Al
+                  İade Al
                 </button>
               </div>
             ) : (
@@ -127,7 +116,7 @@ export default function SatisDetayOdeme({
             )}
           </div>
         ))}
-        {isShow(undefined) && !isEdit && (
+        {isShow(undefined) && (
           <div className="grid w-full grid-cols-4 gap-3  text-black">
             <div className="col-span-3"></div>
             <button
@@ -135,61 +124,10 @@ export default function SatisDetayOdeme({
               onClick={() => append({ payment_type: "", payment_price: null })}
               className="col-span-1 rounded-md bg-primary p-3 font-bold text-white"
             >
-              Ödeme Al
+              İade Al
             </button>
           </div>
         )}
-        <div className="mt-3 grid w-full grid-cols-4 gap-3 text-black">
-          <div></div>
-          <div>
-            <CustomMoneyInput
-              item={{
-                title: "Toplam Ödenen Tutar",
-                name: "total_payment",
-                required: false,
-                type: "money",
-                rightIcon: "$",
-                isConstant: true,
-              }}
-              {...register("total_payment")}
-              value={toplamOdenenTutar.toFixed(2)}
-              isConstant={true}
-              disabled={true}
-            />
-          </div>
-          <div>
-            <CustomMoneyInput
-              item={{
-                title: "Toplam Kalan Tutar",
-                name: "total_notpayed",
-                required: false,
-                type: "money",
-                rightIcon: "$",
-                isConstant: true,
-              }}
-              isConstant={true}
-              {...register("total_notpayed")}
-              value={Number(toplamKalanTutar).toFixed(2)}
-              disabled={true}
-            />
-          </div>
-          <div>
-            <CustomMoneyInput
-              item={{
-                title: "TOPLAM ",
-                name: "total_maliyet",
-                required: false,
-                type: "money",
-                rightIcon: "$",
-                isConstant: true,
-              }}
-              isConstant={true}
-              {...register("total_maliyet")}
-              value={toplamMaliyet.toFixed(2)}
-              disabled={true}
-            />
-          </div>
-        </div>
       </div>
     </div>
   );

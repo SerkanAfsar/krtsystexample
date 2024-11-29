@@ -41,7 +41,9 @@ const CustomMoneyInput = React.forwardRef<
     },
     ref,
   ) => {
-    const [val, setVal] = useState<string | undefined>(value);
+    const [val, setVal] = useState<string | undefined>(
+      typeof value == "number" ? value.toFixed(2) : value,
+    );
 
     const allValues = getValues && getValues();
 

@@ -55,6 +55,7 @@ export type SaleProductType = {
 export type SalePayment = {
   payment_type: "Nakit" | "Kredi Kartı";
   payment_price: number;
+  isExist?: boolean;
 };
 export type SaleType = {
   products: SaleProductType[];
@@ -62,6 +63,25 @@ export type SaleType = {
   payments: SalePayment[];
   total_payment: number;
   total_nonpayed: number;
+  refund_details?: SalePayment[];
+};
+
+export type SimpleSaleType = {
+  customer_name: string;
+  customer_id: number;
+  payment_details: SalePayment[];
+  total_paid_amount: string;
+  total_remaining_amount: string;
+  total: string;
+  products: { product: ProductType; sales_price: string; used_carat: number }[];
+};
+
+export type UpdateSaleService = {
+  products: { product_id: number }[];
+  customer_order_id: number;
+  refund_details: {
+    [key: string]: number;
+  };
 };
 
 export type SaleTypeFormResult = {
@@ -77,6 +97,7 @@ export type SaleResponseType = Omit<
   SaleTypeFormResult,
   "customer" | "customer_id"
 > & {
+  id: number;
   customer: {
     name: string;
   };
@@ -91,6 +112,7 @@ export type SatisListesiHeaderType = {
   toplamTutar: string;
   odemeYontemi: React.ReactNode;
   satisTarihi: React.ReactNode;
+  islemler: React.ReactNode;
 };
 
 export const SatisListesiHeaderColumns: Column<SatisListesiHeaderType>[] = [
@@ -121,5 +143,9 @@ export const SatisListesiHeaderColumns: Column<SatisListesiHeaderType>[] = [
   {
     Header: "Ödeme Yöntemi",
     accessor: "odemeYontemi",
+  },
+  {
+    Header: "İşlemler",
+    accessor: "islemler",
   },
 ];

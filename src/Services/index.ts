@@ -43,6 +43,7 @@ export const BaseService = async ({
       headers: headers,
       body: isFormData ? bodyData : bodyData ? JSON.stringify(bodyData) : null,
     });
+
     const result = await response.json();
 
     if (response.ok) {

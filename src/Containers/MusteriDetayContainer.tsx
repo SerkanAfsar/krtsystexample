@@ -11,7 +11,7 @@ import CustomTabs, { TabSectionType } from "@/components/CustomUI/CustomTabs";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import { useTedarikciModalData } from "@/store/useModalStore";
 import { SatisListesiHeaderColumns } from "../types/Satis";
-import useSatisListData from "@/hooks/CustomDataHooks/useSatisListData";
+import useSatisListData from "@/hooks/SatisHooks/useSatisListData";
 
 export default function MusteriDetayContainer({
   musteriItemData,
@@ -26,7 +26,10 @@ export default function MusteriDetayContainer({
   const [activeStep, setActiveStep] = useState<number>(0);
   const [data, setData] = useState<MusteriType>(musteriItem);
   const { activeData, activePage, totalPageCount, setActivePage, error } =
-    useSatisListData({ customer_id: musteriItemData?.id || undefined });
+    useSatisListData({
+      customer_id: musteriItemData?.id || undefined,
+      redirectUrl: "/Admin/Satislar/SatisEkle/",
+    });
 
   const { setMusteriModalData } = useTedarikciModalData();
 
