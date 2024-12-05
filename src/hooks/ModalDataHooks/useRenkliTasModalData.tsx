@@ -105,22 +105,25 @@ export default function useRenkliTasModalData({
               : Number(item.total_cost);
           return {
             sec: (
-              <input
-                type="checkbox"
-                defaultChecked={condition}
-                name={item?.pk?.toString()}
-                onChange={(e) =>
-                  handleCheck(
-                    e,
-                    {
-                      ...item.properties,
-                      code: item.code,
-                      firstPrice: Number(firstMaliyet),
-                    },
-                    index,
-                  )
-                }
-              />
+              <div className="flex h-full w-full items-center justify-center">
+                <input
+                  className="h-4 w-4"
+                  type="checkbox"
+                  defaultChecked={condition}
+                  name={item?.pk?.toString()}
+                  onChange={(e) =>
+                    handleCheck(
+                      e,
+                      {
+                        ...item.properties,
+                        code: item.code,
+                        firstPrice: Number(firstMaliyet),
+                      },
+                      index,
+                    )
+                  }
+                />
+              </div>
             ),
             code: item.code,
             name: item?.properties?.renkliTas,

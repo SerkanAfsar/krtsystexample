@@ -14,6 +14,8 @@ import { ProductType } from "@/types/types";
 import { useReactToPrint } from "react-to-print";
 import Image from "next/image";
 import { cn, dolarFormat } from "@/utils";
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css";
 
 export default function MucevherStokListesi() {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -32,6 +34,9 @@ export default function MucevherStokListesi() {
     error,
     item,
     selectedItemsforPrint,
+    isOpen,
+    imgUrl,
+    setIsOpen,
   } = useGemProductData("/Admin/StokYonetimi/Mucevher/MucevherEkle/");
 
   return (
@@ -104,6 +109,13 @@ export default function MucevherStokListesi() {
               </button>
             </>
           </CustomModalPage>
+
+          {isOpen && (
+            <Lightbox
+              mainSrc={imgUrl as string}
+              onCloseRequest={() => setIsOpen(false)}
+            />
+          )}
           <CustomDatatable
             totalPageCount={totalPageCount}
             columns={MucevherListesiDataHeaders}

@@ -96,22 +96,25 @@ export default function usePirlantaModalData({
 
     return {
       sec: (
-        <input
-          type="checkbox"
-          defaultChecked={condition}
-          name={item?.pk?.toString()}
-          onChange={(e) =>
-            handleCheck(
-              e,
-              {
-                ...item.properties,
-                firstPrice: Number(firstMaliyet),
-                code: item.code,
-              },
-              index,
-            )
-          }
-        />
+        <div className="flex h-full w-full items-center justify-center">
+          <input
+            type="checkbox"
+            defaultChecked={condition}
+            name={item?.pk?.toString()}
+            className="h-4 w-4"
+            onChange={(e) =>
+              handleCheck(
+                e,
+                {
+                  ...item.properties,
+                  firstPrice: Number(firstMaliyet),
+                  code: item.code,
+                },
+                index,
+              )
+            }
+          />
+        </div>
       ),
       code: item?.code,
       carat: item?.properties?.carat,

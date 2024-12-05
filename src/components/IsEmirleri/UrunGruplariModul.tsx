@@ -15,7 +15,7 @@ import Image from "next/image";
 export type UrunGruplariModulType = {
   title: string;
   buttonText: string;
-  headerColumns: { title: string; accessor: string }[];
+  headerColumns: { title: string; accessor: string; isCenter?: boolean }[];
   tableFunction?: any;
   modalHeaderColumns?: any;
 };

@@ -19,6 +19,8 @@ export default function useSadeModalData({
   const [activeData, setActiveData] = useState<any>([]);
   const [totalPageCount, setTotalPageCount] = useState<number>(1);
   const [error, setError] = useState<string | null>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [imgSrc, setImageSrc] = useState<string>();
 
   const handleCheck = (
     e: React.FormEvent<HTMLInputElement>,
@@ -83,28 +85,37 @@ export default function useSadeModalData({
 
           return {
             sec: (
-              <input
-                type="checkbox"
-                defaultChecked={condition}
-                name={item?.pk?.toString()}
-                onChange={(e) =>
-                  handleCheck(e, {
-                    ...item.properties,
-                    code: item.code,
-                    firstPrice: maliyet,
-                    img: item.image ?? null,
-                  })
-                }
-              />
+              <div className="flex h-full w-full items-center justify-center">
+                <input
+                  type="checkbox"
+                  defaultChecked={condition}
+                  name={item?.pk?.toString()}
+                  className="h-4 w-4"
+                  onChange={(e) =>
+                    handleCheck(e, {
+                      ...item.properties,
+                      code: item.code,
+                      firstPrice: maliyet,
+                      img: item.image ?? null,
+                    })
+                  }
+                />
+              </div>
             ),
             resim: item.image ? (
-              <Image
-                src={item.image as string}
-                alt={item.code as string}
-                className="h-auto w-16"
-                width={80}
-                height={40}
-              />
+              <div className="flex h-full w-full items-center justify-center">
+                <Image
+                  src={item.image as string}
+                  alt={item.code as string}
+                  className="h-auto w-16 cursor-pointer"
+                  width={100}
+                  height={60}
+                  onClick={() => {
+                    setIsOpen(true);
+                    setImageSrc(item.image as string);
+                  }}
+                />
+              </div>
             ) : null,
             code: item.code,
             renk: item?.properties?.altinRengi,
@@ -136,5 +147,8 @@ export default function useSadeModalData({
     activeData,
     totalPageCount,
     error,
+    isOpen,
+    setIsOpen,
+    imgSrc,
   };
 }

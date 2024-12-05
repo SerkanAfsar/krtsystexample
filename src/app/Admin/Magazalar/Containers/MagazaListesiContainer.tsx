@@ -66,7 +66,6 @@ export default function MagazaListesiContainer() {
             columns={columns}
             data={activeData}
             activePage={activePage}
-            isFirstLarge={false}
             setActivePage={setActivePage}
           />
         </>

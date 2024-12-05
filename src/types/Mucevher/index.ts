@@ -20,16 +20,21 @@ export type MucevherListType = {
   ambar: string | null;
 };
 
-export const MucevherListesiDataHeaders: Column<
+type MucevherDataTableType = Column<
   MucevherListType & { islemler: React.ReactNode }
->[] = [
+> & {
+  isCenter?: boolean;
+};
+export const MucevherListesiDataHeaders: MucevherDataTableType[] = [
   {
     Header: "Seç",
     accessor: "checkBox",
+    isCenter: true,
   },
   {
     Header: "Resim",
     accessor: "resim",
+    isCenter: true,
   },
   {
     Header: "Mücevher Kodu",

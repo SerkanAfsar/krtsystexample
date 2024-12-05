@@ -113,7 +113,6 @@ export default function MusteriDetayContainer({
               columns={SatisListesiHeaderColumns}
               data={activeData}
               activePage={activePage}
-              isFirstLarge={false}
               setActivePage={setActivePage}
             />
           )}

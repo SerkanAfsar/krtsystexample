@@ -30,7 +30,7 @@ const UrunGruplari: UrunGruplariModulType[] = [
     buttonText: "Sade Ekle ",
     headerColumns: [
       { title: "Ürün Kodu", accessor: "code" },
-      { title: "Resim", accessor: "resim" },
+      { title: "Resim", accessor: "resim", isCenter: true },
       { title: "Renk", accessor: "renk" },
       { title: "Gram", accessor: "gram" },
       { title: "Has", accessor: "has" },

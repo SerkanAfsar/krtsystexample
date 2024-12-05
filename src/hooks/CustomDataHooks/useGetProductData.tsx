@@ -9,124 +9,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { SadeListType } from "@/types/Sade";
 import { RenkliTasListType } from "@/types/RenkliTas";
 import { PirlantaListType } from "@/types/Pirlanta";
-// import { LightgalleryItem } from "react-lightgallery";
+
 import Image from "next/image";
 import { SadeModelTurleri } from "@/data/Sade.data";
 import { dolarFormat } from "@/utils";
 import Link from "next/link";
 import { formatDate } from "date-fns";
 import { tr } from "date-fns/locale";
-
-const InnerConvert = ({
-  data,
-  dataType,
-  islemlerArea,
-  sertifikaFunc,
-}: {
-  data: ProductListType;
-  dataType: "Diamond" | "Simple" | "ColoredStone";
-  islemlerArea: any;
-  sertifikaFunc?: any;
-}) => {
-  switch (dataType) {
-    case "ColoredStone": {
-      return data.results.map((item) => {
-        return {
-          code: item.code,
-          renkliTas: `${item?.properties?.renkliTas}`,
-          carat: item?.properties?.carat,
-          renk: item?.properties?.renk,
-          sertifika: sertifikaFunc(item),
-          kesim: item?.properties?.kesim,
-          mensei: item?.properties?.mensei,
-          treatment: item?.properties?.treatment,
-          islemler: islemlerArea({
-            id: item?.pk as number,
-            productCode: item?.code,
-          }),
-        };
-      }) as RenkliTasListType[];
-    }
-    case "Diamond": {
-      return data.results.map((item) => {
-        return {
-          berraklik: item?.properties?.berraklik,
-          carat: item?.properties?.carat,
-          code: item?.code,
-          fluorescence: item?.product_certificate?.fluorescence,
-          cut: item?.properties?.kesim,
-          max: item?.product_certificate?.max,
-          min: item?.product_certificate?.min,
-          polish: item?.product_certificate?.polish,
-          proposion: item?.product_certificate?.propotion,
-          sertifika: sertifikaFunc(item),
-          sertifikaNo: sertifikaFunc(item),
-          sertifikaTarihi: item.product_certificate?.sertifikaTarihi
-            ? formatDate(
-                item.product_certificate?.sertifikaTarihi as string,
-                "dd MMMM yyyy",
-                { locale: tr },
-              )
-            : null,
-          renk: item?.properties?.renk,
-          kesim: item?.properties?.kesim,
-          symmetry: item?.product_certificate?.symmetry,
-          paraportFiyatı: item?.product_cost?.rapaportPrice
-            ? dolarFormat(Number(item?.product_cost?.rapaportPrice))
-            : undefined,
-          height: item?.product_certificate?.height,
-          islemler: islemlerArea({
-            id: item?.pk as number,
-            productCode: item?.code,
-          }),
-          total_coast: item?.product_cost?.total_cost
-            ? dolarFormat(Number(item?.product_cost?.total_cost))
-            : undefined,
-          ppc: item?.product_cost?.pricePerCarat
-            ? dolarFormat(Number(item?.product_cost?.pricePerCarat))
-            : undefined,
-        };
-      }) as PirlantaListType[];
-    }
-    case "Simple": {
-      return data.results.map((item) => {
-        return {
-          resim: item.image ? (
-            <Image
-              src={item.image as string}
-              width={40}
-              height={40}
-              style={{
-                width: "60px",
-                cursor: "pointer",
-                height: "auto",
-                maxHeight: "60px",
-              }}
-              alt={item.code as string}
-            />
-          ) : null,
-          modelKodu: `${SadeModelTurleri.find((a) => a.titleVal == item?.properties?.modelTuru)?.extraValue}${item?.properties?.modelKodu}`,
-          modelTuru: item?.properties?.modelTuru,
-          code: item?.code,
-          ayar: item?.properties?.ayar
-            ? `${item?.properties?.ayar}K`
-            : undefined,
-          gram: item?.properties?.gram
-            ? `${item?.properties?.gram} gr`
-            : undefined,
-          hasGrami: item?.properties?.hasGrami
-            ? `${item?.properties?.hasGrami} gr`
-            : undefined,
-          iscilik: `${item?.properties?.iscilik} ${item?.properties?.cost_currency}`,
-          islemler: islemlerArea({
-            id: item?.pk as number,
-            productCode: item?.code,
-          }),
-        };
-      }) as SadeListType[];
-    }
-  }
-};
 
 export default function useGetProductData(
   type: "Diamond" | "Simple" | "ColoredStone",
@@ -142,9 +31,129 @@ export default function useGetProductData(
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const itemRef = useRef<any | null>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [imgUrl, setImageUrl] = useState<string>();
 
   const order_by = params.get("order_by");
   const sort = (params.get("sort") as "asc" | "desc") || undefined;
+
+  const InnerConvert = useCallback(
+    ({
+      data,
+      dataType,
+      islemlerArea,
+      sertifikaFunc,
+    }: {
+      data: ProductListType;
+      dataType: "Diamond" | "Simple" | "ColoredStone";
+      islemlerArea: any;
+      sertifikaFunc?: any;
+    }) => {
+      switch (dataType) {
+        case "ColoredStone": {
+          return data.results.map((item) => {
+            return {
+              code: item.code,
+              renkliTas: `${item?.properties?.renkliTas}`,
+              carat: item?.properties?.carat,
+              renk: item?.properties?.renk,
+              sertifika: sertifikaFunc(item),
+              kesim: item?.properties?.kesim,
+              mensei: item?.properties?.mensei,
+              treatment: item?.properties?.treatment,
+              islemler: islemlerArea({
+                id: item?.pk as number,
+                productCode: item?.code,
+              }),
+            };
+          }) as RenkliTasListType[];
+        }
+        case "Diamond": {
+          return data.results.map((item) => {
+            return {
+              berraklik: item?.properties?.berraklik,
+              carat: item?.properties?.carat,
+              code: item?.code,
+              fluorescence: item?.product_certificate?.fluorescence,
+              cut: item?.properties?.kesim,
+              max: item?.product_certificate?.max,
+              min: item?.product_certificate?.min,
+              polish: item?.product_certificate?.polish,
+              proposion: item?.product_certificate?.propotion,
+              sertifika: sertifikaFunc(item),
+              sertifikaNo: sertifikaFunc(item),
+              sertifikaTarihi: item.product_certificate?.sertifikaTarihi
+                ? formatDate(
+                    item.product_certificate?.sertifikaTarihi as string,
+                    "dd MMMM yyyy",
+                    { locale: tr },
+                  )
+                : null,
+              renk: item?.properties?.renk,
+              kesim: item?.properties?.kesim,
+              symmetry: item?.product_certificate?.symmetry,
+              paraportFiyatı: item?.product_cost?.rapaportPrice
+                ? dolarFormat(Number(item?.product_cost?.rapaportPrice))
+                : undefined,
+              height: item?.product_certificate?.height,
+              islemler: islemlerArea({
+                id: item?.pk as number,
+                productCode: item?.code,
+              }),
+              total_coast: item?.product_cost?.total_cost
+                ? dolarFormat(Number(item?.product_cost?.total_cost))
+                : undefined,
+              ppc: item?.product_cost?.pricePerCarat
+                ? dolarFormat(Number(item?.product_cost?.pricePerCarat))
+                : undefined,
+            };
+          }) as PirlantaListType[];
+        }
+        case "Simple": {
+          return data.results.map((item) => {
+            return {
+              resim: item.image ? (
+                <Image
+                  src={item.image as string}
+                  width={40}
+                  height={40}
+                  style={{
+                    width: "60px",
+                    cursor: "pointer",
+                    height: "auto",
+                    maxHeight: "60px",
+                  }}
+                  alt={item.code as string}
+                  onClick={() => {
+                    setIsOpen(true);
+                    setImageUrl(item.image as string);
+                  }}
+                />
+              ) : null,
+              modelKodu: `${SadeModelTurleri.find((a) => a.titleVal == item?.properties?.modelTuru)?.extraValue}${item?.properties?.modelKodu}`,
+              modelTuru: item?.properties?.modelTuru,
+              code: item?.code,
+              ayar: item?.properties?.ayar
+                ? `${item?.properties?.ayar}K`
+                : undefined,
+              gram: item?.properties?.gram
+                ? `${item?.properties?.gram} gr`
+                : undefined,
+              hasGrami: item?.properties?.hasGrami
+                ? `${item?.properties?.hasGrami} gr`
+                : undefined,
+              iscilik: `${item?.properties?.iscilik} ${item?.properties?.cost_currency}`,
+              islemler: islemlerArea({
+                id: item?.pk as number,
+                productCode: item?.code,
+              }),
+            };
+          }) as SadeListType[];
+        }
+      }
+    },
+    [],
+  );
 
   const updateData = useCallback(() => {
     setActiveData([]);
@@ -227,5 +236,8 @@ export default function useGetProductData(
     showConfirmDelete,
     item: itemRef.current,
     error,
+    isOpen,
+    setIsOpen,
+    imgUrl,
   };
 }

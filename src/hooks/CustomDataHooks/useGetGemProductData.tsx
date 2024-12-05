@@ -26,6 +26,8 @@ export default function useGemProductData(redirectUrl: string) {
   const [selectedItemsforPrint, setSelectedItemsForPrint] = useState<
     ProductType[]
   >([]);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [imgUrl, setImageUrl] = useState<string>();
 
   const InnerConvert = ({
     data,
@@ -50,12 +52,19 @@ export default function useGemProductData(redirectUrl: string) {
           </div>
         ),
         resim: item.image && (
-          <Image
-            src={item.image as string}
-            width={60}
-            height={50}
-            alt={item.code as string}
-          />
+          <div className="flex h-full w-full items-center justify-center">
+            <Image
+              src={item.image as string}
+              width={60}
+              height={50}
+              className="cursor-pointer"
+              onClick={() => {
+                setIsOpen(true);
+                setImageUrl(item.image as string);
+              }}
+              alt={item.code as string}
+            />
+          </div>
         ),
         code: item?.code,
         model: item?.properties?.model,
@@ -177,5 +186,8 @@ export default function useGemProductData(redirectUrl: string) {
     item: itemRef.current,
     error,
     selectedItemsforPrint,
+    isOpen,
+    setIsOpen,
+    imgUrl,
   };
 }

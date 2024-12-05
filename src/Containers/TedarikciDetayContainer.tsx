@@ -127,7 +127,6 @@ export default function TedarikciDetayContainer({
               columns={SupplierProductDataTableHeaders}
               data={activeData}
               activePage={activePage}
-              isFirstLarge={false}
               setActivePage={setActivePage}
             />
           )}

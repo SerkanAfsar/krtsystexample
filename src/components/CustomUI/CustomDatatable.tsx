@@ -6,6 +6,7 @@ import {
   useGlobalFilter,
   useFilters,
   usePagination,
+  HeaderGroup,
 } from "react-table";
 
 import { useRouter } from "next/navigation";
@@ -17,12 +18,10 @@ const CustomDatatable = ({
   activePage,
   setActivePage,
   className,
-  hasOrder = true,
-  isFirstLarge = true,
-  count = 1,
   filterList,
   selectedFilter,
   setSelectedFilter,
+  setFirstCenter = false,
 }: {
   data: any[];
   columns: any;
@@ -30,12 +29,10 @@ const CustomDatatable = ({
   activePage: number;
   setActivePage: any;
   className?: any;
-  hasOrder?: boolean;
-  isFirstLarge?: boolean;
-  count?: number;
   filterList?: any;
   selectedFilter?: any;
   setSelectedFilter?: any;
+  setFirstCenter?: boolean;
 }) => {
   const router = useRouter();
 
@@ -82,81 +79,81 @@ const CustomDatatable = ({
       <thead>
         {headerGroups.map((headerGroup, key) => (
           <tr {...headerGroup.getHeaderGroupProps()} key={key}>
-            {headerGroup.headers.map((column, key) => {
-              return (
-                <th
-                  className={cn(
-                    // key == 0 && isFirstLarge ? "w-40" : "w-42.5 last:w-30",
-                    "h-full w-40 whitespace-nowrap",
-                    "!border border-stroke",
-                    column.columns?.length && "w-[460px]",
-
-                    "last:sticky last:inset-0 last:z-30 last:bg-gray-3",
-                  )}
-                  {...column.getHeaderProps()}
-                  key={key}
-                >
-                  <div
+            {headerGroup.headers.map(
+              (column: HeaderGroup<object> & { isCenter?: boolean }, key) => {
+                return (
+                  <th
                     className={cn(
-                      "flex h-full items-center",
-                      column.columns?.length && "justify-center",
-                      // column.Header == "Maliyet" ? " pl-5" : "text-left",
-                      headerGroup.headers.length - 1 == key &&
-                        "justify-center text-center",
+                      "h-full w-40 whitespace-nowrap",
+                      "!border border-stroke",
+                      column.columns?.length && "w-[460px]",
+                      "last:sticky last:inset-0 last:z-30 last:bg-gray-3",
                     )}
+                    {...column.getHeaderProps()}
+                    key={key}
                   >
-                    <span>
-                      {column.render("Header") == "-"
-                        ? ""
-                        : column.render("Header")}
-                    </span>
-                    {!column.headers?.length && (
-                      <div className="ml-2 inline-flex flex-col space-y-[2px]">
-                        <span
-                          className="inline-block cursor-pointer"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            router.push(`?order_by=${column.id}&sort=desc`);
-                          }}
-                        >
-                          <svg
-                            className="fill-current"
-                            width="10"
-                            height="5"
-                            viewBox="0 0 10 5"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
+                    <div
+                      className={cn(
+                        "flex h-full items-center",
+                        column.isCenter && "justify-center",
+                        column.columns?.length && "justify-center",
+                        headerGroup.headers.length - 1 == key &&
+                          "justify-center text-center",
+                      )}
+                    >
+                      <span>
+                        {column.render("Header") == "-"
+                          ? ""
+                          : column.render("Header")}
+                      </span>
+                      {!column.headers?.length && (
+                        <div className="ml-2 inline-flex flex-col space-y-[2px]">
+                          <span
+                            className="inline-block cursor-pointer"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              router.push(`?order_by=${column.id}&sort=desc`);
+                            }}
                           >
-                            <path d="M5 0L0 5H10L5 0Z" fill="" />
-                          </svg>
-                        </span>
-                        <span
-                          className="inline-block cursor-pointer"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            router.push(`?order_by=${column.id}&sort=asc`);
-                          }}
-                        >
-                          <svg
-                            className="fill-current"
-                            width="10"
-                            height="5"
-                            viewBox="0 0 10 5"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
+                            <svg
+                              className="fill-current"
+                              width="10"
+                              height="5"
+                              viewBox="0 0 10 5"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M5 0L0 5H10L5 0Z" fill="" />
+                            </svg>
+                          </span>
+                          <span
+                            className="inline-block cursor-pointer"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              router.push(`?order_by=${column.id}&sort=asc`);
+                            }}
                           >
-                            <path
-                              d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                              fill=""
-                            />
-                          </svg>
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </th>
-              );
-            })}
+                            <svg
+                              className="fill-current"
+                              width="10"
+                              height="5"
+                              viewBox="0 0 10 5"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
+                                fill=""
+                              />
+                            </svg>
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </th>
+                );
+              },
+            )}
           </tr>
         ))}
       </thead>
@@ -206,7 +203,7 @@ const CustomDatatable = ({
           {headers()}
           <tbody>
             {new Array(10).fill(null).map((item, index) => (
-              <tr key={index} role="status" className="w-full ">
+              <tr key={index} role="status" className="w-full">
                 <td colSpan={headerGroups[0].headers.length}>
                   <div className="block h-6 w-full animate-pulse  rounded-md bg-gray-2"></div>
                 </td>
@@ -355,14 +352,13 @@ const CustomDatatable = ({
                       {...cell.getCellProps()}
                       key={`cell-${key}`}
                     >
-                      {/* {cell.column.Header == "Maliyet" ? (
-                        <div className="block w-[120px] pr-3  text-right">
+                      {setFirstCenter ? (
+                        <div className="flex h-full w-full items-center justify-center">
                           {cell.render("Cell")}
                         </div>
                       ) : (
-                      
-                      )} */}
-                      {cell.render("Cell")}
+                        <>{cell.render("Cell")}</>
+                      )}
                     </td>
                   );
                 })}

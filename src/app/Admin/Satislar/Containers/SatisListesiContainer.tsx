@@ -22,7 +22,6 @@ export default function SatisListesiContainer() {
             columns={SatisListesiHeaderColumns}
             data={activeData}
             activePage={activePage}
-            isFirstLarge={false}
             setActivePage={setActivePage}
           />
         </>

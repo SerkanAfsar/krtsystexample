@@ -103,22 +103,25 @@ interface ISadeData {
   maliyet: string;
 }
 
-export const SadeModalHeaders: (Column<ISadeData> & { isHidden?: boolean })[] =
-  [
-    { Header: "Seç", accessor: "sec" },
-    { Header: "Resim", accessor: "resim" },
-    { Header: "Ürün Kodu", accessor: "code" },
-    { Header: "Renk", accessor: "renk" },
-    { Header: "Gram", accessor: "gram" },
-    { Header: "Has", accessor: "has" },
-    { Header: "Model", accessor: "model" },
-    { Header: "Maliyet", accessor: "maliyet" },
-  ];
+export const SadeModalHeaders: (Column<ISadeData> & {
+  isHidden?: boolean;
+  isCenter?: boolean;
+})[] = [
+  { Header: "Seç", accessor: "sec", isCenter: true },
+  { Header: "Resim", accessor: "resim", isCenter: true },
+  { Header: "Ürün Kodu", accessor: "code" },
+  { Header: "Renk", accessor: "renk" },
+  { Header: "Gram", accessor: "gram" },
+  { Header: "Has", accessor: "has" },
+  { Header: "Model", accessor: "model" },
+  { Header: "Maliyet", accessor: "maliyet" },
+];
 
 export const RenkliTasModalHeaders: (Column<IData & { name?: string }> & {
   isHidden?: boolean;
+  isCenter?: boolean;
 })[] = [
-  { Header: "Seç", accessor: "sec" },
+  { Header: "Seç", accessor: "sec", isCenter: true },
   {
     Header: "Ürün Kodu",
     accessor: "code",
@@ -154,40 +157,42 @@ export const RenkliTasModalHeaders: (Column<IData & { name?: string }> & {
   },
 ];
 
-export const PirlantaModalHeaders: (Column<IData> & { isHidden?: boolean })[] =
-  [
-    { Header: "Seç", accessor: "sec" },
-    {
-      Header: "Ürün Kodu",
-      accessor: "code",
-    },
+export const PirlantaModalHeaders: (Column<IData> & {
+  isHidden?: boolean;
+  isCenter?: boolean;
+})[] = [
+  { Header: "Seç", accessor: "sec", isCenter: true },
+  {
+    Header: "Ürün Kodu",
+    accessor: "code",
+  },
 
-    {
-      Header: "Kesim",
-      accessor: "kesim",
-    },
-    {
-      Header: "Karat",
-      accessor: "carat",
-    },
-    {
-      Header: "Renk",
-      accessor: "renk",
-    },
-    {
-      Header: "Adet",
-      accessor: "adet",
-    },
-    {
-      Header: "Kullanılan Karat",
-      accessor: "kullanilanKarat",
-      isHidden: true,
-    },
-    {
-      Header: "Maliyet",
-      accessor: "maliyet",
-    },
-  ];
+  {
+    Header: "Kesim",
+    accessor: "kesim",
+  },
+  {
+    Header: "Karat",
+    accessor: "carat",
+  },
+  {
+    Header: "Renk",
+    accessor: "renk",
+  },
+  {
+    Header: "Adet",
+    accessor: "adet",
+  },
+  {
+    Header: "Kullanılan Karat",
+    accessor: "kullanilanKarat",
+    isHidden: true,
+  },
+  {
+    Header: "Maliyet",
+    accessor: "maliyet",
+  },
+];
 
 export type TedarikciType = {
   id?: number;

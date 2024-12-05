@@ -51,7 +51,6 @@ export default function IsEmirleriDetayUrunleri({ id }: { id: number }) {
       columns={UretimUrunleriColumns}
       data={activeData}
       activePage={activePage}
-      isFirstLarge={false}
       setActivePage={setActivePage}
     />
   );

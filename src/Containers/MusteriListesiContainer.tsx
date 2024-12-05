@@ -75,7 +75,6 @@ export default function MusteriListesiContainer() {
             columns={columns}
             data={activeData}
             activePage={activePage}
-            isFirstLarge={false}
             setActivePage={setActivePage}
           />
         </>

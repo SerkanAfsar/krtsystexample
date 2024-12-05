@@ -3,6 +3,8 @@
 import CustomErrorAlert from "../CustomUI/Alerts/CustomErrorAlert";
 import CustomDatatable from "../CustomUI/CustomDatatable";
 import { IoMdCloseCircle } from "react-icons/io";
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css";
 
 export default function IsEmirleriModal({
   title,
@@ -22,8 +24,16 @@ export default function IsEmirleriModal({
   if (!tableFunction) {
     return null;
   }
-  const { totalPageCount, activeData, activePage, error, setActivePage } =
-    tableFunction({ setSelectedValues, selectedValues });
+  const {
+    totalPageCount,
+    activeData,
+    activePage,
+    error,
+    setActivePage,
+    isOpen,
+    setIsOpen,
+    imgSrc,
+  } = tableFunction({ setSelectedValues, selectedValues });
 
   return (
     <div className="fixed inset-0 z-999 flex h-full w-full items-center justify-center bg-black bg-opacity-80">
@@ -40,15 +50,22 @@ export default function IsEmirleriModal({
         {error ? (
           <CustomErrorAlert title="Hata" description={error} />
         ) : (
-          <CustomDatatable
-            isFirstLarge={false}
-            className={"block shadow-none"}
-            totalPageCount={totalPageCount}
-            columns={modalHeaderColumns}
-            data={activeData}
-            activePage={activePage}
-            setActivePage={setActivePage}
-          />
+          <>
+            {isOpen && (
+              <Lightbox
+                mainSrc={imgSrc}
+                onCloseRequest={() => setIsOpen(false)}
+              />
+            )}
+            <CustomDatatable
+              className={"block shadow-none"}
+              totalPageCount={totalPageCount}
+              columns={modalHeaderColumns}
+              data={activeData}
+              activePage={activePage}
+              setActivePage={setActivePage}
+            />
+          </>
         )}
       </div>
     </div>
