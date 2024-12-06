@@ -50,20 +50,35 @@ export default function useSatisListData({
         const data = resp.data as CustomDataListType<SaleResponseType>;
         const dataOneResult: SatisListesiHeaderType[] = data.results.map(
           (item: SaleResponseType) => {
-            const date = formatDate(item.created_at);
+            const createdAtDate = formatDate(item.created_at);
+            const updatedAtDate = formatDate(item.updated_at);
             return {
+              satisId: (
+                <div className="flex w-full items-center justify-center">
+                  {Number(item.id)}
+                </div>
+              ),
+
+              sonAlinanOdemeTarihi: (
+                <div className="flex flex-col items-start justify-start leading-6">
+                  <span>{updatedAtDate.primary}</span>
+                  <span>{updatedAtDate.secondary}</span>
+                </div>
+              ),
               kalan: dolarFormat(item.total_remaining_amount),
               musteri: item.customer?.name,
               odemeYontemi: Object.keys(item.payment_details)
                 .map((item) => item.toLocaleUpperCase())
                 .join(" , "),
               odenen: dolarFormat(item.total_paid_amount),
-              satilanUrunler: null,
+              satilanUrunler: item.products
+                .map((product) => product.code)
+                .join(" , "),
               toplamTutar: dolarFormat(item.total as number),
               satisTarihi: (
                 <div className="flex flex-col items-start justify-start leading-6">
-                  <span>{date.primary}</span>
-                  <span>{date.secondary}</span>
+                  <span>{createdAtDate.primary}</span>
+                  <span>{createdAtDate.secondary}</span>
                 </div>
               ),
               islemler: islemlerArea({ id: item.id as number }),

@@ -102,32 +102,42 @@ export type SaleResponseType = Omit<
     name: string;
   };
   created_at: string;
+  updated_at: string;
+  products: { code: string }[];
 };
 
 export type SatisListesiHeaderType = {
+  satisId: React.ReactNode;
   musteri: string;
-  satilanUrunler: string | null;
+  satilanUrunler?: string | null;
   odenen: string;
   kalan: string;
   toplamTutar: string;
   odemeYontemi: React.ReactNode;
   satisTarihi: React.ReactNode;
+  sonAlinanOdemeTarihi: React.ReactNode;
   islemler: React.ReactNode;
 };
 
-export const SatisListesiHeaderColumns: Column<SatisListesiHeaderType>[] = [
+export const SatisListesiHeaderColumns: (Column<SatisListesiHeaderType> & {
+  isLarge?: boolean;
+  isCenter?: boolean;
+})[] = [
   {
-    Header: "Müşteri",
-    accessor: "musteri",
+    Header: "Satış ID",
+    accessor: "satisId",
+    isCenter: true,
   },
   {
     Header: "Satılan Ürünler",
     accessor: "satilanUrunler",
+    isLarge: true,
   },
   {
     Header: "Ödenen",
     accessor: "odenen",
   },
+
   {
     Header: "Kalan",
     accessor: "kalan",
@@ -137,13 +147,19 @@ export const SatisListesiHeaderColumns: Column<SatisListesiHeaderType>[] = [
     accessor: "toplamTutar",
   },
   {
+    Header: "Ödeme Yöntemi",
+    accessor: "odemeYontemi",
+  },
+  {
     Header: "Satış Tarihi",
     accessor: "satisTarihi",
   },
   {
-    Header: "Ödeme Yöntemi",
-    accessor: "odemeYontemi",
+    Header: "Son Alınan Ödeme Tarihi Tarihi",
+    accessor: "sonAlinanOdemeTarihi",
+    isLarge: true,
   },
+
   {
     Header: "İşlemler",
     accessor: "islemler",

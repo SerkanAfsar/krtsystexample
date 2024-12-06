@@ -80,11 +80,19 @@ const CustomDatatable = ({
         {headerGroups.map((headerGroup, key) => (
           <tr {...headerGroup.getHeaderGroupProps()} key={key}>
             {headerGroup.headers.map(
-              (column: HeaderGroup<object> & { isCenter?: boolean }, key) => {
+              (
+                column: HeaderGroup<object> & {
+                  isCenter?: boolean;
+                  isLarge?: boolean;
+                },
+                key,
+              ) => {
                 return (
                   <th
                     className={cn(
-                      "h-full w-40 whitespace-nowrap",
+                      "h-full  whitespace-nowrap",
+                      column.isLarge ? "w-65" : "w-40",
+                      column.id == "islemler" && "w-28",
                       "!border border-stroke",
                       column.columns?.length && "w-[460px]",
                       "last:sticky last:inset-0 last:z-30 last:bg-gray-3",

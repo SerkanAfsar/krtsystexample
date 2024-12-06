@@ -102,7 +102,7 @@ export default function MusteriDetayContainer({
       ),
     },
     {
-      colName: "Müşteriye Satılan Ürünler",
+      colName: "Müşteri Cari",
       component: musteriItemData?.id && (
         <>
           {error ? (
