@@ -609,6 +609,34 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             >
                               İş Emirleri Listesi
                             </Link>
+                            </li>
+                            <li>
+                              <Link
+                                href="/Admin/IsEmirleri/Istransferleri"
+                                className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                                  (pathname === "/stone" ||
+                                    pathname.includes(
+                                      "Istransferleri",
+                                    )) &&
+                                  "bg-graydark dark:bg-meta-4"
+                                }`}
+                              >
+                                İş Transferleri
+                              </Link>
+                            </li>
+                            <li>
+                              <Link
+                                href="/Admin/IsEmirleri/Isyönetimi"
+                                className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                                  (pathname === "/stone" ||
+                                    pathname.includes(
+                                      "Isyönetimi",
+                                    )) &&
+                                  "bg-graydark dark:bg-meta-4"
+                                }`}
+                              >
+                                İş Yönetimi
+                              </Link>
                           </li>
                         </ul>
                       </div>

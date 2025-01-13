@@ -6,7 +6,8 @@ export type CustomProps = React.HTMLAttributes<HTMLInputElement> & {
   inputAdetRefs: any;
   spanMaliyetRefs: any;
   indexNo: number;
-  val: string;
+  adetVal: string;
+  caratVal: string;
   name: string;
   condition: boolean;
 };

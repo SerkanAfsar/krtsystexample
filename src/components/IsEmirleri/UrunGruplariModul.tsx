@@ -38,18 +38,18 @@ export default function UrunGruplariModul({
     const items: WorkOrderProductType[] = selectedValues.map((item) => ({
       product_id: Number(item.pk),
       quantity: item.adet ? Number(item.adet) : 1,
-      used_carat: item.used_carat ? Number(item.used_carat) : 0,
+      used_carat: item.used_carat ? Number(item.used_carat) : Number(item.carat),
       name: (item.name as string) ?? null,
       price:
-        item.firstPrice && item.type != "Sade" && item.used_carat
-          ? Number(item.firstPrice) * (item.used_carat as number)
+        item.caratPrice && item.type != "Sade" && item.used_carat
+          ? Number(item.caratPrice) * (item.used_carat as number) *(item.adet as number)
           : Number(item.firstPrice),
       type: item.type ? String(item.type) : undefined,
       ayar: item.ayar ? String(item.ayar) : null,
       modelTuru: item.modelTuru ? String(item.modelTuru) : null,
       renk: (item.renk as string) ?? null,
+      caratPrice : Number(item.caratPrice)
     }));
-
     setValues((prev: ProductItemsType[]) => {
       const indexNo = prev.findIndex((a) => a.title == title);
       if (indexNo > -1) {
@@ -71,11 +71,11 @@ export default function UrunGruplariModul({
         }}
         className="mb-3 flex w-full flex-col gap-2"
       >
-        <div className="flex w-full items-center justify-between">
+        <div className="flex text-black w-full items-center justify-between">
           <b>{title}</b>
           <button
             type="button"
-            className="btn block w-40 rounded-md bg-primary px-3 py-2 text-center text-white"
+            className="btn block w-35 rounded-md bg-primary px-3 py-1 text-center text-white"
             onClick={() => setModalOpen(true)}
           >
             {buttonText}
@@ -83,8 +83,9 @@ export default function UrunGruplariModul({
         </div>
         <div
           className={cn(
-            "grid gap-2 bg-gray p-2 text-left text-black dark:bg-black dark:text-white",
+            "grid gap-2 py-2 text-gray-500 text-left dark:text-white", 
             `grid-cols-${headerColumns.length}`,
+            "border-b-2 border-t-2 border-stone-200",
           )}
         >
           {headerColumns.map((key, index) => (
@@ -98,10 +99,10 @@ export default function UrunGruplariModul({
             <div
               key={index}
               className={cn(
-                "mx-2 mt-1 grid gap-2 pb-2 text-left text-black",
+                "mt-1 grid gap-2 pb-2 text-left text-black",
                 `grid-cols-${headerColumns.length}`,
                 "items-center",
-                "border-b-[1px] border-stone-400 py-4",
+                "border-b-[1px] border-stone-400 py-",
               )}
             >
               {Object.entries(item).map(([key, value], index) => {
@@ -130,15 +131,15 @@ export default function UrunGruplariModul({
                             );
                             const newItems = selectedValues;
                             const changedItem = newItems[selectedIndexNo];
-
                             const newMaliyet =
                               Number(e.target.value) *
-                              Number(changedItem["firstPrice"]);
+                              (Number(changedItem["caratPrice"]) ? Number(changedItem["caratPrice"]) : Number(changedItem["firstPrice"])) *
+                              Number(changedItem["adet"]);
 
                             changedItem["used_carat"] = e.target.value;
                             changedItem["maliyet"] =
-                              `${formatToCurrency(newMaliyet)} $`;
 
+                              `${formatToCurrency(newMaliyet)} $`;
                             setSelectedValues((prev) => [
                               ...prev.slice(0, selectedIndexNo),
                               changedItem,
@@ -168,7 +169,16 @@ export default function UrunGruplariModul({
                           );
                           const newItems = selectedValues;
                           const changedItem = newItems[selectedIndexNo];
+
+                          const newMaliyet =
+                            Number(e.target.value) *
+                            (Number(changedItem["caratPrice"]) ? Number(changedItem["caratPrice"]) : Number(changedItem["firstPrice"])) *
+                            Number(changedItem["used_carat"]);
+
                           changedItem["adet"] = e.target.value;
+                          changedItem["maliyet"] =
+
+                          `${formatToCurrency(newMaliyet)} $`;
 
                           setSelectedValues((prev) => [
                             ...prev.slice(0, selectedIndexNo),
@@ -197,7 +207,7 @@ export default function UrunGruplariModul({
                   }
                 }
               })}
-              <div className="flex items-center justify-start gap-4 dark:text-white">
+              <div className="flex items-center justify-left  gap-4 dark:text-white">
                 <FaPencil className="cursor-pointer" />
                 <FaTrash
                   className="cursor-pointer"

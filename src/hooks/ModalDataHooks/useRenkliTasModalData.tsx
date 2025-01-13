@@ -41,6 +41,7 @@ export default function useRenkliTasModalData({
       renk,
       code,
       firstPrice,
+      caratPrice
     } = properties;
 
     const item: SeciliUrunType = {
@@ -56,6 +57,7 @@ export default function useRenkliTasModalData({
       maliyet: `${formatToCurrency(firstPrice)} $`,
       firstPrice,
       menstrual_status,
+      caratPrice,
     };
 
     if (target.checked) {
@@ -91,7 +93,6 @@ export default function useRenkliTasModalData({
     }).then((resp: ResponseResult<ProductListType>) => {
       if (resp?.success) {
         const data = resp.data as ProductListType;
-
         const dataOneResult: any = data.results.map((item, index) => {
           const selectedItem = selectedValues.find(
             (a) => (a.pk as string) == (item.pk as unknown),
@@ -101,8 +102,8 @@ export default function useRenkliTasModalData({
           const { adet, used_carat } = selectedItem || {};
           const firstMaliyet =
             item.menstrual_status == "Mixed"
-              ? Number(item.product_cost?.pricePerCarat)
-              : Number(item.total_cost);
+            ? Number(String(item.product_cost?.pricePerCarat).replace(",", "."))
+            : Number(item.total_cost);
           return {
             sec: (
               <div className="flex h-full w-full items-center justify-center">
@@ -118,6 +119,7 @@ export default function useRenkliTasModalData({
                         ...item.properties,
                         code: item.code,
                         firstPrice: Number(firstMaliyet),
+                        caratPrice: Number(firstMaliyet),
                       },
                       index,
                     )
@@ -142,7 +144,8 @@ export default function useRenkliTasModalData({
                 item={item}
                 inputAdetRefs={inputAdetRefs}
                 indexNo={index}
-                val={adet as string}
+                adetVal={adet as string}
+                caratVal={used_carat as string}
                 setSelectedValues={setSelectedValues}
                 spanMaliyetRefs={spanMaliyetRefs}
                 condition={condition}
@@ -160,7 +163,8 @@ export default function useRenkliTasModalData({
                   item={item}
                   inputAdetRefs={inputAdetRefs}
                   indexNo={index}
-                  val={used_carat as string}
+                  adetVal={adet as string}
+                  caratVal={used_carat as string}
                   setSelectedValues={setSelectedValues}
                   spanMaliyetRefs={spanMaliyetRefs}
                   condition={condition}

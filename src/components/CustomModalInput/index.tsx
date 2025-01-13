@@ -4,6 +4,7 @@ import React from "react";
 import { CustomProps } from "../../types/CustomUI.Types";
 import { formatToCurrency } from "@/utils";
 
+
 const CustomModalInput = React.forwardRef<HTMLInputElement, CustomProps>(
   (
     {
@@ -12,49 +13,53 @@ const CustomModalInput = React.forwardRef<HTMLInputElement, CustomProps>(
       spanMaliyetRefs,
       name,
       indexNo,
-      val,
+      adetVal,
+      caratVal,
       condition,
       ...rest
     },
     ref,
   ) => {
-    const [value, setValue] = useState<string>(val);
-
+    const [adetValue, setAdetValue] = useState<string>(adetVal);
+    const [caratValue, setCaratValue] = useState<string>(caratVal);
+    
     useEffect(() => {
       setSelectedValues((prev: SeciliUrunType[]) => {
         const index = prev.findIndex((a) => a.pk == Number(item.pk));
-
         if (index > -1) {
           const spanRef = spanMaliyetRefs.current[indexNo];
           let maliyet = Number(spanRef.ariaLabel);
-
+          let caratMaliyet = Number(spanRef.ariaLabel);
           if (name == "used_carat") {
             maliyet =
-              value && item.menstrual_status == "Mixed"
-                ? Number(maliyet * Number(value))
+            caratValue && item.menstrual_status == "Mixed"
+                ? Number(maliyet * Number(caratValue)* Number(prev[index].adet))
                 : maliyet;
 
             spanRef.textContent = `${formatToCurrency(maliyet)} $`;
           }
 
+          if (name == "adet") {
+            maliyet =
+            adetValue && item.menstrual_status == "Mixed"
+                ? Number(maliyet * Number(adetValue)* Number(prev[index].used_carat))
+                : maliyet;
+
+            spanRef.textContent = `${formatToCurrency(maliyet)} $`;
+          }
           prev[index] = {
             ...prev[index],
-            [name]: value,
+            [name]: name === "used_carat" ? caratValue : adetValue,
             maliyet: `${formatToCurrency(maliyet)} $`,
             firstPrice: maliyet,
+            caratPrice: caratMaliyet
           };
         }
         return [...prev];
       });
     }, [
-      value,
-      indexNo,
-      item.menstrual_status,
-      item.pk,
-      name,
-      setSelectedValues,
-      item.properties?.carat,
-      spanMaliyetRefs,
+      adetValue,
+      caratValue,
     ]);
     return (
       <input
@@ -63,10 +68,15 @@ const CustomModalInput = React.forwardRef<HTMLInputElement, CustomProps>(
         ref={ref}
         disabled={!condition}
         className="block w-20 border border-primary px-2 py-1"
-        onChange={(e) => {
-          setValue(e.target.value);
+        onChange={(e) =>{
+          const newValue = e.target.value;
+          if (name === "used_carat") {
+            setCaratValue(newValue);
+          } else if (name === "adet") {
+            setAdetValue(newValue);
+          }
         }}
-        value={value}
+        value={name === "used_carat" ? caratValue : adetValue} 
         {...rest}
       />
     );

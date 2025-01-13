@@ -80,6 +80,10 @@ export default function IsEmriContainer() {
   const router = useRouter();
   const [description, setDescription] = useState<string>("");
   const [isEmriCode, setIsEmriCode] = useState<string>("");
+  const [gender, setGender] = useState<string>(""); 
+  const [isWomanChecked, setIsWomanChecked] = useState<boolean>(false);
+  const [isManChecked, setIsManChecked] = useState<boolean>(false);
+  const [model, setModel] = useState<string>(""); 
   const [values, setValues] = useState<ProductItemsType[]>(
     UrunGruplari.map((item) => {
       return {
@@ -98,6 +102,32 @@ export default function IsEmriContainer() {
 
   const isCondition = pirlantaArr?.some((a) => a.renk == "BLACK");
 
+  const handleCheckboxChange = (type: "Kadın" | "Erkek", checked: boolean) => {
+    if (type === "Kadın") {
+      setIsWomanChecked(checked);
+    } else if (type === "Erkek") {
+      setIsManChecked(checked);
+    }
+  
+    if (checked) {
+      if (type === "Kadın" && isManChecked) {
+        setGender("Both");
+      } else if (type === "Erkek" && isWomanChecked) {
+        setGender("Both");
+      } else {
+        setGender(type === "Kadın" ? "Woman" : "Man");
+      }
+    } else {
+      if (type === "Kadın" && isManChecked) {
+        setGender("Man");
+      } else if (type === "Erkek" && isWomanChecked) {
+        setGender("Woman");
+      } else {
+        setGender("");
+      }
+    }
+  };
+
   useEffect(() => {
     const resultCode = MucevherCode(pirlantaArr, sadeArr, renkliTasArr);
     const process = async ({ resultCode }: { resultCode: string }) => {
@@ -110,6 +140,7 @@ export default function IsEmriContainer() {
       setIsEmriCode("");
     }
   }, [
+    gender,
     pirlantaArr,
     renkliTasArr,
     sadeArr,
@@ -170,49 +201,110 @@ export default function IsEmriContainer() {
   };
 
   return (
-    <div className="mb-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      <div className="flex w-full flex-col items-start justify-start border-b border-stroke pb-4 dark:border-strokedark">
-        <div className="float-right flex w-full items-center justify-between">
-          <h3 className="p-4 text-lg font-medium text-black dark:text-white">
-            İş Emri Bilgileri
-          </h3>
-          <b className="mr-4 text-black dark:text-white">
-            Mücevher Kodu : {isEmriCode}
-          </b>
+    <div className="mb-5">
+      <div className="flex w-full flex-col items-start">
+        <div className="flex w-full flex-col gap-4 p-3">
+        <div className="mb-6 w-full rounded-lg border border-stroke bg-white p-5 shadow-md dark:border-strokedark dark:bg-boxdark">
+        <div className="float-right flex w-full items-center justify-between text-black text-sm font-medium border-b-2 py-1 border-stone-200">
+            İş Emri ID: {isEmriCode}
         </div>
-        <hr />
-        <div className="flex w-full flex-col gap-16 p-3">
-          {UrunGruplari.map((item, index) => (
-            <UrunGruplariModul setValues={setValues} item={item} key={index} />
-          ))}
-        </div>
-        <div className="flex w-full flex-col items-end self-end p-3">
-          <h2 className="h-full self-end text-xl dark:text-white">
+        <div className="flex w-full justify-between mt-10">
+        {/* model kısmı */}
+          <div className="flex flex-col gap-4 w-1/4">
+            <label className="text-sm font-medium text-black dark:text-white">
+              Model Türü
+            </label>
+            <select className="w-full rounded-lg border-[1.5px] border-stone-400 bg-white px-3 py-2 text-black outline-none focus:border-primary dark:bg-boxdark dark:text-white dark:focus:border-primary"
+                onChange={(e) => setModel(e.target.value)}
+                >
+              <option>Model Türü Seçiniz...</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+            <div className="flex items-center gap-4 ml-2">
+            <label className="flex items-center text-sm font-medium text-black dark:text-white">
+              <input
+                type="checkbox"
+                className="mr-2"
+                value="Kadın"
+                checked={isWomanChecked}
+                onChange={(e) => handleCheckboxChange("Kadın", e.target.checked)}
+              />{" "}
+              KADIN
+            </label>
+            <label className="flex items-center text-sm font-medium text-black dark:text-white">
+              <input
+                type="checkbox"
+                className="mr-2"
+                value="Erkek"
+                checked={isManChecked}
+                onChange={(e) => handleCheckboxChange("Erkek", e.target.checked)}
+              />{" "}
+              ERKEK
+            </label>
+            </div>
+          </div>
+          {/* maliyet */}
+          <div className="flex flex-col gap-2">
+          <label className="text-sm dark:text-white text-black">
+            Maliyetler
+          </label>
+          <label className="text-sm dark:text-white text-black font-bold">
             Toplam Malzeme Maliyeti :{" "}
             <span className="font-bold text-black underline dark:text-white">{`${formatToCurrency(totalPrice)} $`}</span>
-          </h2>
-          <div className="flex w-full flex-col items-start gap-2">
-            <label className="mb-1 block text-sm font-medium text-black dark:text-white">
-              Üretim Açıklaması Giriniz
+          </label>
+          </div>
+          {/* açıklama */}
+          <div className="flex flex-col gap-2 w-1/2">
+            <label className="text-sm font-medium text-black dark:text-white">
+              Üretim Müdürü Açıklaması
             </label>
             <textarea
               rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Üretim Açıklaması Giriniz..."
-              className="w-full rounded-lg border-[1.5px] border-stone-400 bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+              placeholder="Üretim Müdürü Açıklaması..."
+              className="w-full rounded-lg border-[1.5px] border-stone-400 bg-white px-5 py-3 text-black outline-none focus:border-primary dark:bg-boxdark dark:text-white dark:focus:border-primary"
             />
           </div>
         </div>
-        <div className="flex items-center self-end p-3">
+      </div>
+
+      {/* ürün kısımları */}
+          {UrunGruplari.map((item, index) => (
+            <div
+              key={index}
+              className="rounded-lg border border-stroke bg-white p-4 shadow-md dark:border-strokedark dark:bg-boxdark"
+            >
+              <UrunGruplariModul setValues={setValues} item={item} />
+            </div>
+          ))}
+        </div>
+
+        <div className="flex items-center self-end justify-between p-3">
+          {/* <button
+            type="button"
+            onClick={async () => {
+              setValues([]);
+              setDescription("");
+              setIsEmriCode("");
+            }}
+            className="w-50 rounded-md bg-primary px-2 py-2 text-center text-white"
+          >
+            Temizle
+          </button>
+          */}
           <button
             type="button"
             onClick={async () => await addWorkOrder()}
-            className="w-60 rounded-md bg-primary px-2 py-3 text-center text-white"
+            className="w-40 rounded-md bg-primary px-2 py-2 ml-5 text-center text-white"
           >
-            İLERİ
+            Kaydet
           </button>
         </div>
+
+
       </div>
     </div>
   );
