@@ -24,7 +24,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { WorkOrderQueueApiService } from "@/ApiServices/WorkOrders.ApiService";
 import { MucevherCode } from "@/utils/Mucevher.Utils";
-//
+
 const UrunGruplari: UrunGruplariModulType[] = [
   {
     buttonText: "Sade Ekle ",
