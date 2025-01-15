@@ -37,6 +37,7 @@ export default function usePirlantaModalData({
       firstPrice,
       code,
       menstrual_status,
+      caratPrice
     } = properties;
     const item: SeciliUrunType = {
       pk: target.name,
@@ -49,6 +50,7 @@ export default function usePirlantaModalData({
       maliyet: `${formatToCurrency(firstPrice)} $`,
       firstPrice,
       menstrual_status,
+      caratPrice,
     };
 
     if (target.checked) {
@@ -88,11 +90,10 @@ export default function usePirlantaModalData({
     );
     const condition = selectedItem != null;
     const { adet, used_carat } = selectedItem || {};
-
     const firstMaliyet =
       item.menstrual_status == "Mixed"
-        ? Number(item.product_cost?.pricePerCarat)
-        : Number(item.total_cost);
+      ? Number(String(item.product_cost?.pricePerCarat).replace(",", "."))
+      : Number(item.total_cost);
 
     return {
       sec: (
@@ -108,6 +109,7 @@ export default function usePirlantaModalData({
                 {
                   ...item.properties,
                   firstPrice: Number(firstMaliyet),
+                  caratPrice: Number(firstMaliyet),
                   code: item.code,
                 },
                 index,
@@ -132,7 +134,8 @@ export default function usePirlantaModalData({
           item={item}
           inputAdetRefs={inputAdetRefs}
           indexNo={index}
-          val={adet as string}
+          adetVal={adet as string}
+          caratVal={used_carat as string}
           setSelectedValues={setSelectedValues}
           spanMaliyetRefs={spanMaliyetRefs}
           condition={condition}
@@ -150,7 +153,8 @@ export default function usePirlantaModalData({
             item={item}
             inputAdetRefs={inputAdetRefs}
             indexNo={index}
-            val={used_carat as string}
+            adetVal={adet as string}
+            caratVal={used_carat as string}
             setSelectedValues={setSelectedValues}
             spanMaliyetRefs={spanMaliyetRefs}
             condition={condition}

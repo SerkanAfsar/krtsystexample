@@ -18,6 +18,8 @@ export type ProductItemsType = {
 };
 
 export type AddWorOrderType = {
+  total_product_cost : string,
+  gender : string,
   description: string;
   workorder_products: any[];
   product_temp_code: string;

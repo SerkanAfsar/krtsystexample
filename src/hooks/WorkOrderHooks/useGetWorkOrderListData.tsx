@@ -110,6 +110,12 @@ export default function useGetWorkOrderListData() {
               router.push(`/Admin/IsEmirleri/UretimBaslatma/${id}`)
             }
           />
+          <FaPencil
+            className="cursor-pointer"
+            onClick={() =>
+              router.push(`/Admin/IsEmirleri/UretimDuzenle/${id}`)
+            }
+          />
           {user?.groups.some((a) => a.name == "Üretim Müdürü") && (
             <FaTrash
               className="cursor-pointer"
