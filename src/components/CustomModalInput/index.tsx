@@ -33,20 +33,12 @@ const CustomModalInput = React.forwardRef<HTMLInputElement, CustomProps>(
           if (name == "used_carat") {
             maliyet =
             caratValue && item.menstrual_status == "Mixed"
-                ? Number(maliyet * Number(caratValue)* Number(prev[index].adet))
+                ? Number(maliyet * Number(caratValue))
                 : maliyet;
 
             spanRef.textContent = `${formatToCurrency(maliyet)} $`;
           }
 
-          if (name == "adet") {
-            maliyet =
-            adetValue && item.menstrual_status == "Mixed"
-                ? Number(maliyet * Number(adetValue)* Number(prev[index].used_carat))
-                : maliyet;
-
-            spanRef.textContent = `${formatToCurrency(maliyet)} $`;
-          }
           prev[index] = {
             ...prev[index],
             [name]: name === "used_carat" ? caratValue : adetValue,

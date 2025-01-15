@@ -263,3 +263,17 @@ export const PostWorkOrderNotificationReadService = async ({
 
   return result as ResponseResult<any>;
 };
+
+export const GetWorkOderModels = async (): Promise<ResponseResult<WorkOrderListType>> => {
+  let url = `product/model-types/`;
+  const result = await BaseService({
+    url: url,
+    bodyData: null,
+    method: "GET",
+    hasToken: true,
+  });
+
+  console.log(result);
+
+  return result
+};

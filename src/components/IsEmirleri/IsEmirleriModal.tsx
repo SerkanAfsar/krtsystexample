@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import CustomErrorAlert from "../CustomUI/Alerts/CustomErrorAlert";
 import CustomDatatable from "../CustomUI/CustomDatatable";
 import { IoMdCloseCircle } from "react-icons/io";
@@ -13,6 +14,7 @@ export default function IsEmirleriModal({
   tableFunction,
   setSelectedValues,
   selectedValues,
+  model,
 }: {
   title: string;
   modalHeaderColumns: any;
@@ -20,6 +22,7 @@ export default function IsEmirleriModal({
   setSelectedValues: any;
   tableFunction?: any;
   selectedValues?: any;
+  model?: any;
 }) {
   if (!tableFunction) {
     return null;
@@ -34,6 +37,10 @@ export default function IsEmirleriModal({
     setIsOpen,
     imgSrc,
   } = tableFunction({ setSelectedValues, selectedValues });
+
+  const filteredData = title === "Sade Ekle" && model
+  ? activeData.filter((item: any) => item.model === model)
+  : activeData;
 
   return (
     <div className="fixed inset-0 z-999 flex h-full w-full items-center justify-center bg-black bg-opacity-80">
@@ -62,7 +69,7 @@ export default function IsEmirleriModal({
               className={"block shadow-none"}
               totalPageCount={totalPageCount}
               columns={modalHeaderColumns}
-              data={activeData}
+              data={filteredData}
               activePage={activePage}
               setActivePage={setActivePage}
             />
