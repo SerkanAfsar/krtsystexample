@@ -83,8 +83,8 @@ export default function IsEmriContainer() {
   const [gender, setGender] = useState<string>(""); 
   const [isWomanChecked, setIsWomanChecked] = useState<boolean>(false);
   const [isManChecked, setIsManChecked] = useState<boolean>(false);
-  const [modelList, setModelList] = useState<string[]>([]);
-  const [model, setModel] = useState<string>(""); 
+  const [modelList, setModelList] = useState<{ name: string; id: number }[]>([]);
+  const [model, setModel] = useState<{ name: string; id: number } | null>(null);
   const [values, setValues] = useState<ProductItemsType[]>(
     UrunGruplari.map((item) => {
       return {
@@ -129,17 +129,19 @@ export default function IsEmriContainer() {
     }
   };
 
-   useEffect(() => {
-      GetWorkOderModels().then((resp) => {
-        if (resp?.success && Array.isArray(resp.data)) {
-          const modelNames = resp.data.map((item: any) => item.name); 
-          setModelList(modelNames); 
-        }  else {
-          console.log("API Response başarısız:", resp);
-        }
-      });
-    }, [] );
-
+  useEffect(() => {
+    GetWorkOderModels().then((resp) => {
+      if (resp?.success && Array.isArray(resp.data)) {
+        const modelData = resp.data.map((item: any) => ({
+          name: item.name,
+          id: item.id, 
+        }));
+        setModelList(modelData); 
+      } else {
+        console.log("API Response başarısız:", resp);
+      }
+    });
+  }, []);
   useEffect(() => {
     const resultCode = MucevherCode(pirlantaArr, sadeArr, renkliTasArr);
     const process = async ({ resultCode }: { resultCode: string }) => {
@@ -173,6 +175,7 @@ export default function IsEmriContainer() {
   }, 0);
 
   const lastData: AddWorOrderType = {
+    model_type: model?.id ?? 0 ,
     total_product_cost : totalPrice.toString(),
     gender,
     description,
@@ -208,12 +211,13 @@ export default function IsEmriContainer() {
       });
     }
     console.log("kaydete tıklandı")
+    console.log(lastData)
     const result: any = await AddWorkOrderService({ data: lastData });
 
     if (result?.success) {
       toast.success("Üretim İş Emri Eklendi", { position: "top-right" });
       return router.push(
-        `/Admin/IsEmirleri/UretimBaslatma/${result.data.id}?isFirst=true`,
+        `/Admin/IsEmirleri/UretimDuzenle/${result.data.id}?isFirst=true`,
       );
     } else {
       toast.error(result[0], { position: "top-right" });
@@ -236,12 +240,18 @@ export default function IsEmriContainer() {
             </label>
             <select
               className="w-full rounded-lg border-[1.5px] border-stone-400 bg-white px-3 py-2 text-black outline-none focus:border-primary dark:bg-boxdark dark:text-white dark:focus:border-primary"
-              onChange={(e) => setModel(e.target.value)} 
+              onChange={(e) => {
+                const selectedModelId = e.target.value;
+                const selectedModel = modelList.find(item => item.id === Number(selectedModelId));
+                if (selectedModel) {
+                  setModel({ id: selectedModel.id, name: selectedModel.name });
+                }
+              }}
             >
-              <option value="" disabled selected>Model Türü Seçiniz...</option>
-              {modelList.map((name, index) => (
-                <option key={index} value={name}>
-                  {name}
+              <option value="" disabled selected >Model Türü Seçiniz...</option>
+              {modelList.map((item, index) => (
+                <option key={index} value={item.id}>
+                  {item.name}
                 </option>
               ))}
             </select>
@@ -300,7 +310,7 @@ export default function IsEmriContainer() {
               key={index}
               className="rounded-lg border border-stroke bg-white p-4 shadow-md dark:border-strokedark dark:bg-boxdark"
             >
-              <UrunGruplariModul setValues={setValues} item={item} model={model} />
+              <UrunGruplariModul setValues={setValues} item={item} model={model?.name} />
             </div>
           ))}
         </div>

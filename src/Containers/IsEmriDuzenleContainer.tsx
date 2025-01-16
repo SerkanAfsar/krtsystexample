@@ -16,7 +16,7 @@ import {
 import usePirlantaModalData from "@/hooks/ModalDataHooks/usePirlantaModalData";
 import useRenkliTasModalData from "@/hooks/ModalDataHooks/useRenkliTasModalData";
 import useSadeModalData from "@/hooks/ModalDataHooks/useSadeModalData";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { formatToCurrency } from "@/utils";
 import {
   AddWorOrderType,
@@ -101,11 +101,11 @@ export default function IsEmriDuzenleContainer ({
 }) {
   const router = useRouter();
   const [description, setDescription] = useState<string>(workOrderData.description || "");
-  const [isEmriCode, setIsEmriCode] = useState<string>("");
-  const [gender, setGender] = useState<string>(""); 
+  const [isEmriCode, setIsEmriCode] = useState<string>(workOrderData.product_temp_code || "");
+  const [gender, setGender] = useState<string>(workOrderData.gender || ""); 
   const [isWomanChecked, setIsWomanChecked] = useState<boolean>(false);
   const [isManChecked, setIsManChecked] = useState<boolean>(false);
-  const [model, setModel] = useState<string>(""); 
+  const [model, setModel] = useState<string>(workOrderData.model_type_name || ""); 
   const [urunData, setUrunData] = useState<any>([]);
   const [values, setValues] = useState<ProductItemsType[]>(
     UrunGruplari.map((item) => {
@@ -118,37 +118,27 @@ export default function IsEmriDuzenleContainer ({
   const pirlantaArr = values.find((a) => a.title == "Pırlanta")?.products;
   const renkliTasArr = values.find((a) => a.title == "Renkli Taş")?.products;
   const sadeArr = values.find((a) => a.title == "Sade")?.products;
-
   const { ayar, modelTuru } = sadeArr?.length ? sadeArr[0] : {};
   const { name: type } = renkliTasArr?.length ? renkliTasArr[0] : {};
-
   const isCondition = pirlantaArr?.some((a) => a.renk == "BLACK");
+  const initialTotalPrice = useRef<number>(0); 
 
-  const handleCheckboxChange = (type: "Kadın" | "Erkek", checked: boolean) => {
-    if (type === "Kadın") {
-      setIsWomanChecked(checked);
-    } else if (type === "Erkek") {
-      setIsManChecked(checked);
+
+  useEffect(() => {
+    if (gender === "Woman") {
+      setIsWomanChecked(true);
+      setIsManChecked(false);
+      setGender("Woman");
+    } else if (gender === "Man") {
+      setIsWomanChecked(false);
+      setIsManChecked(true);
+      setGender("Man");
+    } else if (gender === "Both") {
+      setIsWomanChecked(true);
+      setIsManChecked(true);
+      setGender("Both");
     }
-  
-    if (checked) {
-      if (type === "Kadın" && isManChecked) {
-        setGender("Both");
-      } else if (type === "Erkek" && isWomanChecked) {
-        setGender("Both");
-      } else {
-        setGender(type === "Kadın" ? "Woman" : "Man");
-      }
-    } else {
-      if (type === "Kadın" && isManChecked) {
-        setGender("Man");
-      } else if (type === "Erkek" && isWomanChecked) {
-        setGender("Woman");
-      } else {
-        setGender("");
-      }
-    }
-  };
+  }, [gender]);
 
   useEffect(() => {
     GetSimpleWorkOrderProductList({
@@ -169,12 +159,12 @@ export default function IsEmriDuzenleContainer ({
     const resultCode = MucevherCode(pirlantaArr, sadeArr, renkliTasArr);
     const process = async ({ resultCode }: { resultCode: string }) => {
       const result = await WorkOrderQueueApiService({ code: resultCode });
-      setIsEmriCode(`${resultCode}-${result}`);
+      //setIsEmriCode(`${resultCode}-${result}`);
     };
     if (resultCode) {
       process({ resultCode });
     } else {
-      setIsEmriCode("");
+      setIsEmriCode(workOrderData.product_temp_code || "");
     }
   }, [
     gender,
@@ -199,7 +189,14 @@ export default function IsEmriDuzenleContainer ({
     return next.price ? acc + next.price : acc;
   }, 0);
 
+  if (initialTotalPrice.current === 0) {
+    initialTotalPrice.current = lastItems.reduce<number>((acc, next) => {
+      return next.price ? acc + next.price : acc;
+    }, 0);
+  }
+
   const lastData: AddWorOrderType = {
+    model_type : 0,
     total_product_cost : totalPrice.toString(),
     gender,
     description,
@@ -273,7 +270,6 @@ export default function IsEmriDuzenleContainer ({
                 className="mr-2"
                 value="Kadın"
                 checked={isWomanChecked}
-                onChange={(e) => handleCheckboxChange("Kadın", e.target.checked)}
               />{" "}
               KADIN
             </label>
@@ -284,7 +280,6 @@ export default function IsEmriDuzenleContainer ({
                 className="mr-2"
                 value="Erkek"
                 checked={isManChecked}
-                onChange={(e) => handleCheckboxChange("Erkek", e.target.checked)}
               />{" "}
               ERKEK
             </label>
@@ -297,11 +292,11 @@ export default function IsEmriDuzenleContainer ({
           </label>
           <label className="text-sm dark:text-white text-black font-bold">
             İlk Malzeme Maliyeti :{" "}
-            <span className="font-bold text-black underline dark:text-white">{`${formatToCurrency(totalPrice)} $`}</span>
+            <span className="font-bold text-black underline dark:text-white">{`${formatToCurrency(initialTotalPrice.current)} $`}</span>
           </label>
           <label className="text-sm dark:text-white text-green-400 font-bold">
-            Güncel Malzeme Maliyeti :{" "}
-            <span className="font-bold text-green-400 underline dark:text-white">{"-"}</span>
+            Güncel Malzeme Maliyeti : {" "}
+            <span className="font-bold text-green-400 underline dark:text-white">{`${formatToCurrency(totalPrice)} $`}</span>
           </label>
           </div>
           {/* açıklama */}
@@ -326,7 +321,7 @@ export default function IsEmriDuzenleContainer ({
               key={index}
               className="rounded-lg border border-stroke bg-white p-4 shadow-md dark:border-strokedark dark:bg-boxdark"
             >
-              <UrunGruplariModul setValues={setValues} item={item} urunData={urunData.results}/>
+              <UrunGruplariModul setValues={setValues} item={item} urunData={urunData.results} model={model}/>
             </div>
           ))}
         </div>
