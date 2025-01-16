@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import IsEmirleriModal from "./IsEmirleriModal";
 import { cn, formatToCurrency } from "@/utils";
-import { FaPencil } from "react-icons/fa6";
+//import { FaPencil } from "react-icons/fa6";
 import { FaTrash } from "react-icons/fa6";
 import { IoSendSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
