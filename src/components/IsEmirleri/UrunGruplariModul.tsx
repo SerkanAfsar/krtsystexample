@@ -7,7 +7,7 @@ import { FaPencil } from "react-icons/fa6";
 import { FaTrash } from "react-icons/fa6";
 import { IoSendSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
-
+import CustomConfirmPage from "../CustomUI/CustomConfirmPage";  
 
 import {
   ProductItemsType,
@@ -40,22 +40,51 @@ export default function UrunGruplariModul({
 }) {
   const [selectedValues, setSelectedValues] = useState<SeciliUrunType[]>([]);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [statusForConfirmation, setStatusForConfirmation] = useState<string>('');
+  const [indexForConfirmation, setIndexForConfirmation] = useState<number | null>(null);
 
-  const getSelectBoxColor = (status: string) => {
+  const getColor = (status: string) => {
     switch (status) {
-      case "Gönderildi":
-        return "green";
-      case "Onaylandı":
-        return "blue";
-      case "RESERVED":
-        return "orange";
-      case "Red Edildi":
-        return "red";
+      case 'Gönderildi':
+        return 'purple-500'; 
+      case 'Onaylandı':
+        return 'green-500'; 
+      case 'RESERVED':
+        return 'blue-500'; 
+      case 'Red Edildi':
+        return 'red-500'; 
+        case 'Onay Bekliyor':
+          return 'orange-500'; 
       default:
-        return "black";
+        return 'gray-500'; 
     }
   };
 
+  const handleConfirmationOpen = (status: string, index: number) => {
+    setStatusForConfirmation(status);
+    setIndexForConfirmation(index);
+    setConfirmModalOpen(true);
+  };
+
+  const handleConfirmation = () => {
+    if (indexForConfirmation !== null) {
+      const updatedValues = [...selectedValues];
+      if (updatedValues[indexForConfirmation].status === 'RESERVED') {
+        updatedValues[indexForConfirmation].status = 'Onay Bekliyor';
+      } else if (updatedValues[indexForConfirmation].status === 'Onay Bekliyor') {
+        updatedValues[indexForConfirmation].status = 'Onaylandı';
+      } else if (updatedValues[indexForConfirmation].status === 'Onaylandı') {
+        updatedValues[indexForConfirmation].status = 'Gönderildi';
+      }
+      setSelectedValues(updatedValues);
+    }
+    setConfirmModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setConfirmModalOpen(false);
+  };
   //İş emri düzenleden gelen datalar için. Sıfırdan iş emri oluşturulması durumunda çalışmayacak.
   useEffect(() => {
   if (!urunData) return;
@@ -77,14 +106,14 @@ export default function UrunGruplariModul({
             pk:item.product.pk,
             ayar: item.product.properties.gram,
             code: item.product.code,
-            firstPrice: item.product.total_cost,
+            firstPrice: item.cost,
             resim: item.product.image,
             renk: item.product.properties.altinRengi,
             gram: item.product.properties.gram,
             has: item.product.properties.hasGrami,
             model: item.product.properties.modelTuru,
             modelTuru: item.product.properties.modelTuru,
-            maliyet: `${formatToCurrency(item.product.total_cost)} $`,
+            maliyet: `${formatToCurrency(item.cost)} $`,
             nerede: "Sade Kasa",
             status:item.status,
             type: "Sade"
@@ -104,10 +133,11 @@ export default function UrunGruplariModul({
             renk: item.product.properties.renk ,
             adet: item.quantity ,
             menstrual_status: item.product.properties.menstrual_status,
-            maliyet: `${formatToCurrency(item.product.total_cost)} $`,
-            firstPrice: item.product.total_cost,
+            maliyet: `${formatToCurrency(item.cost)} $`,
+            firstPrice: item.cost,
             nerede: "Sade Kasa",
             status:item.status,
+            caratPrice:item.product.product_cost.pricePerCarat
           }));
   
       case "Pırlanta":
@@ -123,10 +153,11 @@ export default function UrunGruplariModul({
             renk: item.product.properties.renk ,
             adet: item.quantity ,
             menstrual_status: item.product.properties.menstrual_status,
-            maliyet: `${formatToCurrency(item.product.total_cost)} $`,
-            firstPrice: item.product.total_cost,
+            maliyet: `${formatToCurrency(item.cost)} $`,
+            firstPrice: item.cost,
             nerede: "Sade Kasa",
             status:item.status,
+            caratPrice:item.product.product_cost.pricePerCarat
           }));
   
       default:
@@ -340,34 +371,12 @@ export default function UrunGruplariModul({
                     );
                   } else if (key == "status") {
                     return (
-                      <select
+                      <div
                       key={index}
-                      className="p ml-[-20px] h-8 w-28 rounded-full border border-black text-center dark:disabled:text-white text-sm"
-                      style={{
-                        color: getSelectBoxColor(String(item.status)),
-                        border: `2px solid ${getSelectBoxColor(String(item.status))}` 
-                      }}
-                      value={item.status}
-                      onChange={(e) => {
-                        const selectedIndexNo = selectedValues.findIndex(
-                          (a) => a.pk == item.pk,
-                        );
-                        const newItems = selectedValues;
-                        const changedItem = newItems[selectedIndexNo];
-                        changedItem["status"] = e.target.value;
-                    
-                        setSelectedValues((prev) => [
-                          ...prev.slice(0, selectedIndexNo),
-                          changedItem,
-                          ...prev.slice(selectedIndexNo + 1, newItems.length),
-                        ]);
-                      }}
+                      className={`p ml-[-20px] h-8 w-28 rounded-full text-center text-sm font-bold dark:disabled:text-white text-${getColor(String(item.status))} border-${getColor(String(item.status))} border-2 leading-[2]`}
                     >
-                      <option className="text-green-400"value="Gönderildi">Gönderildi</option>
-                      <option className="text-blue-500"value="Onaylandı">Onaylandı</option>
-                      <option className="text-yellow-400"value="RESERVED">Reserved</option>
-                      <option className="text-red"value="Red Edildi">Red Edildi</option>
-                    </select>
+                      {item.status}
+                    </div>
                     );
                   } else {
                     return (
@@ -379,18 +388,12 @@ export default function UrunGruplariModul({
                 }
               })}
            <div className="flex items-center justify-left gap-4 dark:text-white">
-              {urunData ? (
+              {urunData && String(item.status) !== 'Gönderildi'? (
                 <>
-                  <IoSendSharp className="cursor-pointer" 
-                    onClick={() => {
-                      if (item.status === "Onaylandı") {
-                        console.log("IoSendSharp icon clicked, status is 'Onaylandı'");
-                      } else {
-                        return toast.error("Ürünleri gönderebilmek için önce ürünleri onaylamanız gerekmektedir!", {
-                          position: "top-right",
-                        });                      }
-                    }}
-                  />
+              <IoSendSharp
+                  className="cursor-pointer"
+                  onClick={() => handleConfirmationOpen(String(item.status), index)}
+                />
                  <FaTrash
                     className="cursor-pointer"
                     onClick={(e) => {
@@ -399,6 +402,7 @@ export default function UrunGruplariModul({
                       );
                     }}
                   />
+    
                 </>
               ) : (
                 <>
@@ -427,6 +431,14 @@ export default function UrunGruplariModul({
           setSelectedValues={setSelectedValues}
           selectedValues={selectedValues}
           model={model}
+        />
+      )}
+         {confirmModalOpen && (
+        <CustomConfirmPage
+          isOpen={confirmModalOpen}
+          status={statusForConfirmation}
+          onConfirm={handleConfirmation}
+          onCancel={handleCancel}
         />
       )}
     </>

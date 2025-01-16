@@ -18,6 +18,7 @@ export type ProductItemsType = {
 };
 
 export type AddWorOrderType = {
+  model_type: number,
   total_product_cost : string,
   gender : string,
   description: string;
@@ -64,6 +65,8 @@ export type WorkOrderType = {
   totalProductColumn?: React.ReactNode;
   labor_cost: number | null;
   total_cost: number | null;
+  gender: string;
+  model_type_name: string
 };
 
 export type WorkOrderLogType = {
