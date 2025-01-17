@@ -8,6 +8,7 @@ import { FaTrash } from "react-icons/fa6";
 import { IoSendSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
 import CustomConfirmPage from "../CustomUI/CustomConfirmPage";  
+import { PostWorkOderUpdateStatus } from "@/Services/WorkOrder.Services";
 
 import {
   ProductItemsType,
@@ -50,6 +51,18 @@ export default function UrunGruplariModul({
     setConfirmModalOpen(true);
   };
 
+  const statusMap: { [key: string]: string } = {
+    PENDING: "Onay Bekliyor",
+    RESERVED: "Rezervli",
+    CANCELLED: "İptal Edildi",
+    ACCEPTED: "Onaylandı",
+    SENT: "Gönderildi",
+  };
+
+  const reverseStatusMap = Object.fromEntries(
+    Object.entries(statusMap).map(([key, value]) => [value, key])
+  );
+
   const handleConfirmation = () => {
     if (indexForConfirmation !== null) {
       const updatedValues = [...selectedValues];
@@ -61,6 +74,20 @@ export default function UrunGruplariModul({
         updatedValues[indexForConfirmation].status = 'Gönderildi';
       }
       setSelectedValues(updatedValues);
+      const newBackendStatus = reverseStatusMap[
+        String(updatedValues[indexForConfirmation].status)
+      ];       
+      console.log(newBackendStatus)
+        PostWorkOderUpdateStatus({
+              work_order_product_id: Number(updatedValues[indexForConfirmation].id),
+              status: newBackendStatus, 
+          }).then((resp) => {
+            if (resp?.success) {
+              //console.log("API Response başarılır:", resp);
+            } else {
+              console.log("API Response başarısız:", resp);
+            }
+          });
     }
     setConfirmModalOpen(false);
   };
@@ -98,8 +125,9 @@ export default function UrunGruplariModul({
             modelTuru: item.product.properties.modelTuru,
             maliyet: `${formatToCurrency(item.cost)} $`,
             nerede: "Kasa",
-            status:item.status,
-            type: "Sade"
+            status: statusMap[item.status] || item.status,
+            type: "Sade",
+            id:item.id
           }));
   
       case "Renkli Taş":
@@ -119,8 +147,9 @@ export default function UrunGruplariModul({
             maliyet: `${formatToCurrency(item.cost)} $`,
             firstPrice: item.cost,
             nerede: "Kasa",
-            status:item.status,
-            caratPrice:item.product.product_cost.pricePerCarat
+            status: statusMap[item.status] || item.status,
+            caratPrice:item.product.product_cost.pricePerCarat,
+            id:item.id
           }));
   
       case "Pırlanta":
@@ -139,8 +168,9 @@ export default function UrunGruplariModul({
             maliyet: `${formatToCurrency(item.cost)} $`,
             firstPrice: item.cost,
             nerede: "Kasa",
-            status:item.status,
-            caratPrice:item.product.product_cost.pricePerCarat
+            status: statusMap[item.status] || item.status,
+            caratPrice:item.product.product_cost.pricePerCarat,
+            id:item.id
           }));
   
       default:

@@ -210,7 +210,6 @@ export default function IsEmriContainer() {
         position: "top-right",
       });
     }
-    console.log("kaydete tıklandı")
     console.log(lastData)
     const result: any = await AddWorkOrderService({ data: lastData });
 
