@@ -58,7 +58,7 @@ export default async function UretimDuzenle({ params }: { params: Params }) {
             url: "/Admin/IsEmirleri/UretimIsEmirleriListesi",
           },
         ]}
-        pageName={`${workOrderData.product_temp_code} İş Emri Bilgileri ${workOrderData.status === "Completed" ? " - (Tamamlanmış)" : ""}`}
+        pageName={`ID: ${workOrderData.id} İş Emri Bilgileri ${workOrderData.status === "Completed" ? " - (Tamamlanmış)" : ""}`}
       />
       <IsEmriDuzenleContainer
         userId={userId}

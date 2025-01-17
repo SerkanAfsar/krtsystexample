@@ -39,30 +39,13 @@ export default function UrunGruplariModul({
   model?: any;
 }) {
   const [selectedValues, setSelectedValues] = useState<SeciliUrunType[]>([]);
+  const [editableUrun, setEditableUrun] = useState<SeciliUrunType>({});
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
-  const [statusForConfirmation, setStatusForConfirmation] = useState<string>('');
   const [indexForConfirmation, setIndexForConfirmation] = useState<number | null>(null);
 
-  const getColor = (status: string) => {
-    switch (status) {
-      case 'Gönderildi':
-        return 'purple-500'; 
-      case 'Onaylandı':
-        return 'green-500'; 
-      case 'RESERVED':
-        return 'blue-500'; 
-      case 'Red Edildi':
-        return 'red-500'; 
-        case 'Onay Bekliyor':
-          return 'orange-500'; 
-      default:
-        return 'gray-500'; 
-    }
-  };
-
-  const handleConfirmationOpen = (status: string, index: number) => {
-    setStatusForConfirmation(status);
+  const handleConfirmationOpen = (item: SeciliUrunType,index: number) => {
+    setEditableUrun(item)
     setIndexForConfirmation(index);
     setConfirmModalOpen(true);
   };
@@ -114,7 +97,7 @@ export default function UrunGruplariModul({
             model: item.product.properties.modelTuru,
             modelTuru: item.product.properties.modelTuru,
             maliyet: `${formatToCurrency(item.cost)} $`,
-            nerede: "Sade Kasa",
+            nerede: "Kasa",
             status:item.status,
             type: "Sade"
           }));
@@ -135,7 +118,7 @@ export default function UrunGruplariModul({
             menstrual_status: item.product.properties.menstrual_status,
             maliyet: `${formatToCurrency(item.cost)} $`,
             firstPrice: item.cost,
-            nerede: "Sade Kasa",
+            nerede: "Kasa",
             status:item.status,
             caratPrice:item.product.product_cost.pricePerCarat
           }));
@@ -155,7 +138,7 @@ export default function UrunGruplariModul({
             menstrual_status: item.product.properties.menstrual_status,
             maliyet: `${formatToCurrency(item.cost)} $`,
             firstPrice: item.cost,
-            nerede: "Sade Kasa",
+            nerede: "Kasa",
             status:item.status,
             caratPrice:item.product.product_cost.pricePerCarat
           }));
@@ -192,7 +175,7 @@ export default function UrunGruplariModul({
       ayar: item.ayar ? String(item.ayar) : null,
       modelTuru: item.modelTuru ? String(item.modelTuru) : null,
       renk: (item.renk as string) ?? null,
-      caratPrice : Number(item.caratPrice)
+      caratPrice : Number(item.caratPrice),
     }));
     setValues((prev: ProductItemsType[]) => {
       const indexNo = prev.findIndex((a) => a.title == title);
@@ -232,7 +215,7 @@ export default function UrunGruplariModul({
                     type="button"
                     className="btn block w-35 rounded-md px-3 py-1 text-center text-primary font-bold border-2 border-primary"
                     onClick={() => {
-                      if (buttonText === "Sade Ekle" && model === "") {
+                      if (buttonText === "Sade Ekle" && !model) {
                         return toast.error("Sade eklemeden önce model seçilmesi zorunludur!", {
                           position: "top-right",
                         });
@@ -249,7 +232,7 @@ export default function UrunGruplariModul({
             type="button"
             className="btn block w-35 rounded-md bg-primary px-3 py-1 text-center text-white"
             onClick={() => {
-              if (buttonText === "Sade Ekle" && model === "") {
+              if (buttonText === "Sade Ekle" && !model) {
                 return toast.error("Sade eklemeden önce model seçilmesi zorunludur!", {
                   position: "top-right",
                 });
@@ -373,8 +356,16 @@ export default function UrunGruplariModul({
                     return (
                       <div
                       key={index}
-                      className={`p ml-[-20px] h-8 w-28 rounded-full text-center text-sm font-bold dark:disabled:text-white text-${getColor(String(item.status))} border-${getColor(String(item.status))} border-2 leading-[2]`}
-                    >
+                      className={`
+                        p ml-[-20px] h-8 w-28 rounded-full text-center text-sm font-bold dark:disabled:text-white
+                        ${item.status === 'RESERVED' ? 'text-blue-500 border-blue-500' :
+                         item.status === 'Onay Bekliyor' ? 'text-orange-500 border-orange-500' :
+                         item.status === 'Onaylandı' ? 'text-green-500 border-green-500' :
+                         item.status === 'Gönderildi' ? 'text-purple-500 border-purple-500' :
+                         'text-black-500 border-black-500'}
+                        border-2 leading-[2]
+                      `}                    
+                      >
                       {item.status}
                     </div>
                     );
@@ -392,7 +383,7 @@ export default function UrunGruplariModul({
                 <>
               <IoSendSharp
                   className="cursor-pointer"
-                  onClick={() => handleConfirmationOpen(String(item.status), index)}
+                  onClick={() => handleConfirmationOpen(item, index)}
                 />
                  <FaTrash
                     className="cursor-pointer"
@@ -436,7 +427,7 @@ export default function UrunGruplariModul({
          {confirmModalOpen && (
         <CustomConfirmPage
           isOpen={confirmModalOpen}
-          status={statusForConfirmation}
+          item={editableUrun}
           onConfirm={handleConfirmation}
           onCancel={handleCancel}
         />

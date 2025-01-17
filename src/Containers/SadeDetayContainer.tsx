@@ -15,10 +15,12 @@ export default function SadeDetayContainer({
   sadeItemData,
   isAdd,
   gramAltinKur,
+  dolarKuru,
 }: {
   sadeItemData: (ISadeType & { code?: string | null }) | null;
   isAdd: boolean;
   gramAltinKur: number;
+  dolarKuru: number;
 }) {
   const sadeItem: ISadeType = sadeItemData ?? {};
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -110,9 +112,13 @@ export default function SadeDetayContainer({
   }, []);
 
   const totalCoastHesapla = useCallback(
-    ({ hasGrami, iscilik }: { hasGrami?: string; iscilik: number }) => {
-      if (hasGrami && iscilik) {
-        return Number(hasGrami) * gramAltinKur + iscilik;
+    ({ hasGrami, iscilik, cost_currency }: { hasGrami?: string; iscilik: number; cost_currency? : string }) => {
+      if (hasGrami && iscilik && cost_currency) {
+        if(cost_currency === "USD"){
+          return ((Number(hasGrami) * gramAltinKur) / dolarKuru)  + Number(iscilik); 
+        } else{
+          return ((Number(hasGrami) * gramAltinKur) / dolarKuru) + ((Number(iscilik) * gramAltinKur) / dolarKuru);
+        }
       }
     },
     [gramAltinKur],
@@ -127,6 +133,7 @@ export default function SadeDetayContainer({
         total_cost: totalCoastHesapla({
           hasGrami,
           iscilik: value.iscilik,
+          cost_currency: value.cost_currency
         }),
       };
     },

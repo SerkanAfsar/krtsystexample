@@ -277,3 +277,18 @@ export const GetWorkOderModels = async (): Promise<ResponseResult<WorkOrderListT
 
   return result
 };
+
+export const PostWorkOderUpdateStatus = async ({
+  data,
+}: {
+  data: AddWorOrderType; //updatedItemStatus etc
+}): Promise<ResponseResult<any>> => {
+  const result = await BaseService({
+    url: "/product/update-work-order-product-status/",
+    bodyData: data,
+    method: "POST",
+    hasToken: true,
+  });
+
+  return result as ResponseResult<any>;
+};

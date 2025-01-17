@@ -21,7 +21,6 @@ export default function useSadeModalData({
   const [error, setError] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [imgSrc, setImageSrc] = useState<string>();
-  console.log("sade açıldı")
   const handleCheck = (
     e: React.FormEvent<HTMLInputElement>,
     properties: any,
@@ -77,11 +76,8 @@ export default function useSadeModalData({
             selectedValues.findIndex(
               (a) => (a.pk as string) == (item.pk as unknown),
             ) > -1;
-            console.log(item?.properties?.hasGrami)
-            console.log(process.env.NEXT_PUBLIC_ALTIN_KURU)
           const maliyet =
-            Number(item?.properties?.hasGrami || 0) *
-            Number(process.env.NEXT_PUBLIC_ALTIN_KURU);
+            Number(item?.total_cost)
           return {
             sec: (
               <div className="flex h-full w-full items-center justify-center">
