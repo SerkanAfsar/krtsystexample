@@ -101,7 +101,7 @@ export default function IsEmriDuzenleContainer ({
 }) {
   const router = useRouter();
   const [description, setDescription] = useState<string>(workOrderData.description || "");
-  const [isEmriCode, setIsEmriCode] = useState<string>(workOrderData.product_temp_code || "");
+  const [isEmriCode, setIsEmriCode] = useState<string>(String(workOrderData.id) || "");
   const [gender, setGender] = useState<string>(workOrderData.gender || ""); 
   const [isWomanChecked, setIsWomanChecked] = useState<boolean>(false);
   const [isManChecked, setIsManChecked] = useState<boolean>(false);
@@ -147,7 +147,6 @@ export default function IsEmriDuzenleContainer ({
       page: 1,
     }).then((resp) => {
       if (resp?.success) {
-        console.log("API Response:", resp);
         setUrunData(resp?.data);
       } else {
         console.log("API Response başarısız:", resp);
@@ -164,7 +163,7 @@ export default function IsEmriDuzenleContainer ({
     if (resultCode) {
       process({ resultCode });
     } else {
-      setIsEmriCode(workOrderData.product_temp_code || "");
+      setIsEmriCode(String(workOrderData.id) || "");;
     }
   }, [
     gender,
@@ -197,7 +196,7 @@ export default function IsEmriDuzenleContainer ({
 
   const lastData: AddWorOrderType = {
     model_type : 0,
-    total_product_cost : totalPrice.toString(),
+    total_product_cost : String(totalPrice),
     gender,
     description,
     workorder_products: lastItems,

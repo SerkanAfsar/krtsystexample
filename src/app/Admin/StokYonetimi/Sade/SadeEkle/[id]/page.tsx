@@ -4,7 +4,7 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { ProductType } from "../../../../../../types/types";
 import { notFound } from "next/navigation";
-import { getGramAltinKuru } from "@/utils/Sade.Utils";
+import { getGramAltinKuru, getDolarKuru } from "@/utils/Sade.Utils";
 
 export default async function SadeDetay({
   params,
@@ -16,6 +16,7 @@ export default async function SadeDetay({
     const data = result.data as ProductType;
 
     const gramAltiKuru = await getGramAltinKuru();
+    const dolarKuru = await getDolarKuru();
 
     const props = data.properties;
     delete data.properties;
@@ -36,6 +37,7 @@ export default async function SadeDetay({
           gramAltinKur={gramAltiKuru}
           isAdd={false}
           sadeItemData={realData}
+          dolarKuru={dolarKuru}
         />
       </DefaultLayout>
     );

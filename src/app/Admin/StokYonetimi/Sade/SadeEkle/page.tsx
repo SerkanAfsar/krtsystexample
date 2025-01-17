@@ -2,10 +2,11 @@ import SadeDetayContainer from "@/Containers/SadeDetayContainer";
 
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import { getGramAltinKuru } from "@/utils/Sade.Utils";
+import { getGramAltinKuru, getDolarKuru } from "@/utils/Sade.Utils";
 
 const SadeEklePage = async () => {
   const gramAltiKuru = await getGramAltinKuru();
+  const dolarKuru = await getDolarKuru();
 
   return (
     <DefaultLayout>
@@ -21,6 +22,7 @@ const SadeEklePage = async () => {
       <SadeDetayContainer
         isAdd={true}
         gramAltinKur={gramAltiKuru}
+        dolarKuru={dolarKuru}
         sadeItemData={null}
       />
     </DefaultLayout>

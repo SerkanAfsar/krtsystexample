@@ -81,6 +81,23 @@ export const getGramAltinKuru = async () => {
     : 2200;
 };
 
+export const getDolarKuru = async () => {
+  const response = await fetch("https://bigpara.hurriyet.com.tr/dolar/", {
+    cache: "no-store",
+  });
+  const result = await response.text();
+  const text = parse(result);
+  const elems = text.querySelectorAll(".tBody ul");
+
+  const dolarKuruElem = elems[0];
+
+  const dolarKuruLi = returnResult(dolarKuruElem);
+
+  return dolarKuruLi?.alis
+    ? Number(dolarKuruLi?.alis?.toString().replace(".", "").replace(",", "."))
+    : 35;
+};
+
 const returnResult = (elem: HTMLElement): CurrencyType => {
   const liItem = elem.querySelectorAll("li");
 

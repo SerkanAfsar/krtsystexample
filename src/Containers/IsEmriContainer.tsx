@@ -229,9 +229,9 @@ export default function IsEmriContainer() {
       <div className="flex w-full flex-col items-start">
         <div className="flex w-full flex-col gap-4 p-3">
         <div className="mb-6 w-full rounded-lg border border-stroke bg-white p-5 shadow-md dark:border-strokedark dark:bg-boxdark">
-        <div className="float-right flex w-full items-center justify-between text-black text-sm font-medium border-b-2 py-1 border-stone-200">
+        {/*<div className="float-right flex w-full items-center justify-between text-black text-sm font-medium border-b-2 py-1 border-stone-200">
             İş Emri ID: {isEmriCode}
-        </div>
+        </div>*/}
         <div className="flex w-full justify-between mt-10">
         {/* model kısmı */}
           <div className="flex flex-col gap-4 w-1/4">
