@@ -19,7 +19,7 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, onConfirm
   let cirakSecimi = null; 
 
   switch (item.status) {
-    case 'RESERVED':
+    case 'Rezervli':
       message =  `${item.code} kodlu ürünü onay beklemeye göndermek istediğinizden emin misiniz?`;
       buttonText = 'Onayla';
       break;

@@ -66,7 +66,7 @@ export default function UrunGruplariModul({
   const handleConfirmation = () => {
     if (indexForConfirmation !== null) {
       const updatedValues = [...selectedValues];
-      if (updatedValues[indexForConfirmation].status === 'RESERVED') {
+      if (updatedValues[indexForConfirmation].status === 'Rezervli') {
         updatedValues[indexForConfirmation].status = 'Onay Bekliyor';
       } else if (updatedValues[indexForConfirmation].status === 'Onay Bekliyor') {
         updatedValues[indexForConfirmation].status = 'Onaylandı';
@@ -388,7 +388,7 @@ export default function UrunGruplariModul({
                       key={index}
                       className={`
                         p ml-[-20px] h-8 w-28 rounded-full text-center text-sm font-bold dark:disabled:text-white
-                        ${item.status === 'RESERVED' ? 'text-blue-500 border-blue-500' :
+                        ${item.status === 'Rezervli' ? 'text-blue-500 border-blue-500' :
                          item.status === 'Onay Bekliyor' ? 'text-orange-500 border-orange-500' :
                          item.status === 'Onaylandı' ? 'text-green-500 border-green-500' :
                          item.status === 'Gönderildi' ? 'text-purple-500 border-purple-500' :
