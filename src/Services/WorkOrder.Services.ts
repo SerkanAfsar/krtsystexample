@@ -294,3 +294,18 @@ export const PostWorkOderUpdateStatus = async ({
 
   return result as ResponseResult<any>;
 };
+
+export const GetWorkOrderPupils = async () => {
+  const url = "user/pupils/";
+  try {
+    const result = await BaseService({
+      url: url,
+      bodyData: null,
+      method: "GET",
+      hasToken: true,
+    });
+    return result as ResponseResult<any>;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
