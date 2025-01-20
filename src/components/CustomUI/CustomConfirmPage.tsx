@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { GetWorkOrderPupils } from "@/Services/WorkOrder.Services";
+
 
 type SeciliUrunType = {
   [key: string]: string | number;
@@ -12,8 +14,31 @@ type ConfirmPropsType = {
 };
 
 const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, onConfirm, onCancel }) => {
+  const [ciraklar, setCiraklar] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (item.status === 'Onaylandı') {
+      const fetchCiraklar = async () => {
+        try {
+          const response = await GetWorkOrderPupils(); 
+          if (response && response.success && response.data) {
+            const names = response.data.map((pupil: { username: string }) => pupil.username); 
+            setCiraklar(names);
+          }
+          else if (response && !response.success) {
+            console.error('Data fetch failed cirak list'); 
+          }
+          
+        } catch (error) {
+          console.error('Error fetching pupils:', error);
+        }
+      };
+  
+      fetchCiraklar(); 
+    }
+  }, [item.status]);
+
   if (!isOpen) return null;
-  console.log(item)
   let message = '';
   let buttonText = '';
   let cirakSecimi = null; 
@@ -35,9 +60,16 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, onConfirm
         <label htmlFor="cirakSecimi" className="items-center text-sm font-medium text-gray-700">
             Lütfen göndereceğiniz çırağı seçiniz
           </label>
-          <select
-            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
-          >
+          <select className="w-full mt-1 p-2 border border-gray-300 rounded-md">
+            {ciraklar.length > 0 ? (
+              ciraklar.map((name, index) => (
+                <option key={index} value={name}>
+                  {name}
+                </option>
+              ))
+            ) : (
+              <option disabled></option>
+            )}
           </select>
         </div>
         );
