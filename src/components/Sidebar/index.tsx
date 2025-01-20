@@ -266,6 +266,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                           Pırlanta Stok Listesi
                                         </Link>
                                       </li>
+                                      <li>
+                                        <Link
+                                          href="/Admin/StokYonetimi/Pirlanta/PirlantaUretimTalepleri"
+                                          className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                            pathname ===
+                                              "/Admin/StokYonetimi/Pirlanta/PirlantaUretimTalepleri" &&
+                                            "text-white"
+                                          } `}
+                                        >
+                                           Pırlanta Üretim Talepleri
+                                        </Link>
+                                      </li>
+                                     
                                     </ul>
                                   </div>
                                   {/* <!-- Dropdown Menu End --> */}
@@ -346,6 +359,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                           } `}
                                         >
                                           Sade Stok Listesi
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <Link
+                                          href="/Admin/StokYonetimi/Sade/SadeUretimTalepleri"
+                                          className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                            pathname ===
+                                              "/Admin/StokYonetimi/Sade/SadeUretimTalepleri" &&
+                                            "text-white"
+                                          } `}
+                                        >
+                                          Sade Üretim Talepleri
                                         </Link>
                                       </li>
                                     </ul>
@@ -429,6 +454,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                           } `}
                                         >
                                           Renkli Taş Stok Listesi
+                                        </Link>
+                                        <Link
+                                          href="/Admin/StokYonetimi/RenkliTas/RenkliUretimTalepleri"
+                                          className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                            pathname ===
+                                              "/Admin/StokYonetimi/RenkliTas/RenkliUretimTalepleri" &&
+                                            "text-white"
+                                          } `}
+                                        >
+                                          Renkli Taş Üretim Talepleri
                                         </Link>
                                       </li>
                                     </ul>
