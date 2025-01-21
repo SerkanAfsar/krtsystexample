@@ -158,9 +158,11 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
                   disabled
                   className="text-body dark:text-bodydark"
                 >
-                  {firstOptionText
-                    ? `${firstOptionText}`
-                    : `${item.title} Seçiniz`}
+                {firstOptionText
+                  ? `${firstOptionText}`
+                  : item.title === "Birim" || item.title === "Altın Rengi"
+                  ? item.title
+                  : `${item.title} Seçiniz`}
                 </option>
                 {staticOptions
                   ? staticOptions()
