@@ -202,13 +202,15 @@ export const AltinRengiData: CustomOptionType[] = [
 ];
 
 export const AltinAyarData: CustomOptionType[] = [
+  { titleVal: "24", valueVal: "24" },
+  { titleVal: "22", valueVal: "22" },
   { titleVal: "18", valueVal: "18" },
   { titleVal: "14", valueVal: "14" },
   { titleVal: "8", valueVal: "8" },
-  { titleVal: "750", valueVal: "750" },
-  { titleVal: "585", valueVal: "585" },
-  { titleVal: "22", valueVal: "22" },
-  { titleVal: "24", valueVal: "24" },
+];
+
+export const MilyemData: CustomOptionType[] = [
+
 ];
 
 export const AtolyeListesi: CustomOptionType[] = [

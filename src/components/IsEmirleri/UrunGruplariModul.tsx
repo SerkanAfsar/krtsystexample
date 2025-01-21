@@ -77,7 +77,6 @@ export default function UrunGruplariModul({
       const newBackendStatus = reverseStatusMap[
         String(updatedValues[indexForConfirmation].status)
       ];       
-      console.log(newBackendStatus)
         PostWorkOderUpdateStatus({
               work_order_product_id: Number(updatedValues[indexForConfirmation].id),
               status: newBackendStatus, 

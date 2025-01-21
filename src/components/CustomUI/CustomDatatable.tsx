@@ -356,6 +356,14 @@ const CustomDatatable = ({
                     <td
                       className={cn(
                         "z-20 border border-slate-400 !align-middle text-sm font-thin last:sticky last:inset-0 last:z-30 last:bg-gray-3  last:text-center",
+                        (cell.column.Header === "Maliyet" 
+                          || cell.column.Header === "PPC" 
+                          || cell.column.Header === "Rapaport" 
+                          || cell.column.Header === "Toplam"
+                          || cell.column.Header === "Toplam İşçilik"
+                          || cell.column.Header === "Etiket Fiyatı"
+                          || cell.column.Header === "İşçilik") && "text-right"
+
                       )}
                       {...cell.getCellProps()}
                       key={`cell-${key}`}

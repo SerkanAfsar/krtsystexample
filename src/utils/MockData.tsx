@@ -6,6 +6,7 @@ import {
   AltinRengiData,
   AtolyeListesi,
   SadeModelTurleri,
+  MilyemData,
 } from "@/data/Sade.data";
 import {
   PirlantaBerraklikData,
@@ -197,7 +198,7 @@ export const AddSadeSections: Array<FormSectionType> = [
           { titleVal: "HAS", valueVal: "HAS" },
           { titleVal: "USD", valueVal: "USD" },
         ],
-        span: 1,
+        span: 2,
       },
       {
         name: "altinRengi",
@@ -207,7 +208,7 @@ export const AddSadeSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Altın Rengi Değeri Boş Bırakılamaz",
         relativeTo: "type",
-        span: 3,
+        span: 2,
         options: AltinRengiData,
       },
       {
@@ -228,8 +229,19 @@ export const AddSadeSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Ayar Değeri Boş Bırakılamaz",
         relativeTo: "type",
-        span: 3,
+        span: 2,
         options: AltinAyarData,
+      },
+      {
+        name: "milyem",
+        type: "select",
+        title: "Milyem",
+        placeholder: "Milyem Giriniz...",
+        required: true,
+        requiredMessage: "Milyem Değeri Boş Bırakılamaz",
+        relativeTo: "type",
+        span: 2,
+        options: MilyemData,
       },
       {
         name: "hasGrami",
@@ -239,7 +251,7 @@ export const AddSadeSections: Array<FormSectionType> = [
         required: true,
         requiredMessage: "Has Gramı Değeri Boş Bırakılamaz",
         disabled: true,
-        span: 3,
+        span: 2,
       },
       {
         name: "aciklama",
@@ -1038,6 +1050,16 @@ export const AddStoneSections: Array<FormSectionType> = [
         requiredMessage: "Sertifika No Değeri Boş Bırakılamaz",
         span: 3,
       },
+    ]
+  },
+  {
+    visibleRelativeColumn: "menstrual_status",
+    colsLenght: "12",
+    visibleRelativeToValue: "Sertifikalı",
+    sectionTitle: "Laboratuvar Bilgileri",
+    groupNumber: 1,
+    keyString: "product_certificate",
+    elements: [
       {
         name: "propotion",
         type: "select",
@@ -1260,8 +1282,8 @@ export const AddStoneSections: Array<FormSectionType> = [
       {
         name: "rapaportPrice",
         type: "money",
-        title: "Rapaport Güncel Fiyatı",
-        placeholder: "Rapaport Güncel Fiyatı...",
+        title: "Alış Rapaport",
+        placeholder: "Alış Rapaport...",
         required: true,
         requiredMessage: "Rapaport Fiyatı Boş Bırakılamaz",
         rightIcon: "$",

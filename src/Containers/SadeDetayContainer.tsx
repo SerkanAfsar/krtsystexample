@@ -35,8 +35,57 @@ export default function SadeDetayContainer({
   });
 
   useEffect(() => {
-    setData((prev: any) => ({ ...prev, code: sadeCode, sadeKodu: sadeCode }));
-  }, [sadeCode]);
+    setData((prev: any) => ({ ...prev, code: sadeCode, sadeKodu: sadeCode, }));
+    AddSadeSections.forEach(section => {
+      const milyemElement = section.elements.find(element => element.name === 'milyem');
+      if (milyemElement) {
+        if (data.ayar) {
+          switch (data.ayar) {
+            case "24":
+              //data.milyem= "995"
+              milyemElement.options = [
+                { titleVal: "995", valueVal: "995",},
+              ];
+              break;
+            case "22":
+              //data.milyem= "916"
+              milyemElement.options = [
+                { titleVal: "916", valueVal: "916" },
+              ];
+              break;
+            case "18":
+              //data.milyem= "825"
+              milyemElement.options = [
+                { titleVal: "825", valueVal: "825" },
+                { titleVal: "787.5", valueVal: "787.5"},
+                { titleVal: "750", valueVal: "750" },
+              ];
+              break;
+            case "14":
+              //data.milyem= "585"
+              milyemElement.options = [
+                { titleVal: "585", valueVal: "585" },
+                { titleVal: "615", valueVal: "615" },
+                { titleVal: "645", valueVal: "645" },
+              ];
+              break;
+            case "8":
+              //data.milyem= "333"
+              milyemElement.options = [
+                { titleVal: "333", valueVal: "333" },
+                { titleVal: "350", valueVal: "350" },
+                { titleVal: "366", valueVal: "366" },
+              ];
+              break;
+            default:
+              milyemElement.options = []; 
+          }
+        }
+       
+      }
+    });
+  }, [sadeCode, data?.ayar]);
+
 
   const getBase64 = (file: any): any => {
     if (file && file[0]) {
@@ -77,37 +126,10 @@ export default function SadeDetayContainer({
   );
 
   const hasGramHesapla = useCallback((value: any) => {
-    if (value.ayar && value.gram) {
-      switch (value.ayar) {
-        case "18": {
-          const result = (750 / 1000) * parseFloat(value.gram);
-          return result.toFixed(2);
-        }
-        case "750": {
-          const result = (750 / 1000) * parseFloat(value.gram);
-          return result.toFixed(2);
-        }
-        case "14": {
-          const result = (585 / 1000) * parseFloat(value.gram);
-          return result.toFixed(2);
-        }
-        case "585": {
-          const result = (585 / 1000) * parseFloat(value.gram);
-          return result.toFixed(2);
-        }
-        case "8": {
-          const result = (333 / 1000) * parseFloat(value.gram);
-          return result.toFixed(2);
-        }
-        case "22": {
-          const result = (916 / 1000) * parseFloat(value.gram);
-          return result.toFixed(2);
-        }
-        case "24": {
-          const result = (999 / 1000) * parseFloat(value.gram);
-          return result.toFixed(2);
-        }
-      }
+    console.log(value)
+    if (value.milyem && value.gram) {
+      const result = (Number(value.milyem) / 1000) * parseFloat(value.gram);
+      return result.toFixed(2);
     }
   }, []);
 
