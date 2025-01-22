@@ -82,10 +82,7 @@ export default function RenkliTasDetayContainer({
     },
   );
 
-  const sectionLenght: number =
-    data.menstrual_status == "Sertifikalı"
-      ? AddRenkliTasSections.length
-      : AddRenkliTasSections.length - 1;
+  const sectionLenght: number = 1
 
   return (
     <>

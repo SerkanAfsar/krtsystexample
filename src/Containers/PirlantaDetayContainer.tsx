@@ -105,11 +105,7 @@ const PirlantaDetayContainer = ({
     },
   );
 
-  const sectionLenght: number =
-    data.menstrual_status == "Sertifikalı"
-      ? AddStoneSections.length - 1
-      : AddStoneSections.length - 1;
-
+  const sectionLenght: number = 1
   return (
     <>
       <CustomModalPage
