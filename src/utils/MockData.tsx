@@ -1010,7 +1010,7 @@ export const AddStoneSections: Array<FormSectionType> = [
     colsLenght: "12",
     visibleRelativeToValue: "Sertifikalı",
     sectionTitle: "Sertifika Bilgileri",
-    groupNumber: 1,
+    groupNumber: 0,
     keyString: "product_certificate",
     elements: [
       {
@@ -1064,7 +1064,7 @@ export const AddStoneSections: Array<FormSectionType> = [
     colsLenght: "12",
     visibleRelativeToValue: "Sertifikalı",
     sectionTitle: "Laboratuvar Bilgileri",
-    groupNumber: 1,
+    groupNumber: 0,
     keyString: "product_certificate",
     elements: [
       {
@@ -1274,7 +1274,7 @@ export const AddStoneSections: Array<FormSectionType> = [
   {
     colsLenght: "4",
     sectionTitle: "Pırlanta Fiyat Bilgileri",
-    groupNumber: 1,
+    groupNumber: 0,
     keyString: "product_cost",
     elements: [
       {
@@ -1554,7 +1554,7 @@ export const AddRenkliTasSections: Array<FormSectionType> = [
     colsLenght: "12",
     visibleRelativeToValue: "Sertifikalı",
     sectionTitle: "Sertifika Bilgileri",
-    groupNumber: 1,
+    groupNumber: 0,
     keyString: "product_certificate",
     elements: [
       {
