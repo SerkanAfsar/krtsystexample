@@ -84,6 +84,7 @@ export type ISadeType = {
   cost_currency?: string;
   islemler?: React.ReactNode;
   store_id?: number;
+  totalCost?: string;
 };
 
 export type FormSectionType = {
