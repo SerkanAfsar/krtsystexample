@@ -210,7 +210,7 @@ export const AltinAyarData: CustomOptionType[] = [
 ];
 
 export const MilyemData: CustomOptionType[] = [
-
+  { titleVal: "Milyem Seçiniz", valueVal: "0" }
 ];
 
 export const AtolyeListesi: CustomOptionType[] = [

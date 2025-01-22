@@ -152,18 +152,24 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
                 )}
                 {...rest}
               >
-                <option
-                  value=""
-                  selected
-                  disabled
-                  className="text-body dark:text-bodydark"
-                >
-                {firstOptionText
-                  ? `${firstOptionText}`
-                  : item.title === "Birim" || item.title === "Altın Rengi"
-                  ? item.title
-                  : `${item.title} Seçiniz`}
-                </option>
+              {
+                item.title !== "Milyem" && (
+                  <option
+                    value=""
+                    selected
+                    disabled
+                    className="text-body dark:text-bodydark"
+                  >
+                    {
+                      firstOptionText
+                        ? `${firstOptionText}`
+                        : item.title === "Birim" || item.title === "Altın Rengi"
+                        ? item.title
+                        : `${item.title} Seçiniz`
+                    }
+                  </option>
+                )
+              }
                 {staticOptions
                   ? staticOptions()
                   : options?.map((item2, index) => {

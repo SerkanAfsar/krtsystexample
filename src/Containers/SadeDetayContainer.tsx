@@ -6,6 +6,7 @@ import { ISadeType } from "../types/formTypes";
 import { ProductType } from "../types/types";
 import { AddSadeSections } from "@/utils/MockData";
 import { useCallback, useEffect, useState } from "react";
+import { formatToCurrency } from "@/utils";
 import {
   AddProductApiService,
   UpdateProductApiService,
@@ -34,44 +35,55 @@ export default function SadeDetayContainer({
     sadeDataItemType: sadeItemData?.type,
   });
 
+
   useEffect(() => {
-    setData((prev: any) => ({ ...prev, code: sadeCode, sadeKodu: sadeCode, }));
+    setData((prev: any) => ({ ...prev, code: sadeCode, sadeKodu: sadeCode }));
+  }, [sadeCode]);
+
+  useEffect(() => {
+    console.log(data)
     AddSadeSections.forEach(section => {
       const milyemElement = section.elements.find(element => element.name === 'milyem');
       if (milyemElement) {
         if (data.ayar) {
+          setData((prev: any) => ({ ...prev, milyem: null }));
           switch (data.ayar) {
             case "24":
-              //data.milyem= "995"
+              setData((prev: any) => ({ ...prev, milyem: "", hasGrami: "0.00" }));
               milyemElement.options = [
+                { titleVal: "Milyem Seçiniz", valueVal: "" },
                 { titleVal: "995", valueVal: "995",},
               ];
               break;
             case "22":
-              //data.milyem= "916"
+              setData((prev: any) => ({ ...prev, milyem: "", hasGrami: "0.00"}));
               milyemElement.options = [
+                { titleVal: "Milyem Seçiniz", valueVal: "" },
                 { titleVal: "916", valueVal: "916" },
               ];
               break;
             case "18":
-              //data.milyem= "825"
+              setData((prev: any) => ({ ...prev, milyem: "", hasGrami: "0.00" }));
               milyemElement.options = [
+                { titleVal: "Milyem Seçiniz", valueVal: "" },
                 { titleVal: "825", valueVal: "825" },
                 { titleVal: "787.5", valueVal: "787.5"},
                 { titleVal: "750", valueVal: "750" },
               ];
               break;
             case "14":
-              //data.milyem= "585"
+              setData((prev: any) => ({ ...prev, milyem: "", hasGrami: "0.00" }));
               milyemElement.options = [
+                { titleVal: "Milyem Seçiniz", valueVal: "" },
                 { titleVal: "585", valueVal: "585" },
                 { titleVal: "615", valueVal: "615" },
                 { titleVal: "645", valueVal: "645" },
               ];
               break;
             case "8":
-              //data.milyem= "333"
+              setData((prev: any) => ({ ...prev, milyem: "", hasGrami: "0.00"}));
               milyemElement.options = [
+                { titleVal: "Milyem Seçiniz", valueVal: ""},
                 { titleVal: "333", valueVal: "333" },
                 { titleVal: "350", valueVal: "350" },
                 { titleVal: "366", valueVal: "366" },
@@ -84,7 +96,7 @@ export default function SadeDetayContainer({
        
       }
     });
-  }, [sadeCode, data?.ayar]);
+  }, [data?.ayar]);
 
 
   const getBase64 = (file: any): any => {
@@ -126,7 +138,6 @@ export default function SadeDetayContainer({
   );
 
   const hasGramHesapla = useCallback((value: any) => {
-    console.log(value)
     if (value.milyem && value.gram) {
       const result = (Number(value.milyem) / 1000) * parseFloat(value.gram);
       return result.toFixed(2);
@@ -161,6 +172,14 @@ export default function SadeDetayContainer({
     },
     [hasGramHesapla, totalCoastHesapla],
   );
+
+  useEffect(() => {
+    console.log()
+    if (data.total_cost) {
+      const totalCost = data.total_cost
+      setData((prev: any) => ({ ...prev, totalCost: `${formatToCurrency(totalCost)} $`, }));
+    }
+  }, [data.milyem, data.gram, data.iscilik, data.cost_currency,]);
 
   useEffect(() => {
     if (data.resim) {
