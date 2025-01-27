@@ -11,7 +11,7 @@ import {
 import {
   PirlantaBerraklikData,
   PirlantaBoyKodlari,
-  PirlantaElekData,
+  //PirlantaElekData,
   PirlantaKesimKodlariData,
   PirlantaRenkData,
 } from "@/data/Pirlanta.data";

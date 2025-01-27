@@ -221,7 +221,7 @@ export const PirlantaBerraklikData: CustomOptionType[] = [
   },
 ];
 
-export const PirlantaElekData: CustomOptionType[] = [
+/*export const PirlantaElekData: CustomOptionType[] = [
   {
     titleVal: "60",
     valueVal: "60",
@@ -334,7 +334,7 @@ export const PirlantaElekData: CustomOptionType[] = [
     titleVal: "70",
     valueVal: "70",
   },
-];
+];*/
 
 export const PirlantaBoyKodlari: CustomOptionType[] = [
   {
