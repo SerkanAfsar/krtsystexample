@@ -30,6 +30,7 @@ import { useRouter } from "next/navigation";
 import { WorkOrderQueueApiService } from "@/ApiServices/WorkOrders.ApiService";
 import { MucevherCode } from "@/utils/Mucevher.Utils";
 import { GetSimpleWorkOrderProductList } from "@/Services/WorkOrder.Services";
+import { useUserStore } from "@/store/useUserStore";
 
 const UrunGruplari: UrunGruplariModulType[] = [
   {
@@ -100,6 +101,8 @@ export default function IsEmriDuzenleContainer ({
   workOrderGroups: WorkOrderTeamGroupType[];
 }) {
   const router = useRouter();
+  const { user } = useUserStore(); 
+  const userRoleID = user?.groups[0]?.id;
   const [description, setDescription] = useState<string>(workOrderData.description || "");
   const [isEmriCode, setIsEmriCode] = useState<string>(String(workOrderData.id) || "");
   const [gender, setGender] = useState<string>(workOrderData.gender || ""); 
@@ -335,10 +338,13 @@ export default function IsEmriDuzenleContainer ({
           </button>
           <button
             type="button"
-            className="w-40 rounded-md bg-primary px-2 py-2 ml-5 text-center text-white"
+            className={`w-40 rounded-md px-2 py-2 ml-5 text-center text-white ${
+              userRoleID === 2 ? "bg-primary" : "bg-primary cursor-not-allowed"
+            }`}
+            disabled={userRoleID !== 2} 
           >
             Üretimi Başlat
-          </button>
+        </button>
         </div>
 
 
