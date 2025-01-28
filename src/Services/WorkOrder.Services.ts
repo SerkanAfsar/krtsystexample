@@ -264,7 +264,9 @@ export const PostWorkOrderNotificationReadService = async ({
   return result as ResponseResult<any>;
 };
 
-export const GetWorkOderModels = async (): Promise<ResponseResult<WorkOrderListType>> => {
+export const GetWorkOderModels = async (): Promise<
+  ResponseResult<WorkOrderListType>
+> => {
   let url = `product/model-types/`;
   const result = await BaseService({
     url: url,
@@ -275,7 +277,7 @@ export const GetWorkOderModels = async (): Promise<ResponseResult<WorkOrderListT
 
   console.log(result);
 
-  return result
+  return result;
 };
 
 export const PostWorkOderUpdateStatus = async ({
@@ -287,7 +289,7 @@ export const PostWorkOderUpdateStatus = async ({
 }): Promise<ResponseResult<any>> => {
   const result = await BaseService({
     url: "product/update-work-order-product-status/",
-    bodyData: { work_order_product_id, status},
+    bodyData: { work_order_product_id, status },
     method: "POST",
     hasToken: true,
   });

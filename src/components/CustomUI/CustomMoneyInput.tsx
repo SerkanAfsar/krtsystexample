@@ -41,9 +41,7 @@ const CustomMoneyInput = React.forwardRef<
     },
     ref,
   ) => {
-    const [val, setVal] = useState<string | undefined>(
-      typeof value == "number" ? value.toFixed(2) : value,
-    );
+    const [val, setVal] = useState<string | undefined>(value);
 
     const allValues = getValues && getValues();
 
@@ -72,12 +70,12 @@ const CustomMoneyInput = React.forwardRef<
               decimalsLimit={2}
               placeholder={item.placeholder ?? undefined}
               onValueChange={(value, name, values) => {
-                setVal(value);
-                setFormValues && setFormValues(name, value);
+                setVal(values?.value);
+                setFormValues && setFormValues(name, values?.float);
               }}
               decimalSeparator=","
-              disableGroupSeparators={true}
               onBlur={onBlur}
+              disableGroupSeparators={true}
               value={item.isConstant || isDeneme ? value : val}
               className={cn(
                 "h-full w-full rounded border-[1.5px] border-stone-400 bg-transparent px-5 py-3 pb-[14px] font-normal  text-black outline-none transition placeholder:capitalize focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary",

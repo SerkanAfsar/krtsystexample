@@ -1045,7 +1045,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         requiredMessage: "Sertifika No Değeri Boş Bırakılamaz",
         span: 3,
       },
-    ]
+    ],
   },
   {
     visibleRelativeColumn: "menstrual_status",
@@ -1311,7 +1311,6 @@ export const AddStoneSections: Array<FormSectionType> = [
         // isConstant: true,
         isConstantCondition: { field: "menstrual_status", val: "Sertifikalı" },
         relativeTo: "menstrual_status",
-        
       },
       {
         name: "poPrice",
@@ -1411,7 +1410,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         relativeTo: "menstrual_status",
         span: 1,
         isConstant: true,
-      }, 
+      },
       {
         name: "total_cost",
         type: "money",
@@ -1491,7 +1490,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         relativeTo: "menstrual_status",
         span: 4,
         isConstant: true,
-      }, 
+      },
       {
         name: "total_cost",
         type: "money",
@@ -1579,7 +1578,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       {
         name: "lot2",
         type: "text",
-        title: `${' '}`,
+        title: `${" "}`,
         placeholder: "C",
         relativeTo: "menstrual_status",
         required: false,
@@ -1589,7 +1588,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       {
         name: "elek2",
         type: "text",
-        title: `${' '}`,
+        title: `${" "}`,
         placeholder: "Elek",
         relativeTo: "menstrual_status",
         required: false,
@@ -1599,7 +1598,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       {
         name: "karat2",
         type: "text",
-        title: `${' '}`,
+        title: `${" "}`,
         relativeTo: "menstrual_status",
         required: false,
         span: 2,
@@ -1607,7 +1606,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       {
         name: "carpan2",
         type: "text",
-        title: `${' '}`,
+        title: `${" "}`,
         placeholder: "0",
         relativeTo: "menstrual_status",
         required: false,
@@ -1618,7 +1617,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         name: "anaMaliyet2",
         type: "text",
         placeholder: "0",
-        title: `${' '}`,
+        title: `${" "}`,
         disabled: true,
         relativeTo: "menstrual_status",
         required: false,
@@ -1629,7 +1628,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         name: "ppc2",
         type: "text",
         placeholder: "0",
-        title: `${' '}`,
+        title: `${" "}`,
         relativeTo: "menstrual_status",
         required: false,
         disabled: true,
@@ -1640,7 +1639,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         name: "uretimMaliyeti2",
         type: "text",
         placeholder: "0",
-        title: `${' '}`,
+        title: `${" "}`,
         relativeTo: "menstrual_status",
         required: false,
         disabled: true,
@@ -1650,7 +1649,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       {
         name: "lot3",
         type: "text",
-        title: `${' '}`,
+        title: `${" "}`,
         placeholder: "D",
         relativeTo: "menstrual_status",
         required: false,
@@ -1660,7 +1659,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       {
         name: "elek3",
         type: "text",
-        title: `${' '}`,
+        title: `${" "}`,
         placeholder: "Elek",
         relativeTo: "menstrual_status",
         required: false,
@@ -1670,7 +1669,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       {
         name: "karat3",
         type: "text",
-        title: `${' '}`,
+        title: `${" "}`,
         relativeTo: "menstrual_status",
         required: false,
         span: 2,
@@ -1678,7 +1677,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       {
         name: "carpan3",
         type: "text",
-        title: `${' '}`,
+        title: `${" "}`,
         placeholder: "0",
         relativeTo: "menstrual_status",
         required: false,
@@ -1688,7 +1687,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       {
         name: "anaMaliyet3",
         type: "text",
-        title: `${' '}`,
+        title: `${" "}`,
         placeholder: "0",
         relativeTo: "menstrual_status",
         required: false,
@@ -1699,7 +1698,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       {
         name: "ppc3",
         type: "text",
-        title: `${' '}`,
+        title: `${" "}`,
         placeholder: "0",
         relativeTo: "menstrual_status",
         required: false,
@@ -1710,7 +1709,7 @@ export const AddStoneSections: Array<FormSectionType> = [
       {
         name: "uretimMaliyeti3",
         type: "text",
-        title: `${' '}`,
+        title: `${" "}`,
         placeholder: "0",
         relativeTo: "menstrual_status",
         required: false,
@@ -1726,8 +1725,8 @@ export const AddStoneSections: Array<FormSectionType> = [
         title: "Toplam Karat",
         required: false,
         disabled: true,
-        colStart:"4",
-        colEnd:"6",
+        colStart: "4",
+        colEnd: "6",
         span: 2,
         isConstant: true,
       },
@@ -1739,8 +1738,8 @@ export const AddStoneSections: Array<FormSectionType> = [
         relativeTo: "menstrual_status",
         required: false,
         disabled: true,
-        colStart:"9",
-        colEnd:"11",
+        colStart: "9",
+        colEnd: "11",
         rightIcon: "$",
         span: 2,
         isConstant: true,
@@ -1753,7 +1752,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         relativeTo: "menstrual_status",
         required: false,
         disabled: true,
-        colStart:"11",
+        colStart: "11",
         rightIcon: "$",
         span: 2,
         isConstant: true,
