@@ -9,6 +9,7 @@ import { IoSendSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
 import CustomConfirmPage from "../CustomUI/CustomConfirmPage";  
 import { PostWorkOderUpdateStatus } from "@/Services/WorkOrder.Services";
+import { useUserStore } from "@/store/useUserStore";
 
 import {
   ProductItemsType,
@@ -44,6 +45,13 @@ export default function UrunGruplariModul({
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [indexForConfirmation, setIndexForConfirmation] = useState<number | null>(null);
+  const { user } = useUserStore(); 
+  const userRoleID = user?.groups[0]?.id;
+  const isDisabled = urunData && (
+    (title === "Pırlanta" && ![2, 8].includes(userRoleID ?? -1)) ||
+    (title === "Renkli Taş" && ![2, 7].includes(userRoleID ?? -1)) ||
+    (title === "Sade" && ![2, 1].includes(userRoleID ?? -1))
+  );
 
   const handleConfirmationOpen = (item: SeciliUrunType,index: number) => {
     setEditableUrun(item)
@@ -235,9 +243,10 @@ export default function UrunGruplariModul({
                     type="button"
                     className="btn block w-35 rounded-md px-3 py-1 text-center text-primary font-bold border-2 border-primary"
                     onClick={() => {
-                      console.log("")
+                      console.log("Toplu Gönder işlemi");
                     }}
-                  >
+                    disabled={isDisabled}
+                    >
                     {"Toplu Gönder"}
                   </button>
                   <button
@@ -252,6 +261,7 @@ export default function UrunGruplariModul({
                         setModalOpen(true);
                       }
                     }}
+                    disabled={isDisabled}
                   >
                     {buttonText}
                   </button>
@@ -283,7 +293,7 @@ export default function UrunGruplariModul({
         >
           {headerColumns.map((key, index) => (
             <label className="font-bold dark:font-normal" key={index}>
-              {key.title}
+              {key.title} 
             </label>
           ))}
         </div>
@@ -318,6 +328,7 @@ export default function UrunGruplariModul({
                           className="ml-[-10px]  h-8 w-16 rounded-md border border-black pl-3 text-center"
                           type="number"
                           value={item.used_carat}
+                          disabled={isDisabled}
                           onChange={(e) => {
                             const selectedIndexNo = selectedValues.findIndex(
                               (a) => a.pk == item.pk,
@@ -352,7 +363,8 @@ export default function UrunGruplariModul({
                         className="p ml-[-12px] h-8 w-16 rounded-md border border-black pl-3 text-center dark:disabled:text-white"
                         type="number"
                         disabled={
-                          item?.menstrual_status == "Sertifikalı" ? true : false
+                          item?.menstrual_status == "Sertifikalı" ||
+                          isDisabled
                         }
                         value={item.adet}
                         onChange={(e) => {
@@ -411,28 +423,35 @@ export default function UrunGruplariModul({
               {urunData && String(item.status) !== 'Gönderildi'? (
                 <>
               <IoSendSharp
-                  className="cursor-pointer"
-                  onClick={() => handleConfirmationOpen(item, index)}
+                    className={`cursor-pointer ${isDisabled ? 'opacity-50 pointer-events-none' : ''}`}
+                    onClick={() => {
+                      if (!isDisabled) {
+                        handleConfirmationOpen(item, index);
+                      }
+                    }}
                 />
                  <FaTrash
-                    className="cursor-pointer"
-                    onClick={(e) => {
-                      setSelectedValues((prev: SeciliUrunType[]) =>
-                        prev.filter((a) => a.pk != item.pk),
-                      );
-                    }}
+                   className={`cursor-pointer ${isDisabled ? 'opacity-50 pointer-events-none' : ''}`}
+                   onClick={(e) => {
+                     if (!isDisabled) {
+                       setSelectedValues((prev: SeciliUrunType[]) =>
+                         prev.filter((a) => a.pk != item.pk),
+                       );
+                     }
+                   }}
                   />
-    
                 </>
               ) : (
                 <>
                   <FaTrash
-                    className="cursor-pointer"
-                    onClick={(e) => {
+                  className={`cursor-pointer ${isDisabled ? 'opacity-50 pointer-events-none' : ''}`}
+                  onClick={(e) => {
+                    if (!isDisabled) {
                       setSelectedValues((prev: SeciliUrunType[]) =>
                         prev.filter((a) => a.pk != item.pk),
                       );
-                    }}
+                    }
+                  }}
                   />
                 </>
               )}
