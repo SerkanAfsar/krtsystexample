@@ -19,7 +19,7 @@ import useSadeModalData from "@/hooks/ModalDataHooks/useSadeModalData";
 import { useEffect, useState, useRef } from "react";
 import { formatToCurrency } from "@/utils";
 import {
-  AddWorOrderType,
+  UpdateWorkOrderType,
   ProductItemsType,
   WorkOrderProductType,
 } from "../types/WorkOrder.types";
@@ -104,11 +104,12 @@ export default function IsEmriDuzenleContainer ({
   const { user } = useUserStore(); 
   const userRoleID = user?.groups[0]?.id;
   const [description, setDescription] = useState<string>(workOrderData.description || "");
-  const [isEmriCode, setIsEmriCode] = useState<string>(String(workOrderData.id) || "");
+  const [isEmriCode, setIsEmriCode] = useState<string>("");
   const [gender, setGender] = useState<string>(workOrderData.gender || ""); 
   const [isWomanChecked, setIsWomanChecked] = useState<boolean>(false);
   const [isManChecked, setIsManChecked] = useState<boolean>(false);
   const [model, setModel] = useState<string>(workOrderData.model_type_name || ""); 
+  const [modelType, setModelType] = useState<number>(workOrderData.model_type || 0); 
   const [urunData, setUrunData] = useState<any>([]);
   const [values, setValues] = useState<ProductItemsType[]>(
     UrunGruplari.map((item) => {
@@ -152,7 +153,7 @@ export default function IsEmriDuzenleContainer ({
       if (resp?.success) {
         setUrunData(resp?.data);
       } else {
-        console.log("API Response başarısız:", resp);
+        console.log("err:", resp);
       }
     });
   }, [workOrderData.id]);
@@ -161,12 +162,12 @@ export default function IsEmriDuzenleContainer ({
     const resultCode = MucevherCode(pirlantaArr, sadeArr, renkliTasArr);
     const process = async ({ resultCode }: { resultCode: string }) => {
       const result = await WorkOrderQueueApiService({ code: resultCode });
-      //setIsEmriCode(`${resultCode}-${result}`);
+      setIsEmriCode(`${resultCode}-${result}`);
     };
     if (resultCode) {
       process({ resultCode });
     } else {
-      setIsEmriCode(String(workOrderData.id) || "");;
+      setIsEmriCode("");
     }
   }, [
     gender,
@@ -196,17 +197,17 @@ export default function IsEmriDuzenleContainer ({
       return next.price ? acc + next.price : acc;
     }, 0);
   }
-
-  const lastData: AddWorOrderType = {
-    model_type : 0,
+  const lastData: UpdateWorkOrderType = {
+    model_type : modelType,
     total_product_cost : String(totalPrice),
     gender,
     description,
     workorder_products: lastItems,
     product_temp_code: isEmriCode,
+    work_order_id: workOrderData.id,
   };
-
-  const addWorkOrder = async () => {
+  
+  const upDateWorkOrder = async () => {
     const condition = lastData.workorder_products.some(
       (a: WorkOrderProductType) => a.type == "Sade",
     );
@@ -222,24 +223,12 @@ export default function IsEmriDuzenleContainer ({
       });
     }
 
-    if (!description) {
-      return toast.error("Üretimde İş Emri Açıklaması Girilmesi Zorunludur!", {
-        position: "top-right",
-      });
-    }
-
-    if (!gender) {
-      return toast.error("Üretimde Cinsiyet Seçilmesi Zorunludur!", {
-        position: "top-right",
-      });
-    }
+    //console.log(lastData)
     const result: any = await AddWorkOrderService({ data: lastData });
 
     if (result?.success) {
-      toast.success("Üretim İş Emri Eklendi", { position: "top-right" });
-      return router.push(
-        `/Admin/IsEmirleri/UretimBaslatma/${result.data.id}?isFirst=true`,
-      );
+      toast.success("Üretim İş Emri Güncellendi", { position: "top-right" });
+     
     } else {
       toast.error(result[0], { position: "top-right" });
     }
@@ -251,7 +240,7 @@ export default function IsEmriDuzenleContainer ({
         <div className="flex w-full flex-col gap-4 p-3">
         <div className="mb-6 w-full rounded-lg border border-stroke bg-white p-5 shadow-md dark:border-strokedark dark:bg-boxdark">
         <div className="float-right flex w-full items-center justify-between text-black text-sm font-medium border-b-2 py-1 border-stone-200">
-            İş Emri ID: {isEmriCode}
+            İş Emri ID: {workOrderData.id}
         </div>
         <div className="flex w-full justify-between mt-10">
         {/* model kısmı */}
@@ -331,7 +320,7 @@ export default function IsEmriDuzenleContainer ({
         <div className="flex items-center self-end justify-between p-3">
         <button
             type="button"
-            onClick={async () => await addWorkOrder()}
+            onClick={async () => await upDateWorkOrder()}
             className="w-40 rounded-md bg-primary px-2 py-2 ml-5 text-center text-white"
           >
             Kaydet

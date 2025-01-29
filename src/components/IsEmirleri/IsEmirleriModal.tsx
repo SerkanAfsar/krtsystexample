@@ -15,6 +15,7 @@ export default function IsEmirleriModal({
   setSelectedValues,
   selectedValues,
   model,
+  isDuzenleContainer
 }: {
   title: string;
   modalHeaderColumns: any;
@@ -23,6 +24,7 @@ export default function IsEmirleriModal({
   tableFunction?: any;
   selectedValues?: any;
   model?: any;
+  isDuzenleContainer?: boolean;
 }) {
   if (!tableFunction) {
     return null;
@@ -36,7 +38,7 @@ export default function IsEmirleriModal({
     isOpen,
     setIsOpen,
     imgSrc,
-  } = tableFunction({ setSelectedValues, selectedValues });
+  } = tableFunction({ setSelectedValues, selectedValues, isDuzenleContainer});
 
   const filteredData = title === "Sade Ekle" && model
   ? activeData.filter((item: any) => item.model === model)

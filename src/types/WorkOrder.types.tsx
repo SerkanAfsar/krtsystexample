@@ -17,13 +17,23 @@ export type ProductItemsType = {
   products: WorkOrderProductType[];
 };
 
-export type AddWorOrderType = {
+export type AddWorkOrderType = {
   model_type: number,
   total_product_cost : string,
   gender : string,
   description: string;
   workorder_products: any[];
   product_temp_code: string;
+};
+
+export type UpdateWorkOrderType = {
+  model_type: number,
+  total_product_cost : string,
+  gender : string,
+  description: string;
+  workorder_products: any[];
+  product_temp_code: string;
+  work_order_id: number;
 };
 
 export type WorkOrderAtolyeType = {
@@ -67,6 +77,7 @@ export type WorkOrderType = {
   total_cost: number | null;
   gender: string;
   model_type_name: string
+  model_type: number
 };
 
 export type WorkOrderLogType = {

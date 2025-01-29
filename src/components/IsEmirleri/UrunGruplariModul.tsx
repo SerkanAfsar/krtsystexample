@@ -25,6 +25,12 @@ export type UrunGruplariModulType = {
   modalHeaderColumns?: any;
 };
 
+export type CirakType = {
+  id: number;
+  username: string;
+  email: string;
+};
+
 export type SeciliUrunType = {
   [key: string]: string | number;
 };
@@ -40,6 +46,7 @@ export default function UrunGruplariModul({
   urunData?: any;
   model?: any;
 }) {
+
   const [selectedValues, setSelectedValues] = useState<SeciliUrunType[]>([]);
   const [editableUrun, setEditableUrun] = useState<SeciliUrunType>({});
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -71,30 +78,36 @@ export default function UrunGruplariModul({
     Object.entries(statusMap).map(([key, value]) => [value, key])
   );
 
-  const handleConfirmation = () => {
+  const handleConfirmation = (cirak?: CirakType) => {
+    console.log("Seçili Çırak:", cirak); 
     if (indexForConfirmation !== null) {
       const updatedValues = [...selectedValues];
+      let newStatus: string | undefined;
+
       if (updatedValues[indexForConfirmation].status === 'Rezervli') {
-        updatedValues[indexForConfirmation].status = 'Onay Bekliyor';
+        newStatus = 'Onay Bekliyor';
       } else if (updatedValues[indexForConfirmation].status === 'Onay Bekliyor') {
-        updatedValues[indexForConfirmation].status = 'Onaylandı';
+        newStatus = 'Onaylandı';
       } else if (updatedValues[indexForConfirmation].status === 'Onaylandı') {
-        updatedValues[indexForConfirmation].status = 'Gönderildi';
+        newStatus = 'Gönderildi';
       }
-      setSelectedValues(updatedValues);
-      const newBackendStatus = reverseStatusMap[
-        String(updatedValues[indexForConfirmation].status)
-      ];       
-        PostWorkOderUpdateStatus({
-              work_order_product_id: Number(updatedValues[indexForConfirmation].id),
-              status: newBackendStatus, 
-          }).then((resp) => {
-            if (resp?.success) {
-              //console.log("API Response başarılır:", resp);
-            } else {
-              console.log("API Response başarısız:", resp);
-            }
+
+      if (newStatus) {
+      const newBackendStatus = reverseStatusMap[String(newStatus)];
+      PostWorkOderUpdateStatus({
+        work_order_product_id: Number(updatedValues[indexForConfirmation].id),
+        status: newBackendStatus,
+      }).then((resp) => {
+        if (resp?.success) {
+          updatedValues[indexForConfirmation].status = newStatus;
+          setSelectedValues(updatedValues);
+        } else {
+          return toast.error("Ürünün durumunu değiştirmeden önce kaydetmeniz gerekmektedir!", {
+            position: "top-right",
           });
+            }
+        });
+      }
     }
     setConfirmModalOpen(false);
   };
@@ -131,7 +144,7 @@ export default function UrunGruplariModul({
             model: item.product.properties.modelTuru,
             modelTuru: item.product.properties.modelTuru,
             maliyet: `${formatToCurrency(item.cost)} $`,
-            nerede: "Kasa",
+            nerede: item.user_group_name,
             status: statusMap[item.status] || item.status,
             type: "Sade",
             id:item.id
@@ -153,9 +166,10 @@ export default function UrunGruplariModul({
             menstrual_status: item.product.properties.menstrual_status,
             maliyet: `${formatToCurrency(item.cost)} $`,
             firstPrice: item.cost,
-            nerede: "Kasa",
+            nerede: item.user_group_name,
             status: statusMap[item.status] || item.status,
             caratPrice:item.product.product_cost.pricePerCarat,
+            type:item.product.type,
             id:item.id
           }));
   
@@ -174,9 +188,10 @@ export default function UrunGruplariModul({
             menstrual_status: item.product.properties.menstrual_status,
             maliyet: `${formatToCurrency(item.cost)} $`,
             firstPrice: item.cost,
-            nerede: "Kasa",
+            nerede: item.user_group_name,
             status: statusMap[item.status] || item.status,
             caratPrice:item.product.product_cost.pricePerCarat,
+            type:item.product.type,
             id:item.id
           }));
   
@@ -197,7 +212,6 @@ export default function UrunGruplariModul({
     setSelectedValues(pirlantaUrunler); 
   }
 }, [urunData]);
-
   useEffect(() => {
     const items: WorkOrderProductType[] = selectedValues.map((item) => ({
       product_id: Number(item.pk),
@@ -328,7 +342,10 @@ export default function UrunGruplariModul({
                           className="ml-[-10px]  h-8 w-16 rounded-md border border-black pl-3 text-center"
                           type="number"
                           value={item.used_carat}
-                          disabled={isDisabled}
+                          disabled={
+                            isDisabled ||
+                            item.status == "Gönderildi"
+                          }
                           onChange={(e) => {
                             const selectedIndexNo = selectedValues.findIndex(
                               (a) => a.pk == item.pk,
@@ -364,7 +381,8 @@ export default function UrunGruplariModul({
                         type="number"
                         disabled={
                           item?.menstrual_status == "Sertifikalı" ||
-                          isDisabled
+                          isDisabled ||
+                          item.status == "Gönderildi"
                         }
                         value={item.adet}
                         onChange={(e) => {
@@ -470,6 +488,7 @@ export default function UrunGruplariModul({
           setSelectedValues={setSelectedValues}
           selectedValues={selectedValues}
           model={model}
+          isDuzenleContainer={urunData ? true : false}
         />
       )}
          {confirmModalOpen && (
