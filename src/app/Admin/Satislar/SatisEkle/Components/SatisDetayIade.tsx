@@ -1,6 +1,6 @@
-import { CustomMoneyInput } from "@/components/CustomUI/CustomMoneyInput";
+import { CustomMoneyInput2 } from "@/components/CustomUI/CustomMoneyInput2";
 import CustomSelect from "@/components/CustomUI/CustomSelect";
-import { SalePayment } from "@/types/Satis";
+
 import { useCallback } from "react";
 
 export default function SatisDetayIade({
@@ -36,9 +36,9 @@ export default function SatisDetayIade({
           <div></div>
           <div>İşlemler</div>
         </div>
-        {fields.map((item: SalePayment, index: number) => (
+        {fields.map((item: any, index: number) => (
           <div
-            key={`refund_${index.toString()}_${item.payment_price}_${item.payment_type}`}
+            key={item.id}
             className="grid w-full grid-cols-4 gap-3  text-black"
           >
             <div>
@@ -64,7 +64,7 @@ export default function SatisDetayIade({
               />
             </div>
             <div>
-              <CustomMoneyInput
+              <CustomMoneyInput2
                 item={{
                   name: `refund_details.${index}.payment_price`,
                   required: true,
@@ -74,8 +74,11 @@ export default function SatisDetayIade({
                   rightIcon: "$",
                 }}
                 disabled={item.isExist}
-                {...register(`refund_details.${index}.payment_price`)}
-                value={item.payment_price?.toString()}
+                {...(register(`refund_details.${index}.payment_price`),
+                {
+                  valueAsNumber: true,
+                })}
+                value={item.payment_price}
               />
             </div>
             <div></div>

@@ -1,9 +1,6 @@
 import { cn } from "@/utils";
 
-import {
-  RenkliTasHeaders,
-  RenkliTasModelType,
-} from "@/app/types/RenkliTas.HeaderType";
+import { RenkliTasHeaders } from "@/app/types/RenkliTas.HeaderType";
 import MucevherRenkliTasRow from "./MucevherRenkliTasRow";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
@@ -49,13 +46,13 @@ export default function MucevherRenkliTasSection({
       <div
         className={cn("my-3 grid gap-3", `grid-cols-${renkliTasHeaderColSum}`)}
       >
-        {mainArr?.map((item: RenkliTasModelType, index: number) => {
+        {mainArr?.map((item: any, index: number) => {
           return (
             <MucevherRenkliTasRow
               register={register}
               errors={errors}
               isEdit={isEdit}
-              key={`${item.adet}_${item.carat}_${item.fiyat}_${item.renkliTas}_${index}`}
+              key={item.id}
               index={index}
               model={item}
               removeRenkliTas={removeRenkliTas}

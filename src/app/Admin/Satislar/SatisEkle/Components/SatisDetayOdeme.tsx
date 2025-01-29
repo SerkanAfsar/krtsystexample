@@ -1,6 +1,6 @@
-import { CustomMoneyInput } from "@/components/CustomUI/CustomMoneyInput";
+import { CustomMoneyInput2 } from "@/components/CustomUI/CustomMoneyInput2";
 import CustomSelect from "@/components/CustomUI/CustomSelect";
-import { SalePayment } from "@/types/Satis";
+
 import { useCallback } from "react";
 
 export default function SatisDetayOdeme({
@@ -11,18 +11,18 @@ export default function SatisDetayOdeme({
   toplamOdenenTutar,
   toplamKalanTutar,
   toplamMaliyet,
-
   isEdit,
+  setValue,
 }: {
   fields?: any;
   append: any;
   remove: any;
   register: any;
-  setValue: any;
+
   toplamOdenenTutar: number;
   toplamKalanTutar: string;
   toplamMaliyet: number;
-
+  setValue?: any;
   isEdit?: boolean;
 }) {
   const isShow = useCallback(
@@ -46,9 +46,9 @@ export default function SatisDetayOdeme({
           <div></div>
           <div>İşlemler</div>
         </div>
-        {fields.map((item: SalePayment, index: number) => (
+        {fields.map((item: any, index: number) => (
           <div
-            key={`payment_${index.toString()}_${item.payment_price}_${item.payment_type}`}
+            key={item.id}
             className="grid w-full grid-cols-4 gap-3  text-black"
           >
             <div>
@@ -75,18 +75,21 @@ export default function SatisDetayOdeme({
               />
             </div>
             <div>
-              <CustomMoneyInput
+              <CustomMoneyInput2
                 item={{
                   name: `payments.${index}.payment_price`,
                   required: true,
                   placeholder: "Ödenen Tutar",
-                  type: "money",
+                  type: "text",
                   isChanging: true,
                   rightIcon: "$",
                 }}
                 disabled={item.isExist}
-                {...register(`payments.${index}.payment_price`)}
-                value={item.payment_price?.toString()}
+                {...register(`payments.${index}.payment_price`, {
+                  valueAsNumber: true,
+                })}
+                setFormValues={setValue}
+                value={item.payment_price}
               />
             </div>
             <div></div>
@@ -142,12 +145,12 @@ export default function SatisDetayOdeme({
         <div className="mt-3 grid w-full grid-cols-4 gap-3 text-black">
           <div></div>
           <div>
-            <CustomMoneyInput
+            <CustomMoneyInput2
               item={{
                 title: "Toplam Ödenen Tutar",
                 name: "total_payment",
                 required: false,
-                type: "money",
+                type: "text",
                 rightIcon: "$",
                 isConstant: true,
               }}
@@ -158,12 +161,12 @@ export default function SatisDetayOdeme({
             />
           </div>
           <div>
-            <CustomMoneyInput
+            <CustomMoneyInput2
               item={{
                 title: "Toplam Kalan Tutar",
                 name: "total_notpayed",
                 required: false,
-                type: "money",
+                type: "text",
                 rightIcon: "$",
                 isConstant: true,
               }}
@@ -174,12 +177,12 @@ export default function SatisDetayOdeme({
             />
           </div>
           <div>
-            <CustomMoneyInput
+            <CustomMoneyInput2
               item={{
                 title: "TOPLAM ",
                 name: "total_maliyet",
                 required: false,
-                type: "money",
+                type: "text",
                 rightIcon: "$",
                 isConstant: true,
               }}

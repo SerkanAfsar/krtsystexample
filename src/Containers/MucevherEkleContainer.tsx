@@ -96,18 +96,9 @@ export default function MucevherEkleContainer() {
           purchase_price: stringToMoney(purchase_price.toString()),
           labor_cost: stringToMoney(labor_cost.toString()),
           products: [
-            ...(data?.products?.pirlanta?.map((item) => ({
-              ...item,
-              fiyat: stringToMoney(item.fiyat as string),
-            })) || []),
-            ...(data?.products?.renkliTas?.map((item) => ({
-              ...item,
-              fiyat: stringToMoney(item.fiyat as string),
-            })) || []),
-            ...(data?.products?.sade?.map((item) => ({
-              ...item,
-              fiyat: stringToMoney(item.fiyat as string),
-            })) || []),
+            ...(data?.products?.pirlanta || []),
+            ...(data?.products?.renkliTas || []),
+            ...(data?.products?.sade || []),
           ],
         };
 
@@ -153,12 +144,10 @@ export default function MucevherEkleContainer() {
 
   const [labor_cost, purchase_price] = watch(["labor_cost", "purchase_price"]);
 
-  const priceTag =
-    stringToMoney(labor_cost?.toString()) +
-    stringToMoney(purchase_price?.toString());
-
   const sadeProducts = watch("products.sade");
   const sadeProductsString = JSON.stringify(sadeProducts);
+  const priceTag =
+    labor_cost && purchase_price ? labor_cost + purchase_price : 0;
 
   useEffect(() => {
     if (sadeProducts && sadeProducts[0]) {

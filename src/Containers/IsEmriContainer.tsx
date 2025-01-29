@@ -19,7 +19,10 @@ import {
   WorkOrderProductType,
 } from "../types/WorkOrder.types";
 
-import { AddWorkOrderService, GetWorkOderModels } from "@/Services/WorkOrder.Services";
+import {
+  AddWorkOrderService,
+  GetWorkOderModels,
+} from "@/Services/WorkOrder.Services";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { WorkOrderQueueApiService } from "@/ApiServices/WorkOrders.ApiService";
@@ -80,10 +83,12 @@ export default function IsEmriContainer() {
   const router = useRouter();
   const [description, setDescription] = useState<string>("");
   const [isEmriCode, setIsEmriCode] = useState<string>("");
-  const [gender, setGender] = useState<string>(""); 
+  const [gender, setGender] = useState<string>("");
   const [isWomanChecked, setIsWomanChecked] = useState<boolean>(false);
   const [isManChecked, setIsManChecked] = useState<boolean>(false);
-  const [modelList, setModelList] = useState<{ name: string; id: number }[]>([]);
+  const [modelList, setModelList] = useState<{ name: string; id: number }[]>(
+    [],
+  );
   const [model, setModel] = useState<{ name: string; id: number } | null>(null);
   const [values, setValues] = useState<ProductItemsType[]>(
     UrunGruplari.map((item) => {
@@ -109,7 +114,7 @@ export default function IsEmriContainer() {
     } else if (type === "Erkek") {
       setIsManChecked(checked);
     }
-  
+
     if (checked) {
       if (type === "Kadın" && isManChecked) {
         setGender("Both");
@@ -134,9 +139,9 @@ export default function IsEmriContainer() {
       if (resp?.success && Array.isArray(resp.data)) {
         const modelData = resp.data.map((item: any) => ({
           name: item.name,
-          id: item.id, 
+          id: item.id,
         }));
-        setModelList(modelData); 
+        setModelList(modelData);
       } else {
         console.log("err:", resp);
       }
@@ -174,9 +179,9 @@ export default function IsEmriContainer() {
     return next.price ? acc + next.price : acc;
   }, 0);
 
-  const lastData: AddWorkOrderType = {
-    model_type: model?.id ?? 0 ,
-    total_product_cost : totalPrice.toString(),
+  const lastData: AddWorOrderType = {
+    model_type: model?.id ?? 0,
+    total_product_cost: totalPrice.toString(),
     gender,
     description,
     workorder_products: lastItems,
@@ -210,6 +215,7 @@ export default function IsEmriContainer() {
         position: "top-right",
       });
     }
+
     const result: any = await AddWorkOrderService({ data: lastData });
 
     if (result?.success) {
@@ -226,94 +232,109 @@ export default function IsEmriContainer() {
     <div className="mb-5">
       <div className="flex w-full flex-col items-start">
         <div className="flex w-full flex-col gap-4 p-3">
-        <div className="mb-6 w-full rounded-lg border border-stroke bg-white p-5 shadow-md dark:border-strokedark dark:bg-boxdark">
-        {/*<div className="float-right flex w-full items-center justify-between text-black text-sm font-medium border-b-2 py-1 border-stone-200">
+          <div className="mb-6 w-full rounded-lg border border-stroke bg-white p-5 shadow-md dark:border-strokedark dark:bg-boxdark">
+            {/*<div className="float-right flex w-full items-center justify-between text-black text-sm font-medium border-b-2 py-1 border-stone-200">
             İş Emri ID: {isEmriCode}
         </div>*/}
-        <div className="flex w-full justify-between mt-10">
-        {/* model kısmı */}
-          <div className="flex flex-col gap-4 w-1/4">
-            <label className="text-sm font-medium text-black dark:text-white">
-              Model Türü
-            </label>
-            <select
-              className="w-full rounded-lg border-[1.5px] border-stone-400 bg-white px-3 py-2 text-black outline-none focus:border-primary dark:bg-boxdark dark:text-white dark:focus:border-primary"
-              onChange={(e) => {
-                const selectedModelId = e.target.value;
-                const selectedModel = modelList.find(item => item.id === Number(selectedModelId));
-                if (selectedModel) {
-                  setModel({ id: selectedModel.id, name: selectedModel.name });
-                }
-              }}
-            >
-              <option value="" disabled selected >Model Türü Seçiniz...</option>
-              {modelList.map((item, index) => (
-                <option key={index} value={item.id}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-            <div className="flex items-center gap-4 ml-2">
-            <label className="flex items-center text-sm font-medium text-black dark:text-white">
-              <input
-                type="checkbox"
-                className="mr-2"
-                value="Kadın"
-                checked={isWomanChecked}
-                onChange={(e) => handleCheckboxChange("Kadın", e.target.checked)}
-              />{" "}
-              KADIN
-            </label>
-            <label className="flex items-center text-sm font-medium text-black dark:text-white">
-              <input
-                type="checkbox"
-                className="mr-2"
-                value="Erkek"
-                checked={isManChecked}
-                onChange={(e) => handleCheckboxChange("Erkek", e.target.checked)}
-              />{" "}
-              ERKEK
-            </label>
+            <div className="mt-10 flex w-full justify-between">
+              {/* model kısmı */}
+              <div className="flex w-1/4 flex-col gap-4">
+                <label className="text-sm font-medium text-black dark:text-white">
+                  Model Türü
+                </label>
+                <select
+                  className="w-full rounded-lg border-[1.5px] border-stone-400 bg-white px-3 py-2 text-black outline-none focus:border-primary dark:bg-boxdark dark:text-white dark:focus:border-primary"
+                  onChange={(e) => {
+                    const selectedModelId = e.target.value;
+                    const selectedModel = modelList.find(
+                      (item) => item.id === Number(selectedModelId),
+                    );
+                    if (selectedModel) {
+                      setModel({
+                        id: selectedModel.id,
+                        name: selectedModel.name,
+                      });
+                    }
+                  }}
+                >
+                  <option value="" disabled selected>
+                    Model Türü Seçiniz...
+                  </option>
+                  {modelList.map((item, index) => (
+                    <option key={index} value={item.id}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+                <div className="ml-2 flex items-center gap-4">
+                  <label className="flex items-center text-sm font-medium text-black dark:text-white">
+                    <input
+                      type="checkbox"
+                      className="mr-2"
+                      value="Kadın"
+                      checked={isWomanChecked}
+                      onChange={(e) =>
+                        handleCheckboxChange("Kadın", e.target.checked)
+                      }
+                    />{" "}
+                    KADIN
+                  </label>
+                  <label className="flex items-center text-sm font-medium text-black dark:text-white">
+                    <input
+                      type="checkbox"
+                      className="mr-2"
+                      value="Erkek"
+                      checked={isManChecked}
+                      onChange={(e) =>
+                        handleCheckboxChange("Erkek", e.target.checked)
+                      }
+                    />{" "}
+                    ERKEK
+                  </label>
+                </div>
+              </div>
+              {/* maliyet */}
+              <div className="flex flex-col gap-2">
+                <label className="text-sm text-black dark:text-white">
+                  Maliyetler
+                </label>
+                <label className="text-sm font-bold text-black dark:text-white">
+                  Toplam Malzeme Maliyeti :{" "}
+                  <span className="font-bold text-black underline dark:text-white">{`${formatToCurrency(totalPrice)} $`}</span>
+                </label>
+              </div>
+              {/* açıklama */}
+              <div className="flex w-1/2 flex-col gap-2">
+                <label className="text-sm font-medium text-black dark:text-white">
+                  Üretim Müdürü Açıklaması
+                </label>
+                <textarea
+                  rows={3}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Üretim Müdürü Açıklaması..."
+                  className="w-full rounded-lg border-[1.5px] border-stone-400 bg-white px-5 py-3 text-black outline-none focus:border-primary dark:bg-boxdark dark:text-white dark:focus:border-primary"
+                />
+              </div>
             </div>
           </div>
-          {/* maliyet */}
-          <div className="flex flex-col gap-2">
-          <label className="text-sm dark:text-white text-black">
-            Maliyetler
-          </label>
-          <label className="text-sm dark:text-white text-black font-bold">
-            Toplam Malzeme Maliyeti :{" "}
-            <span className="font-bold text-black underline dark:text-white">{`${formatToCurrency(totalPrice)} $`}</span>
-          </label>
-          </div>
-          {/* açıklama */}
-          <div className="flex flex-col gap-2 w-1/2">
-            <label className="text-sm font-medium text-black dark:text-white">
-              Üretim Müdürü Açıklaması
-            </label>
-            <textarea
-              rows={3}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Üretim Müdürü Açıklaması..."
-              className="w-full rounded-lg border-[1.5px] border-stone-400 bg-white px-5 py-3 text-black outline-none focus:border-primary dark:bg-boxdark dark:text-white dark:focus:border-primary"
-            />
-          </div>
-        </div>
-      </div>
 
-      {/* ürün kısımları */}
+          {/* ürün kısımları */}
           {UrunGruplari.map((item, index) => (
             <div
               key={index}
               className="rounded-lg border border-stroke bg-white p-4 shadow-md dark:border-strokedark dark:bg-boxdark"
             >
-              <UrunGruplariModul setValues={setValues} item={item} model={model?.name} />
+              <UrunGruplariModul
+                setValues={setValues}
+                item={item}
+                model={model?.name}
+              />
             </div>
           ))}
         </div>
 
-        <div className="flex items-center self-end justify-between p-3">
+        <div className="flex items-center justify-between self-end p-3">
           {/* <button
             type="button"
             onClick={async () => {
@@ -329,13 +350,11 @@ export default function IsEmriContainer() {
           <button
             type="button"
             onClick={async () => await addWorkOrder()}
-            className="w-40 rounded-md bg-primary px-2 py-2 ml-5 text-center text-white"
+            className="ml-5 w-40 rounded-md bg-primary px-2 py-2 text-center text-white"
           >
             Kaydet
           </button>
         </div>
-
-
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
 import CustomModalPage from "@/components/CustomModals/CustomPageModal";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import CustomInput from "@/components/CustomUI/CustomInput";
-import { CustomMoneyInput } from "@/components/CustomUI/CustomMoneyInput";
+import { CustomMoneyInput2 } from "@/components/CustomUI/CustomMoneyInput2";
+
 import useGetSatisProductData from "@/hooks/SatisHooks/useGetSatisProductData";
 import { SaleProductType } from "@/types/Satis";
 import { SatisModalHeader } from "@/types/types";
@@ -21,6 +22,7 @@ export default function SatisDetayUrunler({
   setEditIadeProductIdList,
   editIadeProductIdList,
   refundedProductIdList,
+  setValue,
 }: {
   fields?: any;
   append: any;
@@ -34,6 +36,7 @@ export default function SatisDetayUrunler({
   setEditIadeProductIdList?: any;
   editIadeProductIdList?: number[];
   refundedProductIdList?: number[];
+  setValue: any;
 }) {
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const filterList: any = [
@@ -94,7 +97,7 @@ export default function SatisDetayUrunler({
             <div className="col-span-3">Ürün Satış Fiyatı</div>
           </div>
 
-          {fields.map((item: SaleProductType, index: number) => {
+          {fields.map((item: any, index: number) => {
             const { sales_price, total_cost, product_id } = products[index];
             const isInIade =
               isEdit &&
@@ -106,13 +109,13 @@ export default function SatisDetayUrunler({
 
             const err =
               sales_price &&
-              Number(
-                sales_price.toString().replace(".", "").replace(",", "."),
-              ) < Number(total_cost);
+              total_cost &&
+              Number(sales_price) < Number(total_cost);
+            console.log(sales_price, total_cost);
 
             return (
               <div
-                key={`${item.product_id}_${index}`}
+                key={item.id}
                 className="grid w-full grid-cols-11 gap-3 border-b border-x-graydark py-5 font-bold text-black"
               >
                 <CustomInput
@@ -164,26 +167,26 @@ export default function SatisDetayUrunler({
                   disabled={item.type == "Mücevher" || isEdit}
                 />
 
-                <CustomMoneyInput
+                <CustomMoneyInput2
                   item={{
                     disabled: true,
                     name: "txt_maliyet",
                     required: false,
                     placeholder: "Satış Fiyatı",
-                    type: "money",
+                    type: "text",
                     rightIcon: "$",
                   }}
                   className={"col-span-2"}
                   disabled={true}
-                  value={item.total_cost?.toFixed(2)}
+                  value={item.total_cost}
                 />
-                <CustomMoneyInput
+                <CustomMoneyInput2
                   item={{
                     disabled: true,
                     name: "txt_etiketFiyati",
                     required: false,
                     placeholder: "Etiket Fiyatı",
-                    type: "money",
+                    type: "text",
                     rightIcon: "$",
                   }}
                   className={"col-span-2"}
@@ -191,16 +194,19 @@ export default function SatisDetayUrunler({
                   value={Number((item.total_cost as number) * 4.55).toFixed(2)}
                 />
                 <div className="col-span-3 flex w-full gap-3">
-                  <CustomMoneyInput
+                  <CustomMoneyInput2
                     item={{
                       name: `products.${index}.sales_price`,
                       required: true,
                       placeholder: "Satış Fiyatı",
-                      type: "money",
+                      type: "text",
                       isChanging: true,
                       rightIcon: "$",
                     }}
-                    {...register(`products.${index}.sales_price`)}
+                    setFormValues={setValue}
+                    {...register(`products.${index}.sales_price`, {
+                      valueAsNumber: true,
+                    })}
                     value={item.sales_price}
                     err={err ? "Satış Fiyatı Malitetin Altında!" : null}
                     disabled={isEdit}
@@ -266,11 +272,11 @@ export default function SatisDetayUrunler({
                 value={toplamKarat}
                 disabled={true}
               />
-              <CustomMoneyInput
+              <CustomMoneyInput2
                 item={{
                   title: "Toplam Tutar",
                   name: "total_deneme",
-                  type: "money",
+                  type: "text",
                   required: false,
                   isConstant: true,
                   disabled: true,
@@ -280,11 +286,11 @@ export default function SatisDetayUrunler({
                 value={toplamTutar.toFixed(2)}
                 disabled={true}
               />
-              <CustomMoneyInput
+              <CustomMoneyInput2
                 item={{
                   title: "Toplam Etiket Fiyatı",
                   name: "total_etiketFiyati",
-                  type: "money",
+                  type: "text",
                   required: false,
                   isConstant: true,
                   disabled: true,
@@ -294,11 +300,11 @@ export default function SatisDetayUrunler({
                 value={Number(Number(toplamTutar) * 4.55).toFixed(2)}
                 disabled={true}
               />
-              <CustomMoneyInput
+              <CustomMoneyInput2
                 item={{
                   title: "Toplam Satış Fiyatı",
                   name: "total_deneme",
-                  type: "money",
+                  type: "text",
                   required: false,
                   isConstant: true,
                   disabled: true,
