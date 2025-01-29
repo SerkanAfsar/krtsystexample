@@ -2,7 +2,8 @@ import { BaseService } from ".";
 import { ResponseResult } from "../types/responseTypes";
 import { ProductListType } from "../types/types";
 import {
-  AddWorOrderType,
+  AddWorkOrderType,
+  UpdateWorkOrderType,
   WorkOrderAtolyeType,
   WorkOrderListType,
   WorkOrderNotificationType,
@@ -12,10 +13,12 @@ import {
   WorkOrderType,
 } from "../types/WorkOrder.types";
 
+type AddorUpdateWorkOrderType = AddWorkOrderType | UpdateWorkOrderType;
+
 export const AddWorkOrderService = async ({
   data,
 }: {
-  data: AddWorOrderType;
+  data: AddorUpdateWorkOrderType;
 }): Promise<ResponseResult<any>> => {
   const result = await BaseService({
     url: "product/work-order",
@@ -30,11 +33,13 @@ export const AddWorkOrderService = async ({
 export const GetWorkOrderProductListModalService = async ({
   type,
   code,
+  page,
 }: {
   type?: string;
   code?: string;
+  page?: Number;
 }) => {
-  let url = `product/product-list/?&type=${type}`;
+  let url = `product/product-list/?&type=${type}&page=${page}`;
   if (code) {
     url += `&code=${code}`;
   }
@@ -272,9 +277,7 @@ export const GetWorkOderModels = async (): Promise<ResponseResult<WorkOrderListT
     method: "GET",
     hasToken: true,
   });
-
-  console.log(result);
-
+  
   return result
 };
 

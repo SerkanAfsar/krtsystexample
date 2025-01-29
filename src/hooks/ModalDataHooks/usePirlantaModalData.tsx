@@ -10,9 +10,11 @@ import CustomModalInput from "@/components/CustomModalInput";
 export default function usePirlantaModalData({
   setSelectedValues,
   selectedValues,
+  isDuzenleContainer
 }: {
   setSelectedValues: any;
   selectedValues: SeciliUrunType[];
+  isDuzenleContainer: boolean;
 }) {
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<any>([]);
@@ -54,6 +56,11 @@ export default function usePirlantaModalData({
     };
 
     if (target.checked) {
+
+      if (isDuzenleContainer) {
+        item.nerede = "Pırlanta Kasa"; 
+        item.status = "Rezervli"; 
+      }
       inputAdetRefs.current[index].disabled =
         item?.menstrual_status == "Sertifikalı" ? true : false;
       inputAdetRefs.current[index].value = "1";
@@ -188,6 +195,7 @@ export default function usePirlantaModalData({
     setActiveData([]);
     GetWorkOrderProductListModalService({
       type: "Diamond",
+      page: activePage
     }).then((resp: ResponseResult<ProductListType>) => {
       if (resp?.success) {
         const data = resp.data as ProductListType;
@@ -204,7 +212,7 @@ export default function usePirlantaModalData({
         setError(resp.error?.at(0) || "Hata");
       }
     });
-  }, []);
+  }, [activePage]);
 
   useEffect(() => {
     updateData();

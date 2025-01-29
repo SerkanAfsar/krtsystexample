@@ -11,9 +11,11 @@ import Image from "next/image";
 export default function useSadeModalData({
   setSelectedValues,
   selectedValues,
+  isDuzenleContainer,
 }: {
   setSelectedValues: any;
   selectedValues: SeciliUrunType[];
+  isDuzenleContainer: boolean;
 }) {
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<any>([]);
@@ -56,6 +58,11 @@ export default function useSadeModalData({
         ayar: SadeAltinKarsiliklari(ayar),
       };
 
+      if (isDuzenleContainer) {
+        item.nerede = "Sade Kasa"; 
+        item.status = "Rezervli"; 
+      }
+
       setSelectedValues((prev: SeciliUrunType[]) => [...prev, item]);
     } else {
       setSelectedValues((prev: SeciliUrunType[]) =>
@@ -68,6 +75,7 @@ export default function useSadeModalData({
     setActiveData([]);
     GetWorkOrderProductListModalService({
       type: "Simple",
+      page: activePage
     }).then((resp: ResponseResult<ProductListType>) => {
       if (resp?.success) {
         const data = resp.data as ProductListType;

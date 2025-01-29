@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { GetWorkOrderPupils } from "@/Services/WorkOrder.Services";
-
-
-type SeciliUrunType = {
-  [key: string]: string | number;
-};
+import { SeciliUrunType, CirakType } from "@/components/IsEmirleri/UrunGruplariModul"
 
 type ConfirmPropsType = {
   isOpen: boolean;
   item: SeciliUrunType; 
-  onConfirm: () => void;
+  onConfirm: (cirak?: CirakType) => void;
   onCancel: () => void;
 };
 
 const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, onConfirm, onCancel }) => {
-  const [ciraklar, setCiraklar] = useState<string[]>([]);
+  const [ciraklar, setCiraklar] = useState<CirakType[]>([]);
+  const [selectedCirak, setSelectedCirak] = useState<CirakType | null>(null);
 
   useEffect(() => {
     if (item.status === 'Onaylandı') {
@@ -23,7 +20,7 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, onConfirm
           const response = await GetWorkOrderPupils(); 
           if (response && response.success && response.data) {
             const names = response.data.map((pupil: { username: string }) => pupil.username); 
-            setCiraklar(names);
+            setCiraklar(response.data);
           }
           else if (response && !response.success) {
             console.error('Data fetch failed cirak list'); 
@@ -37,6 +34,10 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, onConfirm
       fetchCiraklar(); 
     }
   }, [item.status]);
+
+  const handleConfirm = () => {
+    onConfirm(selectedCirak || undefined);
+  };
 
   if (!isOpen) return null;
   let message = '';
@@ -60,17 +61,18 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, onConfirm
         <label htmlFor="cirakSecimi" className="items-center text-sm font-medium text-gray-700">
             Lütfen göndereceğiniz çırağı seçiniz
           </label>
-          <select className="w-full mt-1 p-2 border border-gray-300 rounded-md">
-            {ciraklar.length > 0 ? (
-              ciraklar.map((name, index) => (
-                <option key={index} value={name}>
-                  {name}
-                </option>
-              ))
-            ) : (
-              <option disabled></option>
-            )}
-          </select>
+          <select className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+          onChange={(e) => {
+            const selected = ciraklar.find(c => c.id === Number(e.target.value));
+            setSelectedCirak(selected || null);
+          }}
+        >
+          {ciraklar.map((cirak) => (
+            <option key={cirak.id} value={cirak.id}>
+              {cirak.username} 
+            </option>
+          ))}
+        </select>
         </div>
         );
       break;
@@ -88,7 +90,7 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, onConfirm
         {cirakSecimi}
         <div className="flex gap-4 mt-auto">
           <button
-            onClick={onConfirm}
+            onClick={handleConfirm}
             className="btn px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
           >
             {buttonText}

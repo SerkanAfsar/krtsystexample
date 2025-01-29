@@ -12,9 +12,11 @@ import CustomModalInput from "@/components/CustomModalInput";
 export default function useRenkliTasModalData({
   setSelectedValues,
   selectedValues,
+  isDuzenleContainer,
 }: {
   setSelectedValues: any;
   selectedValues: SeciliUrunType[];
+  isDuzenleContainer: boolean;
 }) {
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<any>([]);
@@ -61,6 +63,12 @@ export default function useRenkliTasModalData({
     };
 
     if (target.checked) {
+
+      if (isDuzenleContainer) {
+        item.nerede = "Renkli Taş Kasa"; 
+        item.status = "Rezervli"; 
+      }
+
       inputAdetRefs.current[index].disabled =
         item?.menstrual_status == "Sertifikalı" ? true : false;
       inputAdetRefs.current[index].value = "1";
@@ -90,6 +98,7 @@ export default function useRenkliTasModalData({
     setActiveData([]);
     GetWorkOrderProductListModalService({
       type: "ColoredStone",
+      page: activePage
     }).then((resp: ResponseResult<ProductListType>) => {
       if (resp?.success) {
         const data = resp.data as ProductListType;

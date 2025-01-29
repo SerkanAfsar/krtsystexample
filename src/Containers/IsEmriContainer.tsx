@@ -14,7 +14,7 @@ import useSadeModalData from "@/hooks/ModalDataHooks/useSadeModalData";
 import { useEffect, useState } from "react";
 import { formatToCurrency } from "@/utils";
 import {
-  AddWorOrderType,
+  AddWorkOrderType,
   ProductItemsType,
   WorkOrderProductType,
 } from "../types/WorkOrder.types";
@@ -138,7 +138,7 @@ export default function IsEmriContainer() {
         }));
         setModelList(modelData); 
       } else {
-        console.log("API Response başarısız:", resp);
+        console.log("err:", resp);
       }
     });
   }, []);
@@ -174,7 +174,7 @@ export default function IsEmriContainer() {
     return next.price ? acc + next.price : acc;
   }, 0);
 
-  const lastData: AddWorOrderType = {
+  const lastData: AddWorkOrderType = {
     model_type: model?.id ?? 0 ,
     total_product_cost : totalPrice.toString(),
     gender,
@@ -210,7 +210,6 @@ export default function IsEmriContainer() {
         position: "top-right",
       });
     }
-    console.log(lastData)
     const result: any = await AddWorkOrderService({ data: lastData });
 
     if (result?.success) {

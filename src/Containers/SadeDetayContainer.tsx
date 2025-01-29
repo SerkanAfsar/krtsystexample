@@ -41,7 +41,6 @@ export default function SadeDetayContainer({
   }, [sadeCode]);
 
   useEffect(() => {
-    console.log(data)
     AddSadeSections.forEach(section => {
       const milyemElement = section.elements.find(element => element.name === 'milyem');
       if (milyemElement) {
