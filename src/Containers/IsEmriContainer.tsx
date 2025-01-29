@@ -179,7 +179,7 @@ export default function IsEmriContainer() {
     return next.price ? acc + next.price : acc;
   }, 0);
 
-  const lastData: AddWorOrderType = {
+  const lastData: AddWorkOrderType = {
     model_type: model?.id ?? 0,
     total_product_cost: totalPrice.toString(),
     gender,
