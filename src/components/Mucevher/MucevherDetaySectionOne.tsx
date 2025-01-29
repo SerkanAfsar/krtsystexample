@@ -8,9 +8,10 @@ import Image from "next/image";
 import { ProductType } from "../../types/types";
 import CustomSelect from "../CustomUI/CustomSelect";
 import { MagazaCustomListType } from "@/utils/Magaza.Utils";
-import { CustomMoneyInput } from "../CustomUI/CustomMoneyInput";
+
 import CustomDatePicker2 from "../CustomUI/CustomDatePicker2";
 import { TedarikciCustomListType } from "@/utils/Tedarikciler.Utils";
+import { CustomMoneyInput2 } from "../CustomUI/CustomMoneyInput2";
 
 export default function MucevherDetaySectionOne({
   isEdit = false,
@@ -30,9 +31,9 @@ export default function MucevherDetaySectionOne({
   register: UseFormRegister<AddMucevherExternalType>;
   mainData?: ProductType;
   getValues?: any;
-  priceTag?: any;
-  labor_cost?: any;
-  purchase_price?: any;
+  priceTag?: number;
+  labor_cost?: number;
+  purchase_price?: number;
   unregister?: any;
 }) {
   const [files, setFiles] = useState<FileList | null>(null);
@@ -199,10 +200,10 @@ export default function MucevherDetaySectionOne({
                 err={errors.style_no?.message}
                 disabled={isEdit}
               />
-              <CustomMoneyInput
+              <CustomMoneyInput2
                 item={{
                   name: "labor_cost",
-                  required: false,
+                  required: true,
                   type: "money",
                   placeholder: "İşçilik",
                   rightIcon: "$",
@@ -210,6 +211,7 @@ export default function MucevherDetaySectionOne({
                 className={"col-span-2"}
                 err={errors.labor_cost?.message}
                 {...register("labor_cost", {
+                  valueAsNumber: true,
                   required: "İşçilik Giriniz",
                 })}
                 value={
@@ -217,12 +219,13 @@ export default function MucevherDetaySectionOne({
                     ? (mainData?.properties?.totalLaborCost as number)
                     : labor_cost
                 }
+                setFormValues={setValue}
                 disabled={isEdit}
               />
-              <CustomMoneyInput
+              <CustomMoneyInput2
                 item={{
                   name: "purchase_price",
-                  required: false,
+                  required: true,
                   type: "money",
                   placeholder: "Satın Alma Fiyatı",
                   rightIcon: "$",
@@ -230,8 +233,10 @@ export default function MucevherDetaySectionOne({
                 className={"col-span-2"}
                 err={errors.purchase_price?.message}
                 {...register("purchase_price", {
+                  valueAsNumber: true,
                   required: "Satın Alma Fiyatı Giriniz",
                 })}
+                setFormValues={setValue}
                 value={
                   isEdit
                     ? (mainData?.properties?.purchasePrice as number)
@@ -239,7 +244,11 @@ export default function MucevherDetaySectionOne({
                 }
                 disabled={isEdit}
               />
-              <CustomMoneyInput
+              <CustomMoneyInput2
+                {...register("price_tag", {
+                  valueAsNumber: true,
+                  required: false,
+                })}
                 item={{
                   name: "price_tag",
                   required: false,
@@ -250,9 +259,7 @@ export default function MucevherDetaySectionOne({
                 }}
                 className={"col-span-2"}
                 value={
-                  isEdit
-                    ? (mainData?.properties?.priceTag as number)
-                    : Number(Number(priceTag).toFixed(2))
+                  isEdit ? (mainData?.properties?.priceTag as number) : priceTag
                 }
                 disabled={true}
               />

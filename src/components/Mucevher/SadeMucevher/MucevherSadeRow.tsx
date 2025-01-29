@@ -10,8 +10,7 @@ import CustomInput from "@/components/CustomUI/CustomInput";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
 
-import { CustomMoneyInput } from "@/components/CustomUI/CustomMoneyInput";
-import { stringToMoney } from "@/utils";
+import { CustomMoneyInput2 } from "@/components/CustomUI/CustomMoneyInput2";
 
 export default function MucevherSadeRow({
   model,
@@ -123,24 +122,19 @@ export default function MucevherSadeRow({
         />
       </div>
       <div className={`col-span-${findSpan("fiyat")} flex gap-3`}>
-        <CustomMoneyInput
+        <CustomMoneyInput2
           item={{
             name: "fiyat",
             required: true,
-            type: "number",
+            type: "text",
             placeholder: "Fiyat",
             rightIcon: "$",
           }}
           {...register(`products.sade.${index}.fiyat`, {
+            valueAsNumber: true,
             required: "Fiyat Giriniz",
           })}
-          value={
-            model?.fiyat
-              ? !isEdit
-                ? stringToMoney(model.fiyat).toString()
-                : (model?.fiyat as number)
-              : undefined
-          }
+          value={model?.fiyat as number}
           err={errors.products?.sade?.[index]?.fiyat?.message}
           disabled={isEdit}
         />
