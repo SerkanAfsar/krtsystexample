@@ -5,11 +5,12 @@ import { SeciliUrunType, CirakType } from "@/components/IsEmirleri/UrunGruplariM
 type ConfirmPropsType = {
   isOpen: boolean;
   item: SeciliUrunType; 
+  items: SeciliUrunType[]; 
   onConfirm: (cirak?: CirakType) => void;
   onCancel: () => void;
 };
 
-const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, onConfirm, onCancel }) => {
+const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, onConfirm, onCancel }) => {
   const [ciraklar, setCiraklar] = useState<CirakType[]>([]);
   const [selectedCirak, setSelectedCirak] = useState<CirakType | null>(null);
 
@@ -40,22 +41,44 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, onConfirm
   };
 
   if (!isOpen) return null;
-  let message = '';
+  let message: React.ReactNode;
   let buttonText = '';
   let cirakSecimi = null; 
 
   switch (item.status) {
     case 'Rezervli':
-      message =  `${item.code} kodlu ürünü onay beklemeye göndermek istediğinizden emin misiniz?`;
+      message = (
+        <>
+          <strong>{item.code}</strong> kodlu ürünü onay beklemeye göndermek istediğinizden emin misiniz?
+        </>
+      );
       buttonText = 'Onayla';
       break;
     case 'Onay Bekliyor':
-      message = `${item.code} kodlu ürünü onaylamak istediğinizden emin misiniz?`;
+      message = (
+        <>
+          <strong>{item.code}</strong> kodlu ürünü onaylamak istediğinizden emin misiniz?
+        </>
+      );
       buttonText = 'Onayla';
       break;
     case 'Onaylandı':
-      message = `${item.code} kodlu ürünü üretim müdürüne göndermek istediğinize emin misiniz?`;
-      buttonText = 'Tamam';
+      if (items.length > 1) {
+        const codes = items.map(item => item.code).join(", ");
+        message = (
+          <>
+            <strong>{codes}</strong> kodlu ürünleri üretim müdürüne göndermek istediğinize emin misiniz?
+          </>
+        );
+        buttonText = 'Tamam';
+      } else {
+        message = (
+          <>
+            <strong>{item.code}</strong> kodlu ürünü üretim müdürüne göndermek istediğinize emin misiniz?
+          </>
+        );      
+        buttonText = 'Tamam';
+      }
       cirakSecimi = (
         <div className="w-3/4 mt-3 flex flex-col items-center justify-center">
         <label htmlFor="cirakSecimi" className="items-center text-sm font-medium text-gray-700">
@@ -76,6 +99,22 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, onConfirm
         </div>
         );
       break;
+      case 'Red Edildi':
+        message = (
+          <>
+            <strong>{item.code}</strong> kodlu ürünü iptal etmek istediğinize emin misiniz?
+          </>
+        );
+        buttonText = 'İptal Et';
+        break;
+        case 'Gönderildi':
+          message = (
+            <>
+              <strong>{item.code}</strong> kodlu ürünü teslim aldığınıza emin misiniz??
+            </>
+          );
+          buttonText = 'Onayla';
+          break;
     default:
       message = 'Bilinmeyen bir durum';
       buttonText = 'Tamam';
