@@ -5,7 +5,6 @@ import IsEmirleriModal from "./IsEmirleriModal";
 import { cn, formatToCurrency } from "@/utils";
 //import { FaPencil } from "react-icons/fa6";
 import { FaTrash } from "react-icons/fa6";
-import { IoSendSharp } from "react-icons/io5";
 import { toast } from "react-toastify";
 import CustomConfirmPage from "../CustomUI/CustomConfirmPage";  
 import { PostWorkOderUpdateStatus } from "@/Services/WorkOrder.Services";
@@ -49,6 +48,7 @@ export default function UrunGruplariModul({
 
   const [selectedValues, setSelectedValues] = useState<SeciliUrunType[]>([]);
   const [editableUrun, setEditableUrun] = useState<SeciliUrunType>({});
+  const [editableUruns, setEditableUruns] = useState<SeciliUrunType[]>([]);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [indexForConfirmation, setIndexForConfirmation] = useState<number | null>(null);
@@ -60,18 +60,43 @@ export default function UrunGruplariModul({
     (title === "Sade" && ![2, 1].includes(userRoleID ?? -1))
   );
 
-  const handleConfirmationOpen = (item: SeciliUrunType,index: number) => {
-    setEditableUrun(item)
+  const isButtonDisabled = (item: SeciliUrunType) => {
+    if (title === "Pırlanta") {
+      if (item.status === "Rezervli" || item.status === "Gönderildi") {
+        return userRoleID !== 2;
+      }
+      return userRoleID !== 8;
+    }
+    if (title === "Renkli Taş") {
+      if (item.status === "Rezervli" || item.status === "Gönderildi") {
+        return userRoleID !== 2;
+      }
+      return userRoleID !== 7;
+    }
+    if (title === "Sade") {
+      if (item.status === "Rezervli" || item.status === "Gönderildi") {
+        return userRoleID !== 2;
+      }
+      return userRoleID !== 1;
+    }
+    return true; 
+  };
+
+
+  const handleConfirmationOpen = (item: SeciliUrunType, index: number, newStatus?: string, items?: SeciliUrunType[]) => {
+    setEditableUrun(newStatus ? { ...item, status: newStatus } : item);
     setIndexForConfirmation(index);
     setConfirmModalOpen(true);
+    setEditableUruns(items || []);
   };
 
   const statusMap: { [key: string]: string } = {
     PENDING: "Onay Bekliyor",
     RESERVED: "Rezervli",
-    CANCELLED: "İptal Edildi",
+    CANCELLED: "Red Edildi",
     ACCEPTED: "Onaylandı",
     SENT: "Gönderildi",
+    Tesim: "Teslim Edildi",
   };
 
   const reverseStatusMap = Object.fromEntries(
@@ -79,20 +104,25 @@ export default function UrunGruplariModul({
   );
 
   const handleConfirmation = (cirak?: CirakType) => {
+
     console.log("Seçili Çırak:", cirak); 
     if (indexForConfirmation !== null) {
       const updatedValues = [...selectedValues];
       let newStatus: string | undefined;
-
-      if (updatedValues[indexForConfirmation].status === 'Rezervli') {
+      if (editableUrun.status === "Red Edildi") {
+        newStatus = "Red Edildi";
+      } else if (updatedValues[indexForConfirmation].status === 'Rezervli') {
         newStatus = 'Onay Bekliyor';
       } else if (updatedValues[indexForConfirmation].status === 'Onay Bekliyor') {
         newStatus = 'Onaylandı';
       } else if (updatedValues[indexForConfirmation].status === 'Onaylandı') {
         newStatus = 'Gönderildi';
+      }  else if (updatedValues[indexForConfirmation].status === 'Gönderildi') {
+        newStatus = 'Tesim Edildi';
       }
+      
 
-      if (newStatus) {
+      if (newStatus && newStatus != 'Tesim Edildi') {
       const newBackendStatus = reverseStatusMap[String(newStatus)];
       PostWorkOderUpdateStatus({
         work_order_product_id: Number(updatedValues[indexForConfirmation].id),
@@ -257,7 +287,25 @@ export default function UrunGruplariModul({
                     type="button"
                     className="btn block w-35 rounded-md px-3 py-1 text-center text-primary font-bold border-2 border-primary"
                     onClick={() => {
-                      console.log("Toplu Gönder işlemi");
+                      if (userRoleID === 2) {
+                        const deliveredItems = selectedValues.filter((item) => item.status === "Teslim Alındı");
+                        if (deliveredItems.length > 0) {
+                          deliveredItems.forEach((item, index) => {
+                            handleConfirmationOpen(item, index, "Teslim Alındı", deliveredItems);
+                          });
+                        } else {
+                          toast.error("Teslim alınan ürün yok!", { position: "top-right" });
+                        }
+                      } else {
+                        const sentItems = selectedValues.filter((item) => item.status === "Onaylandı");
+                        if (sentItems.length > 0) {
+                          sentItems.forEach((item, index) => {
+                            handleConfirmationOpen(item, index, "Onaylandı", sentItems); 
+                          });
+                        } else {
+                          toast.error("Onaylanmış ürün yok!", { position: "top-right" });
+                        }
+                      }
                     }}
                     disabled={isDisabled}
                     >
@@ -330,7 +378,10 @@ export default function UrunGruplariModul({
                   if (key == "carat") {
                     if (item.menstrual_status == "Sertifikalı") {
                       return (
-                        <div className="dark:text-white" key={index}>
+                        <div className={cn("dark:text-white",
+                        item.status === "Red Edildi" ? "line-through" : ""
+                      )}
+                        key={index}>
                           {item.carat}
                         </div>
                       );
@@ -339,12 +390,14 @@ export default function UrunGruplariModul({
                         <input
                           min="1"
                           key={index}
-                          className="ml-[-10px]  h-8 w-16 rounded-md border border-black pl-3 text-center"
+                          className={cn("ml-[-10px]  h-8 w-16 rounded-md border border-black pl-3 text-center",
+                          item.status === "Red Edildi" ? "line-through" : "" 
+                        )}
                           type="number"
                           value={item.used_carat}
                           disabled={
                             isDisabled ||
-                            item.status == "Gönderildi"
+                            (item?.status && item?.status !== "Rezervli")
                           }
                           onChange={(e) => {
                             const selectedIndexNo = selectedValues.findIndex(
@@ -377,12 +430,14 @@ export default function UrunGruplariModul({
                       <input
                         min="1"
                         key={index}
-                        className="p ml-[-12px] h-8 w-16 rounded-md border border-black pl-3 text-center dark:disabled:text-white"
+                        className={cn("p ml-[-12px] h-8 w-16 rounded-md border border-black pl-3 text-center dark:disabled:text-white",
+                          item.status === "Red Edildi" ? "line-through" : "" 
+                        )}
                         type="number"
                         disabled={
                           item?.menstrual_status == "Sertifikalı" ||
-                          isDisabled ||
-                          item.status == "Gönderildi"
+                          isDisabled  ||
+                          (item?.status && item?.status !== "Rezervli")
                         }
                         value={item.adet}
                         onChange={(e) => {
@@ -421,8 +476,10 @@ export default function UrunGruplariModul({
                          item.status === 'Onay Bekliyor' ? 'text-orange-500 border-orange-500' :
                          item.status === 'Onaylandı' ? 'text-green-500 border-green-500' :
                          item.status === 'Gönderildi' ? 'text-purple-500 border-purple-500' :
+                         item.status === 'Red Edildi' ? 'text-red border-red' :
+                         item.status === 'Tesim Edildi' ? 'text-green-500 border-green-500' :
                          'text-black-500 border-black-500'}
-                        border-2 leading-[2]
+                        border-2 leading-[2] 
                       `}                    
                       >
                       {item.status}
@@ -430,7 +487,11 @@ export default function UrunGruplariModul({
                     );
                   } else {
                     return (
-                      <div className="dark:text-white" key={index}>
+                      <div className={cn(
+                        "dark:text-white",
+                        item.status === "Red Edildi" ? "line-through" : "" 
+                      )}
+                      key={index}>
                         {value}
                       </div>
                     );
@@ -438,26 +499,46 @@ export default function UrunGruplariModul({
                 }
               })}
            <div className="flex items-center justify-left gap-4 dark:text-white">
-              {urunData && String(item.status) !== 'Gönderildi'? (
+              {urunData ? (
                 <>
-              <IoSendSharp
-                    className={`cursor-pointer ${isDisabled ? 'opacity-50 pointer-events-none' : ''}`}
+                {item.status !== "Red Edildi" && item.status !== "Teslim Edildi" ? (
+                <>
+                  <img
+                    src={
+                      item.status === "Rezervli"
+                        ? "/images/icon/sendToConfirmation.svg"
+                        : item.status === "Onay bekliyor"
+                        ? "/images/icon/confirmation.svg"
+                        : item.status === "Onaylandı"
+                        ? "/images/icon/send.svg"
+                        : "/images/icon/confirmation.svg"
+                    }
+                    alt="Change Status"
+                    className={`cursor-pointer w-4 h-4 ${isButtonDisabled(item) ? 'opacity-50 pointer-events-none' : ''}`}
                     onClick={() => {
-                      if (!isDisabled) {
+                      if (!isButtonDisabled(item)) {
                         handleConfirmationOpen(item, index);
                       }
                     }}
-                />
-                 <FaTrash
-                   className={`cursor-pointer ${isDisabled ? 'opacity-50 pointer-events-none' : ''}`}
-                   onClick={(e) => {
-                     if (!isDisabled) {
-                       setSelectedValues((prev: SeciliUrunType[]) =>
-                         prev.filter((a) => a.pk != item.pk),
-                       );
-                     }
-                   }}
                   />
+                  <img
+                    src="/images/icon/redTrash.svg"
+                    alt="delete"
+                    className={`cursor-pointer w-4 h-4 ${isButtonDisabled(item) ? 'opacity-50 pointer-events-none' : ''}`}
+                    onClick={(e) => {
+                      if (!isButtonDisabled(item)) {
+                        if (item.status === "Rezervli") {
+                          setSelectedValues((prev: SeciliUrunType[]) =>
+                            prev.filter((a) => a.pk != item.pk),
+                          );
+                        } else {
+                          handleConfirmationOpen(item, index, "Red Edildi");
+                        }
+                      }
+                    }}
+                  />
+                </>
+                ) : null}
                 </>
               ) : (
                 <>
@@ -495,9 +576,10 @@ export default function UrunGruplariModul({
         <CustomConfirmPage
           isOpen={confirmModalOpen}
           item={editableUrun}
+          items={editableUruns}
           onConfirm={handleConfirmation}
           onCancel={handleCancel}
-        />
+        />      
       )}
     </>
   );
