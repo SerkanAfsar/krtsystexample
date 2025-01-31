@@ -10,8 +10,8 @@ import { UseFormGetValues } from "react-hook-form";
 import CustomTextArea from "./CustomTextArea";
 import { CustomRadioButtonList } from "./CustomRadioButtonList";
 import { CustomPhoneNumberText } from "./CustomPhoneNumberText";
-import { CustomMoneyInput } from "./CustomMoneyInput";
 import CustomDatePicker2 from "./CustomDatePicker2";
+import { CustomMoneyInput2 } from "./CustomMoneyInput2";
 
 const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -90,8 +90,31 @@ export default function FormElementItem({
   switch (item.type) {
     case "money": {
       return (
-        <CustomMoneyInput
+        // <CustomMoneyInput
+        //   {...register(item.name, {
+        //     required:
+        //       !isDisabled && item.required ? item.requiredMessage : false,
+        //     ...item.extraValidations,
+        //   })}
+        //   setFormValues={setValue}
+        //   err={err}
+        //   key={item.name}
+        //   outerClass={cn(
+        //     item?.span && `col-span-${item.span.toString()}`,
+        //     item.colStart && `col-start-${item.colStart}`,
+        //     item.colEnd && `col-end-${item.colEnd}`,
+        //     item.rowSpan && `row-span-${item.rowSpan}`,
+        //   )}
+        //   value={val}
+        //   showIcon={showIconRelativeTo}
+        //   item={item}
+        //   getValues={getValues}
+        //   disabled={isDisabled}
+        //   {...rest}
+        // />
+        <CustomMoneyInput2
           {...register(item.name, {
+            valueAsNumber: true,
             required:
               !isDisabled && item.required ? item.requiredMessage : false,
             ...item.extraValidations,

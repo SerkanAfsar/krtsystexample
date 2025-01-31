@@ -102,11 +102,18 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
                 className,
                 err && "border-red",
                 item.rightIcon && "pr-[45px]",
-                ["uretimMaliyeti1", "uretimMaliyeti2", "uretimMaliyeti3", "toplamUretimMaliyeti"].includes(name ?? "")
-                ? "text-green-500"
-                : ["ppc1", "ppc2", "ppc3", "toplamLotMaliyet"].includes(name ?? "")
-                ? "text-blue-500"
-                : "text-black"
+                [
+                  "uretimMaliyeti1",
+                  "uretimMaliyeti2",
+                  "uretimMaliyeti3",
+                  "toplamUretimMaliyeti",
+                ].includes(name ?? "")
+                  ? "text-green-500"
+                  : ["ppc1", "ppc2", "ppc3", "toplamLotMaliyet"].includes(
+                        name ?? "",
+                      )
+                    ? "text-blue-500"
+                    : "text-black",
               )}
               {...rest}
             />

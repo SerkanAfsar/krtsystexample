@@ -1,9 +1,6 @@
 import { cn } from "@/utils";
 
-import {
-  PirlantaHeaders,
-  PirlantaModelType,
-} from "@/app/types/Pirlanta.HeaderType";
+import { PirlantaHeaders } from "@/app/types/Pirlanta.HeaderType";
 import MucevherPirlantaRow from "./MucevherPirlantaRow";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
@@ -48,12 +45,12 @@ export default function MucevherPirlantaSection({
       <div
         className={cn("my-3 grid gap-3", `grid-cols-${pirlantaHeaderColSum}`)}
       >
-        {mainArr?.map((item: PirlantaModelType, index: number) => {
+        {mainArr?.map((item: any, index: number) => {
           return (
             <MucevherPirlantaRow
               index={index}
               isEdit={isEdit}
-              key={`${item.type}_${item.fiyat}_${item.carat}_${item.adet}_${index}`}
+              key={item.id}
               model={item}
               errors={errors}
               register={register}
