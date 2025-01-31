@@ -280,8 +280,6 @@ export const GetWorkOderModels = async (): Promise<
     hasToken: true,
   });
 
-  console.log(result);
-
   return result;
 };
 
