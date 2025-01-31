@@ -1384,6 +1384,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         disabled: true,
         relativeTo: "menstrual_status",
         span: 1,
+        value: "1.10",
         isConstant: true,
       },
       {
