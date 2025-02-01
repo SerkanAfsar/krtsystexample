@@ -91,23 +91,12 @@ export default function SatisEkleDetayContainer({
 
   const toplamMaliyet =
     products?.reduce((acc: any, next: any) => {
-      return (
-        acc +
-        Number(
-          next.sales_price?.toString().replace(".", "").replace(",", ".") || 0,
-        )
-      );
+      return acc + Number(next.sales_price || 0);
     }, 0) || 0;
 
   const toplamOdenenTutar =
     payments?.reduce((acc: number, next: SalePayment) => {
-      return (
-        acc +
-        Number(
-          next.payment_price?.toString().replace(".", "").replace(",", ".") ||
-            0,
-        )
-      );
+      return acc + Number(next.payment_price || 0);
     }, 0) || 0;
   const toplamKarat =
     products?.reduce((acc: any, next: any) => {
@@ -116,23 +105,12 @@ export default function SatisEkleDetayContainer({
 
   const toplamKalanTutar = Number(toplamMaliyet - toplamOdenenTutar).toFixed(2);
 
-  // const toplamEtiketFiyati =
-  //   products?.reduce((acc: any, next: any) => {
-  //     return (
-  //       acc +
-  //       Number(
-  //         next.sales_price?.toString().replace(".", "").replace(",", ".") || 0,
-  //       ) *
-  //         4.55
-  //     );
-  //   }, 0) || 0;
-
   const onSubmit = async () => {
     const data = getValues();
     if (isEdit) {
       const toplamIade = data.refund_details?.reduce<number>(
         (acc: number, next: any) => {
-          return acc + stringToMoney(next.payment_price || 0);
+          return acc + Number(next.payment_price || 0);
         },
         0,
       );
@@ -151,7 +129,7 @@ export default function SatisEkleDetayContainer({
         refund_details: data.refund_details?.reduce((acc: any, next: any) => {
           return {
             ...acc,
-            [next.payment_type]: stringToMoney(next.payment_price),
+            [next.payment_type]: next.payment_price,
           };
         }, {}),
       };
@@ -166,7 +144,7 @@ export default function SatisEkleDetayContainer({
             .reduce((acc: any, next: any) => {
               return {
                 ...acc,
-                [next.payment_type]: stringToMoney(next.payment_price),
+                [next.payment_type]: next.payment_price,
               };
             }, {}) || [],
       };
@@ -215,14 +193,11 @@ export default function SatisEkleDetayContainer({
         total_remaining_amount: Number(toplamKalanTutar),
         total: stringToMoney(toplamTutar),
         total_paid_amount: toplamOdenenTutar,
-        products: data.products.map((item: any) => ({
-          ...item,
-          sales_price: stringToMoney(item.sales_price),
-        })),
+        products: data.products || [],
         payment_details: data.payments.reduce((acc: any, next: any) => {
           return {
             ...acc,
-            [next.payment_type]: stringToMoney(next.payment_price),
+            [next.payment_type]: next.payment_price,
           };
         }, {}),
       };
@@ -260,6 +235,7 @@ export default function SatisEkleDetayContainer({
         editIadeProductIdList={editIadeProductIdList}
         setEditIadeProductIdList={setEditIadeProductIdList}
         refundedProductIdList={refundedProductIdList}
+        setValue={setValue}
       />
       <SatisDetayOdeme
         fields={paymentFields}

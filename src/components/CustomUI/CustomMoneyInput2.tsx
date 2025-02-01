@@ -1,4 +1,3 @@
-import CurrencyInput from "react-currency-input-field";
 import * as React from "react";
 import { ElementType } from "../../types/inputTypes";
 import { ClassValue } from "clsx";
@@ -6,23 +5,20 @@ import { UseFormGetValues } from "react-hook-form";
 import { cn } from "@/utils";
 import { useState } from "react";
 
-type CustomMoneyInputTpe = React.ComponentPropsWithoutRef<
-  typeof CurrencyInput
-> & {
+type CustomMoneyInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   item: ElementType;
   err?: string | null;
   outerClass?: ClassValue | null;
   icon?: React.ReactNode;
-  className?: ClassValue | null;
   showIcon?: boolean;
   getValues?: UseFormGetValues<any>;
   setFormValues?: any;
   value?: any;
 };
 
-const CustomMoneyInput = React.forwardRef<
-  React.ElementRef<typeof CurrencyInput>,
-  CustomMoneyInputTpe
+const CustomMoneyInput2 = React.forwardRef<
+  HTMLInputElement,
+  CustomMoneyInputProps
 >(
   (
     {
@@ -34,16 +30,14 @@ const CustomMoneyInput = React.forwardRef<
       err,
       getValues,
       value,
-      onChange,
+      onChange: setChange,
       setFormValues,
       onBlur,
       ...rest
     },
     ref,
   ) => {
-    const [val, setVal] = useState<string | undefined>(
-      typeof value == "number" ? value.toFixed(2) : value,
-    );
+    const [val, setVal] = useState<string | number | undefined>(value);
 
     const allValues = getValues && getValues();
 
@@ -51,6 +45,11 @@ const CustomMoneyInput = React.forwardRef<
       item.isConstantCondition &&
       allValues[item.isConstantCondition["field"]] ==
         item.isConstantCondition["val"];
+
+    React.useEffect(() => {
+      setVal((prev) => prev?.toString().replace(",", "."));
+      setFormValues && setFormValues(name, val);
+    }, [val, setFormValues, name]);
 
     return (
       <div className={cn("w-full", outerClass && outerClass, className)}>
@@ -64,21 +63,22 @@ const CustomMoneyInput = React.forwardRef<
         )}
         <div className="flex gap-1">
           <div className="relative flex-1">
-            <CurrencyInput
+            <input
+              type="text"
               id={name}
               name={name}
               ref={ref}
-              onChange={onChange}
-              decimalsLimit={2}
-              placeholder={item.placeholder ?? undefined}
-              onValueChange={(value, name, values) => {
-                setVal(value);
-                setFormValues && setFormValues(name, value);
+              onChange={(e) => {
+                const inputValue = e.target.value;
+                if (/^[0-9]*[.,]?[0-9]*$/.test(inputValue)) {
+                  setVal(inputValue);
+                }
               }}
-              decimalSeparator=","
-              disableGroupSeparators={true}
+              placeholder={item.placeholder ?? undefined}
               onBlur={onBlur}
-              value={item.isConstant || isDeneme ? value : val}
+              value={
+                item.isConstant || isDeneme ? Number(value).toFixed(2) : val
+              }
               className={cn(
                 "h-full w-full rounded border-[1.5px] border-stone-400 bg-transparent px-5 py-3 pb-[14px] font-normal  text-black outline-none transition placeholder:capitalize focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary",
                 className,
@@ -104,6 +104,6 @@ const CustomMoneyInput = React.forwardRef<
     );
   },
 );
-CustomMoneyInput.displayName = CurrencyInput.displayName;
+CustomMoneyInput2.displayName = "CustomMoneyInput2";
 
-export { CustomMoneyInput };
+export { CustomMoneyInput2 };

@@ -1,4 +1,4 @@
-import { SadeHeaders, SadeModelType } from "@/app/types/Sade.HeaderType";
+import { SadeHeaders } from "@/app/types/Sade.HeaderType";
 import MucevherSadeRow from "./MucevherSadeRow";
 import { cn } from "@/utils";
 
@@ -28,6 +28,8 @@ export default function MucevherSadeSection({
 
   const mainArr = isEdit ? dataList : fieldsSade;
 
+  console.log("mainarr is ", mainArr);
+
   return (
     <div className="mb-3 flex w-full flex-col gap-3">
       <b className="mb-1 block text-black underline">Sade Bilgileri</b>
@@ -44,11 +46,11 @@ export default function MucevherSadeSection({
         ))}
       </div>
       <div className={cn("my-3 grid gap-3", `grid-cols-${sadeHeaderColSum}`)}>
-        {mainArr?.map((item: SadeModelType, index: number) => {
+        {mainArr?.map((item: any, index: number) => {
           return (
             <MucevherSadeRow
               register={register}
-              key={`${item.altinRengi}_${item.ayar}_${item.gram}_${item.modelTuru}_${index}`}
+              key={item.id}
               index={index}
               isEdit={isEdit}
               model={item}

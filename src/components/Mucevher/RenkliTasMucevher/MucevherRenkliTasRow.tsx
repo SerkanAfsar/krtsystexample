@@ -16,8 +16,7 @@ import {
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { AddMucevherExternalType } from "@/types/Mucevher";
 
-import { CustomMoneyInput } from "@/components/CustomUI/CustomMoneyInput";
-import { stringToMoney } from "@/utils";
+import { CustomMoneyInput2 } from "@/components/CustomUI/CustomMoneyInput2";
 
 export default function MucevherRenkliTasRow({
   model,
@@ -149,24 +148,19 @@ export default function MucevherRenkliTasRow({
         />
       </div>
       <div className={`col-span-${findSpan("fiyat")} flex gap-2`}>
-        <CustomMoneyInput
+        <CustomMoneyInput2
           item={{
             name: "fiyat",
             required: true,
-            type: "money",
+            type: "text",
             placeholder: "Fiyat Giriniz",
             rightIcon: "$",
           }}
           {...register(`products.renkliTas.${index}.fiyat`, {
+            valueAsNumber: true,
             required: "Fiyat Giriniz",
           })}
-          value={
-            model?.fiyat
-              ? !isEdit
-                ? stringToMoney(model.fiyat).toString()
-                : (model?.fiyat as number)
-              : undefined
-          }
+          value={model.fiyat as number}
           err={errors.products?.renkliTas?.[index]?.["fiyat"]?.message}
           disabled={isEdit}
         />
