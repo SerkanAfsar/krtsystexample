@@ -4,7 +4,6 @@ import {
   WorkOrderStatusType,
 } from "@/utils/WorkOrder.Utils";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { FaPencil, FaTrash } from "react-icons/fa6";
 import { WorkOrderType } from "../../types/WorkOrder.types";
 import { GetWorkOrdersList } from "@/Services/WorkOrder.Services";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -104,21 +103,27 @@ export default function useGetWorkOrderListData() {
     ({ id, productCode }: { id: number; productCode: string }) => {
       return (
         <div className="flex items-center justify-center  gap-6">
-          <FaPencil
-            className="cursor-pointer"
+          <img
+            src={"/images/icon/box.svg" }
+            alt="Atolye Detay"
+            className={`cursor-pointer w-4 h-4`}
             onClick={() =>
               router.push(`/Admin/IsEmirleri/UretimBaslatma/${id}`)
             }
           />
-          <FaPencil
-            className="cursor-pointer"
+          <img
+            src={"/images/icon/hammer.svg" }
+            alt="Is Emri Detay"
+            className={`cursor-pointer w-4 h-4`}
             onClick={() =>
               router.push(`/Admin/IsEmirleri/UretimDuzenle/${id}`)
             }
           />
           {user?.groups.some((a) => a.name == "Üretim Müdürü") && (
-            <FaTrash
-              className="cursor-pointer"
+            <img
+              src={"/images/icon/redTrash2.svg" }
+              alt="Sil"
+              className={`cursor-pointer w-4 h-4`}
               onClick={async () => {
                 setShowConfirmDelete(true);
                 itemRef.current = { id, productCode };

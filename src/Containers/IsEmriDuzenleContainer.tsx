@@ -239,13 +239,13 @@ export default function IsEmriDuzenleContainer ({
       <div className="flex w-full flex-col items-start">
         <div className="flex w-full flex-col gap-4 p-3">
         <div className="mb-6 w-full rounded-lg border border-stroke bg-white p-5 shadow-md dark:border-strokedark dark:bg-boxdark">
-        <div className="float-right flex w-full items-center justify-between text-black text-sm font-medium border-b-2 py-1 border-stone-200">
+        <div className="float-right flex w-full items-center justify-between text-black text-sm font-medium border-b-2 py-1 border-stone-200 dark:text-white">
             İş Emri ID: {workOrderData.id}
         </div>
         <div className="flex w-full justify-between mt-10">
         {/* model kısmı */}
           <div className="flex flex-col gap-4 w-1/4">
-            <label className="text-sm font-medium text-black dark:text-white">
+            <label className="text-sm font-bold text-black dark:text-white">
               Model Türü
             </label>
             <select disabled className="w-full rounded-lg border-[1.5px] border-stone-400 bg-white px-3 py-2 text-black outline-none focus:border-primary dark:bg-boxdark dark:text-white dark:focus:border-primary"
@@ -277,22 +277,31 @@ export default function IsEmriDuzenleContainer ({
             </div>
           </div>
           {/* maliyet */}
-          <div className="flex flex-col gap-2">
-          <label className="text-sm dark:text-white text-black">
-            Maliyetler
-          </label>
-          <label className="text-sm dark:text-white text-black font-bold">
-            İlk Malzeme Maliyeti :{" "}
-            <span className="font-bold text-black underline dark:text-white">{`${formatToCurrency(initialTotalPrice.current)} $`}</span>
-          </label>
-          <label className="text-sm dark:text-white text-green-400 font-bold">
-            Güncel Malzeme Maliyeti : {" "}
-            <span className="font-bold text-green-400 underline dark:text-white">{`${formatToCurrency(totalPrice)} $`}</span>
-          </label>
+          <div className="w-2/5 mx-auto">
+            <h2 className="text-sm font-bold dark:text-white text-black ml-6 mb-1">Maliyetler</h2>
+            <table className="w-full border-collapse">
+              <tbody>
+                {[
+                  { label: "İlk Malzeme Maliyeti", value: formatToCurrency(initialTotalPrice.current) },
+                  { label: "Güncel Malzeme Maliyeti", value: formatToCurrency(totalPrice) },
+                  { label: "İşçilik", value: "0" },
+                  { label: "Toplam Güncel Maliyet", value: formatToCurrency(totalPrice), highlight: true, border: true }, 
+                ].map(({ label, value, highlight, border }, index) => (
+                  <tr
+                    key={index}
+                    className={`${highlight ? "text-green-400 font-semibold" : "text-black dark:text-white"} 
+                    ${border ? "border-t border-black dark:border-white" : ""}`} 
+                  >
+                    <td className="text-sm py-0.5 px-1 text-left pl-6">{label} :</td>
+                    <td className="text-sm py-0.5 px-1 text-right pr-4">{`${value} $`}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
           {/* açıklama */}
-          <div className="flex flex-col gap-2 w-1/2">
-            <label className="text-sm font-medium text-black dark:text-white">
+          <div className="flex flex-col gap-2 w-1/2 ml-2">
+            <label className="text-sm font-bold text-black dark:text-white">
               Üretim Müdürü Açıklaması
             </label>
             <textarea
@@ -325,15 +334,6 @@ export default function IsEmriDuzenleContainer ({
           >
             Kaydet
           </button>
-          <button
-            type="button"
-            className={`w-40 rounded-md px-2 py-2 ml-5 text-center text-white ${
-              userRoleID === 2 ? "bg-primary" : "bg-primary cursor-not-allowed"
-            }`}
-            disabled={userRoleID !== 2} 
-          >
-            Üretimi Başlat
-        </button>
         </div>
 
 

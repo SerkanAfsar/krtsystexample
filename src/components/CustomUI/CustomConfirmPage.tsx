@@ -20,7 +20,6 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, on
         try {
           const response = await GetWorkOrderPupils(); 
           if (response && response.success && response.data) {
-            const names = response.data.map((pupil: { username: string }) => pupil.username); 
             setCiraklar(response.data);
           }
           else if (response && !response.success) {
