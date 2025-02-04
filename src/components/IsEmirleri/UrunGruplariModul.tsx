@@ -96,7 +96,7 @@ export default function UrunGruplariModul({
     CANCELLED: "Red Edildi",
     ACCEPTED: "Onaylandı",
     SENT: "Gönderildi",
-    Tesim: "Teslim Edildi",
+    Teslim: "Teslim Edildi",
   };
 
   const reverseStatusMap = Object.fromEntries(
@@ -105,7 +105,7 @@ export default function UrunGruplariModul({
 
   const handleConfirmation = (cirak?: CirakType) => {
 
-    console.log("Seçili Çırak:", cirak); 
+    console.log("Seçili Çırak:", cirak?.id); 
     if (indexForConfirmation !== null) {
       const updatedValues = [...selectedValues];
       let newStatus: string | undefined;
@@ -127,6 +127,7 @@ export default function UrunGruplariModul({
       PostWorkOderUpdateStatus({
         work_order_product_id: Number(updatedValues[indexForConfirmation].id),
         status: newBackendStatus,
+        ...(cirak ? { cirak: cirak.id } : {}), 
       }).then((resp) => {
         if (resp?.success) {
           updatedValues[indexForConfirmation].status = newStatus;
@@ -279,10 +280,48 @@ export default function UrunGruplariModul({
         }}
         className="mb-3 flex w-full flex-col gap-2"
       >
-        <div className="flex text-black w-full items-center justify-between">
+        <div className="flex text-black dark:text-white w-full items-center justify-between">
           <b>{title}</b>
           {urunData ? (
-                  <div className="flex space-x-2">
+                <div className="flex space-x-2 ">
+                  {title !== "Sade" && (
+                    <b className="mt-1 px-3 py-1 ml-4">
+                      <span className="mr-8 text-black dark:text-white">
+                      Toplam Karat:{" "}
+                      <span className="text-green-500">
+                        {selectedValues
+                          .reduce((sum, item) => sum + (Number(item.used_carat) || Number(item.carat) || 0), 0)
+                          .toFixed(2)}
+                      </span>
+                      </span>
+                      <span className=" text-black dark:text-white">
+                      Toplam Adet:{" "}
+                      <span className="text-green-500">
+                        {selectedValues
+                          .reduce((sum, item) => sum + (Number(item.adet) || 0), 0)}
+                      </span>
+                      </span>
+                    </b>
+                  )}
+                  <b className="mt-1 px-3 py-1 ml-4 dark:text-white text-black">
+                    Toplam Maliyet:{" "}
+                    <span className="text-green-500">
+                      {(() => {
+                        const total = selectedValues.reduce((sum, item) => {
+                          if (title === "Sade") {
+                            return sum + (Number(item.firstPrice) || 0);
+                          } else {
+                            return sum + (Number(item.caratPrice) * Number(item.used_carat) || 0);
+                          }
+                        }, 0);
+
+                        return total
+                          .toFixed(2)
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ","); 
+                      })()}{" "}
+                      $
+                    </span>
+                  </b>     
                   <button
                     type="button"
                     className="btn block w-35 rounded-md px-3 py-1 text-center text-primary font-bold border-2 border-primary"
@@ -390,7 +429,7 @@ export default function UrunGruplariModul({
                         <input
                           min="1"
                           key={index}
-                          className={cn("ml-[-10px]  h-8 w-16 rounded-md border border-black pl-3 text-center",
+                          className={cn("ml-[-10px] dark:text-white  h-8 w-16 rounded-md border border-black pl-3 text-center",
                           item.status === "Red Edildi" ? "line-through" : "" 
                         )}
                           type="number"
@@ -430,7 +469,7 @@ export default function UrunGruplariModul({
                       <input
                         min="1"
                         key={index}
-                        className={cn("p ml-[-12px] h-8 w-16 rounded-md border border-black pl-3 text-center dark:disabled:text-white",
+                        className={cn("p ml-[-12px] h-8 w-16 rounded-md border dark:text-white border-black pl-3 text-center dark:disabled:text-white",
                           item.status === "Red Edildi" ? "line-through" : "" 
                         )}
                         type="number"
@@ -511,6 +550,8 @@ export default function UrunGruplariModul({
                         ? "/images/icon/confirmation.svg"
                         : item.status === "Onaylandı"
                         ? "/images/icon/send.svg"
+                        : item.status === "Teslim Edildi"
+                        ? "/images/icon/approval.svg"
                         : "/images/icon/confirmation.svg"
                     }
                     alt="Change Status"
