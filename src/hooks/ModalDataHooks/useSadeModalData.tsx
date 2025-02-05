@@ -12,10 +12,12 @@ export default function useSadeModalData({
   setSelectedValues,
   selectedValues,
   isDuzenleContainer,
+  model
 }: {
   setSelectedValues: any;
   selectedValues: SeciliUrunType[];
   isDuzenleContainer: boolean;
+  model: string;
 }) {
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<any>([]);
@@ -71,6 +73,7 @@ export default function useSadeModalData({
     }
   };
 
+  //console.log("model: ", model)
   const updateData = useCallback(() => {
     setActiveData([]);
     GetWorkOrderProductListModalService({

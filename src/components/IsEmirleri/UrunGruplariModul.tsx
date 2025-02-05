@@ -52,6 +52,9 @@ export default function UrunGruplariModul({
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [indexForConfirmation, setIndexForConfirmation] = useState<number | null>(null);
+  const [kasa, setKasa] = useState<number | null>(null);
+  const [targetUser, setTargetUSer] = useState<number | null>(null);
+  const [userGiving, setUserGiving] = useState<number | null>(null);
   const { user } = useUserStore(); 
   const userRoleID = user?.groups[0]?.id;
   const isDisabled = urunData && (
@@ -88,6 +91,13 @@ export default function UrunGruplariModul({
     setIndexForConfirmation(index);
     setConfirmModalOpen(true);
     setEditableUruns(items || []);
+    if (title === "Renkli Taş") {
+      setKasa(7);
+    } else if (title === "Pırlanta") {
+      setKasa(8);
+    } else if (title === "Sade") {
+      setKasa(9);
+    }
   };
 
   const statusMap: { [key: string]: string } = {
@@ -111,14 +121,33 @@ export default function UrunGruplariModul({
       let newStatus: string | undefined;
       if (editableUrun.status === "Red Edildi") {
         newStatus = "Red Edildi";
+        setTargetUSer(kasa)
+        if(updatedValues[indexForConfirmation].status === 'Gönderildi'){
+          setUserGiving(3)
+        } else{
+          setUserGiving(kasa)
+        }
       } else if (updatedValues[indexForConfirmation].status === 'Rezervli') {
         newStatus = 'Onay Bekliyor';
+        setUserGiving(kasa)
+        setTargetUSer(kasa)
       } else if (updatedValues[indexForConfirmation].status === 'Onay Bekliyor') {
         newStatus = 'Onaylandı';
+        setUserGiving(kasa)
+        setTargetUSer(kasa)
       } else if (updatedValues[indexForConfirmation].status === 'Onaylandı') {
         newStatus = 'Gönderildi';
+        setUserGiving(kasa)
+        setTargetUSer(2)
       }  else if (updatedValues[indexForConfirmation].status === 'Gönderildi') {
         newStatus = 'Tesim Edildi';
+        setUserGiving(2)
+        setTargetUSer(2)
+      }
+      else if (updatedValues[indexForConfirmation].status === 'Tesim Edildi') {
+        newStatus = 'Üretime Gönderildi';
+        setUserGiving(2)
+        setTargetUSer(2)
       }
       
 
@@ -127,7 +156,9 @@ export default function UrunGruplariModul({
       PostWorkOderUpdateStatus({
         work_order_product_id: Number(updatedValues[indexForConfirmation].id),
         status: newBackendStatus,
-        ...(cirak ? { cirak: cirak.id } : {}), 
+       // cirak: cirak?.id ?? null, 
+       // user_giving: userGiving,
+       // target_user: targetUser
       }).then((resp) => {
         if (resp?.success) {
           updatedValues[indexForConfirmation].status = newStatus;
@@ -247,7 +278,7 @@ export default function UrunGruplariModul({
     const items: WorkOrderProductType[] = selectedValues.map((item) => ({
       product_id: Number(item.pk),
       quantity: item.adet ? Number(item.adet) : 1,
-      used_carat: item.used_carat ? Number(item.used_carat) : Number(item.carat),
+      used_carat: item.used_carat != null ? Number(item.used_carat) : (item.carat != null ? Number(item.carat) : null),
       name: (item.name as string) ?? null,
       price:
         item.caratPrice && item.type != "Sade" && item.used_carat
@@ -257,7 +288,7 @@ export default function UrunGruplariModul({
       ayar: item.ayar ? String(item.ayar) : null,
       modelTuru: item.modelTuru ? String(item.modelTuru) : null,
       renk: (item.renk as string) ?? null,
-      caratPrice : Number(item.caratPrice),
+      caratPrice: item.caratPrice != null ? Number(item.caratPrice) : null,
     }));
     setValues((prev: ProductItemsType[]) => {
       const indexNo = prev.findIndex((a) => a.title == title);

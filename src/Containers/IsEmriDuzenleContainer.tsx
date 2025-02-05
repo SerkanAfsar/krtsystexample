@@ -127,6 +127,20 @@ export default function IsEmriDuzenleContainer ({
   const isCondition = pirlantaArr?.some((a) => a.renk == "BLACK");
   const initialTotalPrice = useRef<number>(0); 
 
+  const fetchWorkOrderProducts = async (id: number) => {
+    const response = await GetSimpleWorkOrderProductList({
+      work_order_id: id,
+      order_by: "order_by",
+      page: 1,
+    });
+  
+    if (response?.success) {
+      setUrunData(response?.data);
+    } else {
+      console.log("err:", response);
+    }
+  };
+
 
   useEffect(() => {
     if (gender === "Woman") {
@@ -145,17 +159,7 @@ export default function IsEmriDuzenleContainer ({
   }, [gender]);
 
   useEffect(() => {
-    GetSimpleWorkOrderProductList({
-      work_order_id: workOrderData.id,
-      order_by: "order_by", 
-      page: 1,
-    }).then((resp) => {
-      if (resp?.success) {
-        setUrunData(resp?.data);
-      } else {
-        console.log("err:", resp);
-      }
-    });
+    fetchWorkOrderProducts(workOrderData.id);
   }, [workOrderData.id]);
 
   useEffect(() => {
@@ -228,7 +232,7 @@ export default function IsEmriDuzenleContainer ({
 
     if (result?.success) {
       toast.success("Üretim İş Emri Güncellendi", { position: "top-right" });
-     
+      fetchWorkOrderProducts(workOrderData.id);
     } else {
       toast.error(result[0], { position: "top-right" });
     }

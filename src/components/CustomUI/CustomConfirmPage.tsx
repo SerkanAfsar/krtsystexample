@@ -6,16 +6,38 @@ type ConfirmPropsType = {
   isOpen: boolean;
   item: SeciliUrunType; 
   items: SeciliUrunType[]; 
-  onConfirm: (cirak?: CirakType) => void;
+  onConfirm: (cirak?: CirakType, targetLocation?: number) => void;
   onCancel: () => void;
 };
 
 const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, onConfirm, onCancel }) => {
   const [ciraklar, setCiraklar] = useState<CirakType[]>([]);
   const [selectedCirak, setSelectedCirak] = useState<CirakType | null>(null);
+  const [tagetLocation, setTargetLocation] = useState<number | null>(null);
+
+  const renderCirakSecimi = () => (
+    <div className="w-3/4 mt-3 flex flex-col items-center justify-center">
+      <label htmlFor="cirakSecimi" className="items-center text-sm font-medium text-gray-700">
+        Lütfen göndereceğiniz çırağı seçiniz
+      </label>
+      <select
+        className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+        onChange={(e) => {
+          const selected = ciraklar.find(c => c.id === Number(e.target.value));
+          setSelectedCirak(selected || null);
+        }}
+      >
+        {ciraklar.map((cirak) => (
+          <option key={cirak.id} value={cirak.id}>
+            {cirak.username}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
 
   useEffect(() => {
-    if (item.status === 'Onaylandı') {
+    if (item.status === 'Onaylandı' || item.status === 'Tesim Edildi') {
       const fetchCiraklar = async () => {
         try {
           const response = await GetWorkOrderPupils(); 
@@ -36,13 +58,14 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, on
   }, [item.status]);
 
   const handleConfirm = () => {
-    onConfirm(selectedCirak || undefined);
+    onConfirm(selectedCirak || undefined, tagetLocation || undefined);
   };
 
   if (!isOpen) return null;
   let message: React.ReactNode;
   let buttonText = '';
   let cirakSecimi = null; 
+  let targetLocationSecimi = null; 
 
   switch (item.status) {
     case 'Rezervli':
@@ -78,26 +101,42 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, on
         );      
         buttonText = 'Tamam';
       }
-      cirakSecimi = (
-        <div className="w-3/4 mt-3 flex flex-col items-center justify-center">
-        <label htmlFor="cirakSecimi" className="items-center text-sm font-medium text-gray-700">
-            Lütfen göndereceğiniz çırağı seçiniz
-          </label>
-          <select className="w-full mt-1 p-2 border border-gray-300 rounded-md"
-          onChange={(e) => {
-            const selected = ciraklar.find(c => c.id === Number(e.target.value));
-            setSelectedCirak(selected || null);
-          }}
-        >
-          {ciraklar.map((cirak) => (
-            <option key={cirak.id} value={cirak.id}>
-              {cirak.username} 
-            </option>
-          ))}
-        </select>
-        </div>
-        );
+      cirakSecimi = renderCirakSecimi()
       break;
+      case 'Teslim Edildi':
+        if (items.length > 1) {
+          const codes = items.map(item => item.code).join(", ");
+          message = (
+            <>
+              <strong>{codes}</strong> kodlu ürünleri göndermek istediğinize emin misiniz?
+            </>
+          );
+          buttonText = 'Tamam';
+        } else {
+          message = (
+            <>
+              <strong>{item.code}</strong> kodlu ürünü göndermek istediğinize emin misiniz?
+            </>
+          );      
+          buttonText = 'Tamam';
+        }
+        cirakSecimi = renderCirakSecimi()
+        targetLocationSecimi = (
+          <div className="w-3/4 mt-3 flex flex-col items-center justify-center">
+            <label htmlFor="targetLocationSecimi" className="items-center text-sm font-medium text-gray-700">
+              Lütfen gideceği birimi seçiniz
+            </label>
+            <select
+              className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+              onChange={(e) => setTargetLocation(Number(e.target.value))}
+            >
+              <option value={4}>Mıhlayıcı</option>
+              <option value={5}>Cilacı</option>
+              <option value={1}>Sadekar</option>
+            </select>
+          </div>
+        );
+        break;
       case 'Red Edildi':
         message = (
           <>
@@ -126,6 +165,7 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, on
           <p className="mt-2">{message}</p>
         </div>
         {cirakSecimi}
+        {targetLocationSecimi}
         <div className="flex gap-4 mt-auto">
           <button
             onClick={handleConfirm}
