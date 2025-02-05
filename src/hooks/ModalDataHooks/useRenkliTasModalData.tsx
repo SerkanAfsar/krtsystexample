@@ -96,6 +96,7 @@ export default function useRenkliTasModalData({
 
   const updateData = useCallback(() => {
     setActiveData([]);
+    //model:null eklenecek
     GetWorkOrderProductListModalService({
       type: "ColoredStone",
       page: activePage

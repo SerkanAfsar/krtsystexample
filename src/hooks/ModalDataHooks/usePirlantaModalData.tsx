@@ -193,6 +193,7 @@ export default function usePirlantaModalData({
 
   const updateData = useCallback(() => {
     setActiveData([]);
+    //model:null eklenecek
     GetWorkOrderProductListModalService({
       type: "Diamond",
       page: activePage

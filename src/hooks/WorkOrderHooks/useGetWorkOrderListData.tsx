@@ -104,7 +104,7 @@ export default function useGetWorkOrderListData() {
       return (
         <div className="flex items-center justify-center  gap-6">
           <img
-            src={"/images/icon/box.svg" }
+            src={"/images/icon/hammer.svg" }
             alt="Atolye Detay"
             className={`cursor-pointer w-4 h-4`}
             onClick={() =>
@@ -112,7 +112,7 @@ export default function useGetWorkOrderListData() {
             }
           />
           <img
-            src={"/images/icon/hammer.svg" }
+            src={"/images/icon/box.svg" }
             alt="Is Emri Detay"
             className={`cursor-pointer w-4 h-4`}
             onClick={() =>
