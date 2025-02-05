@@ -342,7 +342,9 @@ export default function UrunGruplariModul({
                           if (title === "Sade") {
                             return sum + (Number(item.firstPrice) || 0);
                           } else {
-                            return sum + (Number(item.caratPrice) * Number(item.used_carat) || 0);
+                            return sum + (item.used_carat != null 
+                              ? (Number(String(item.caratPrice).replace(",", ".")) * Number(item.used_carat)) 
+                              : Number(item.firstPrice)) || 0;
                           }
                         }, 0);
 
