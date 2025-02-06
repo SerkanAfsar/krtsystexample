@@ -29,7 +29,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { WorkOrderQueueApiService } from "@/ApiServices/WorkOrders.ApiService";
 import { MucevherCode } from "@/utils/Mucevher.Utils";
-import { GetSimpleWorkOrderProductList } from "@/Services/WorkOrder.Services";
+import { GetWorkOrderProductList } from "@/Services/WorkOrder.Services";
 import { useUserStore } from "@/store/useUserStore";
 
 const UrunGruplari: UrunGruplariModulType[] = [
@@ -128,19 +128,15 @@ export default function IsEmriDuzenleContainer ({
   const initialTotalPrice = useRef<number>(0); 
 
   const fetchWorkOrderProducts = async (id: number) => {
-    const response = await GetSimpleWorkOrderProductList({
+    const response = await GetWorkOrderProductList({
       work_order_id: id,
-      order_by: "order_by",
-      page: 1,
     });
-  
     if (response?.success) {
       setUrunData(response?.data);
     } else {
-      console.log("err:", response);
+      console.log("err:", response.error);
     }
   };
-
 
   useEffect(() => {
     if (gender === "Woman") {
@@ -231,7 +227,7 @@ export default function IsEmriDuzenleContainer ({
     const result: any = await AddWorkOrderService({ data: lastData });
 
     if (result?.success) {
-      toast.success("Üretim İş Emri Güncellendi", { position: "top-right" });
+      toast.success("İş Emri Güncellendi", { position: "top-right" });
       fetchWorkOrderProducts(workOrderData.id);
     } else {
       toast.error(result[0], { position: "top-right" });
@@ -325,7 +321,7 @@ export default function IsEmriDuzenleContainer ({
               key={index}
               className="rounded-lg border border-stroke bg-white p-4 shadow-md dark:border-strokedark dark:bg-boxdark"
             >
-              <UrunGruplariModul setValues={setValues} item={item} urunData={urunData.results} model={model}/>
+              <UrunGruplariModul setValues={setValues} item={item} urunData={urunData} model={model}/>
             </div>
           ))}
         </div>

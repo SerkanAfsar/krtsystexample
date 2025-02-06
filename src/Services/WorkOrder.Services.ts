@@ -34,12 +34,17 @@ export const GetWorkOrderProductListModalService = async ({
   type,
   code,
   page,
+  model
 }: {
   type?: string;
   code?: string;
   page?: Number;
+  model?: string;
 }) => {
   let url = `product/product-list/?&type=${type}&page=${page}`;
+  if (model) {
+    url += `&modelType=${model}`;
+  }
   if (code) {
     url += `&code=${code}`;
   }
@@ -170,6 +175,25 @@ export const GetSimpleWorkOrderProductList = async ({
     hasToken: true,
   });
 
+  return result as ResponseResult<ProductListType>;
+};
+
+export const GetWorkOrderProductList = async ({
+  work_order_id,
+}: {
+  work_order_id: number;
+}): Promise<ResponseResult<ProductListType>> => {
+  let urlPath: string = "product/work-order/list-of-products/?";
+  if (work_order_id) {
+    urlPath += `&work_order_id=${work_order_id.toString()}`;
+  }
+
+  const result = await BaseService({
+    url: urlPath,
+    bodyData: null,
+    method: "GET",
+    hasToken: true,
+  });
   return result as ResponseResult<ProductListType>;
 };
 
@@ -313,4 +337,19 @@ export const GetWorkOrderPupils = async () => {
   } catch (error) {
     console.error("Error fetching data:", error);
   }
+};
+
+export const DeleteWorkOrderSingleItem = async ({
+  work_order_product_id,
+}: {
+  work_order_product_id: number;
+}): Promise<ResponseResult<any>> => {
+  const result = await BaseService({
+    url: "product/work-order/delete-product",
+    bodyData: { work_order_product_id},
+    method: "POST",
+    hasToken: true,
+  });
+  
+  return result as ResponseResult<any>;
 };
