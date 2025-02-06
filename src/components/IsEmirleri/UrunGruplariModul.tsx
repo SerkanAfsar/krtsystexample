@@ -7,7 +7,7 @@ import { cn, formatToCurrency } from "@/utils";
 import { FaTrash } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import CustomConfirmPage from "../CustomUI/CustomConfirmPage";  
-import { PostWorkOderUpdateStatus } from "@/Services/WorkOrder.Services";
+import { PostWorkOderUpdateStatus, DeleteWorkOrderSingleItem } from "@/Services/WorkOrder.Services";
 import { useUserStore } from "@/store/useUserStore";
 
 import {
@@ -177,6 +177,38 @@ export default function UrunGruplariModul({
   const handleCancel = () => {
     setConfirmModalOpen(false);
   };
+
+
+  const handleDeleteSingleItem = (item: SeciliUrunType): void => {
+    if(item.id){
+      DeleteWorkOrderSingleItem({
+        work_order_product_id: Number(item.id),
+      }).then((resp) => {
+        if (resp?.success) {
+          setSelectedValues((prev: SeciliUrunType[]) =>
+            prev.filter((a) => a.pk != item.pk),
+          );
+        } else {
+          if(resp?.error == "WorkOrderProduct matching query does not exist."){
+            setSelectedValues((prev: SeciliUrunType[]) =>
+              prev.filter((a) => a.pk != item.pk),
+            );
+          } else {
+            return toast.error("Ürün silinemedi!", {
+              position: "top-right",
+            });
+          }
+        }
+      });
+    } else{
+      setSelectedValues((prev: SeciliUrunType[]) =>
+        prev.filter((a) => a.pk != item.pk),
+      );
+    }
+
+  };
+  
+  
   //İş emri düzenleden gelen datalar için. Sıfırdan iş emri oluşturulması durumunda çalışmayacak.
   useEffect(() => {
   if (!urunData) return;
@@ -472,11 +504,20 @@ export default function UrunGruplariModul({
                             (item?.status && item?.status !== "Rezervli")
                           }
                           onChange={(e) => {
+                            //maliyet hesabında karat 0 gelme durumu değerlendirelecek. Şimdilik burası ekrana basıyor Ancak toplam maliyete karat 0sa yansımıyor.
                             const selectedIndexNo = selectedValues.findIndex(
                               (a) => a.pk == item.pk,
                             );
                             const newItems = selectedValues;
                             const changedItem = newItems[selectedIndexNo];
+
+                            if (item.remaining_carat && e.target.value > item.remaining_carat) {
+                              toast.error(`Girdiğiniz karat miktarı ${item.remaining_carat} ile sınırlıdır!`, {
+                                position: "top-right",
+                              });
+                              e.target.value = item.remaining_carat.toString();
+                            }
+
                             const newMaliyet =
                               Number(e.target.value) *
                               (Number(changedItem["caratPrice"]) ? Number(changedItem["caratPrice"]) : Number(changedItem["firstPrice"])) 
@@ -602,9 +643,7 @@ export default function UrunGruplariModul({
                     onClick={(e) => {
                       if (!isButtonDisabled(item)) {
                         if (item.status === "Rezervli") {
-                          setSelectedValues((prev: SeciliUrunType[]) =>
-                            prev.filter((a) => a.pk != item.pk),
-                          );
+                          handleDeleteSingleItem(item)
                         } else {
                           handleConfirmationOpen(item, index, "Red Edildi");
                         }

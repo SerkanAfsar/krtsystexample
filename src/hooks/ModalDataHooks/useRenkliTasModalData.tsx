@@ -60,6 +60,7 @@ export default function useRenkliTasModalData({
       firstPrice,
       menstrual_status,
       caratPrice,
+      remaining_carat: properties.remaining_carat || undefined, 
     };
 
     if (target.checked) {

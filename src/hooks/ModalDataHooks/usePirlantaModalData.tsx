@@ -53,6 +53,7 @@ export default function usePirlantaModalData({
       firstPrice,
       menstrual_status,
       caratPrice,
+      remaining_carat: properties.remaining_carat || undefined, 
     };
 
     if (target.checked) {

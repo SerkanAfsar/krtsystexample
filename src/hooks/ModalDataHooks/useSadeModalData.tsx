@@ -73,12 +73,12 @@ export default function useSadeModalData({
     }
   };
 
-  //console.log("model: ", model)
   const updateData = useCallback(() => {
     setActiveData([]);
     GetWorkOrderProductListModalService({
       type: "Simple",
-      page: activePage
+      page: activePage,
+      model: model
     }).then((resp: ResponseResult<ProductListType>) => {
       if (resp?.success) {
         const data = resp.data as ProductListType;
