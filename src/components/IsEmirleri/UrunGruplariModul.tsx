@@ -120,40 +120,36 @@ export default function UrunGruplariModul({
     if (indexForConfirmation !== null) {
       const updatedValues = [...selectedValues];
       let newStatus: string | undefined;
+      const currentStatus = items && items.length > 0 ? items[0].status : updatedValues[indexForConfirmation].status;
 
       if (editableUrun.status === "Red Edildi") {
         newStatus = "Red Edildi";
-        targetUser = kasa
-        if(updatedValues[indexForConfirmation].status === 'Gönderildi'){
-          userGiving = 3
-        } else{
-          userGiving = kasa
-        }
-      } else if (updatedValues[indexForConfirmation].status === 'Rezervli') {
+        targetUser = kasa;
+        userGiving = currentStatus === 'Gönderildi' ? 3 : kasa;
+      } else if (currentStatus === 'Rezervli') {
         newStatus = 'Onay Bekliyor';
-        userGiving = kasa
-        targetUser = kasa
-      } else if (updatedValues[indexForConfirmation].status === 'Onay Bekliyor') {
+        userGiving = kasa;
+        targetUser = kasa;
+      } else if (currentStatus === 'Onay Bekliyor') {
         newStatus = 'Onaylandı';
-        userGiving = kasa
-        targetUser = kasa
-      } else if (updatedValues[indexForConfirmation].status === 'Onaylandı') {
+        userGiving = kasa;
+        targetUser = kasa;
+      } else if (currentStatus === 'Onaylandı') {
         newStatus = 'Gönderildi';
-        userGiving = kasa
-        targetUser = 2
-      }  else if (updatedValues[indexForConfirmation].status === 'Gönderildi') {
+        userGiving = kasa;
+        targetUser = 2;
+      } else if (currentStatus === 'Gönderildi') {
         newStatus = 'Üretim Onayladı';
-        userGiving = 2
-        targetUser = 2
-      }
-      else if (updatedValues[indexForConfirmation].status === 'Üretim Onayladı') {
+        userGiving = 2;
+        targetUser = 2;
+      } else if (currentStatus === 'Üretim Onayladı') {
         newStatus = 'Atly. Gönderildi';
-        userGiving = 2
-        targetUser = (Number(tagetLocation))
+        userGiving = 2;
+        targetUser = Number(tagetLocation);
       }
+      
 
       const workOrderProductIds = items && items.length > 0  ? items.map(item => item.id) : [updatedValues[indexForConfirmation].id];
-
       if (newStatus) {
       const newBackendStatus = reverseStatusMap[String(newStatus)];
       PostWorkOderUpdateStatus({
@@ -430,7 +426,6 @@ export default function UrunGruplariModul({
                     className="btn block w-35 rounded-md px-3 py-1 text-center text-primary font-bold border-2 border-primary"
                     onClick={() => {
                       if (userRoleID === 2) {
-                        console.log("üretim müdürü")
                         const deliveredItems = selectedValues.filter((item) => item.status === "Üretim Onayladı");
                         if (deliveredItems.length > 0) {
                           deliveredItems.forEach((item, index) => {
@@ -440,7 +435,6 @@ export default function UrunGruplariModul({
                           toast.error("Onaylanmış ürün yok!", { position: "top-right" });
                         }
                       } else {
-                        console.log("test")
                         const sentItems = selectedValues.filter((item) => item.status === "Onaylandı");
                         if (sentItems.length > 0) {
                           sentItems.forEach((item, index) => {
