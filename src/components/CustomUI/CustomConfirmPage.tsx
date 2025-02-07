@@ -6,15 +6,14 @@ type ConfirmPropsType = {
   isOpen: boolean;
   item: SeciliUrunType; 
   items: SeciliUrunType[]; 
-  onConfirm: (cirak?: CirakType, targetLocation?: number) => void;
+  onConfirm: (cirak?: CirakType, targetLocation?: number, items?: SeciliUrunType[]) => void;
   onCancel: () => void;
 };
 
 const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, onConfirm, onCancel }) => {
   const [ciraklar, setCiraklar] = useState<CirakType[]>([]);
   const [selectedCirak, setSelectedCirak] = useState<CirakType | null>(null);
-  const [tagetLocation, setTargetLocation] = useState<number | null>(null);
-
+  const [tagetLocation, setTargetLocation] = useState<number | null>(4);
   const renderCirakSecimi = () => (
     <div className="w-3/4 mt-3 flex flex-col items-center justify-center">
       <label htmlFor="cirakSecimi" className="items-center text-sm font-medium text-gray-700">
@@ -37,12 +36,13 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, on
   );
 
   useEffect(() => {
-    if (item.status === 'Onaylandı' || item.status === 'Tesim Edildi') {
+    if (item.status === 'Onaylandı' || item.status === 'Üretim Onayladı') {
       const fetchCiraklar = async () => {
         try {
           const response = await GetWorkOrderPupils(); 
           if (response && response.success && response.data) {
             setCiraklar(response.data);
+            setSelectedCirak(response.data[0])
           }
           else if (response && !response.success) {
             console.error('Data fetch failed cirak list'); 
@@ -58,7 +58,7 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, on
   }, [item.status]);
 
   const handleConfirm = () => {
-    onConfirm(selectedCirak || undefined, tagetLocation || undefined);
+    onConfirm(selectedCirak || undefined, tagetLocation || undefined, items ? items : undefined);
   };
 
   if (!isOpen) return null;
@@ -103,7 +103,7 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, on
       }
       cirakSecimi = renderCirakSecimi()
       break;
-      case 'Teslim Edildi':
+      case 'Üretim Onayladı':
         if (items.length > 1) {
           const codes = items.map(item => item.code).join(", ");
           message = (
@@ -128,6 +128,7 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, on
             </label>
             <select
               className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+              value={tagetLocation || 4}
               onChange={(e) => setTargetLocation(Number(e.target.value))}
             >
               <option value={4}>Mıhlayıcı</option>
