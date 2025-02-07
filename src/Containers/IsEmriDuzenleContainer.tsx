@@ -43,6 +43,7 @@ const UrunGruplari: UrunGruplariModulType[] = [
       { title: "Has", accessor: "has" },
       { title: "Model", accessor: "model" },
       { title: "Maliyet", accessor: "maliyet" },
+      { title: "Fiyat", accessor: "fiyat" },
       { title: "Nerede", accessor: "nerede" },
       { title: "Status", accessor: "status" },
       { title: "İşlemler", accessor: "islemler" },

@@ -53,8 +53,6 @@ export default function UrunGruplariModul({
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [indexForConfirmation, setIndexForConfirmation] = useState<number | null>(null);
   const [kasa, setKasa] = useState<number | null>(null);
-  const [targetUser, setTargetUSer] = useState<number | null>(null);
-  const [userGiving, setUserGiving] = useState<number | null>(null);
   const { user } = useUserStore(); 
   const userRoleID = user?.groups[0]?.id;
   const isDisabled = urunData && (
@@ -106,62 +104,76 @@ export default function UrunGruplariModul({
     CANCELLED: "Red Edildi",
     ACCEPTED: "Onaylandı",
     SENT: "Gönderildi",
-    Teslim: "Teslim Edildi",
+    PRODUCTION_ACCEPTED : "Üretim Onayladı",
+    SENT_TO_WORKSHOP  : "Atly. Gönderildi",
   };
 
   const reverseStatusMap = Object.fromEntries(
     Object.entries(statusMap).map(([key, value]) => [value, key])
   );
 
-  const handleConfirmation = (cirak?: CirakType) => {
+  const handleConfirmation = (cirak?: CirakType, tagetLocation?:Number, items?:SeciliUrunType[]) => {
 
-    console.log("Seçili Çırak:", cirak?.id); 
+    let userGiving;
+    let targetUser;
+
     if (indexForConfirmation !== null) {
       const updatedValues = [...selectedValues];
       let newStatus: string | undefined;
+
       if (editableUrun.status === "Red Edildi") {
         newStatus = "Red Edildi";
-        setTargetUSer(kasa)
+        targetUser = kasa
         if(updatedValues[indexForConfirmation].status === 'Gönderildi'){
-          setUserGiving(3)
+          userGiving = 3
         } else{
-          setUserGiving(kasa)
+          userGiving = kasa
         }
       } else if (updatedValues[indexForConfirmation].status === 'Rezervli') {
         newStatus = 'Onay Bekliyor';
-        setUserGiving(kasa)
-        setTargetUSer(kasa)
+        userGiving = kasa
+        targetUser = kasa
       } else if (updatedValues[indexForConfirmation].status === 'Onay Bekliyor') {
         newStatus = 'Onaylandı';
-        setUserGiving(kasa)
-        setTargetUSer(kasa)
+        userGiving = kasa
+        targetUser = kasa
       } else if (updatedValues[indexForConfirmation].status === 'Onaylandı') {
         newStatus = 'Gönderildi';
-        setUserGiving(kasa)
-        setTargetUSer(2)
+        userGiving = kasa
+        targetUser = 2
       }  else if (updatedValues[indexForConfirmation].status === 'Gönderildi') {
-        newStatus = 'Tesim Edildi';
-        setUserGiving(2)
-        setTargetUSer(2)
+        newStatus = 'Üretim Onayladı';
+        userGiving = 2
+        targetUser = 2
       }
-      else if (updatedValues[indexForConfirmation].status === 'Tesim Edildi') {
-        newStatus = 'Üretime Gönderildi';
-        setUserGiving(2)
-        setTargetUSer(2)
+      else if (updatedValues[indexForConfirmation].status === 'Üretim Onayladı') {
+        newStatus = 'Atly. Gönderildi';
+        userGiving = 2
+        targetUser = (Number(tagetLocation))
       }
-      
 
-      if (newStatus && newStatus != 'Tesim Edildi') {
+      const workOrderProductIds = items && items.length > 0  ? items.map(item => item.id) : [updatedValues[indexForConfirmation].id];
+
+      if (newStatus) {
       const newBackendStatus = reverseStatusMap[String(newStatus)];
       PostWorkOderUpdateStatus({
-        work_order_product_id: Number(updatedValues[indexForConfirmation].id),
+        work_order_product_ids: workOrderProductIds.map(id => Number(id)),
         status: newBackendStatus,
-       // cirak: cirak?.id ?? null, 
-       // user_giving: userGiving,
-       // target_user: targetUser
+        cirak: cirak?.id ? Number(cirak.id) : null,
+        user_giving: Number(userGiving),
+        target_user: Number(targetUser)
       }).then((resp) => {
         if (resp?.success) {
-          updatedValues[indexForConfirmation].status = newStatus;
+          if (items && items.length > 0) {
+            items.forEach(item => {
+              const index = updatedValues.findIndex(u => u.id === item.id);
+              if (index !== -1) {
+                updatedValues[index].status = newStatus; 
+              }
+            });
+          } else {
+            updatedValues[indexForConfirmation].status = newStatus; 
+          }
           setSelectedValues(updatedValues);
         } else {
           return toast.error("Ürünün durumunu değiştirmeden önce kaydetmeniz gerekmektedir!", {
@@ -238,6 +250,7 @@ export default function UrunGruplariModul({
             model: item.product.properties.modelTuru,
             modelTuru: item.product.properties.modelTuru,
             maliyet: `${formatToCurrency(item.cost)} $`,
+            fiyat: item.cost || 0,
             nerede: item.user_group_name,
             status: statusMap[item.status] || item.status,
             type: "Sade",
@@ -264,7 +277,10 @@ export default function UrunGruplariModul({
             status: statusMap[item.status] || item.status,
             caratPrice:item.product.product_cost.pricePerCarat,
             type:item.product.type,
-            id:item.id
+            id:item.id,
+            remaining_carat: item.product.properties.remaining_carat 
+              ? item.product.properties.remaining_carat + item.used_carat 
+              : (item.used_carat === 0 ? 0 : item.used_carat),
           }));
   
       case "Pırlanta":
@@ -286,7 +302,10 @@ export default function UrunGruplariModul({
             status: statusMap[item.status] || item.status,
             caratPrice:item.product.product_cost.pricePerCarat,
             type:item.product.type,
-            id:item.id
+            id:item.id,
+            remaining_carat: item.product.properties.remaining_carat 
+              ? item.product.properties.remaining_carat + item.used_carat 
+              : (item.used_carat === 0 ? 0 : item.used_carat), 
           }));
   
       default:
@@ -310,7 +329,7 @@ export default function UrunGruplariModul({
     const items: WorkOrderProductType[] = selectedValues.map((item) => ({
       product_id: Number(item.pk),
       quantity: item.adet ? Number(item.adet) : 1,
-      used_carat: item.used_carat != null ? Number(item.used_carat) : (item.carat != null ? Number(item.carat) : null),
+      used_carat: item.used_carat != null ? Number(item.used_carat) : 0,
       name: (item.name as string) ?? null,
       price:
         item.caratPrice && item.type != "Sade" && item.used_carat
@@ -367,6 +386,7 @@ export default function UrunGruplariModul({
                     </b>
                   )}
                   <b className="mt-1 px-3 py-1 ml-4 dark:text-white text-black">
+                  <span className="text-black dark:text-white">
                     Toplam Maliyet:{" "}
                     <span className="text-green-500">
                       {(() => {
@@ -386,21 +406,41 @@ export default function UrunGruplariModul({
                       })()}{" "}
                       $
                     </span>
+                    </span>
+                    {title == "Sade" && (
+                    <span className="text-black dark:text-white ml-6">
+                    Toplam Fiyat:{" "}
+                    <span className="text-green-500">
+                      {(() => {
+                        const total = selectedValues.reduce((sum, item) => {
+                          return sum + (Number(item.fiyat) || 0);
+                        }, 0);
+
+                        return total
+                          .toFixed(2)
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                      })()}{" "}
+                      $
+                    </span>
+                  </span>
+                  )}
                   </b>     
                   <button
                     type="button"
                     className="btn block w-35 rounded-md px-3 py-1 text-center text-primary font-bold border-2 border-primary"
                     onClick={() => {
                       if (userRoleID === 2) {
-                        const deliveredItems = selectedValues.filter((item) => item.status === "Teslim Alındı");
+                        console.log("üretim müdürü")
+                        const deliveredItems = selectedValues.filter((item) => item.status === "Üretim Onayladı");
                         if (deliveredItems.length > 0) {
                           deliveredItems.forEach((item, index) => {
-                            handleConfirmationOpen(item, index, "Teslim Alındı", deliveredItems);
+                            handleConfirmationOpen(item, index, "Üretim Onayladı", deliveredItems);
                           });
                         } else {
-                          toast.error("Teslim alınan ürün yok!", { position: "top-right" });
+                          toast.error("Onaylanmış ürün yok!", { position: "top-right" });
                         }
                       } else {
+                        console.log("test")
                         const sentItems = selectedValues.filter((item) => item.status === "Onaylandı");
                         if (sentItems.length > 0) {
                           sentItems.forEach((item, index) => {
@@ -494,7 +534,8 @@ export default function UrunGruplariModul({
                         <input
                           min="1"
                           key={index}
-                          className={cn("ml-[-10px] dark:text-white  h-8 w-16 rounded-md border border-black pl-3 text-center",
+                          className={cn("ml-[-10px] dark:text-white  h-8 w-17 rounded-md border border-black pl-3 text-center",
+                          "appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-moz-appearance]:textfield",
                           item.status === "Red Edildi" ? "line-through" : "" 
                         )}
                           type="number"
@@ -503,6 +544,15 @@ export default function UrunGruplariModul({
                             isDisabled ||
                             (item?.status && item?.status !== "Rezervli")
                           }
+                          onWheel={(e) => {
+                            e.preventDefault();
+                          }}
+                          onFocus={(e) => {
+                            e.target.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
+                          }}
+                          onBlur={(e) => {
+                            e.target.removeEventListener('wheel', (e) => e.preventDefault());
+                          }}
                           onChange={(e) => {
                             //maliyet hesabında karat 0 gelme durumu değerlendirelecek. Şimdilik burası ekrana basıyor Ancak toplam maliyete karat 0sa yansımıyor.
                             const selectedIndexNo = selectedValues.findIndex(
@@ -543,7 +593,8 @@ export default function UrunGruplariModul({
                       <input
                         min="1"
                         key={index}
-                        className={cn("p ml-[-12px] h-8 w-16 rounded-md border dark:text-white border-black pl-3 text-center dark:disabled:text-white",
+                        className={cn("p ml-[-12px] h-8 w-17 rounded-md border dark:text-white border-black pl-3 text-center dark:disabled:text-white",
+                          "appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-moz-appearance]:textfield",
                           item.status === "Red Edildi" ? "line-through" : "" 
                         )}
                         type="number"
@@ -553,6 +604,15 @@ export default function UrunGruplariModul({
                           (item?.status && item?.status !== "Rezervli")
                         }
                         value={item.adet}
+                        onWheel={(e) => {
+                          e.preventDefault();
+                        }}
+                        onFocus={(e) => {
+                          e.target.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
+                        }}
+                        onBlur={(e) => {
+                          e.target.removeEventListener('wheel', (e) => e.preventDefault());
+                        }}
                         onChange={(e) => {
                           const selectedIndexNo = selectedValues.findIndex(
                             (a) => a.pk == item.pk,
@@ -584,13 +644,14 @@ export default function UrunGruplariModul({
                       <div
                       key={index}
                       className={`
-                        p ml-[-20px] h-8 w-28 rounded-full text-center text-sm font-bold dark:disabled:text-white
+                        p ml-[-15px] h-8 w-25 lg:w-25 md:w-22 sm:w-20 rounded-full text-center text-sm font-bold whitespace-nowrap dark:disabled:text-white
                         ${item.status === 'Rezervli' ? 'text-blue-500 border-blue-500' :
-                         item.status === 'Onay Bekliyor' ? 'text-orange-500 border-orange-500' :
+                         item.status === 'Onay Bekliyor' ? 'text-orange-500 border-orange-500 text-xs pt-0.5' :
                          item.status === 'Onaylandı' ? 'text-green-500 border-green-500' :
                          item.status === 'Gönderildi' ? 'text-purple-500 border-purple-500' :
                          item.status === 'Red Edildi' ? 'text-red border-red' :
-                         item.status === 'Tesim Edildi' ? 'text-green-500 border-green-500' :
+                         item.status === 'Üretim Onayladı' ? 'text-green-500 border-green-500 text-xs pt-0.5' :
+                         item.status === 'Atly. Gönderildi' ? 'text-purple-500 border-purple-500 text-xs whitespace-pre-wrap' :
                          'text-black-500 border-black-500'}
                         border-2 leading-[2] 
                       `}                    
@@ -598,10 +659,53 @@ export default function UrunGruplariModul({
                       {item.status}
                     </div>
                     );
+                  } else if (key == "fiyat") {
+                    return (
+                      <div key={index} className="relative w-22 lg:w-22 md:w-16 sm:w-16 lg:ml-[-14px] md:ml-[-10px]">
+                      <input
+                        min="0"
+                        className={cn(
+                          "p h-8 w-full border-0 border-b rounded-none border-black bg-transparent dark:text-white text-center",
+                          "dark:disabled:text-white focus:outline-none focus:ring-0",
+                          "appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-moz-appearance]:textfield",
+                          item.status === "Red Edildi" ? "line-through" : ""
+                        )}
+                        type="text" 
+                        disabled={
+                          isDisabled || (item?.status && item?.status !== "Rezervli")
+                        }
+                        value={item.fiyat}
+                        onChange={(e) => {
+                          let value = e.target.value;
+                          if (value.includes(',')) {
+                            value = value.replace(',', '.');
+                          }
+                          if (!/^\d*\.?\d{0,2}$/.test(value)) {
+                            return;
+                          }
+                    
+                          const selectedIndexNo = selectedValues.findIndex(
+                            (a) => a.pk == item.pk
+                          );
+                          const newItems = selectedValues;
+                          const changedItem = newItems[selectedIndexNo];
+                          changedItem["fiyat"] = value;
+                    
+                          setSelectedValues((prev) => [
+                            ...prev.slice(0, selectedIndexNo),
+                            changedItem,
+                            ...prev.slice(selectedIndexNo + 1, newItems.length),
+                          ]);
+                        }}
+                      />
+                      <span className="absolute right-1 top-1/2 -translate-y-1/2 text-black dark:text-white text-sm">$</span>
+                    </div>
+                    
+                  );
                   } else {
                     return (
                       <div className={cn(
-                        "dark:text-white",
+                        "dark:text-white lg:text-base md:text-xs sm:text-xs",
                         item.status === "Red Edildi" ? "line-through" : "" 
                       )}
                       key={index}>
@@ -611,10 +715,10 @@ export default function UrunGruplariModul({
                   }
                 }
               })}
-           <div className="flex items-center justify-left gap-4 dark:text-white">
+           <div className="flex items-center justify-left gap-4 ml-2 lg:ml-2 md:ml-3 sm:ml-3 dark:text-white">
               {urunData ? (
                 <>
-                {item.status !== "Red Edildi" && item.status !== "Teslim Edildi" ? (
+              {item.status !== "Red Edildi" && item.status !== "Atly. Gönderildi" ? (
                 <>
                   <img
                     src={
@@ -624,7 +728,7 @@ export default function UrunGruplariModul({
                         ? "/images/icon/confirmation.svg"
                         : item.status === "Onaylandı"
                         ? "/images/icon/send.svg"
-                        : item.status === "Teslim Edildi"
+                        : item.status === "Gönderildi"
                         ? "/images/icon/approval.svg"
                         : "/images/icon/confirmation.svg"
                     }

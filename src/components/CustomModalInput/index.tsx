@@ -3,7 +3,7 @@ import { SeciliUrunType } from "../IsEmirleri/UrunGruplariModul";
 import React from "react";
 import { CustomProps } from "../../types/CustomUI.Types";
 import { formatToCurrency } from "@/utils";
-
+import { toast } from "react-toastify";
 
 const CustomModalInput = React.forwardRef<HTMLInputElement, CustomProps>(
   (
@@ -61,11 +61,16 @@ const CustomModalInput = React.forwardRef<HTMLInputElement, CustomProps>(
         disabled={!condition}
         className="block w-20 border border-primary px-2 py-1"
         onChange={(e) =>{
-          const newValue = e.target.value;
           if (name === "used_carat") {
-            setCaratValue(newValue);
+            if (item?.properties?.remaining_carat && e.target.value > item?.properties?.remaining_carat) {
+              toast.error(`Girdiğiniz karat miktarı ${item.properties.remaining_carat} ile sınırlıdır!`, {
+                position: "top-right",
+              });
+              e.target.value = item.properties.remaining_carat.toString();
+            }
+            setCaratValue(e.target.value);
           } else if (name === "adet") {
-            setAdetValue(newValue);
+            setAdetValue(e.target.value);
           }
         }}
         value={name === "used_carat" ? caratValue : adetValue} 
