@@ -150,8 +150,6 @@ export default function UrunGruplariModul({
       
 
       const workOrderProductIds = items && items.length > 0  ? items.map(item => item.id) : [updatedValues[indexForConfirmation].id];
-      console.log(newStatus)
-      console.log(updatedValues[indexForConfirmation])
       if (newStatus) {
       const newBackendStatus = reverseStatusMap[String(newStatus)];
       PostWorkOderUpdateStatus({
