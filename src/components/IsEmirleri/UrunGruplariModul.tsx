@@ -60,29 +60,20 @@ export default function UrunGruplariModul({
     (title === "Renkli Taş" && ![2, 7].includes(userRoleID ?? -1)) ||
     (title === "Sade" && ![2, 1].includes(userRoleID ?? -1))
   );
-
   const isButtonDisabled = (item: SeciliUrunType) => {
-    if (title === "Pırlanta") {
-      if (item.status === "Rezervli" || item.status === "Gönderildi") {
-        return userRoleID !== 2;
-      }
-      return userRoleID !== 8;
+    const statusCondition = item.status === "Rezervli" || item.status === "Gönderildi" || item.status === "Üretim Onayladı";
+    const roleMap: { [key: string]: number} = {
+      "Pırlanta": 8,
+      "Renkli Taş": 7,
+      "Sade": 1
+    };
+  
+    if (statusCondition) {
+      return userRoleID !== 2;
     }
-    if (title === "Renkli Taş") {
-      if (item.status === "Rezervli" || item.status === "Gönderildi") {
-        return userRoleID !== 2;
-      }
-      return userRoleID !== 7;
-    }
-    if (title === "Sade") {
-      if (item.status === "Rezervli" || item.status === "Gönderildi") {
-        return userRoleID !== 2;
-      }
-      return userRoleID !== 1;
-    }
-    return true; 
+  
+    return userRoleID !== roleMap[title] && title in roleMap;
   };
-
 
   const handleConfirmationOpen = (item: SeciliUrunType, index: number, newStatus?: string, items?: SeciliUrunType[]) => {
     setEditableUrun(newStatus ? { ...item, status: newStatus } : item);
@@ -98,78 +89,92 @@ export default function UrunGruplariModul({
     }
   };
 
-  const statusMap: { [key: string]: string } = {
-    PENDING: "Onay Bekliyor",
-    RESERVED: "Rezervli",
-    CANCELLED: "Red Edildi",
-    ACCEPTED: "Onaylandı",
-    SENT: "Gönderildi",
-    PRODUCTION_ACCEPTED : "Üretim Onayladı",
-    SENT_TO_WORKSHOP  : "Atly. Gönderildi",
+  const statusDetailsMap : { 
+    [key: string]: 
+    { 
+      className: string,
+      icon: string, 
+      name: string,
+      newStatus: string, 
+    } 
+  } = {
+    CANCELLED: {
+      className: "text-red border-red",
+      icon: "/images/icon/redTrash.svg",
+      name: "Red Edildi",
+      newStatus: "CANCELLED"
+    },
+    RESERVED: {
+      className: "text-blue-500 border-blue-500",
+      icon: "/images/icon/sendToConfirmation.svg",
+      name: "Rezervli",
+      newStatus: "PENDING"
+    },
+    PENDING: {
+      className: "text-orange-500 border-orange-500 text-xs pt-0.5",
+      icon: "/images/icon/confirmation.svg",
+      name: "Onay Bekliyor",
+      newStatus: "ACCEPTED"
+    },
+    ACCEPTED: {
+      className: "text-green-500 border-green-500",
+      icon: "/images/icon/send.svg",
+      name: "Onaylandı",
+      newStatus: "SENT"
+    },
+    SENT: {
+      className: "text-purple-500 border-purple-500",
+      icon: '/images/icon/approval.svg',
+      name: 'Gönderildi',
+      newStatus: "PRODUCTION_ACCEPTED"
+    },
+    PRODUCTION_ACCEPTED: {
+      className: "text-green-500 border-green-500 text-xs pt-0.5",
+      icon: "/images/icon/approval.svg",
+      name: "Üretim Onayladı",
+      newStatus: "SENT_TO_WORKSHOP"
+    },
+    SENT_TO_WORKSHOP: {
+      className: "text-purple-500 border-purple-500 text-xs whitespace-pre-wrap",
+      icon: "/images/icon/sendToConfirmation.svg",
+      name: "Atly. Gönderildi",
+      newStatus: ""
+    },
   };
 
-  const reverseStatusMap = Object.fromEntries(
-    Object.entries(statusMap).map(([key, value]) => [value, key])
-  );
-
   const handleConfirmation = (cirak?: CirakType, tagetLocation?:Number, items?:SeciliUrunType[]) => {
-
-    let userGiving;
-    let targetUser;
-
     if (indexForConfirmation !== null) {
+      let newStatus: string | "";
+      let userGiving = null;
+      let targetUser = null;
+
       const updatedValues = [...selectedValues];
-      let newStatus: string | undefined;
-      const currentStatus = items && items.length > 0 ? items[0].status : updatedValues[indexForConfirmation].status;
-
-      if (editableUrun.status === "Red Edildi") {
-        newStatus = "Red Edildi";
-        targetUser = kasa;
-        userGiving = currentStatus === 'Gönderildi' ? 3 : kasa;
-      } else if (currentStatus === 'Rezervli') {
-        newStatus = 'Onay Bekliyor';
-        userGiving = kasa;
-        targetUser = kasa;
-      } else if (currentStatus === 'Onay Bekliyor') {
-        newStatus = 'Onaylandı';
-        userGiving = kasa;
-        targetUser = kasa;
-      } else if (currentStatus === 'Onaylandı') {
-        newStatus = 'Gönderildi';
-        userGiving = kasa;
-        targetUser = 2;
-      } else if (currentStatus === 'Gönderildi') {
-        newStatus = 'Üretim Onayladı';
-        userGiving = 2;
-        targetUser = 2;
-      } else if (currentStatus === 'Üretim Onayladı') {
-        newStatus = 'Atly. Gönderildi';
-        userGiving = 2;
-        targetUser = Number(tagetLocation);
-      }
-      
-
       const workOrderProductIds = items && items.length > 0  ? items.map(item => item.id) : [updatedValues[indexForConfirmation].id];
-      if (newStatus) {
-      const newBackendStatus = reverseStatusMap[String(newStatus)];
-      PostWorkOderUpdateStatus({
-        work_order_product_ids: workOrderProductIds.map(id => Number(id)),
-        status: newBackendStatus,
-        cirak: cirak?.id ? Number(cirak.id) : null,
-        user_giving: Number(userGiving),
-        target_user: Number(targetUser)
-      }).then((resp) => {
-        if (resp?.success) {
-          if (items && items.length > 0) {
-            items.forEach(item => {
-              const index = updatedValues.findIndex(u => u.id === item.id);
-              if (index !== -1) {
-                updatedValues[index].status = newStatus; 
-              }
-            });
-          } else {
-            updatedValues[indexForConfirmation].status = newStatus; 
-          }
+      const currentStatus = editableUrun.status === "Red Edildi" ? "Red Edildi" :
+        (items && items.length > 0 ? items[0].status : updatedValues[indexForConfirmation].status);
+      const statusKey = Object.keys(statusDetailsMap).find(
+        key => statusDetailsMap[key].name === currentStatus
+      );
+      if (statusKey) {
+        newStatus = statusDetailsMap[statusKey].newStatus;
+        PostWorkOderUpdateStatus({
+          work_order_product_ids: workOrderProductIds.map(id => Number(id)),
+          status: newStatus,
+          pupil_user_id: cirak?.id ? Number(cirak.id) : null,
+          from_user_id: Number(userGiving),
+          target_user_id: Number(targetUser)
+        }).then((resp) => {
+          if (resp?.success) {
+            if (items && items.length > 0) {
+              items.forEach(item => {
+                const index = updatedValues.findIndex(u => u.id === item.id);
+                if (index !== -1) {
+                  updatedValues[index].status = statusDetailsMap[newStatus].name; 
+                }
+              });
+            } else {
+              updatedValues[indexForConfirmation].status = statusDetailsMap[newStatus].name; 
+            }
           setSelectedValues(updatedValues);
         } else {
           return toast.error("Ürünün durumunu değiştirmeden önce kaydetmeniz gerekmektedir!", {
@@ -248,7 +253,7 @@ export default function UrunGruplariModul({
             maliyet: `${formatToCurrency(item.cost)} $`,
             fiyat: item.cost || 0,
             nerede: item.user_group_name,
-            status: statusMap[item.status] || item.status,
+            status: statusDetailsMap[item.status]?.name || item.status,
             type: "Sade",
             id:item.id
           }));
@@ -263,14 +268,14 @@ export default function UrunGruplariModul({
             name: item.product.properties.renkliTas,
             kesim: item.product.properties.kesim,
             used_carat: item.used_carat ,
-            carat: item.used_carat ,
+            carat: item.product.properties.carat ,
             renk: item.product.properties.renk ,
             adet: item.quantity ,
             menstrual_status: item.product.properties.menstrual_status,
             maliyet: `${formatToCurrency(item.cost)} $`,
             firstPrice: item.cost,
             nerede: item.user_group_name,
-            status: statusMap[item.status] || item.status,
+            status: statusDetailsMap[item.status]?.name || item.status,
             caratPrice:item.product.product_cost.pricePerCarat,
             type:item.product.type,
             id:item.id,
@@ -286,7 +291,7 @@ export default function UrunGruplariModul({
             pk:item.product.pk,
             code: item.product.code,
             kesim: item.product.properties.kesim ,
-            carat: item.used_carat ,
+            carat: item.product.properties.carat  ,
             used_carat: item.used_carat ,
             berraklik: item.product.properties.berraklik ,
             renk: item.product.properties.renk ,
@@ -295,7 +300,7 @@ export default function UrunGruplariModul({
             maliyet: `${formatToCurrency(item.cost)} $`,
             firstPrice: item.cost,
             nerede: item.user_group_name,
-            status: statusMap[item.status] || item.status,
+            status: statusDetailsMap[item.status]?.name || item.status,
             caratPrice:item.product.product_cost.pricePerCarat,
             type:item.product.type,
             id:item.id,
@@ -321,6 +326,7 @@ export default function UrunGruplariModul({
     setSelectedValues(pirlantaUrunler); 
   }
 }, [urunData]);
+
   useEffect(() => {
     const items: WorkOrderProductType[] = selectedValues.map((item) => ({
       product_id: Number(item.pk),
@@ -548,25 +554,26 @@ export default function UrunGruplariModul({
                             e.target.removeEventListener('wheel', (e) => e.preventDefault());
                           }}
                           onChange={(e) => {
-                            //maliyet hesabında karat 0 gelme durumu değerlendirelecek. Şimdilik burası ekrana basıyor Ancak toplam maliyete karat 0sa yansımıyor.
                             const selectedIndexNo = selectedValues.findIndex(
                               (a) => a.pk == item.pk,
                             );
                             const newItems = selectedValues;
                             const changedItem = newItems[selectedIndexNo];
+                            let value = e.target.value;
 
-                            if (item.remaining_carat && e.target.value > item.remaining_carat) {
+                            value = value.replace(/(\.\d{2})\d+/g, '$1');
+                            if (item.remaining_carat && value > item.remaining_carat) {
                               toast.error(`Girdiğiniz karat miktarı ${item.remaining_carat} ile sınırlıdır!`, {
                                 position: "top-right",
                               });
-                              e.target.value = item.remaining_carat.toString();
+                              value= item.remaining_carat.toString();
                             }
 
                             const newMaliyet =
-                              Number(e.target.value) *
+                              Number(value) *
                               (Number(changedItem["caratPrice"]) ? Number(changedItem["caratPrice"]) : Number(changedItem["firstPrice"])) 
 
-                            changedItem["used_carat"] = e.target.value;
+                            changedItem["used_carat"] = value;
                             changedItem["maliyet"] =
 
                               `${formatToCurrency(newMaliyet)} $`;
@@ -583,46 +590,62 @@ export default function UrunGruplariModul({
                       );
                     }
                   } else if (key == "adet") {
-                    return (
-                      <input
-                        min="1"
-                        key={index}
-                        className={cn("p ml-[-12px] h-8 w-17 rounded-md border dark:text-white border-black pl-3 text-center dark:disabled:text-white",
-                          "appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-moz-appearance]:textfield",
-                          item.status === "Red Edildi" ? "line-through" : "" 
-                        )}
-                        type="number"
-                        disabled={
-                          item?.menstrual_status == "Sertifikalı" ||
-                          isDisabled  ||
-                          (item?.status && item?.status !== "Rezervli")
-                        }
-                        value={item.adet}
-                        onWheel={(e) => {
-                          e.preventDefault();
-                        }}
-                        onFocus={(e) => {
-                          e.target.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
-                        }}
-                        onBlur={(e) => {
-                          e.target.removeEventListener('wheel', (e) => e.preventDefault());
-                        }}
-                        onChange={(e) => {
-                          const selectedIndexNo = selectedValues.findIndex(
-                            (a) => a.pk == item.pk,
-                          );
-                          const newItems = selectedValues;
-                          const changedItem = newItems[selectedIndexNo];
-                          changedItem["adet"] = e.target.value;
-                          
-                          setSelectedValues((prev) => [
-                            ...prev.slice(0, selectedIndexNo),
-                            changedItem,
-                            ...prev.slice(selectedIndexNo + 1, newItems.length),
-                          ]);
-                        }}
-                      />
-                    );
+                    if (item.menstrual_status == "Sertifikalı") {
+                      return (
+                        <div className={cn("dark:text-white",
+                        item.status === "Red Edildi" ? "line-through" : ""
+                      )}
+                        key={index}>
+                          {item.adet}
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <input
+                          min="1"
+                          key={index}
+                          className={cn("p ml-[-12px] h-8 w-17 rounded-md border dark:text-white border-black pl-3 text-center dark:disabled:text-white",
+                            "appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-moz-appearance]:textfield",
+                            item.status === "Red Edildi" ? "line-through" : "" 
+                          )}
+                          type="number"
+                          disabled={
+                            item?.menstrual_status == "Sertifikalı" ||
+                            isDisabled  ||
+                            (item?.status && item?.status !== "Rezervli")
+                          }
+                          value={item.adet}
+                          onKeyDown={(e) => {
+                            if (e.key === '.') {
+                              e.preventDefault();
+                            }
+                          }}
+                          onWheel={(e) => {
+                            e.preventDefault();
+                          }}
+                          onFocus={(e) => {
+                            e.target.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
+                          }}
+                          onBlur={(e) => {
+                            e.target.removeEventListener('wheel', (e) => e.preventDefault());
+                          }}
+                          onChange={(e) => {
+                            const selectedIndexNo = selectedValues.findIndex(
+                              (a) => a.pk == item.pk,
+                            );
+                            const newItems = selectedValues;
+                            const changedItem = newItems[selectedIndexNo];
+                            changedItem["adet"] = e.target.value;
+                            
+                            setSelectedValues((prev) => [
+                              ...prev.slice(0, selectedIndexNo),
+                              changedItem,
+                              ...prev.slice(selectedIndexNo + 1, newItems.length),
+                            ]);
+                          }}
+                        />
+                      );
+                    }
                   } else if (key == "resim") {
                     return (
                       <Image
@@ -639,14 +662,7 @@ export default function UrunGruplariModul({
                       key={index}
                       className={`
                         p ml-[-15px] h-8 w-25 lg:w-25 md:w-22 sm:w-20 rounded-full text-center text-sm font-bold whitespace-nowrap dark:disabled:text-white
-                        ${item.status === 'Rezervli' ? 'text-blue-500 border-blue-500' :
-                         item.status === 'Onay Bekliyor' ? 'text-orange-500 border-orange-500 text-xs pt-0.5' :
-                         item.status === 'Onaylandı' ? 'text-green-500 border-green-500' :
-                         item.status === 'Gönderildi' ? 'text-purple-500 border-purple-500' :
-                         item.status === 'Red Edildi' ? 'text-red border-red' :
-                         item.status === 'Üretim Onayladı' ? 'text-green-500 border-green-500 text-xs pt-0.5' :
-                         item.status === 'Atly. Gönderildi' ? 'text-purple-500 border-purple-500 text-xs whitespace-pre-wrap' :
-                         'text-black-500 border-black-500'}
+                        ${Object.values(statusDetailsMap).find(detail => detail.name === item.status)?.className}
                         border-2 leading-[2] 
                       `}                    
                       >
@@ -665,9 +681,7 @@ export default function UrunGruplariModul({
                           item.status === "Red Edildi" ? "line-through" : ""
                         )}
                         type="text" 
-                        disabled={
-                          isDisabled || (item?.status && item?.status !== "Rezervli")
-                        }
+                        disabled={!(userRoleID === 1 && item?.status === "Onay Bekliyor")}
                         value={item.fiyat}
                         onChange={(e) => {
                           let value = e.target.value;
@@ -713,19 +727,10 @@ export default function UrunGruplariModul({
               {urunData ? (
                 <>
               {item.status !== "Red Edildi" && item.status !== "Atly. Gönderildi" ? (
+                
                 <>
                   <img
-                    src={
-                      item.status === "Rezervli"
-                        ? "/images/icon/sendToConfirmation.svg"
-                        : item.status === "Onay bekliyor"
-                        ? "/images/icon/confirmation.svg"
-                        : item.status === "Onaylandı"
-                        ? "/images/icon/send.svg"
-                        : item.status === "Gönderildi"
-                        ? "/images/icon/approval.svg"
-                        : "/images/icon/confirmation.svg"
-                    }
+                    src={Object.values(statusDetailsMap).find(detail => detail.name === item.status)?.icon}
                     alt="Change Status"
                     className={`cursor-pointer w-4 h-4 ${isButtonDisabled(item) ? 'opacity-50 pointer-events-none' : ''}`}
                     onClick={() => {

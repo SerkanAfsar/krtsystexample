@@ -310,19 +310,19 @@ export const GetWorkOderModels = async (): Promise<
 export const PostWorkOderUpdateStatus = async ({
   work_order_product_ids,
   status,
-  cirak,
-  user_giving,
-  target_user
+  pupil_user_id,
+  from_user_id,
+  target_user_id
 }: {
   work_order_product_ids: Array<number>;
   status: string;
-  cirak: number | null;
-  user_giving: number,
-  target_user: number
+  pupil_user_id: number | null;
+  from_user_id: number,
+  target_user_id: number
 }): Promise<ResponseResult<any>> => {
   const result = await BaseService({
     url: "product/update-work-order-product-status/",
-    bodyData: { work_order_product_ids, status, cirak, user_giving, target_user },
+    bodyData: { work_order_product_ids, status, pupil_user_id, from_user_id, target_user_id },
     method: "POST",
     hasToken: true,
   });

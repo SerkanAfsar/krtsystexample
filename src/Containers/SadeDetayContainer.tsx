@@ -173,7 +173,6 @@ export default function SadeDetayContainer({
   );
 
   useEffect(() => {
-    console.log()
     if (data.total_cost) {
       const totalCost = data.total_cost
       setData((prev: any) => ({ ...prev, totalCost: `${formatToCurrency(totalCost)} $`, }));
