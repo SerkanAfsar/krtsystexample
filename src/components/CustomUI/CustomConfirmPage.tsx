@@ -17,7 +17,7 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, on
   const renderCirakSecimi = () => (
     <div className="w-3/4 mt-3 flex flex-col items-center justify-center">
       <label htmlFor="cirakSecimi" className="items-center text-sm font-medium text-gray-700">
-        Lütfen göndereceğiniz çırağı seçiniz
+        Göndereceğiniz çırağı seçiniz
       </label>
       <select
         className="w-full mt-1 p-2 border border-gray-300 rounded-md"
@@ -92,14 +92,14 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, on
             <strong>{codes}</strong> kodlu ürünleri üretim müdürüne göndermek istediğinize emin misiniz?
           </>
         );
-        buttonText = 'Tamam';
+        buttonText = 'Gönder';
       } else {
         message = (
           <>
             <strong>{item.code}</strong> kodlu ürünü üretim müdürüne göndermek istediğinize emin misiniz?
           </>
         );      
-        buttonText = 'Tamam';
+        buttonText = 'Gönder';
       }
       cirakSecimi = renderCirakSecimi()
       break;
@@ -111,20 +111,20 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, on
               <strong>{codes}</strong> kodlu ürünleri göndermek istediğinize emin misiniz?
             </>
           );
-          buttonText = 'Tamam';
+          buttonText = 'Gönder';
         } else {
           message = (
             <>
               <strong>{item.code}</strong> kodlu ürünü göndermek istediğinize emin misiniz?
             </>
           );      
-          buttonText = 'Tamam';
+          buttonText = 'Gönder';
         }
         cirakSecimi = renderCirakSecimi()
         targetLocationSecimi = (
           <div className="w-3/4 mt-3 flex flex-col items-center justify-center">
             <label htmlFor="targetLocationSecimi" className="items-center text-sm font-medium text-gray-700">
-              Lütfen gideceği birimi seçiniz
+              Gideceği atölyeyi seçiniz
             </label>
             <select
               className="w-full mt-1 p-2 border border-gray-300 rounded-md"
@@ -144,7 +144,7 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, on
             <strong>{item.code}</strong> kodlu ürünü iptal etmek istediğinize emin misiniz?
           </>
         );
-        buttonText = 'İptal Et';
+        buttonText = 'Evet';
         break;
         case 'Gönderildi':
           message = (
@@ -160,29 +160,21 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, on
   }
 
   return  (
-    <div className="fixed inset-0 z-999 flex items-center justify-center bg-black bg-opacity-80">
-      <div className="flex flex-col items-center justify-between h-[30%] w-[30%] animate-modalAnimation rounded-lg bg-white p-3 dark:bg-graydark relative">
-        <div className="flex flex-col items-center justify-center w-full">
-          <p className="mt-2">{message}</p>
-        </div>
-        {cirakSecimi}
-        {targetLocationSecimi}
-        <div className="flex gap-4 mt-auto">
-          <button
-            onClick={handleConfirm}
-            className="btn px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-          >
-            {buttonText}
-          </button>
-          <button
-            onClick={onCancel}
-            className="btn px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-          >
-            Vazgeç
-          </button>
-        </div>
-      </div>
+<div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4">
+  <div className="flex flex-col items-center justify-center w-full max-w-md p-4 bg-white rounded-lg shadow-md">
+    <p className="text-center">{message}</p>
+    {cirakSecimi && <div className="flex justify-center mt-2 w-full">{cirakSecimi}</div>}
+    {targetLocationSecimi && <div className="flex justify-center mt-2 w-full">{targetLocationSecimi}</div>}
+    <div className="flex gap-2 mt-4 w-full">
+    <button onClick={onCancel} className="flex-1 bg-blue-500 text-white py-2 rounded-md">
+        Vazgeç
+      </button>
+      <button onClick={handleConfirm} className="flex-1 bg-blue-500 text-white py-2 rounded-md">
+        {buttonText}
+      </button>
     </div>
+  </div>
+</div>
   );
 };
 
