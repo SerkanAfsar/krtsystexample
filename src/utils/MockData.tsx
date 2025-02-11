@@ -1315,11 +1315,10 @@ export const AddStoneSections: Array<FormSectionType> = [
       {
         name: "poPrice",
         type: "money",
-        title: "PO",
+        title: "Çarpan(PO)",
         placeholder: "PO...",
         required: false,
         requiredMessage: "PO Fiyatı Bırakılamaz",
-        rightIcon: "$",
         colStart: "4",
         colEnd: "5",
         disabled: true,
@@ -1327,6 +1326,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         // disabledRelative: "Sertifikalı",
         span: 1,
         isConstant: true,
+        value:"1.10"
       },
       {
         name: "total_cost",

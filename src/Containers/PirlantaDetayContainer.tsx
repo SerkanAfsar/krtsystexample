@@ -206,7 +206,7 @@ const PirlantaDetayContainer = ({
           ? total_costOne.toFixed(2)
           : (Number(total_costOne) * 1.1).toFixed(2);
 
-      const poPrice = (Number(pricePerCarat) * Number(value.carat)).toFixed(2);
+      //const poPrice = (Number(pricePerCarat) * Number(value.carat)).toFixed(2);
       return {
         ...value,
         pricePerCarat: Number(pricePerCarat),
@@ -216,7 +216,7 @@ const PirlantaDetayContainer = ({
         toplamKarat: toplamKarat,
         toplamUretimMaliyeti: Number(toplamUretimMaliyeti),
         toplamLotMaliyet: Number(toplamLotMaliyet),
-        poPrice: Number(poPrice),
+        //poPrice: Number(poPrice),
       };
     },
     [data.pricePerCarat, data.menstrual_status, data.iskonto],
