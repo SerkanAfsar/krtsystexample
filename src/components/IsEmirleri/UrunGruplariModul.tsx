@@ -24,7 +24,7 @@ export type UrunGruplariModulType = {
   modalHeaderColumns?: any;
 };
 
-export type CirakType = {
+export type UserType = {
   id: number;
   username: string;
   email: string;
@@ -39,11 +39,13 @@ export default function UrunGruplariModul({
   setValues,
   urunData,
   model,
+  setStatu,
 }: {
   item: UrunGruplariModulType;
   setValues?: any;
   urunData?: any;
   model?: any;
+  setStatu?: any;
 }) {
 
   const [selectedValues, setSelectedValues] = useState<SeciliUrunType[]>([]);
@@ -52,7 +54,6 @@ export default function UrunGruplariModul({
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [indexForConfirmation, setIndexForConfirmation] = useState<number | null>(null);
-  const [kasa, setKasa] = useState<number | null>(null);
   const { user } = useUserStore(); 
   const userRoleID = user?.groups[0]?.id;
   const isDisabled = urunData && (
@@ -80,13 +81,6 @@ export default function UrunGruplariModul({
     setIndexForConfirmation(index);
     setConfirmModalOpen(true);
     setEditableUruns(items || []);
-    if (title === "Renkli Taş") {
-      setKasa(7);
-    } else if (title === "Pırlanta") {
-      setKasa(8);
-    } else if (title === "Sade") {
-      setKasa(9);
-    }
   };
 
   const statusDetailsMap : { 
@@ -96,13 +90,15 @@ export default function UrunGruplariModul({
       icon: string, 
       name: string,
       newStatus: string, 
+      userGiving?: Number, 
     } 
   } = {
     CANCELLED: {
       className: "text-red border-red",
       icon: "/images/icon/redTrash.svg",
       name: "Red Edildi",
-      newStatus: "CANCELLED"
+      newStatus: "CANCELLED",
+      userGiving: Number(user?.id)
     },
     RESERVED: {
       className: "text-blue-500 border-blue-500",
@@ -120,64 +116,56 @@ export default function UrunGruplariModul({
       className: "text-green-500 border-green-500",
       icon: "/images/icon/send.svg",
       name: "Onaylandı",
-      newStatus: "SENT"
+      newStatus: "SENT",
+      userGiving: Number(user?.id)
     },
     SENT: {
       className: "text-purple-500 border-purple-500",
-      icon: '/images/icon/approval.svg',
-      name: 'Gönderildi',
-      newStatus: "PRODUCTION_ACCEPTED"
+      icon: "/images/icon/approval.svg",
+      name: "Gönderildi",
+      newStatus: "PRODUCTION_ACCEPTED",
+      userGiving: Number(user?.id)
     },
     PRODUCTION_ACCEPTED: {
       className: "text-green-500 border-green-500 text-xs pt-0.5",
       icon: "/images/icon/approval.svg",
       name: "Üretim Onayladı",
-      newStatus: "SENT_TO_WORKSHOP"
+      newStatus: "SENT_TO_WORKSHOP",
+      userGiving: Number(user?.id)
     },
     SENT_TO_WORKSHOP: {
       className: "text-purple-500 border-purple-500 text-xs whitespace-pre-wrap",
       icon: "/images/icon/sendToConfirmation.svg",
       name: "Atly. Gönderildi",
-      newStatus: ""
+      newStatus: "",
+      userGiving: Number(user?.id)
     },
   };
 
-  const handleConfirmation = (cirak?: CirakType, tagetLocation?:Number, items?:SeciliUrunType[]) => {
+  const handleConfirmation = (cirak?: UserType, targetUser?:UserType, items?:SeciliUrunType[]) => {
     if (indexForConfirmation !== null) {
-      let newStatus: string | "";
-      let userGiving = null;
-      let targetUser = null;
-
       const updatedValues = [...selectedValues];
       const workOrderProductIds = items && items.length > 0  ? items.map(item => item.id) : [updatedValues[indexForConfirmation].id];
-      const currentStatus = editableUrun.status === "Red Edildi" ? "Red Edildi" :
-        (items && items.length > 0 ? items[0].status : updatedValues[indexForConfirmation].status);
+      const currentStatus = ["Red Edildi", "Geri Gönderildi"].includes(String(editableUrun.status))
+        ? "Red Edildi"
+        : (items && items.length > 0 ? items[0].status : updatedValues[indexForConfirmation].status);
       const statusKey = Object.keys(statusDetailsMap).find(
         key => statusDetailsMap[key].name === currentStatus
       );
+      let newStatus = statusKey ? statusDetailsMap[statusKey]?.newStatus ?? "" : "";
+      let userGiving = statusKey ? statusDetailsMap[statusKey]?.userGiving ?? null : null;
       if (statusKey) {
-        newStatus = statusDetailsMap[statusKey].newStatus;
         PostWorkOderUpdateStatus({
           work_order_product_ids: workOrderProductIds.map(id => Number(id)),
           status: newStatus,
           pupil_user_id: cirak?.id ? Number(cirak.id) : null,
-          from_user_id: Number(userGiving),
-          target_user_id: Number(targetUser)
+          from_user_id: userGiving ? Number(userGiving) : null,
+          target_user_id: currentStatus == "Gönderildi" ? Number(userGiving) : (targetUser?.id ? Number(targetUser.id) : null)
         }).then((resp) => {
           if (resp?.success) {
-            if (items && items.length > 0) {
-              items.forEach(item => {
-                const index = updatedValues.findIndex(u => u.id === item.id);
-                if (index !== -1) {
-                  updatedValues[index].status = statusDetailsMap[newStatus].name; 
-                }
-              });
-            } else {
-              updatedValues[indexForConfirmation].status = statusDetailsMap[newStatus].name; 
-            }
-          setSelectedValues(updatedValues);
+            setStatu((prevStatu: boolean) => !prevStatu);
         } else {
-          return toast.error("Ürünün durumunu değiştirmeden önce kaydetmeniz gerekmektedir!", {
+          return toast.error("Ürünün durumu değiştirilemedi!", {
             position: "top-right",
           });
             }
@@ -746,9 +734,11 @@ export default function UrunGruplariModul({
                     onClick={(e) => {
                       if (!isButtonDisabled(item)) {
                         if (item.status === "Rezervli") {
-                          handleDeleteSingleItem(item)
-                        } else {
+                          handleDeleteSingleItem(item);
+                        } else if (item.status === "Onay Bekliyor" || item.status === "Onaylandı") {
                           handleConfirmationOpen(item, index, "Red Edildi");
+                        } else {
+                          handleConfirmationOpen(item, index, "Geri Gönderildi");
                         }
                       }
                     }}
@@ -795,6 +785,7 @@ export default function UrunGruplariModul({
           items={editableUruns}
           onConfirm={handleConfirmation}
           onCancel={handleCancel}
+          title = {title}
         />      
       )}
     </>

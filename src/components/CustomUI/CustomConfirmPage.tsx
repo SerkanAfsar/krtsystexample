@@ -1,19 +1,58 @@
 import React, { useEffect, useState } from "react";
-import { GetWorkOrderPupils } from "@/Services/WorkOrder.Services";
-import { SeciliUrunType, CirakType } from "@/components/IsEmirleri/UrunGruplariModul"
+import { GetWorkOrderPupils, GetUsersByUserGroups } from "@/Services/WorkOrder.Services";
+import { SeciliUrunType, UserType } from "@/components/IsEmirleri/UrunGruplariModul"
 
 type ConfirmPropsType = {
   isOpen: boolean;
   item: SeciliUrunType; 
   items: SeciliUrunType[]; 
-  onConfirm: (cirak?: CirakType, targetLocation?: number, items?: SeciliUrunType[]) => void;
+  title: string; 
+  onConfirm: (cirak?: UserType, targetLocation?: UserType, items?: SeciliUrunType[]) => void;
   onCancel: () => void;
 };
+const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, title, onConfirm, onCancel }) => {
+  const [ciraklar, setCiraklar] = useState<UserType[]>([]);
+  const [selectedCirak, setSelectedCirak] = useState<UserType | null>(null);
+  const [atolye, setAtolye] = useState<number | null>(4);
+  const [users, setUsers] = useState<UserType[]>([]);
+  const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
+  const groupIdsMap: { [key: string]: number } = {
+    "Pırlanta": 8,
+    "Sade": 1,
+    "Renkli Taş": 7,
+    "default": 0
+  };
+  const statusGroupMap: { [key: string]: number } = {
+    'Onaylandı': 2,
+    'Üretim Onayladı': atolye || 4,
+    'Geri Gönderildi': groupIdsMap[title] || groupIdsMap['default']
+  };
+ 
+  useEffect(() => {
+    if (item.status === 'Onaylandı' || item.status === 'Üretim Onayladı' || item.status === 'Geri Gönderildi') {
+      const fetchData = async () => {
+        if (item.status === 'Onaylandı' || item.status === 'Üretim Onayladı' || item.status === 'Geri Gönderildi') {
+          if (!selectedCirak) {
+            const pupils = await GetWorkOrderPupils();
+            if (pupils?.success) {
+              setCiraklar(pupils.data);
+              setSelectedCirak(pupils.data[0] || null);
+            }
+          }
+        }
+        const groupId = statusGroupMap[item.status];
+        if (groupId !== undefined) {
+          const targets = await GetUsersByUserGroups({ group_ids: [groupId] });
+          setUsers(targets);
+          setSelectedUser(targets[0] || null);
+        }
+      };
+    
+      fetchData();
+    }
+  }, [item.status, atolye]);
 
-const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, onConfirm, onCancel }) => {
-  const [ciraklar, setCiraklar] = useState<CirakType[]>([]);
-  const [selectedCirak, setSelectedCirak] = useState<CirakType | null>(null);
-  const [tagetLocation, setTargetLocation] = useState<number | null>(4);
+
   const renderCirakSecimi = () => (
     <div className="w-3/4 mt-3 flex flex-col items-center justify-center">
       <label htmlFor="cirakSecimi" className="items-center text-sm font-medium text-gray-700">
@@ -35,30 +74,45 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, on
     </div>
   );
 
-  useEffect(() => {
-    if (item.status === 'Onaylandı' || item.status === 'Üretim Onayladı') {
-      const fetchCiraklar = async () => {
-        try {
-          const response = await GetWorkOrderPupils(); 
-          if (response && response.success && response.data) {
-            setCiraklar(response.data);
-            setSelectedCirak(response.data[0])
-          }
-          else if (response && !response.success) {
-            console.error('Data fetch failed cirak list'); 
-          }
-          
-        } catch (error) {
-          console.error('Error fetching pupils:', error);
-        }
-      };
-  
-      fetchCiraklar(); 
-    }
-  }, [item.status]);
+  const renderUserSelection = () => (
+    <div className="w-3/4 mt-3 flex flex-col items-center justify-center">
+      <label htmlFor="userSelection" className="text-sm font-medium text-gray-700">
+      Gönderilecek Kişiyi Seçiniz
+      </label>
+      <select
+        id="userSelection"
+        className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+        onChange={(e) => {
+          const selected = users.find(c => c.id === Number(e.target.value));
+          setSelectedUser(selected || null);
+        }}
+      >
+        {users.map((user) => (
+          <option key={user.id} value={user.id}>
+            {user.username}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+
+  const renderWorkshopSelection = () => (
+    <div className="w-3/4 mt-3 flex flex-col items-center justify-center">
+      <label className="text-sm font-medium text-gray-700">Gideceği Atölyeyi Seçiniz</label>
+      <select
+        className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+        value={atolye || 4}
+        onChange={(e) => setAtolye(Number(e.target.value))}
+      >
+        <option value={4}>Mıhlayıcı</option>
+        <option value={5}>Cilacı</option>
+        <option value={1}>Sadekar</option>
+      </select>
+    </div>
+  );
 
   const handleConfirm = () => {
-    onConfirm(selectedCirak || undefined, tagetLocation || undefined, items ? items : undefined);
+    onConfirm(selectedCirak || undefined, selectedUser || undefined, items ? items : undefined);
   };
 
   if (!isOpen) return null;
@@ -102,6 +156,7 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, on
         buttonText = 'Gönder';
       }
       cirakSecimi = renderCirakSecimi()
+      targetLocationSecimi = renderUserSelection(); 
       break;
       case 'Üretim Onayladı':
         if (items.length > 1) {
@@ -122,20 +177,10 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, on
         }
         cirakSecimi = renderCirakSecimi()
         targetLocationSecimi = (
-          <div className="w-3/4 mt-3 flex flex-col items-center justify-center">
-            <label htmlFor="targetLocationSecimi" className="items-center text-sm font-medium text-gray-700">
-              Gideceği atölyeyi seçiniz
-            </label>
-            <select
-              className="w-full mt-1 p-2 border border-gray-300 rounded-md"
-              value={tagetLocation || 4}
-              onChange={(e) => setTargetLocation(Number(e.target.value))}
-            >
-              <option value={4}>Mıhlayıcı</option>
-              <option value={5}>Cilacı</option>
-              <option value={1}>Sadekar</option>
-            </select>
-          </div>
+          <div className="w-full flex flex-col items-center justify-center">
+          {renderWorkshopSelection()} 
+          {renderUserSelection()} 
+        </div>
         );
         break;
       case 'Red Edildi':
@@ -146,14 +191,24 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, on
         );
         buttonText = 'Evet';
         break;
-        case 'Gönderildi':
-          message = (
-            <>
-              <strong>{item.code}</strong> kodlu ürünü teslim aldığınıza emin misiniz??
-            </>
-          );
-          buttonText = 'Onayla';
-          break;
+      case 'Gönderildi':
+        message = (
+          <>
+            <strong>{item.code}</strong> kodlu ürünü teslim aldığınıza emin misiniz?
+          </>
+        );
+        buttonText = 'Onayla';
+        break;
+      case 'Geri Gönderildi':
+        message = (
+          <>
+            <strong>{item.code}</strong> kodlu ürünü geri göndermek istediğinize emin misiniz?
+          </>
+        );
+        buttonText = 'Evet';
+        cirakSecimi = renderCirakSecimi()
+        targetLocationSecimi = renderUserSelection()
+        break;
     default:
       message = 'Bilinmeyen bir durum';
       buttonText = 'Tamam';
