@@ -112,6 +112,7 @@ export default function IsEmriDuzenleContainer ({
   const [model, setModel] = useState<string>(workOrderData.model_type_name || ""); 
   const [modelType, setModelType] = useState<number>(workOrderData.model_type || 0); 
   const [urunData, setUrunData] = useState<any>([]);
+  const [statu, setStatu] = useState<boolean>(false);
   const [values, setValues] = useState<ProductItemsType[]>(
     UrunGruplari.map((item) => {
       return {
@@ -157,7 +158,7 @@ export default function IsEmriDuzenleContainer ({
 
   useEffect(() => {
     fetchWorkOrderProducts(workOrderData.id);
-  }, [workOrderData.id]);
+  }, [workOrderData.id, statu]);
 
   useEffect(() => {
     const resultCode = MucevherCode(pirlantaArr, sadeArr, renkliTasArr);
@@ -322,7 +323,7 @@ export default function IsEmriDuzenleContainer ({
               key={index}
               className="rounded-lg border border-stroke bg-white p-4 shadow-md dark:border-strokedark dark:bg-boxdark"
             >
-              <UrunGruplariModul setValues={setValues} item={item} urunData={urunData} model={model}/>
+              <UrunGruplariModul setValues={setValues} setStatu={setStatu} item={item} urunData={urunData} model={model}/>
             </div>
           ))}
         </div>

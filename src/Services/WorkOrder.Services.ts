@@ -317,8 +317,8 @@ export const PostWorkOderUpdateStatus = async ({
   work_order_product_ids: Array<number>;
   status: string;
   pupil_user_id: number | null;
-  from_user_id: number,
-  target_user_id: number
+  from_user_id: number | null,
+  target_user_id: number | null
 }): Promise<ResponseResult<any>> => {
   const result = await BaseService({
     url: "product/update-work-order-product-status/",
@@ -339,6 +339,7 @@ export const GetWorkOrderPupils = async () => {
       method: "GET",
       hasToken: true,
     });
+    
     return result as ResponseResult<any>;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -358,4 +359,19 @@ export const DeleteWorkOrderSingleItem = async ({
   });
   
   return result as ResponseResult<any>;
+};
+
+export const GetUsersByUserGroups = async ({
+  group_ids,
+}: {
+  group_ids: Array<number>;
+}): Promise<any[]> => {  
+  const result = await BaseService({
+    url: "user/groups/",
+    bodyData: { group_ids },
+    method: "POST",
+    hasToken: true,
+  });
+
+  return result; 
 };
