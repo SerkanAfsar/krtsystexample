@@ -10,6 +10,8 @@ export type WorkOrderProductType = {
   modelTuru?: string | null;
   renk?: string | null;
   name?: string | null;
+  status?: string | number | null; 
+  current_cost?: number | null; 
 };
 
 export type ProductItemsType = {
@@ -24,11 +26,13 @@ export type AddWorkOrderType = {
   description: string;
   workorder_products: any[];
   product_temp_code: string;
+  current_cost?: string | null;
 };
 
 export type UpdateWorkOrderType = {
   model_type: number,
-  total_product_cost : string,
+  total_product_cost? : string,
+  current_cost : string,
   gender : string,
   description: string;
   workorder_products: any[];
@@ -76,8 +80,10 @@ export type WorkOrderType = {
   labor_cost: number | null;
   total_cost: number | null;
   gender: string;
-  model_type_name: string
-  model_type: number
+  model_type_name: string;
+  model_type: number;
+  total_labor_cost?: number;
+  current_cost ?: string;
 };
 
 export type WorkOrderLogType = {

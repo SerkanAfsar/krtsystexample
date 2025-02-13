@@ -61,7 +61,7 @@ export default function useSadeModalData({
       };
 
       if (isDuzenleContainer) {
-        item.fiyat = 0; 
+        item.fiyat = item.maliyet; 
         item.nerede = "Sade Kasa"; 
         item.status = "Rezervli"; 
       }

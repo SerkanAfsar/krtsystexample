@@ -69,6 +69,11 @@ export default function UrunGruplariModul({
       "Sade": 1
     };
   
+    if (item.status === "Rezervli") {
+      if (userRoleID === 2) return false;
+      return userRoleID !== roleMap[title] && title in roleMap;
+    }
+  
     if (statusCondition) {
       return userRoleID !== 2;
     }
@@ -239,7 +244,7 @@ export default function UrunGruplariModul({
             model: item.product.properties.modelTuru,
             modelTuru: item.product.properties.modelTuru,
             maliyet: `${formatToCurrency(item.cost)} $`,
-            fiyat: item.cost || 0,
+            fiyat: item.current_cost || item.cost,
             nerede: item.user_group_name,
             status: statusDetailsMap[item.status]?.name || item.status,
             type: "Sade",
@@ -330,6 +335,15 @@ export default function UrunGruplariModul({
       modelTuru: item.modelTuru ? String(item.modelTuru) : null,
       renk: (item.renk as string) ?? null,
       caratPrice: item.caratPrice != null ? Number(item.caratPrice) : null,
+      ...(item.type === "Sade"
+        ? { 
+            current_cost: 
+              item.fiyat != null && item.fiyat !== "" 
+                ? Number(String(item.fiyat).replace(/[$,]/g, "")) 
+                : null 
+          } 
+        : {}),
+        ...(urunData ? { status: Object.keys(statusDetailsMap).find(key => statusDetailsMap[key].name === item.status) } : {})
     }));
     setValues((prev: ProductItemsType[]) => {
       const indexNo = prev.findIndex((a) => a.title == title);
@@ -352,7 +366,7 @@ export default function UrunGruplariModul({
         }}
         className="mb-3 flex w-full flex-col gap-2"
       >
-        <div className="flex text-black dark:text-white w-full items-center justify-between">
+        <div className="flex text-black dark:text-white w-full items-center justify-between grid-cols-12">
           <b>{title}</b>
           {urunData ? (
                 <div className="flex space-x-2 ">
@@ -361,15 +375,23 @@ export default function UrunGruplariModul({
                       <span className="mr-8 text-black dark:text-white">
                       Toplam Karat:{" "}
                       <span className="text-green-500">
-                        {selectedValues
-                          .reduce((sum, item) => sum + (Number(item.used_carat) || Number(item.carat) || 0), 0)
-                          .toFixed(2)}
+                      {selectedValues
+                        .filter(item => item.status !== "Red Edildi") 
+                        .reduce((sum, item) => {
+                          const caratValue = item.menstrual_status === "Sertifikalı" 
+                            ? Number(item.carat)  
+                            : Number(item.used_carat);
+                          return sum + (caratValue || 0);  
+                        }, 0)
+                        .toFixed(2)
+                      }
                       </span>
                       </span>
                       <span className=" text-black dark:text-white">
                       Toplam Adet:{" "}
                       <span className="text-green-500">
                         {selectedValues
+                          .filter(item => item.status !== "Red Edildi") 
                           .reduce((sum, item) => sum + (Number(item.adet) || 0), 0)}
                       </span>
                       </span>
@@ -381,10 +403,13 @@ export default function UrunGruplariModul({
                     <span className="text-green-500">
                       {(() => {
                         const total = selectedValues.reduce((sum, item) => {
+                          if (item.status === "Red Edildi") {
+                            return sum;
+                          }
                           if (title === "Sade") {
                             return sum + (Number(item.firstPrice) || 0);
                           } else {
-                            return sum + (item.used_carat != null 
+                            return sum + (item.used_carat != 0 && item.used_carat
                               ? (Number(String(item.caratPrice).replace(",", ".")) * Number(item.used_carat)) 
                               : Number(item.firstPrice)) || 0;
                           }
@@ -403,6 +428,9 @@ export default function UrunGruplariModul({
                     <span className="text-green-500">
                       {(() => {
                         const total = selectedValues.reduce((sum, item) => {
+                          if (item.status === "Red Edildi") {
+                            return sum;
+                          }
                           return sum + (Number(item.fiyat) || 0);
                         }, 0);
 
