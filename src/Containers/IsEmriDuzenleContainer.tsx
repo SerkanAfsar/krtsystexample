@@ -184,6 +184,13 @@ export default function IsEmriDuzenleContainer ({
     isCondition,
   ]);
 
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (workOrderData) {
+      setLoading(false);
+    }
+  }, [workOrderData]);
 
   const lastItems = values.reduce<WorkOrderProductType[]>((acc, next) => {
     return [...acc, ...next.products];
@@ -191,7 +198,13 @@ export default function IsEmriDuzenleContainer ({
 
   
   const totalPrice = lastItems.reduce<number>((acc, next) => {
-    return next.price ? acc + next.price : acc;
+    if (next.status !== "CANCELLED") {
+      const price = next.current_cost || next.price; 
+      if (price) {
+        return acc + price;
+      }
+    }
+    return acc;
   }, 0);
 
   if (initialTotalPrice.current === 0) {
@@ -201,7 +214,7 @@ export default function IsEmriDuzenleContainer ({
   }
   const lastData: UpdateWorkOrderType = {
     model_type : modelType,
-    total_product_cost : String(totalPrice),
+    current_cost : String(totalPrice),
     gender,
     description,
     workorder_products: lastItems,
@@ -236,6 +249,14 @@ export default function IsEmriDuzenleContainer ({
     }
   };
 
+  if (loading || !workOrderData) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
+      </div>
+    );
+  }
+  
   return (
     <div className="mb-5">
       <div className="flex w-full flex-col items-start">
@@ -284,10 +305,10 @@ export default function IsEmriDuzenleContainer ({
             <table className="w-full border-collapse">
               <tbody>
                 {[
-                  { label: "İlk Malzeme Maliyeti", value: formatToCurrency(initialTotalPrice.current) },
+                  { label: "İlk Malzeme Maliyeti", value: formatToCurrency(Number(workOrderData.total_product_cost)) },
                   { label: "Güncel Malzeme Maliyeti", value: formatToCurrency(totalPrice) },
-                  { label: "İşçilik", value: "0" },
-                  { label: "Toplam Güncel Maliyet", value: formatToCurrency(totalPrice), highlight: true, border: true }, 
+                  { label: "İşçilik", value: formatToCurrency(Number(workOrderData.total_labor_cost)) },
+                  { label: "Toplam Güncel Maliyet", value: formatToCurrency(totalPrice + Number(workOrderData.total_labor_cost)), highlight: true, border: true }, 
                 ].map(({ label, value, highlight, border }, index) => (
                   <tr
                     key={index}

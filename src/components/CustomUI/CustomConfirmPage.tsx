@@ -77,7 +77,7 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, ti
   const renderUserSelection = () => (
     <div className="w-3/4 mt-3 flex flex-col items-center justify-center">
       <label htmlFor="userSelection" className="text-sm font-medium text-gray-700">
-      Gönderilecek Kişiyi Seçiniz
+      Gönderilecek Personeli Seçiniz
       </label>
       <select
         id="userSelection"
