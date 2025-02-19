@@ -16,7 +16,6 @@ import { notFound } from "next/navigation";
 import { ResponseResult } from "../../../../../types/responseTypes";
 import { UserGroupsType } from "../../../../../types/types";
 import { getLoggedUserId } from "@/actions/Auth.actions";
-import IsEmriDetayBilgileri from "@/components/IsEmirleri/IsEmirDetayBilgileri";
 
 export default async function UretimBaslatma({ params }: { params: Params }) {
   const cookieStore = cookies();
@@ -59,7 +58,7 @@ export default async function UretimBaslatma({ params }: { params: Params }) {
             url: "/Admin/IsEmirleri/UretimIsEmirleriListesi",
           },
         ]}
-        pageName={`${workOrderData.product_temp_code} İş Emri Bilgileri ${workOrderData.status === "Completed" ? " - (Tamamlanmış)" : ""}`}
+        pageName={`ID: ${workOrderData.id} İş Emri Bilgileri ${workOrderData.status === "Completed" ? " - (Tamamlanmış)" : ""}`}
       />
       <IsEmriBaslatmaContainer
         userId={userId}
@@ -68,7 +67,6 @@ export default async function UretimBaslatma({ params }: { params: Params }) {
         workOrderGroups={(groups?.data as WorkOrderTeamGroupType[]) || []}
       />
 
-      <IsEmriDetayBilgileri id={Number(params.id)} />
     </DefaultLayout>
   );
 }

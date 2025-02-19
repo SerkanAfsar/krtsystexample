@@ -52,7 +52,7 @@ export default function useGetWorkOrderListData() {
               Oluşmadı
             </button>
           ),
-          islem: item?.exit,
+          islem: item?.user,
           last_process_date: item.last_process_date ? (
             <div className="flex flex-col items-start justify-start gap-2">
               <span>{sonIslemTarihi.primary}</span>

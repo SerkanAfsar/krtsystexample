@@ -5,8 +5,8 @@ import { SeciliUrunType, UserType } from "@/components/IsEmirleri/UrunGruplariMo
 type ConfirmPropsType = {
   isOpen: boolean;
   item: SeciliUrunType; 
-  items: SeciliUrunType[]; 
-  title: string; 
+  items?: SeciliUrunType[]; 
+  title?: string; 
   onConfirm: (cirak?: UserType, targetLocation?: UserType, items?: SeciliUrunType[]) => void;
   onCancel: () => void;
 };
@@ -24,14 +24,18 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, ti
   };
   const statusGroupMap: { [key: string]: number } = {
     'Onaylandı': 2,
+    'WORKSHOP_ACCEPTED': 2,
     'Üretim Onayladı': atolye || 4,
-    'Geri Gönderildi': groupIdsMap[title] || groupIdsMap['default']
+    'PRODUCTION_WORKSHOP_APPROVED': atolye || 4,
+    'Geri Gönderildi': groupIdsMap[title ?? 'default']
   };
  
   useEffect(() => {
-    if (item.status === 'Onaylandı' || item.status === 'Üretim Onayladı' || item.status === 'Geri Gönderildi') {
+    if (item.status === 'Onaylandı' || item.status === 'Üretim Onayladı' || item.status === 'Geri Gönderildi' || 
+      item.status === 'WORKSHOP_ACCEPTED' || item.status === 'PRODUCTION_WORKSHOP_APPROVED') {
       const fetchData = async () => {
-        if (item.status === 'Onaylandı' || item.status === 'Üretim Onayladı' || item.status === 'Geri Gönderildi') {
+        if (item.status === 'Onaylandı' || item.status === 'Üretim Onayladı' || item.status === 'Geri Gönderildi' || 
+          item.status === 'WORKSHOP_ACCEPTED' || item.status === 'PRODUCTION_WORKSHOP_APPROVED') {
           if (!selectedCirak) {
             const pupils = await GetWorkOrderPupils();
             if (pupils?.success) {
@@ -139,8 +143,8 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, ti
       buttonText = 'Onayla';
       break;
     case 'Onaylandı':
-      if (items.length > 1) {
-        const codes = items.map(item => item.code).join(", ");
+      if (items && items.length > 1) {
+        const codes = items?.map(item => item.code).join(", ");
         message = (
           <>
             <strong>{codes}</strong> kodlu ürünleri üretim müdürüne göndermek istediğinize emin misiniz?
@@ -159,8 +163,8 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, ti
       targetLocationSecimi = renderUserSelection(); 
       break;
       case 'Üretim Onayladı':
-        if (items.length > 1) {
-          const codes = items.map(item => item.code).join(", ");
+        if (items && items.length > 1) {
+          const codes = items?.map(item => item.code).join(", ");
           message = (
             <>
               <strong>{codes}</strong> kodlu ürünleri göndermek istediğinize emin misiniz?
@@ -209,10 +213,71 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, ti
         cirakSecimi = renderCirakSecimi()
         targetLocationSecimi = renderUserSelection()
         break;
-    default:
-      message = 'Bilinmeyen bir durum';
-      buttonText = 'Tamam';
-  }
+      case 'SENT_TO_WORKSHOP':
+        message = (
+          <>
+            <strong>{(item.product as any).code}</strong> kodlu ürünü teslim aldığınıza emin misiniz?
+          </>
+        );
+        buttonText = 'Onayla';
+        break;
+      case 'WORKSHOP_ACCEPTED':
+        if (items && items.length > 1) {
+          const codes = items?.map(item => (item.product as any).code).join(", ");
+          message = (
+            <>
+              <strong>{codes}</strong> kodlu ürünleri üretim müdürüne göndermek istediğinize emin misiniz?
+            </>
+          );
+          buttonText = 'Gönder';
+        } else {
+          message = (
+            <>
+              <strong>{(item.product as any).code}</strong> kodlu ürünü üretim müdürüne göndermek istediğinize emin misiniz?
+            </>
+          );      
+          buttonText = 'Gönder';
+        }
+        cirakSecimi = renderCirakSecimi()
+        targetLocationSecimi = renderUserSelection(); 
+        break;
+      case 'WORKSHOP_SENT':
+        message = (
+          <>
+            <strong>{(item.product as any).code}</strong> kodlu ürünü teslim aldığınıza emin misiniz?
+          </>
+        );
+        buttonText = 'Onayla';
+        break;
+      case 'PRODUCTION_WORKSHOP_APPROVED':
+        if (items && items.length > 1) {
+          const codes = items?.map(item => (item.product as any).code).join(", ");
+          message = (
+            <>
+              <strong>{codes}</strong> kodlu ürünleri göndermek istediğinize emin misiniz?
+            </>
+          );
+          buttonText = 'Gönder';
+        } else {
+          message = (
+            <>
+              <strong>{item.code}</strong> kodlu ürünü göndermek istediğinize emin misiniz?
+            </>
+          );      
+          buttonText = 'Gönder';
+        }
+        cirakSecimi = renderCirakSecimi()
+        targetLocationSecimi = (
+          <div className="w-full flex flex-col items-center justify-center">
+          {renderWorkshopSelection()} 
+          {renderUserSelection()} 
+        </div>
+        );
+        break;
+        default:
+          message = 'Bilinmeyen bir durum';
+          buttonText = 'Tamam';
+      }
 
   return  (
 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4">
