@@ -1,24 +1,34 @@
 "use client";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useEffect, useState } from "react";
 import {
-  WorkOrderAtolyeType,
-  WorkOrderPeopleList,
   WorkOrderTeamGroupType,
   WorkOrderType,
 } from "../types/WorkOrder.types";
-import CustomSelect from "@/components/CustomUI/CustomSelect";
-import { CustomOptionType } from "../types/inputTypes";
-import { useEffect, useState } from "react";
-import {
-  AddWorkOrderLogService,
-  GetWorkOrderPeopleByGroups,
-} from "@/Services/WorkOrder.Services";
 import CustomInput from "@/components/CustomUI/CustomInput";
-import { toast } from "react-toastify";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useParams } from "next/navigation";
 import { cn } from "@/utils";
-import CustomMucevherSaveModal from "@/components/CustomUI/CustomMucevherSaveModal";
+import { toast } from 'react-toastify'; 
+import CustomConfirmPage from "../components/CustomUI/CustomConfirmPage";  
+import CustomMucevherSaveModal from "../components/CustomUI/CustomMucevherSaveModal";  
+import { PostWorkOderUpdateStatus, PostWorkOderWastages, GetWorkOrderProductList } from "@/Services/WorkOrder.Services";
+import { useUserStore } from "@/store/useUserStore";
+import { WorkOrderWastagePayloadType } from "../types/WorkOrder.types";
+
+type StatusDetails = {
+  className: string;
+  name: string;
+  newStatus: string;
+  userGiving: Number;
+};
+
+type SeciliUrunType = {
+  [key: string]: string | number;
+};
+
+type UserType = {
+  id: number;
+  username: string;
+  email: string;
+};
 
 export default function IsEmriBaslatmaContainer({
   workOrderGroups,
@@ -31,113 +41,194 @@ export default function IsEmriBaslatmaContainer({
   workOrderData: WorkOrderType;
   workOrderGroups: WorkOrderTeamGroupType[];
 }) {
-  const { id } = useParams();
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [teslimEdenList, setTeslimEdenList] = useState<CustomOptionType[]>([]);
-  const [teslimAlanList, setTeslimAlanList] = useState<CustomOptionType[]>([]);
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(
-    workOrderData.status === "Completed",
-  );
+  const [productList, setProductList] = useState<any[]>([]);
+  const [fireValues, setFireValues] = useState<{ [key: number]: number }>({});
+  const [description, setDescription] = useState<string>("");
+  const [outputGram, setOutputGram] = useState<number | string>("");
+  const [iscilik, setIscilik] = useState<number | string>("");
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [finishModalOpen, setFinishModalOpen] = useState(false);
+  const [editableUrun, setEditableUrun] = useState<SeciliUrunType>({});
+  const [editableUruns, setEditableUruns] = useState<SeciliUrunType[]>([]);
+  const [statu, setStatu] = useState<boolean>(false);
+  const [isSendClicked, setIsSendClicked] = useState(false);
+  const { user } = useUserStore(); 
+  const userRoleID = user?.groups[0]?.id;
+  const resetForm = () => {
+    setDescription("");
+    setOutputGram("");
+    setIscilik("");
+    setFireValues({});
+};
 
-  const [showConfirm, setShowConfirm] = useState<boolean>(false);
-
-  const isFirst =
-    searchParams.get("isFirst") && Boolean(searchParams.get("isFirst"));
-
-  const newGroupData: CustomOptionType[] = workOrderGroups.map((item) => ({
-    titleVal: item.name,
-    valueVal: item.id.toString(),
-  }));
-
-  const {
-    register,
-    formState: { errors },
-    watch,
-    setValue,
-    handleSubmit,
-  } = useForm<WorkOrderAtolyeType>({
-    defaultValues: {
-      from_group:
-        workOrderGroups.find((a) => a.name == workOrderData.group)?.id ||
-        undefined,
-    },
-  });
-
-  useEffect(() => {
-    if (!isFirst && !isSubmitted) {
-      const grpId = workOrderGroups.find(
-        (a) => a.name == workOrderData.group,
-      )?.id;
-      GetWorkOrderPeopleByGroups({ group_ids: [Number(grpId)] })
-        .then((resp: WorkOrderPeopleList[]) => {
-          const data = resp.map((item) => ({
-            titleVal: item.username,
-            valueVal: item.id.toString(),
-          }));
-          return data;
-        })
-        .then((data) => {
-          setTeslimEdenList(data);
-          const fromPerson = data.find(
-            (a) => a.titleVal == workOrderData.user,
-          )?.valueVal;
-
-          setValue("from_person", fromPerson ? Number(fromPerson) : 0);
-        })
-        .catch((err) => {
-          console.log("err is ", err);
-        });
-    }
-  }, [
-    isFirst,
-    workOrderData.group,
-    workOrderGroups,
-    setValue,
-    workOrderData.user,
-    isSubmitted,
-  ]);
-
-  useEffect(() => {
-    const subscription = watch((value, { name }) => {
-      if (name && (name == "from_group" || "to_group")) {
-        GetWorkOrderPeopleByGroups({ group_ids: [Number(value[name])] })
-          .then((resp: WorkOrderPeopleList[]) => {
-            const data = resp.map((item) => ({
-              titleVal: item.username,
-              valueVal: item.id.toString(),
-            }));
-            return data;
-          })
-          .then((data) => {
-            if (name == "from_group") {
-              setTeslimEdenList(data);
-            } else if (name == "to_group") {
-              setTeslimAlanList(data);
-            }
-          })
-          .catch((err) => {
-            console.log("err is ", err);
-          });
-      }
-      if (name && name == "from_person") {
-        if (value.from_person == userId && value.to_person) {
-          setIsSubmitted(true);
-        }
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [watch, userId]);
-
-  const onSubmit: SubmitHandler<WorkOrderAtolyeType> = async (data) => {
-    const newData: WorkOrderAtolyeType = { ...data, work_order: Number(id) };
-    const result = await AddWorkOrderLogService({ data: newData });
-    if (result?.success) {
-      toast.success("Üretim Bilgileri Güncellendi", { position: "top-right" });
-      setIsSubmitted(true);
-      return router.refresh();
+  const fetchWorkOrderProducts = async (id: number) => {
+    const response = await GetWorkOrderProductList({ work_order_id: id });
+  
+    if (response?.success && Array.isArray(response.data)) {
+      const validStatuses = [
+        "SENT_TO_WORKSHOP",
+        "WORKSHOP_ACCEPTED",
+        "WORKSHOP_SENT",
+        "PRODUCTION_WORKSHOP_APPROVED",
+      ];
+  
+      const filteredProducts = response.data.filter((product) =>
+        validStatuses.includes(product.status)
+      );
+  
+      setProductList(filteredProducts);
     } else {
-      return toast.error(result.error ? result.error[0] : "Hata", {
+      console.log("err:", response?.error);
+      setProductList([]);
+    }
+  };
+  
+  const statusDetailsMap: Record<string, StatusDetails> = {
+    SENT_TO_WORKSHOP: {
+      className: "text-purple-500 border-purple-500",
+      name: "Atly. Gönderildi",
+      newStatus: "WORKSHOP_ACCEPTED",
+      userGiving: Number(user?.id)
+    },
+    WORKSHOP_ACCEPTED: {
+      className: "text-green-500 border-green-500",
+      name: "Atly. Onayladı",
+      newStatus: "WORKSHOP_SENT",
+      userGiving: Number(user?.id)
+    },
+    WORKSHOP_SENT: {
+      className: "text-blue-500 border-blue-500",
+      name: "Atly. Gönderdi",
+      newStatus: "PRODUCTION_WORKSHOP_APPROVED",
+      userGiving: Number(user?.id)
+    },
+    PRODUCTION_WORKSHOP_APPROVED: {
+      className: "text-green-500 border-green-500",
+      name: "Üretim Onayladı",
+      newStatus: "SENT_TO_WORKSHOP",
+      userGiving: Number(user?.id)
+    },
+  };
+
+  
+  useEffect(() => {
+    fetchWorkOrderProducts(workOrderData.id);
+    setIsSendClicked(false);
+  }, [workOrderData.id, statu]);
+
+  const handleFireChange = (id: number, value: number) => {
+    setFireValues((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleConfirmation = (cirak?: UserType, targetUser?: UserType, items?: SeciliUrunType[]) => {
+    const workOrderProductIds = items && items.length > 0 ? items.map(item => item.id) : [editableUrun.id];
+    const currentStatus = editableUrun.status;
+    const statusKey = currentStatus && statusDetailsMap[currentStatus] ? currentStatus : null;
+    let newStatus = statusKey ? statusDetailsMap[statusKey]?.newStatus ?? "" : "";
+    let userGiving = statusKey ? statusDetailsMap[statusKey]?.userGiving ?? null : null;
+
+    if (statusKey) {
+      if (isSendClicked) {
+        const wastagePayload = workOrderProductIds.map((productId) => ({
+          work_order_product_id: Number(productId),
+          wastage: String(fireValues[Number(productId)] || "0"), 
+        }));
+        
+        const WorkOrderWastagePayload: WorkOrderWastagePayloadType = {
+          work_order_product_wastage: wastagePayload,
+          will_update_products: {
+            work_order_product_ids: workOrderProductIds.map(Number),
+            status: newStatus,
+            target_user_id:
+              currentStatus === "WORKSHOP_SENT" || currentStatus === "SENT_TO_WORKSHOP"
+                ? Number(userGiving)
+                : targetUser?.id
+                ? Number(targetUser.id)
+                : null,
+            from_user_id: userGiving ? Number(userGiving) : null,
+            pupil_user_id: cirak?.id ? Number(cirak.id) : null,
+          },
+          work_order_log: {
+            work_order: workOrderData.id,
+            output_gram: outputGram,
+            cost: iscilik,
+            description: description,
+            product_ids: workOrderProductIds.map(Number),
+          },
+        };
+        
+        PostWorkOderWastages(WorkOrderWastagePayload).then((resp) => {
+          if (resp?.success) {
+            toast.success("Ürünlerin durumu başarıyla değişti!", { position: "top-right" });
+            setStatu(prevStatu => !prevStatu);
+          } else {
+            toast.error("Ürünlerin durumu değiştirilemedi!", { position: "top-right" });
+          }
+        });
+        
+      } else {
+        PostWorkOderUpdateStatus({
+          work_order_product_ids: workOrderProductIds.map(id => Number(id)),
+          status: newStatus,
+          pupil_user_id: cirak?.id ? Number(cirak.id) : null,
+          from_user_id: userGiving ? Number(userGiving) : null,
+          target_user_id: currentStatus === "WORKSHOP_SENT" || currentStatus === "SENT_TO_WORKSHOP" 
+          ? Number(userGiving) 
+          : (targetUser?.id 
+          ? Number(targetUser.id) 
+          : null),
+        }).then((resp) => {
+          if (resp?.success) {
+            toast.success("Ürünlerin durumu başarıyla değişti!", { position: "top-right" });
+            setStatu(prevStatu => !prevStatu);
+          } else {
+            toast.error("Ürünün durumu değiştirilemedi!", { position: "top-right" });
+          }
+        });
+      }
+    }
+    resetForm()
+    setConfirmModalOpen(false);
+  };
+  
+  const handleConfirmationOpen = (item: any, index: number) => {
+    setEditableUrun(item); 
+    setEditableUruns([])
+    setConfirmModalOpen(true); 
+  };
+  
+  const handleSubmit = () => {
+    if (!description.trim()) {
+      return toast.error("Açıklama alanı boş olamaz!", { position: "top-right" });
+    }
+    if (!outputGram || isNaN(Number(outputGram)) || Number(outputGram) <= 0) {
+      return toast.error("Geçerli bir çıkış gramı giriniz!", { position: "top-right" });
+    }
+    if (!iscilik || isNaN(Number(iscilik)) || Number(iscilik) <= 0) {
+      return toast.error("Geçerli bir işçilik değeri giriniz!", { position: "top-right" });
+    }
+    const acceptedProducts = productList.filter(
+      (product) => product.status === "WORKSHOP_ACCEPTED"
+    );
+  
+    if (acceptedProducts.length === 0) {
+      return toast.error("Atölyede gönderilecek ürün yok!", {
+        position: "top-right",
+      });
+    }
+    setEditableUruns(acceptedProducts)
+    setEditableUrun(acceptedProducts[0])
+    setConfirmModalOpen(true); 
+    setIsSendClicked(true);
+  };
+
+  const handleFinishProduction = () => {
+    const allApproved = productList.every(product => product.status === "PRODUCTION_WORKSHOP_APPROVED");
+
+    if (allApproved) {
+      setFinishModalOpen(true)
+    } else {
+      return toast.error("Hala üretimde olan ürünler var!", {
         position: "top-right",
       });
     }
@@ -145,15 +236,6 @@ export default function IsEmriBaslatmaContainer({
 
   return (
     <>
-      {showConfirm && (
-        <CustomMucevherSaveModal
-          code={workOrderData?.product_temp_code as string}
-          showConfirm={showConfirm}
-          id={Number(id)}
-          setShowConfirm={setShowConfirm}
-        />
-      )}
-
       <div className="mb-1 rounded-sm border border-stroke bg-white pb-5 shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="border-b border-stroke dark:border-strokedark">
           <div className="flex w-full items-center justify-between">
@@ -170,148 +252,213 @@ export default function IsEmriBaslatmaContainer({
         </div>
         <hr />
         <div className="m-4">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid w-full grid-cols-4 gap-4">
-              <CustomSelect
-                item={{
-                  title: "Çıkış Atolye",
-                  type: "select",
-                  name: "from_group",
-                  required: true,
-                  options: newGroupData,
-                }}
-                disabled={!isFirst || isSubmitted ? true : false}
-                err={errors.from_group?.message}
-                {...register("from_group", {
-                  required: "Çıkış Atölye Seçiniz",
-                  valueAsNumber: true,
-                })}
-              />
-              <CustomSelect
-                item={{
-                  title: "Teslim Eden",
-                  type: "select",
-                  name: "from_person",
-                  required: true,
-                  options: teslimEdenList,
-                }}
-                disabled={!isFirst || isSubmitted ? true : false}
-                err={errors.from_person?.message}
-                {...register("from_person", {
-                  required: "Teslim Eden Personel Seçiniz",
-                  valueAsNumber: true,
-                })}
-              />
-              <CustomSelect
-                item={{
-                  title: "Giriş Atolye",
-                  type: "select",
-                  name: "to_group",
-                  required: true,
-                  options: newGroupData,
-                }}
-                disabled={isSubmitted}
-                err={errors.to_group?.message}
-                {...register("to_group", {
-                  required: "Giriş Atölye Seçiniz",
-                  valueAsNumber: true,
-                })}
-              />
-              <CustomSelect
-                item={{
-                  title: "Teslim Alan",
-                  type: "select",
-                  name: "to_person",
-                  required: true,
-                  options: teslimAlanList,
-                }}
-                disabled={isSubmitted}
-                err={errors.to_person?.message}
-                {...register("to_person", {
-                  required: "Teslim Alan Personel Seçiniz",
-                  valueAsNumber: true,
-                })}
-              />
-              <CustomInput
-                item={{
-                  name: "description",
-                  title: "Açıklama",
-                  required: false,
-                  type: "text",
-                }}
-                disabled={isSubmitted}
-                {...register("description", {
-                  required: false,
-                })}
-              />
-              <CustomInput
-                item={{
-                  name: "output_gram",
-                  title: "Çıkış Gramı",
-                  required: true,
-                  type: "number",
-                  placeholder: "Çıkış Gramı",
-                }}
-                disabled={isSubmitted}
-                step=".001"
-                err={errors.output_gram?.message}
-                {...register("output_gram", {
-                  required: "Çıkış Gramını Giriniz",
-                  valueAsNumber: true,
-                })}
-              />
-              <CustomInput
-                item={{
-                  name: "cost",
-                  title: "İşçilik",
-                  required: true,
-                  type: "number",
-                  placeholder: "İşçilik",
-                  rightIcon: "$",
-                }}
-                {...register("cost", {
-                  required: "İşçilik Giriniz",
-                  valueAsNumber: true,
-                })}
-                disabled={isSubmitted}
-                err={errors.cost?.message}
-              />
-
-              <button
-                type="button"
-                className={cn(
-                  "mt-5 rounded-md border border-primary bg-white p-3 text-black disabled:bg-gray disabled:text-black-2",
-                  isAdmin ? "col-start-2 col-end-3" : "col-start-3 col-end-4",
-                )}
-                disabled={isSubmitted}
-              >
-                İPTAL
-              </button>
-              <button
-                className={cn(
-                  "mt-5 rounded-md bg-primary p-3 text-white",
-                  isAdmin ? "col-start-3 col-end-4 " : "col-start-4 col-end-5",
-                  "disabled:bg-opacity-50",
-                )}
-                disabled={isSubmitted}
-              >
-                GÖNDER
-              </button>
-
-              {isAdmin && (
-                <button
-                  type="button"
-                  onClick={() => setShowConfirm(true)}
-                  disabled={isSubmitted}
-                  className="col-start-4  col-end-5 mt-5 rounded-md bg-primary p-3 text-white disabled:bg-opacity-50"
-                >
-                  BİTİR
-                </button>
-              )}
-            </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
+        >
+          <div className="grid w-full grid-cols-4 gap-4">
+            <CustomInput
+              item={{
+                name: "description",
+                title: "Açıklama",
+                required: false,
+                type: "text",
+              }}
+              onChange={(e) => setDescription(e.target.value)}
+              value={description} 
+            />
+            <CustomInput
+              item={{
+                name: "output_gram",
+                title: "Çıkış Gramı",
+                required: true,
+                type: "number",
+                placeholder: "Çıkış Gramı",
+              }}
+              step=".001"
+              onChange={(e) => setOutputGram(e.target.value)}
+              value={outputGram} 
+            />
+            <CustomInput
+              item={{
+                name: "cost",
+                title: "İşçilik",
+                required: true,
+                type: "number",
+                placeholder: "İşçilik",
+                rightIcon: "$",
+              }}
+              onChange={(e) => setIscilik(e.target.value)}
+              value={iscilik} 
+            />
+          <button
+            type="submit"
+            className={cn(
+              "mt-8 rounded-md bg-primary p-3 text-white h-12",
+              userRoleID === 2 ? "opacity-50 cursor-not-allowed" : ""
+            )}
+            disabled={userRoleID === 2}
+          >
+            GÖNDER
+          </button>
+          </div>
           </form>
         </div>
       </div>
+      <div className="mt-6 rounded-sm border border-stroke bg-white pb-5 shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div className="border-b border-stroke dark:border-strokedark p-4">
+          <h3 className="text-lg font-medium text-black dark:text-white">
+            Üretim Ürünleri
+          </h3>
+        </div>
+        <div className="overflow-x-auto p-4">
+          <table className="w-full table-fixed border-collapse">
+            <thead>
+              <tr className="bg-gray-100 dark:bg-gray-700">
+                {[
+                  "ID",
+                  "Kod",
+                  "Ürün Tipi",
+                  "Adet",
+                  "Kullanılan Karat",
+                  "Fire",
+                  "Toplam Fire",
+                  "Nerede",
+                  "Statu",
+                  "Fiyat",
+                  "İşlemler"
+                ].map((header, index) => (
+                  <th key={index} className="border-b border-gray p-2 text-left text-sm font-medium">
+                    {header}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {productList.length > 0 ? (
+                productList.map((product) => {
+                  const productStatus = product.status; 
+                  const statusDetails = statusDetailsMap[productStatus];
+                  return (
+                    <tr key={product.id}>
+                      <td className="p-2 text-sm">{product.product.pk}</td>
+                      <td className="p-2 text-sm">{product.product.code || "-"}</td>
+                      <td className="p-2 text-sm">
+                      {product.product.type === "Simple" 
+                        ? "Sade" 
+                        : product.product.type === "ColoredStone" 
+                        ? "Renkli Taş" 
+                        : product.product.type === "Diamond" 
+                        ? "Pırlanta" 
+                        : product.product.type || "-"}
+                      </td>
+                      <td className="p-2 text-sm">{product.quantity || "-"}</td>
+                      <td className="p-2 text-sm">
+                        {product.used_carat && product.used_carat !== 0 
+                          ? product.used_carat 
+                          : product.product.properties?.carat && product.product.properties.carat !== 0 
+                            ? product.product.properties.carat 
+                            : "-"}
+                      </td>
+                      <td className="p-2 text-sm">
+                        <input
+                          type="number"
+                          onChange={(e) => {
+                            const value = parseFloat(e.target.value) || 0;
+                            const maxAllowed = (product.wastage || 0) + (product.quantity || 0);
+                      
+                            if (value > maxAllowed) {
+                              toast.error("Fire toplamı adetten fazla olamaz!", { position: "top-right" });;            
+                              handleFireChange(product.id, 0); 
+                            } else {
+                              handleFireChange(product.id, value);
+                            }
+                          }}
+                          className="w-20 border p-1 text-sm"
+                          disabled={product.status !== "WORKSHOP_ACCEPTED"}
+                        />
+                      </td>
+                      <td className="p-2 text-sm">{product.wastage || 0}</td>
+                      <td className="p-2 text-sm">{product.user_group_name || ""} </td>
+                      <td className="p-2 text-sm">
+                        <div className={`p ml-[-25px] pt-2 h-8 w-28 lg:w-28 md:w-22 sm:w-20 rounded-full text-center text-xs font-bold whitespace-nowrap dark:disabled:text-white border-2 leading-[2],
+                           ${statusDetails?.className}`}
+                           >
+                          {statusDetails?.name}
+                        </div>
+                      </td>
+                      <td className="p-2 text-sm">
+                      {product.cost
+                        ? product.cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        : 0} $
+                      </td>
+                      <td className="p-2 text-sm">
+                      {product.status !== "WORKSHOP_ACCEPTED" && (
+                        <button
+                          className={`p-2 w-8 h-8 cursor-pointer ${
+                            (product.status === "SENT_TO_WORKSHOP" && userRoleID === 2) ||
+                            (userRoleID !== 2 && (product.status === "WORKSHOP_SENT" || product.status === "PRODUCTION_WORKSHOP_APPROVED"))
+                              ? "opacity-50 cursor-not-allowed"
+                              : ""
+                          }`}
+                          onClick={() => handleConfirmationOpen(product, product.id)}
+                          disabled={
+                            (product.status === "SENT_TO_WORKSHOP" && userRoleID === 2) ||
+                            (product.status !== "SENT_TO_WORKSHOP" && userRoleID !== 2)
+                          }
+                          >
+                          <img src="/images/icon/confirmation.svg" alt="confirmation" />
+                        </button>
+                      )}
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan={11} className="p-4 text-center text-sm">
+                    Ürün yok.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div className="flex justify-end mt-4">
+      <button
+        className={cn(
+          "mt-8 rounded-md bg-primary p-3 text-white h-12 w-1/4",
+          userRoleID !== 2 ? "opacity-50 cursor-not-allowed" : ""
+        )}
+        disabled={userRoleID !== 2}
+        onClick={handleFinishProduction} 
+      >
+        Üretimi Bitir
+      </button>
+      </div>
+      {confirmModalOpen && (
+        <CustomConfirmPage
+          isOpen={confirmModalOpen}
+          item={editableUrun}
+          items={editableUruns}
+          onConfirm={handleConfirmation}
+          onCancel={() => {
+            setConfirmModalOpen(false);
+            setIsSendClicked(false); 
+          }}
+        />
+      )}
+        {finishModalOpen && (
+        <CustomMucevherSaveModal
+          id={workOrderData.id} 
+          showConfirm={finishModalOpen}
+          setShowConfirm={setFinishModalOpen}
+          code={String(workOrderData.product_temp_code)} 
+        />
+      )}
     </>
   );
 }

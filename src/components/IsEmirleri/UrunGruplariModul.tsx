@@ -673,17 +673,20 @@ export default function UrunGruplariModul({
                       />
                     );
                   } else if (key == "status") {
+                    const currentStatus = item.status;
+                    const isValidStatus = Object.values(statusDetailsMap).some(detail => detail.name === currentStatus);
+                
                     return (
                       <div
-                      key={index}
-                      className={`
-                        p ml-[-15px] h-8 w-25 lg:w-25 md:w-22 sm:w-20 rounded-full text-center text-sm font-bold whitespace-nowrap dark:disabled:text-white
-                        ${Object.values(statusDetailsMap).find(detail => detail.name === item.status)?.className}
-                        border-2 leading-[2] 
-                      `}                    
+                          key={index}
+                          className={`
+                              p ml-[-15px] h-8 w-25 lg:w-25 md:w-22 sm:w-20 rounded-full text-center text-sm font-bold whitespace-nowrap dark:disabled:text-white
+                              ${isValidStatus ? Object.values(statusDetailsMap).find(detail => detail.name === currentStatus)?.className : 'text-purple-500 border-purple-500'} 
+                              border-2 leading-[2] 
+                          `}
                       >
-                      {item.status}
-                    </div>
+                          {isValidStatus ? currentStatus : "Üretimde"}
+                      </div>
                     );
                   } else if (key == "fiyat") {
                     return (
@@ -742,8 +745,8 @@ export default function UrunGruplariModul({
            <div className="flex items-center justify-left gap-4 ml-2 lg:ml-2 md:ml-3 sm:ml-3 dark:text-white">
               {urunData ? (
                 <>
-              {item.status !== "Red Edildi" && item.status !== "Atly. Gönderildi" ? (
-                
+              {!["Red Edildi", "Atly. Gönderildi"].includes(String(item.status)) && 
+                Object.values(statusDetailsMap).map(detail => detail.name).includes(String(item.status)) ? (
                 <>
                   <img
                     src={Object.values(statusDetailsMap).find(detail => detail.name === item.status)?.icon}

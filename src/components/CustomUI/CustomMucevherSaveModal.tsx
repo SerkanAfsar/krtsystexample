@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import CustomSelect from "./CustomSelect";
 import CustomImageSelect from "./CustomImageSelect";
-import { FinishWorkOrderApiService } from "@/ApiServices/WorkOrders.ApiService";
+import { FinishWorkOrder } from "@/Services/WorkOrder.Services";
 
 import { useRouter } from "next/navigation";
 import { MagazaType } from "@/types/Magaza";
@@ -10,6 +10,9 @@ import { MagazaType } from "@/types/Magaza";
 import { CustomDataListType } from "@/types/types";
 import { CustomOptionType } from "@/types/inputTypes";
 import { GetMagazaDatatableService } from "@/Services/Magaza.Services";
+
+import { toast } from 'react-toastify'; 
+
 
 function CustomMucevherSaveModal({
   id,
@@ -29,6 +32,7 @@ function CustomMucevherSaveModal({
   const [img, setImage] = useState<string | ArrayBuffer | undefined>();
   const [store_id, setStoreId] = useState<number>();
   const [error, setError] = useState<boolean>(false);
+  const [outputGram, setOutputGram] = useState<number | undefined>();
 
   const [warehouselist, setWarehouselist] = useState<MagazaType[]>([]);
 
@@ -113,6 +117,19 @@ function CustomMucevherSaveModal({
               value={store_id}
               onChange={(e) => setStoreId(Number(e.target.value))}
             />
+             <div className="block w-full">
+              <label className="mb-3 block h-5 text-sm font-medium text-black dark:text-white">
+                Çıkış Gramı
+              </label>
+              <input
+                type="number"
+                placeholder="Çıkış Gramı..."
+                value={outputGram}
+                onChange={(e) => setOutputGram(Number(e.target.value))}
+                className="block w-full rounded-lg border-[1.5px] border-stone-400 bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                required
+              />
+            </div>
             <div className="block w-full">
               <label className="mb-3 block h-5 text-sm font-medium text-black dark:text-white">
                 Açıklama
@@ -189,11 +206,23 @@ function CustomMucevherSaveModal({
                 setError(true);
                 return;
               }
-              await FinishWorkOrderApiService({
-                id: id,
+              await FinishWorkOrder({
+                work_order_id: id,
                 store_id,
                 image: img as string,
-              });
+                output_gram: Number(outputGram),
+              })
+                .then((resp) => {
+                  if (resp?.success) {
+                    toast.success("Mücevher başarıyla kaydedildi!", { position: "top-right" });
+                    setShowConfirm(false);
+                    return router.push(
+                      `/Admin/StokYonetimi/Mucevher/MucevherStokListesi`,
+                    );
+                  } else {
+                    toast.error("Üretim bitirilemedi. Hala teslim alınmamış ürünler var!", { position: "top-right" });
+                  }
+                })
               router.refresh();
               setShowConfirm(false);
             }}

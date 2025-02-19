@@ -118,3 +118,25 @@ export type WorkOrderNotificationType = {
   created_at: string;
   work_order: number;
 };
+
+export type WorkOrderWastagePayloadType = {
+  work_order_product_wastage: {
+    work_order_product_id: number;
+    wastage: string;
+  }[];
+  will_update_products: {
+    work_order_product_ids: number[];
+    status: string;
+    target_user_id: number | null;
+    from_user_id: number | null;
+    pupil_user_id: number | null;
+  };
+  work_order_log: {
+    work_order: number;
+    output_gram: string | number;
+    cost: string | number;
+    description: string;
+    product_ids: number[];
+  };
+};
+

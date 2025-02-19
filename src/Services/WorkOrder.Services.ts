@@ -11,6 +11,7 @@ import {
   WorkOrderQueueType,
   WorkOrderTeamGroupType,
   WorkOrderType,
+  WorkOrderWastagePayloadType,
 } from "../types/WorkOrder.types";
 
 type AddorUpdateWorkOrderType = AddWorkOrderType | UpdateWorkOrderType;
@@ -374,4 +375,38 @@ export const GetUsersByUserGroups = async ({
   });
 
   return result; 
+};
+
+export const PostWorkOderWastages = async (
+  wastagePayload: WorkOrderWastagePayloadType): 
+  Promise<ResponseResult<any>> => {
+  const result = await BaseService({
+    url: "product/work-order/product-wastage",
+    bodyData: wastagePayload,
+    method: "POST",
+    hasToken: true,
+  });
+
+  return result as ResponseResult<any>;
+};
+
+export const FinishWorkOrder = async ({
+  work_order_id,
+  store_id,
+  image,
+  output_gram,
+}: {
+  work_order_id: number;
+  store_id: number;
+  image: string;
+  output_gram: number;
+}): Promise<ResponseResult<any>> => {  
+  const result = await BaseService({
+    url: "product/finish-work-order/",
+    bodyData: { work_order_id, store_id, image, output_gram },
+    method: "POST",
+    hasToken: true,
+  });
+  
+  return result as ResponseResult<any>;
 };
