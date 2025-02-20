@@ -21,6 +21,9 @@ export default function useGetWorkOrderListData() {
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const itemRef = useRef<any | null>(null);
+  
+  const { user } = useUserStore();
+  const userRoleID = user?.groups[0]?.id;
 
   const order_by = params.get("order_by");
   const sort = (params.get("sort") as "asc" | "desc") || undefined;
@@ -81,6 +84,7 @@ export default function useGetWorkOrderListData() {
           islemler: islemlerArea({
             id: item.id as number,
             productCode: item.product_temp_code as string,
+            workOrderStatus: item.status as string,
           }),
         };
       });
@@ -91,40 +95,47 @@ export default function useGetWorkOrderListData() {
         ),
       );
     });
-  }, [activePage, order_by, sort]);
-
-  const { user } = useUserStore();
+  }, [activePage, order_by, sort, userRoleID]);
 
   useEffect(() => {
     updateData();
-  }, [updateData]);
+  }, [activePage, userRoleID]);
 
   const islemlerArea = useCallback(
-    ({ id, productCode }: { id: number; productCode: string }) => {
+    ({ id, productCode, workOrderStatus }: { id: number; productCode: string; workOrderStatus: string }) => {
       return (
         <div className="flex items-center justify-center  gap-6">
-          <img
-            src={"/images/icon/hammer.svg" }
-            alt="Atolye Detay"
-            className={`cursor-pointer w-4 h-4`}
-            onClick={() =>
-              router.push(`/Admin/IsEmirleri/UretimBaslatma/${id}`)
-            }
-          />
-          <img
-            src={"/images/icon/box.svg" }
-            alt="Is Emri Detay"
-            className={`cursor-pointer w-4 h-4`}
-            onClick={() =>
-              router.push(`/Admin/IsEmirleri/UretimDuzenle/${id}`)
-            }
-          />
-          {user?.groups.some((a) => a.name == "Üretim Müdürü") && (
+          {user?.groups.some((group) =>
+            ["Üretim Müdürü", "Sadekar", "Mıhlayıcı", "Cilacı"].includes(group.name)
+            ) && (
+            <img
+              src={"/images/icon/hammer.svg"}
+              alt="Atolye Detay"
+              className="cursor-pointer w-4 h-4"
+              onClick={() => router.push(`/Admin/IsEmirleri/UretimBaslatma/${id}`)}
+            />
+          )}
+          {user?.groups.some((group) =>
+            ["Üretim Müdürü", "Sade Kasa", "Renkli Taş Kasa", "Pırlanta Kasa"].includes(group.name)
+            ) && (
+            <img
+              src={"/images/icon/box.svg"}
+              alt="Is Emri Detay"
+              className="cursor-pointer w-4 h-4"
+              onClick={() => router.push(`/Admin/IsEmirleri/UretimDuzenle/${id}`)}
+            />
+          )}
+          {user?.groups.some((a) => a.name == "Üretim Müdürü") &&(
             <img
               src={"/images/icon/redTrash2.svg" }
               alt="Sil"
-              className={`cursor-pointer w-4 h-4`}
+              className={`w-4 h-4 ${
+                ["Completed", "Cancelled"].includes(workOrderStatus)
+                  ? "opacity-50 cursor-not-allowed"
+                  : "cursor-pointer"
+              }`}
               onClick={async () => {
+                if (["Completed", "Cancelled"].includes(workOrderStatus)) return; 
                 setShowConfirmDelete(true);
                 itemRef.current = { id, productCode };
               }}
@@ -133,12 +144,8 @@ export default function useGetWorkOrderListData() {
         </div>
       );
     },
-    [router, user],
+    [router, userRoleID, user],
   );
-
-  useEffect(() => {
-    updateData();
-  }, [activePage, updateData]);
 
   useEffect(() => {
     if (confirmDelete && itemRef && itemRef.current) {
@@ -165,5 +172,6 @@ export default function useGetWorkOrderListData() {
     showConfirmDelete,
     item: itemRef.current,
     error,
+    userRoleID
   };
 }

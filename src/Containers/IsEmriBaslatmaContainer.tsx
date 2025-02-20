@@ -236,7 +236,11 @@ export default function IsEmriBaslatmaContainer({
 
   return (
     <>
-      <div className="mb-1 rounded-sm border border-stroke bg-white pb-5 shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className={cn(
+        "mb-1 rounded-sm border border-stroke bg-white pb-5 shadow-default dark:border-strokedark dark:bg-boxdark",
+        ["Completed", "Cancelled"].includes(workOrderData.status) ? "pointer-events-none opacity-50" : ""
+        )}
+      >
         <div className="border-b border-stroke dark:border-strokedark">
           <div className="flex w-full items-center justify-between">
             <h3 className="p-4 text-lg font-medium text-black dark:text-white">
@@ -307,7 +311,11 @@ export default function IsEmriBaslatmaContainer({
           </form>
         </div>
       </div>
-      <div className="mt-6 rounded-sm border border-stroke bg-white pb-5 shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className={cn(
+        "mb-1 rounded-sm border border-stroke bg-white pb-5 shadow-default dark:border-strokedark dark:bg-boxdark",
+        ["Completed", "Cancelled"].includes(workOrderData.status) ? "pointer-events-none opacity-50" : ""
+        )}
+      >
         <div className="border-b border-stroke dark:border-strokedark p-4">
           <h3 className="text-lg font-medium text-black dark:text-white">
             Üretim Ürünleri
@@ -397,11 +405,11 @@ export default function IsEmriBaslatmaContainer({
                       <td className="p-2 text-sm">
                       {product.status !== "WORKSHOP_ACCEPTED" && (
                         <button
-                          className={`p-2 w-8 h-8 cursor-pointer ${
+                          className={`p-2 w-8 h-8 ${
                             (product.status === "SENT_TO_WORKSHOP" && userRoleID === 2) ||
                             (userRoleID !== 2 && (product.status === "WORKSHOP_SENT" || product.status === "PRODUCTION_WORKSHOP_APPROVED"))
                               ? "opacity-50 cursor-not-allowed"
-                              : ""
+                              : "cursor-pointer"
                           }`}
                           onClick={() => handleConfirmationOpen(product, product.id)}
                           disabled={

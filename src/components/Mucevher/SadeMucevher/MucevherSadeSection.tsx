@@ -28,7 +28,7 @@ export default function MucevherSadeSection({
 
   const mainArr = isEdit ? dataList : fieldsSade;
 
-  console.log("mainarr is ", mainArr);
+  //console.log("mainarr is ", mainArr);
 
   return (
     <div className="mb-3 flex w-full flex-col gap-3">

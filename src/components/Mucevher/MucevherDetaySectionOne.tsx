@@ -40,7 +40,6 @@ export default function MucevherDetaySectionOne({
   const [image, setImage] = useState<string | ArrayBuffer | undefined>(
     mainData?.image,
   );
-
   const getBase64 = (file: any): any => {
     if (file && file[0]) {
       var reader = new FileReader();

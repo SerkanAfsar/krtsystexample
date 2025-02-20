@@ -8,8 +8,6 @@ import {
   SadeModalHeaders,
 } from "../types/types";
 import {
-   // WorkOrderAtolyeType,
-   // WorkOrderPeopleList,
     WorkOrderTeamGroupType,
     WorkOrderType,
   } from "../types/WorkOrder.types";
@@ -26,11 +24,9 @@ import {
 
 import { AddWorkOrderService } from "@/Services/WorkOrder.Services";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 import { WorkOrderQueueApiService } from "@/ApiServices/WorkOrders.ApiService";
 import { MucevherCode } from "@/utils/Mucevher.Utils";
 import { GetWorkOrderProductList } from "@/Services/WorkOrder.Services";
-import { useUserStore } from "@/store/useUserStore";
 
 const UrunGruplari: UrunGruplariModulType[] = [
   {
@@ -101,9 +97,6 @@ export default function IsEmriDuzenleContainer ({
   workOrderData: WorkOrderType;
   workOrderGroups: WorkOrderTeamGroupType[];
 }) {
-  const router = useRouter();
-  const { user } = useUserStore(); 
-  const userRoleID = user?.groups[0]?.id;
   const [description, setDescription] = useState<string>(workOrderData.description || "");
   const [isEmriCode, setIsEmriCode] = useState<string>("");
   const [gender, setGender] = useState<string>(workOrderData.gender || ""); 
@@ -344,7 +337,7 @@ export default function IsEmriDuzenleContainer ({
               key={index}
               className="rounded-lg border border-stroke bg-white p-4 shadow-md dark:border-strokedark dark:bg-boxdark"
             >
-              <UrunGruplariModul setValues={setValues} setStatu={setStatu} item={item} urunData={urunData} model={model}/>
+              <UrunGruplariModul workOrderStatus={workOrderData.status} setValues={setValues} setStatu={setStatu} item={item} urunData={urunData} model={model}/>
             </div>
           ))}
         </div>

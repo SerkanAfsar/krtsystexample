@@ -40,12 +40,14 @@ export default function UrunGruplariModul({
   urunData,
   model,
   setStatu,
+  workOrderStatus
 }: {
   item: UrunGruplariModulType;
   setValues?: any;
   urunData?: any;
   model?: any;
   setStatu?: any;
+  workOrderStatus?: string;
 }) {
 
   const [selectedValues, setSelectedValues] = useState<SeciliUrunType[]>([]);
@@ -59,14 +61,14 @@ export default function UrunGruplariModul({
   const isDisabled = urunData && (
     (title === "Pırlanta" && ![2, 8].includes(userRoleID ?? -1)) ||
     (title === "Renkli Taş" && ![2, 7].includes(userRoleID ?? -1)) ||
-    (title === "Sade" && ![2, 1].includes(userRoleID ?? -1))
+    (title === "Sade" && ![2, 9].includes(userRoleID ?? -1)) 
   );
   const isButtonDisabled = (item: SeciliUrunType) => {
     const statusCondition = item.status === "Rezervli" || item.status === "Gönderildi" || item.status === "Üretim Onayladı";
     const roleMap: { [key: string]: number} = {
       "Pırlanta": 8,
       "Renkli Taş": 7,
-      "Sade": 1
+      "Sade": 9
     };
   
     if (item.status === "Rezervli") {
@@ -366,7 +368,12 @@ export default function UrunGruplariModul({
         }}
         className="mb-3 flex w-full flex-col gap-2"
       >
-        <div className="flex text-black dark:text-white w-full items-center justify-between grid-cols-12">
+        <div className={cn("flex text-black dark:text-white w-full items-center justify-between grid-cols-12",
+          workOrderStatus && ["Completed", "Cancelled"].includes(workOrderStatus)
+          ? "pointer-events-none opacity-50"
+          : ""
+          )}
+        >
           <b>{title}</b>
           {urunData ? (
                 <div className="flex space-x-2 ">
@@ -700,7 +707,7 @@ export default function UrunGruplariModul({
                           item.status === "Red Edildi" ? "line-through" : ""
                         )}
                         type="text" 
-                        disabled={!(userRoleID === 1 && item?.status === "Onay Bekliyor")}
+                        disabled={!(userRoleID === 9 && item?.status === "Onay Bekliyor")}
                         value={item.fiyat}
                         onChange={(e) => {
                           let value = e.target.value;
