@@ -109,7 +109,8 @@ export default function useRenkliTasModalData({
             (a) => (a.pk as string) == (item.pk as unknown),
           );
 
-          const condition = selectedItem != null;
+          const condition = selectedItem != null && 
+            selectedItem?.status === "Rezervli"
           const { adet, used_carat } = selectedItem || {};
           const firstMaliyet =
             item.menstrual_status == "Mixed"
@@ -121,7 +122,7 @@ export default function useRenkliTasModalData({
                 <input
                   className="h-4 w-4"
                   type="checkbox"
-                  defaultChecked={condition}
+                  defaultChecked={selectedItem != null}
                   name={item?.pk?.toString()}
                   onChange={(e) =>
                     handleCheck(

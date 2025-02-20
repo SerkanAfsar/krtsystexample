@@ -49,6 +49,20 @@ export default async function UretimDuzenle({ params }: { params: Params }) {
     throw new Error("Work Order Groups get error");
   }
 
+  const allowedGroups = [2, 7, 8, 9];
+  const userGroupIds = userGroups.map(group => group.id); 
+
+  if (!userGroupIds.some(id => allowedGroups.includes(id))) {
+    return (
+      <DefaultLayout>
+        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+          <h1>403 Forbidden</h1>
+          <p>Bu sayfaya erişim izniniz yok.</p>
+        </div>
+      </DefaultLayout>
+    );
+  }
+
   return (
     <DefaultLayout>
       <Breadcrumb

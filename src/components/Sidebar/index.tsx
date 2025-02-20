@@ -14,6 +14,8 @@ import { LiaRingSolid } from "react-icons/lia";
 
 import { RiExportFill, RiImportFill, RiStore3Fill } from "react-icons/ri";
 
+import { useUserStore } from "@/store/useUserStore";
+
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -24,6 +26,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
+  const { user } = useUserStore(); 
+  const userRoleID = user?.groups[0]?.id;
 
   let storedSidebarExpanded = "true";
 
@@ -619,6 +623,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         }`}
                       >
                         <ul className="mb-3 mt-4 flex flex-col gap-2.5 pl-3">
+                        {userRoleID === 2 && (
                           <li>
                             <Link
                               href="/Admin/IsEmirleri/UretimIsEmriEkle"
@@ -631,6 +636,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               Üretim İş Emri Ekle
                             </Link>
                           </li>
+                           )}
                           <li>
                             <Link
                               href="/Admin/IsEmirleri/UretimIsEmirleriListesi"

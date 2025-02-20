@@ -86,9 +86,7 @@ export default function IsEmriContainer() {
   const [gender, setGender] = useState<string>("");
   const [isWomanChecked, setIsWomanChecked] = useState<boolean>(false);
   const [isManChecked, setIsManChecked] = useState<boolean>(false);
-  const [modelList, setModelList] = useState<{ name: string; id: number }[]>(
-    [],
-  );
+  const [modelList, setModelList] = useState<{ name: string; id: number }[]>([]);
   const [model, setModel] = useState<{ name: string; id: number } | null>(null);
   const [values, setValues] = useState<ProductItemsType[]>(
     UrunGruplari.map((item) => {
@@ -245,6 +243,7 @@ export default function IsEmriContainer() {
                 </label>
                 <select
                   className="w-full rounded-lg border-[1.5px] border-stone-400 bg-white px-3 py-2 text-black outline-none focus:border-primary dark:bg-boxdark dark:text-white dark:focus:border-primary"
+                  defaultValue=""
                   onChange={(e) => {
                     const selectedModelId = e.target.value;
                     const selectedModel = modelList.find(
@@ -258,7 +257,7 @@ export default function IsEmriContainer() {
                     }
                   }}
                 >
-                  <option value="" disabled selected>
+                  <option value="" disabled >
                     Model Türü Seçiniz...
                   </option>
                   {modelList.map((item, index) => (

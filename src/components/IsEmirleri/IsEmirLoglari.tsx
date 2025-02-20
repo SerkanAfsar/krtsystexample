@@ -1,36 +1,53 @@
 import { formatDate, formatToCurrency } from "@/utils";
+import { useEffect, useState } from 'react';
 import {
   WorkOrderListType,
   WorkOrderLogType,
 } from "../../types/WorkOrder.types";
 import { GetWorkOrderLogsByWorkOrderId } from "@/Services/WorkOrder.Services";
 
-export default async function IsEmirleriLoglari({
+export default function IsEmirleriLoglari({
   id,
   workOrderLogs,
 }: {
   id?: number;
   workOrderLogs?: WorkOrderLogType[];
 }) {
-  let resultData: WorkOrderListType;
-  if (id) {
-    const result = await GetWorkOrderLogsByWorkOrderId({ id });
-    if (!result?.success) {
-      return <>{result.error ? result.error[0] : "Hata"}</>;
-    }
-    resultData = result.data as WorkOrderListType;
-  } else {
-    resultData = {
-      total_labor_cost:
-        workOrderLogs?.reduce((acc, next) => {
+  const [resultData, setResultData] = useState<WorkOrderListType | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (id) {
+        const result = await GetWorkOrderLogsByWorkOrderId({ id });
+        if (!result?.success) {
+          setError(result.error ? result.error[0] : "Hata");
+        } else {
+          setResultData(result.data as WorkOrderListType);
+        }
+      } else {
+        const totalLaborCost = workOrderLogs?.reduce((acc, next) => {
           return acc + Number(next.cost);
-        }, 0) || 0,
-      logs: workOrderLogs || [],
+        }, 0) || 0;
+        setResultData({
+          total_labor_cost: totalLaborCost,
+          logs: workOrderLogs || [],
+        });
+      }
+      setLoading(false);
     };
-  }
-  const newData = resultData.logs?.sort((a, b) => {
+
+    fetchData();
+  }, [id, workOrderLogs]);
+
+  if (loading) return <div>Yükleniyor...</div>;
+  if (error) return <>{error}</>;
+
+  const newData = resultData?.logs?.sort((a, b) => {
     return Number(a.id) - Number(b.id);
   });
+
   return (
     <div className="mb-1 mt-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="border-b border-stroke dark:border-strokedark">
@@ -67,13 +84,17 @@ export default async function IsEmirleriLoglari({
                 <span>{primary}</span>
                 <span>{secondary}</span>
               </div>
-              <div className="text-center">{item.from_group}</div>
               <div className="text-center">
-                {item.from_person.split("@")[0].split("-")[0]}
+              {item.from_group ? item.from_group : "-"}
               </div>
-              <div className="text-center">{item.to_group}</div>
               <div className="text-center">
-                {item.to_person.split("@")[0].split("-")[0]}
+                {item.from_person ? item.from_person.split("@")[0].split("-")[0] : "-"}
+              </div>
+              <div className="text-center">
+                {item.to_group ? item.to_group : "-"}
+              </div>
+              <div className="text-center">
+                {item.to_person ? item.to_person.split("@")[0].split("-")[0] : "-"}
               </div>
               <div className="text-center">
                 {`${formatToCurrency(item.cost || 0)} $`}

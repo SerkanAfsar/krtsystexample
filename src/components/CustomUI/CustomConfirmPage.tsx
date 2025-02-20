@@ -18,7 +18,7 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, ti
   const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
   const groupIdsMap: { [key: string]: number } = {
     "Pırlanta": 8,
-    "Sade": 1,
+    "Sade": 9,
     "Renkli Taş": 7,
     "default": 0
   };

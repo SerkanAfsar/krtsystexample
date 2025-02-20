@@ -48,6 +48,19 @@ export default async function UretimBaslatma({ params }: { params: Params }) {
   if (!groups.success) {
     throw new Error("Work Order Groups get error");
   }
+  const allowedGroups = [2, 1, 4, 5];
+  const userGroupIds = userGroups.map(group => group.id); 
+
+  if (!userGroupIds.some(id => allowedGroups.includes(id))) {
+    return (
+      <DefaultLayout>
+        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+          <h1>403 Forbidden</h1>
+          <p>Bu sayfaya erişim izniniz yok.</p>
+        </div>
+      </DefaultLayout>
+    );
+  }
 
   return (
     <DefaultLayout>
