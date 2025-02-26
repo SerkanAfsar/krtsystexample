@@ -73,7 +73,7 @@ export default function useGemProductData(redirectUrl: string) {
         totalNumberOfStones: item?.properties?.totalNumberOfStones,
         totalLaborCost: dolarFormat(item?.properties?.totalLaborCost as number),
         priceTag: dolarFormat(item?.properties?.priceTag as number),
-        tedarikci: null,
+        tedarikci: item?.supplier?.name || "Üretim",
         girisTarihi: item?.properties?.productionDate,
         ambar: item?.store?.name || null,
         islemler: islemlerArea({

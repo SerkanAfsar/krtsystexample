@@ -1,6 +1,7 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import IsEmriDuzenleContainer from "@/Containers/IsEmriDuzenleContainer";
+import IsEmriSelectContainer from "@/Containers/IsEmriSelectContainer";
+
 import { cookies } from "next/headers";
 import {
   GetWorkOrderById,
@@ -74,11 +75,12 @@ export default async function UretimDuzenle({ params }: { params: Params }) {
         ]}
         pageName={`ID: ${workOrderData.id} İş Emri Bilgileri ${workOrderData.status === "Completed" ? " - (Tamamlanmış)" : ""}`}
       />
-      <IsEmriDuzenleContainer
+      <IsEmriSelectContainer
         userId={userId}
         isAdmin={isAdmin}
         workOrderData={workOrderData}
         workOrderGroups={(groups?.data as WorkOrderTeamGroupType[]) || []}
+        page={"kasa"}
       />
     </DefaultLayout>
   );

@@ -99,6 +99,7 @@ interface ISadeData {
   renk: string;
   gram: string;
   has: string;
+  modelKodu: string;
   model: string;
   maliyet: string;
 }
@@ -113,6 +114,7 @@ export const SadeModalHeaders: (Column<ISadeData> & {
   { Header: "Renk", accessor: "renk" },
   { Header: "Gram", accessor: "gram" },
   { Header: "Has", accessor: "has" },
+  { Header: "Model Kodu", accessor: "modelKodu" },
   { Header: "Model", accessor: "model" },
   { Header: "Maliyet", accessor: "maliyet" },
 ];
@@ -174,6 +176,10 @@ export const PirlantaModalHeaders: (Column<IData> & {
   {
     Header: "Karat",
     accessor: "carat",
+  },
+  {
+    Header: "Berraklık",
+    accessor: "berraklik",
   },
   {
     Header: "Renk",
