@@ -100,12 +100,11 @@ export const getDolarKuru = async () => {
 
 const returnResult = (elem: HTMLElement): CurrencyType => {
   const liItem = elem.querySelectorAll("li");
-
   return {
     isim: liItem[0].innerText,
     alis: liItem[1].innerText,
     satis: liItem[2].innerText,
     degisim: liItem[3].innerText.replace("%", ""),
-    zaman: liItem[4].innerText,
+    //zaman: liItem[4].innerText,
   };
 };

@@ -243,6 +243,7 @@ export default function UrunGruplariModul({
             renk: item.product.properties.altinRengi,
             gram: item.product.properties.gram,
             has: item.product.properties.hasGrami,
+            modelKodu: item.product.properties.modelKodu,
             model: item.product.properties.modelTuru,
             modelTuru: item.product.properties.modelTuru,
             maliyet: `${formatToCurrency(item.cost)} $`,

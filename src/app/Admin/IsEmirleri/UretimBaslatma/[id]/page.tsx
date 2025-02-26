@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import IsEmriBaslatmaContainer from "@/Containers/IsEmriBaslatmaContainer";
+import IsEmriSelectContainer from "@/Containers/IsEmriSelectContainer";
 import { cookies } from "next/headers";
 import {
   GetWorkOrderById,
@@ -73,11 +73,12 @@ export default async function UretimBaslatma({ params }: { params: Params }) {
         ]}
         pageName={`ID: ${workOrderData.id} İş Emri Bilgileri ${workOrderData.status === "Completed" ? " - (Tamamlanmış)" : ""}`}
       />
-      <IsEmriBaslatmaContainer
+      <IsEmriSelectContainer
         userId={userId}
         isAdmin={isAdmin}
         workOrderData={workOrderData}
         workOrderGroups={(groups?.data as WorkOrderTeamGroupType[]) || []}
+        page={"atolye"}
       />
 
     </DefaultLayout>

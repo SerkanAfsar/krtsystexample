@@ -37,6 +37,7 @@ export default function useSadeModalData({
         altinRengi: renk,
         gram,
         hasGrami: has,
+        modelKodu,
         modelTuru: model,
         ayar,
         img,
@@ -52,6 +53,7 @@ export default function useSadeModalData({
         renk,
         gram,
         has,
+        modelKodu,
         model,
         maliyet: `${formatToCurrency(firstPrice)} $`,
         firstPrice,
@@ -124,6 +126,7 @@ export default function useSadeModalData({
                 />
               </div>
             ) : null,
+            modelKodu: item?.properties?.modelKodu,
             code: item.code,
             renk: item?.properties?.altinRengi,
             gram: item?.properties?.gram,

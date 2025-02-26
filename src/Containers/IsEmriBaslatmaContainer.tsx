@@ -328,6 +328,7 @@ export default function IsEmriBaslatmaContainer({
                 {[
                   "ID",
                   "Kod",
+                  "Resim",
                   "Ürün Tipi",
                   "Adet",
                   "Kullanılan Karat",
@@ -353,6 +354,17 @@ export default function IsEmriBaslatmaContainer({
                     <tr key={product.id}>
                       <td className="p-2 text-sm">{product.product.pk}</td>
                       <td className="p-2 text-sm">{product.product.code || "-"}</td>
+                      <td className="p-2 text-sm">
+                        {product.product.image ? (
+                          <img 
+                          src={product.product.image} 
+                          alt="Ürün Resmi" 
+                          className="w-10 h-10" 
+                          />
+                        ) : (
+                          "-"
+                        )}
+                      </td>
                       <td className="p-2 text-sm">
                       {product.product.type === "Simple" 
                         ? "Sade" 

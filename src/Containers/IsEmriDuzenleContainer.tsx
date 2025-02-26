@@ -27,6 +27,9 @@ import { toast } from "react-toastify";
 import { WorkOrderQueueApiService } from "@/ApiServices/WorkOrders.ApiService";
 import { MucevherCode } from "@/utils/Mucevher.Utils";
 import { GetWorkOrderProductList } from "@/Services/WorkOrder.Services";
+import ReactQuill from 'react-quill';
+import { useUserStore } from "@/store/useUserStore";
+
 
 const UrunGruplari: UrunGruplariModulType[] = [
   {
@@ -37,6 +40,7 @@ const UrunGruplari: UrunGruplariModulType[] = [
       { title: "Renk", accessor: "renk" },
       { title: "Gram", accessor: "gram" },
       { title: "Has", accessor: "has" },
+      { title: "Model Kodu", accessor: "modelKodu" },
       { title: "Model", accessor: "model" },
       { title: "Maliyet", accessor: "maliyet" },
       { title: "Fiyat", accessor: "fiyat" },
@@ -121,6 +125,19 @@ export default function IsEmriDuzenleContainer ({
   const { name: type } = renkliTasArr?.length ? renkliTasArr[0] : {};
   const isCondition = pirlantaArr?.some((a) => a.renk == "BLACK");
   const initialTotalPrice = useRef<number>(0); 
+
+  const { user } = useUserStore(); 
+  const userRoleID = user?.groups[0]?.id;
+
+  const modules = {
+    toolbar: [
+      [{ 'header': [1, 2, false] }],
+      ['bold', 'italic', 'underline'],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' }],
+      [{ align: [] }],
+    ],
+  };
+
 
   const fetchWorkOrderProducts = async (id: number) => {
     const response = await GetWorkOrderProductList({
@@ -320,12 +337,13 @@ export default function IsEmriDuzenleContainer ({
             <label className="text-sm font-bold text-black dark:text-white">
               Üretim Müdürü Açıklaması
             </label>
-            <textarea
-              readOnly
-              rows={3}
+            <ReactQuill
               value={description}
-              placeholder= {workOrderData.description}
-              className="w-full rounded-lg border-[1.5px] border-stone-400 bg-white px-5 py-3 text-black outline-none focus:border-primary dark:bg-boxdark dark:text-white dark:focus:border-primary"
+              onChange={setDescription}
+              modules={modules}
+              theme="snow"
+              className="h-auto overflow-y-auto"
+              readOnly={![8, 2].includes(Number(userRoleID))}
             />
           </div>
         </div>

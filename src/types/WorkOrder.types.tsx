@@ -7,6 +7,7 @@ export type WorkOrderProductType = {
   price: number | null;
   type?: string | null;
   ayar?: string | null;
+  modelKodu?: string | null;
   modelTuru?: string | null;
   renk?: string | null;
   name?: string | null;

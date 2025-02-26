@@ -28,6 +28,9 @@ import { useRouter } from "next/navigation";
 import { WorkOrderQueueApiService } from "@/ApiServices/WorkOrders.ApiService";
 import { MucevherCode } from "@/utils/Mucevher.Utils";
 
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 const UrunGruplari: UrunGruplariModulType[] = [
   {
     buttonText: "Sade Ekle",
@@ -37,6 +40,7 @@ const UrunGruplari: UrunGruplariModulType[] = [
       { title: "Renk", accessor: "renk" },
       { title: "Gram", accessor: "gram" },
       { title: "Has", accessor: "has" },
+      { title: "Model Kodu", accessor: "modelKodu" },
       { title: "Model", accessor: "model" },
       { title: "Maliyet", accessor: "maliyet" },
       { title: "İşlemler", accessor: "islemler" },
@@ -105,6 +109,16 @@ export default function IsEmriContainer() {
   const { name: type } = renkliTasArr?.length ? renkliTasArr[0] : {};
 
   const isCondition = pirlantaArr?.some((a) => a.renk == "BLACK");
+
+  const modules = {
+    toolbar: [
+      [{ 'header': [1, 2, false] }],
+      ['bold', 'italic', 'underline'],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' }],
+      [{ align: [] }],
+    ],
+  };
+
 
   const handleCheckboxChange = (type: "Kadın" | "Erkek", checked: boolean) => {
     if (type === "Kadın") {
@@ -308,13 +322,13 @@ export default function IsEmriContainer() {
                 <label className="text-sm font-medium text-black dark:text-white">
                   Üretim Müdürü Açıklaması
                 </label>
-                <textarea
-                  rows={3}
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Üretim Müdürü Açıklaması..."
-                  className="w-full rounded-lg border-[1.5px] border-stone-400 bg-white px-5 py-3 text-black outline-none focus:border-primary dark:bg-boxdark dark:text-white dark:focus:border-primary"
-                />
+                  <ReactQuill
+                    value={description}
+                    onChange={setDescription}
+                    modules={modules}
+                    theme="snow"
+                    className="h-auto overflow-y-auto"
+                  />
               </div>
             </div>
           </div>
