@@ -5,7 +5,7 @@ import React, { useState, useCallback, useEffect, useRef } from "react";
 import { ProductListType } from "../../types/types";
 import { ResponseResult } from "../../types/responseTypes";
 import { SeciliUrunType } from "@/components/IsEmirleri/UrunGruplariModul";
-import { formatToCurrency, hasDecimal } from "@/utils";
+import { formatToCurrency } from "@/utils";
 import { GetWorkOrderProductListModalService } from "@/Services/WorkOrder.Services";
 import CustomModalInput from "@/components/CustomModalInput";
 
@@ -183,9 +183,7 @@ export default function useRenkliTasModalData({
                 />
                 <span className="text-md font-bold">
                   &nbsp;/&nbsp;
-                  {hasDecimal(Number(item?.properties?.remaining_carat))
-                    ? Number(item?.properties?.remaining_carat).toFixed(2)
-                    : item?.properties?.remaining_carat}
+                  {Number(item?.properties?.remaining_carat).toFixed(2)}
                 </span>
               </div>
             ),

@@ -29,7 +29,7 @@ export default function RenkliTasDetayContainer({
   const resultCallBack = useCallback((value: any) => {
     const carat = Number(value?.carat || 0);
     const total_cost = (
-      Number(value?.pricePerCarat?.toString().replace(",", ".") || 1) * carat
+      Number(value?.pricePerCarat?.toString().replace(",", ".") || 1) * carat * 1.1
     ).toFixed(2);
 
     return {

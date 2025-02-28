@@ -3,7 +3,7 @@ import { ResponseResult } from "../../types/responseTypes";
 import { ProductListType, ProductType } from "../../types/types";
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { SeciliUrunType } from "@/components/IsEmirleri/UrunGruplariModul";
-import { formatToCurrency, hasDecimal } from "@/utils";
+import { formatToCurrency } from "@/utils";
 import { GetWorkOrderProductListModalService } from "@/Services/WorkOrder.Services";
 import CustomModalInput from "@/components/CustomModalInput";
 
@@ -170,9 +170,7 @@ export default function usePirlantaModalData({
           />
           <span className="text-md font-bold">
             &nbsp;/&nbsp;
-            {hasDecimal(Number(item?.properties?.remaining_carat))
-              ? Number(item?.properties?.remaining_carat).toFixed(2)
-              : item?.properties?.remaining_carat}
+            {Number(item?.properties?.remaining_carat).toFixed(2)}
           </span>
         </div>
       ),

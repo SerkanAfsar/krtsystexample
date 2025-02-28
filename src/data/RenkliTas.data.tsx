@@ -19,7 +19,6 @@ export const RenkliTasRenkListesi: CustomOptionType[] = [
   { titleVal: "Teal", valueVal: "Teal" },
   { titleVal: "Maroon", valueVal: "Maroon" },
   { titleVal: "Coral", valueVal: "Coral" },
-  { titleVal: "Coral", valueVal: "Coral" },
   { titleVal: "Lavender", valueVal: "Lavender" },
   { titleVal: "Magenta", valueVal: "Magenta" },
   { titleVal: "Olive", valueVal: "Olive" },
@@ -330,6 +329,61 @@ export const RenkliTasListesiData: CustomOptionType[] = [
     valueVal: "Zoisite",
     extraValue: "YD",
   },
+  {
+    titleVal: "Diff Sapphire",
+    valueVal: "Diff Sapphire",
+    extraValue: "SP",
+  },
+  {
+    titleVal: "Ruby Light",
+    valueVal: "Ruby Light",
+    extraValue: "RB",
+  },
+  {
+    titleVal: "Ametist",
+    valueVal: "Ametist",
+    extraValue: "YD",
+  },
+  {
+    titleVal: "Turmalin",
+    valueVal: "Turmalin",
+    extraValue: "YD",
+  },
+  {
+    titleVal: "Pink Quartz",
+    valueVal: "Pink Quartz",
+    extraValue: "YD",
+  },
+  {
+    titleVal: "Coral",
+    valueVal: "Coral",
+    extraValue: "YD",
+  },
+  {
+    titleVal: "Tsavorit Garnet",
+    valueVal: "Tsavorit Garnet",
+    extraValue: "YD",
+  },
+  {
+    titleVal: "Spinal",
+    valueVal: "Spinal",
+    extraValue: "YD",
+  },
+  {
+    titleVal: "Multi Tourmaline",
+    valueVal: "Multi Tourmaline",
+    extraValue: "YD",
+  },
+  {
+    titleVal: "Green Tourmaline",
+    valueVal: "Green Tourmaline",
+    extraValue: "YD",
+  },
+  {
+    titleVal: "Mother Of Pearl",
+    valueVal: "Mother Of Pearl",
+    extraValue: "YD",
+  },
 ];
 
 export const RenkliTasListesiKesimData: CustomOptionType[] = [
@@ -384,6 +438,30 @@ export const RenkliTasListesiKesimData: CustomOptionType[] = [
   {
     titleVal: "CABOCHON",
     valueVal: "CABOCHON",
+  },
+  {
+    titleVal: "SQUARE",
+    valueVal: "SQUARE",
+  },
+  {
+    titleVal: "OCTAGON",
+    valueVal: "OCTAGON",
+  },
+  {
+    titleVal: "ROSE CUT",
+    valueVal: "ROSE CUT",
+  },
+  {
+    titleVal: "MIX CUT",
+    valueVal: "MIX CUT",
+  },
+  {
+    titleVal: "ORIGINAL",
+    valueVal: "ORIGINAL",
+  },
+  {
+    titleVal: "KITE",
+    valueVal: "KITE",
   },
 ];
 

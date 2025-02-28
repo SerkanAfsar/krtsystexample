@@ -279,7 +279,7 @@ export default function IsEmriDuzenleContainer ({
         <div className="flex w-full justify-between mt-10">
         {/* model kısmı */}
           <div className="flex flex-col gap-4 w-1/4">
-            <label className="text-sm font-bold text-black dark:text-white">
+            <label className="text-sm mt-2 font-bold text-black dark:text-white">
               Model Türü
             </label>
             <select disabled className="w-full rounded-lg border-[1.5px] border-stone-400 bg-white px-3 py-2 text-black outline-none focus:border-primary dark:bg-boxdark dark:text-white dark:focus:border-primary"
@@ -287,7 +287,7 @@ export default function IsEmriDuzenleContainer ({
                 >
               <option>{model}</option>
             </select>
-            <div className="flex items-center gap-4 ml-2">
+            <div className="flex mt-2 items-center gap-4 ml-2">
             <label className="flex items-center text-sm font-medium text-black dark:text-white">
               <input
                 disabled
@@ -311,7 +311,7 @@ export default function IsEmriDuzenleContainer ({
             </div>
           </div>
           {/* maliyet */}
-          <div className="w-2/5 mx-auto">
+          <div className="w-2/5 mx-auto mt-2">
             <h2 className="text-sm font-bold dark:text-white text-black ml-6 mb-1">Maliyetler</h2>
             <table className="w-full border-collapse">
               <tbody>
@@ -326,8 +326,8 @@ export default function IsEmriDuzenleContainer ({
                     className={`${highlight ? "text-green-400 font-semibold" : "text-black dark:text-white"} 
                     ${border ? "border-t border-black dark:border-white" : ""}`} 
                   >
-                    <td className="text-sm py-0.5 px-1 text-left pl-6">{label} :</td>
-                    <td className="text-sm py-0.5 px-1 text-right pr-4">{`${value} $`}</td>
+                    <td className="text-sm py-3 px-1 text-left pl-6">{label} :</td>
+                    <td className="text-sm py-3 px-1 text-right pr-4">{`${value} $`}</td>
                   </tr>
                 ))}
               </tbody>
@@ -335,17 +335,19 @@ export default function IsEmriDuzenleContainer ({
           </div>
           {/* açıklama */}
           <div className="flex flex-col gap-2 w-1/2 ml-2">
-            <label className="text-sm font-bold text-black dark:text-white">
+            <label className="text-sm mt-2 font-bold text-black dark:text-white">
               Üretim Müdürü Açıklaması
             </label>
+            <div className="h-[250px]">
             <ReactQuill
               value={description}
               onChange={setDescription}
               modules={modules}
               theme="snow"
-              className="h-auto overflow-y-auto"
+              className="h-[200px] max-h-[200px]"
               readOnly={![8, 2].includes(Number(userRoleID))}
             />
+            </div>
           </div>
         </div>
       </div>
