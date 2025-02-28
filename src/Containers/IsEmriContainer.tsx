@@ -249,14 +249,14 @@ export default function IsEmriContainer() {
             {/*<div className="float-right flex w-full items-center justify-between text-black text-sm font-medium border-b-2 py-1 border-stone-200">
             İş Emri ID: {isEmriCode}
         </div>*/}
-            <div className="mt-10 flex w-full justify-between">
+            <div className="flex w-full justify-between">
               {/* model kısmı */}
               <div className="flex w-1/4 flex-col gap-4">
                 <label className="text-sm font-medium text-black dark:text-white">
                   Model Türü
                 </label>
                 <select
-                  className="w-full rounded-lg border-[1.5px] border-stone-400 bg-white px-3 py-2 text-black outline-none focus:border-primary dark:bg-boxdark dark:text-white dark:focus:border-primary"
+                  className="w-full mt-2 rounded-lg border-[1.5px] border-stone-400 bg-white px-3 py-2 text-black outline-none focus:border-primary dark:bg-boxdark dark:text-white dark:focus:border-primary"
                   defaultValue=""
                   onChange={(e) => {
                     const selectedModelId = e.target.value;
@@ -280,7 +280,7 @@ export default function IsEmriContainer() {
                     </option>
                   ))}
                 </select>
-                <div className="ml-2 flex items-center gap-4">
+                <div className="ml-2 mt-2 flex items-center gap-4">
                   <label className="flex items-center text-sm font-medium text-black dark:text-white">
                     <input
                       type="checkbox"
@@ -312,7 +312,7 @@ export default function IsEmriContainer() {
                 <label className="text-sm text-black dark:text-white">
                   Maliyetler
                 </label>
-                <label className="text-sm font-bold text-black dark:text-white">
+                <label className="text-sm font-bold text-black dark:text-white mt-2">
                   Toplam Malzeme Maliyeti :{" "}
                   <span className="font-bold text-black underline dark:text-white">{`${formatToCurrency(totalPrice)} $`}</span>
                 </label>
@@ -322,13 +322,15 @@ export default function IsEmriContainer() {
                 <label className="text-sm font-medium text-black dark:text-white">
                   Üretim Müdürü Açıklaması
                 </label>
+                <div className="h-[250px]">
                   <ReactQuill
                     value={description}
                     onChange={setDescription}
                     modules={modules}
                     theme="snow"
-                    className="h-auto overflow-y-auto"
+                    className="h-[200px] max-h-[200px]"
                   />
+                </div>
               </div>
             </div>
           </div>
