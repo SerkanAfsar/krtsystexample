@@ -59,11 +59,8 @@ const PirlantaDetayContainer = ({
       if (value.menstrual_status == "Sertifikasız") {
         if (value.boy === "00" && value.pricePerCarat) {
           value.elek1 = "60-80";
-          value.carpan1 = "1.10";
           value.elek2 = "80-100";
-          value.carpan2 = "1.00";
           value.elek3 = "100-125";
-          value.carpan3 = "0.92";
           if (
             validateKaratSum(
               value?.karat1,
@@ -76,11 +73,8 @@ const PirlantaDetayContainer = ({
           }
         } else if (value.boy === "0.01-0.03" && value.pricePerCarat) {
           value.elek1 = "130-140";
-          value.carpan1 = "0.92";
           value.elek2 = "140-160";
-          value.carpan2 = "1.00";
           value.elek3 = "160-165";
-          value.carpan3 = "1.10";
           if (
             validateKaratSum(
               value?.karat1,
@@ -93,11 +87,8 @@ const PirlantaDetayContainer = ({
           }
         } else if (value.boy === "0.03-0.07" && value.pricePerCarat) {
           value.elek1 = "170-190";
-          value.carpan1 = "0.92";
           value.elek2 = "190-220";
-          value.carpan2 = "1.00";
           value.elek3 = "220-265";
-          value.carpan3 = "1.10";
           if (
             validateKaratSum(
               value?.karat1,
@@ -110,11 +101,8 @@ const PirlantaDetayContainer = ({
           }
         } else if (value.boy === "0.08-0.13" && value.pricePerCarat) {
           value.elek1 = "270-290";
-          value.carpan1 = "0.92";
           value.elek2 = "290-310";
-          value.carpan2 = "1.00";
           value.elek3 = "310-320";
-          value.carpan3 = "1.10";
           if (
             validateKaratSum(
               value?.karat1,
@@ -141,7 +129,7 @@ const PirlantaDetayContainer = ({
       ).toFixed(2);
       const toplamKarat = Number(value?.carat);
 
-      if (value?.karat1 && Number(pricePerCarat) != 0) {
+      if (value?.karat1 && value?.carpan1 && value?.carat && pricePerCarat) {
         value.karat1 = value?.karat1.replace(",", ".");
         value.anaMaliyet1 = (
           Number(pricePerCarat) * Number(value?.carpan1)
@@ -157,7 +145,7 @@ const PirlantaDetayContainer = ({
         value.lot2 = "C";
         value.lot3 = "D";
       }
-      if (value?.karat2 && Number(pricePerCarat) != 0) {
+      if (value?.karat2 && value?.carpan2 && value?.carat && pricePerCarat) {
         value.karat2 = value?.karat2.replace(",", ".");
         value.anaMaliyet2 = (
           Number(pricePerCarat) * Number(value?.carpan2)
@@ -173,7 +161,7 @@ const PirlantaDetayContainer = ({
         value.lot2 = "C";
         value.lot3 = "D";
       }
-      if (value?.karat3 && Number(pricePerCarat) != 0) {
+      if (value?.karat3 && value?.carpan3 && value?.carat && pricePerCarat) {
         value.karat3 = value?.karat3.replace(",", ".");
         value.anaMaliyet3 = (
           Number(pricePerCarat) * Number(value?.carpan3)
@@ -201,10 +189,7 @@ const PirlantaDetayContainer = ({
         Number(value.ppc3)
       ).toFixed(2);
 
-      const totalCoastResult =
-        value.menstrual_status == "Sertifikalı"
-          ? total_costOne.toFixed(2)
-          : (Number(total_costOne) * 1.1).toFixed(2);
+      const totalCoastResult = (Number(total_costOne) * 1.1).toFixed(2)
 
       //const poPrice = (Number(pricePerCarat) * Number(value.carat)).toFixed(2);
       return {
@@ -249,8 +234,9 @@ const PirlantaDetayContainer = ({
         return { ...acc2 };
       }, {});
       if (
-        next.keyString === "product_certificate1" ||
-        next.keyString === "product_certificate2"
+        (data.menstrual_status === "Sertifikalı") &&
+        (next.keyString === "product_certificate1" ||
+        next.keyString === "product_certificate2")
       ) {
         return {
           ...acc,

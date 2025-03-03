@@ -52,12 +52,12 @@ export default function useGemProductData(redirectUrl: string) {
           </div>
         ),
         resim: item.image && (
-          <div className="flex h-full w-full items-center justify-center">
+          <div className="flex  w-full items-center justify-center align-middle">
             <Image
               src={item.image as string}
-              width={60}
-              height={50}
-              className="cursor-pointer"
+              width={50}
+              height={60}
+              className="cursor-pointer h-[25px] w-auto object-contain"
               onClick={() => {
                 setIsOpen(true);
                 setImageUrl(item.image as string);

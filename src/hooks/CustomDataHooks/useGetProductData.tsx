@@ -118,10 +118,10 @@ export default function useGetProductData(
                   width={40}
                   height={40}
                   style={{
-                    width: "60px",
+                    width: "35px",
                     cursor: "pointer",
                     height: "auto",
-                    maxHeight: "60px",
+                    maxHeight: "35px",
                   }}
                   alt={item.code as string}
                   onClick={() => {

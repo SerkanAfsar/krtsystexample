@@ -94,7 +94,11 @@ const CustomDatatable = ({
                       column.isLarge ? "w-65" : "w-40",
                       column.id == "islemler" && "w-28",
                       "!border border-stroke",
-                      column.columns?.length && "w-[460px]",
+                      column.columns?.length
+                      ? column.columns.some((col) => col.Header === "Karat")
+                        ? "w-[360px]"
+                        : "w-[460px]"
+                      : "",
                       "last:sticky last:inset-0 last:z-30 last:bg-gray-3",
                     )}
                     {...column.getHeaderProps()}
@@ -299,7 +303,7 @@ const CustomDatatable = ({
         className && className,
       )}
     >
-      <div className="sticky inset-0  z-99 flex w-full items-center justify-between rounded-sm bg-white  px-8  pb-4 pt-4 ">
+      <div className="sticky inset-0  z-99 flex w-full items-center justify-between rounded-sm bg-white  px-8  pb-4 pt-4">
         <div className="w-100">
           <input
             type="text"
@@ -362,18 +366,21 @@ const CustomDatatable = ({
                           || cell.column.Header === "Toplam"
                           || cell.column.Header === "Toplam İşçilik"
                           || cell.column.Header === "Etiket Fiyatı"
-                          || cell.column.Header === "İşçilik") && "text-right"
+                          || cell.column.Header === "İşçilik") && "text-right",
+                          cell.column.Header === "Resim" && "w-[55px] h-[55px] overflow-hidden"
 
                       )}
                       {...cell.getCellProps()}
                       key={`cell-${key}`}
                     >
                       {setFirstCenter ? (
-                        <div className="flex h-full w-full items-center justify-center">
+                        <div className="flex h-2 w-full items-center justify-center">
                           {cell.render("Cell")}
                         </div>
                       ) : (
-                        <>{cell.render("Cell")}</>
+                        <div className="items-center justify-center h-1 pb-1 mt-[-10px]">
+                        {cell.render("Cell")}
+                      </div>
                       )}
                     </td>
                   );
