@@ -89,6 +89,9 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
               placeholder={item.placeholder ?? undefined}
               name={name}
               onChange={(e) => {
+                if (name === "girdle") {
+                  e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, ""); 
+                }
                 if (
                   !maxLenght ||
                   (maxLenght && e.target.value.length <= maxLenght)
@@ -114,6 +117,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
                       )
                     ? "text-blue-500"
                     : "text-black",
+                name?.includes("carpan") && "appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-moz-appearance]:textfield"
               )}
               {...rest}
             />

@@ -38,11 +38,11 @@ const UrunGruplari: UrunGruplariModulType[] = [
     headerColumns: [
       { title: "Ürün Kodu", accessor: "code" },
       { title: "Resim", accessor: "resim", isCenter: true },
+      { title: "Model Kodu", accessor: "modelKodu" },
+      { title: "Model", accessor: "model" },
       { title: "Renk", accessor: "renk" },
       { title: "Gram", accessor: "gram" },
       { title: "Has", accessor: "has" },
-      { title: "Model Kodu", accessor: "modelKodu" },
-      { title: "Model", accessor: "model" },
       { title: "Maliyet", accessor: "maliyet" },
       { title: "Fiyat", accessor: "fiyat" },
       { title: "Nerede", accessor: "nerede" },

@@ -111,11 +111,11 @@ export const SadeModalHeaders: (Column<ISadeData> & {
   { Header: "Seç", accessor: "sec", isCenter: true },
   { Header: "Resim", accessor: "resim", isCenter: true },
   { Header: "Ürün Kodu", accessor: "code" },
+  { Header: "Model Kodu", accessor: "modelKodu" },
+  { Header: "Model", accessor: "model" },
   { Header: "Renk", accessor: "renk" },
   { Header: "Gram", accessor: "gram" },
   { Header: "Has", accessor: "has" },
-  { Header: "Model Kodu", accessor: "modelKodu" },
-  { Header: "Model", accessor: "model" },
   { Header: "Maliyet", accessor: "maliyet" },
 ];
 

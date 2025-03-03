@@ -1264,12 +1264,12 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "girdle",
-        type: "number",
-        title: "Alpha Numric",
-        placeholder: "Alpha Numric Giriniz...",
+        type: "text",
+        title: "Girdle",
+        placeholder: "Girdle Giriniz...",
         required: true,
         relativeTo: "sertifika",
-        requiredMessage: "Alpha Numric Değeri Boş Bırakılamaz",
+        requiredMessage: "Girdle Değeri Boş Bırakılamaz",
         span: 4,
       },
     ],
@@ -1481,6 +1481,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         relativeTo: "menstrual_status",
         span: 4,
         isConstant: true,
+        value: "1.10"
       },
       {
         name: "anaMaliyetPPC",
@@ -1550,12 +1551,11 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "carpan1",
-        type: "text",
+        type: "number",
         title: "Çarpan",
         placeholder: "0",
         relativeTo: "menstrual_status",
-        required: false,
-        disabled: true,
+        required: true,
         span: 1,
       },
       {
@@ -1621,12 +1621,11 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "carpan2",
-        type: "text",
+        type: "number",
         title: `${" "}`,
         placeholder: "0",
         relativeTo: "menstrual_status",
-        required: false,
-        disabled: true,
+        required: true,
         span: 1,
       },
       {
@@ -1692,12 +1691,11 @@ export const AddStoneSections: Array<FormSectionType> = [
       },
       {
         name: "carpan3",
-        type: "text",
+        type: "number",
         title: `${" "}`,
         placeholder: "0",
         relativeTo: "menstrual_status",
-        required: false,
-        disabled: true,
+        required: true,
         span: 1,
       },
       {
