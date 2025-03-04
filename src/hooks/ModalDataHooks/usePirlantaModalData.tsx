@@ -59,6 +59,7 @@ export default function usePirlantaModalData({
     if (target.checked) {
 
       if (isDuzenleContainer) {
+        item.fiyat = item.maliyet; 
         item.nerede = "Pırlanta Kasa"; 
         item.status = "Rezervli"; 
       }

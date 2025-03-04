@@ -39,6 +39,7 @@ const UrunGruplari: UrunGruplariModulType[] = [
       { title: "Resim", accessor: "resim", isCenter: true },
       { title: "Model Kodu", accessor: "modelKodu" },
       { title: "Model", accessor: "model" },
+      { title: "Ayar", accessor: "ayar" },
       { title: "Renk", accessor: "renk" },
       { title: "Gram", accessor: "gram" },
       { title: "Has", accessor: "has" },
@@ -205,11 +206,11 @@ export default function IsEmriContainer() {
     const condition = lastData.workorder_products.some(
       (a: WorkOrderProductType) => a.type == "Sade",
     );
-    if (!condition) {
+    /*if (!condition) {
       return toast.error("Üretimde En Az 1 Adet Sade Seçilmesi Zorunludur!", {
         position: "top-right",
       });
-    }
+    }*/
 
     if (!pirlantaArr?.length && !renkliTasArr?.length) {
       return toast.error("Üretimde En Az 1 Adet Taş Seçilmesi Zorunludur!", {

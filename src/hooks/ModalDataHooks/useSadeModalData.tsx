@@ -4,7 +4,7 @@ import { ProductListType } from "../../types/types";
 import React, { useState, useCallback, useEffect } from "react";
 import { SeciliUrunType } from "@/components/IsEmirleri/UrunGruplariModul";
 import { formatToCurrency } from "@/utils";
-import { SadeAltinKarsiliklari } from "@/utils/Sade.Utils";
+//import { SadeAltinKarsiliklari } from "@/utils/Sade.Utils";
 
 import { GetWorkOrderProductListModalService } from "@/Services/WorkOrder.Services";
 import Image from "next/image";
@@ -36,10 +36,10 @@ export default function useSadeModalData({
         code,
         modelKodu,
         modelTuru: model,
+        ayar,
         altinRengi: renk,
         gram,
         hasGrami: has,
-        ayar,
         img,
         firstPrice,
         image,
@@ -52,6 +52,8 @@ export default function useSadeModalData({
         resim: img,
         modelKodu,
         model,
+        ayar,
+        //ayar: SadeAltinKarsiliklari(ayar),
         renk,
         gram,
         has,
@@ -59,7 +61,6 @@ export default function useSadeModalData({
         firstPrice,
         type: "Sade",
         modelTuru,
-        ayar: SadeAltinKarsiliklari(ayar),
       };
 
       if (isDuzenleContainer) {
@@ -127,6 +128,7 @@ export default function useSadeModalData({
               </div>
             ) : null,
             modelKodu: item?.properties?.modelKodu,
+            ayar: item?.properties?.ayar,
             code: item.code,
             renk: item?.properties?.altinRengi,
             gram: item?.properties?.gram,

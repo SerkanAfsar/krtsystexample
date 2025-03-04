@@ -40,6 +40,7 @@ const UrunGruplari: UrunGruplariModulType[] = [
       { title: "Resim", accessor: "resim", isCenter: true },
       { title: "Model Kodu", accessor: "modelKodu" },
       { title: "Model", accessor: "model" },
+      { title: "Ayar", accessor: "ayar" },
       { title: "Renk", accessor: "renk" },
       { title: "Gram", accessor: "gram" },
       { title: "Has", accessor: "has" },
@@ -63,6 +64,7 @@ const UrunGruplari: UrunGruplariModulType[] = [
       { title: "Renk", accessor: "renk" },
       { title: "Adet", accessor: "adet" },
       { title: "Maliyet", accessor: "maliyet" },
+      { title: "Fiyat", accessor: "fiyat" },
       { title: "Nerede", accessor: "nerede" },
       { title: "Status", accessor: "status" },
       { title: "İşlemler", accessor: "islemler" },
@@ -81,6 +83,7 @@ const UrunGruplari: UrunGruplariModulType[] = [
       { title: "Renk", accessor: "renk" },
       { title: "Adet", accessor: "adet" },
       { title: "Maliyet", accessor: "maliyet" },
+      { title: "Fiyat", accessor: "fiyat" },
       { title: "Nerede", accessor: "nerede" },
       { title: "Status", accessor: "status" },
       { title: "İşlemler", accessor: "islemler" },
@@ -237,11 +240,11 @@ export default function IsEmriDuzenleContainer ({
     const condition = lastData.workorder_products.some(
       (a: WorkOrderProductType) => a.type == "Sade",
     );
-    if (!condition) {
+    /*if (!condition) {
       return toast.error("Üretimde En Az 1 Adet Sade Seçilmesi Zorunludur!", {
         position: "top-right",
       });
-    }
+    }*/
 
     if (!pirlantaArr?.length && !renkliTasArr?.length) {
       return toast.error("Üretimde En Az 1 Adet Taş Seçilmesi Zorunludur!", {

@@ -66,6 +66,7 @@ export default function useRenkliTasModalData({
     if (target.checked) {
 
       if (isDuzenleContainer) {
+        item.fiyat = item.maliyet; 
         item.nerede = "Renkli Taş Kasa"; 
         item.status = "Rezervli"; 
       }

@@ -102,6 +102,7 @@ interface ISadeData {
   modelKodu: string;
   model: string;
   maliyet: string;
+  ayar: string;
 }
 
 export const SadeModalHeaders: (Column<ISadeData> & {
@@ -113,6 +114,7 @@ export const SadeModalHeaders: (Column<ISadeData> & {
   { Header: "Ürün Kodu", accessor: "code" },
   { Header: "Model Kodu", accessor: "modelKodu" },
   { Header: "Model", accessor: "model" },
+  { Header: "Ayar", accessor: "ayar" },
   { Header: "Renk", accessor: "renk" },
   { Header: "Gram", accessor: "gram" },
   { Header: "Has", accessor: "has" },

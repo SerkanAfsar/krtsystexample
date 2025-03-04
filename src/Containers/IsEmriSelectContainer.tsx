@@ -30,20 +30,27 @@ export default function IsEmriSelectContainer ({
       {isAdmin && (
         <div className="mb-4 flex gap-4">
           <button
-            className={`px-4 py-2 rounded-md ${selectedComponent === "kasa" ? "bg-blue-600 text-white" : "bg-gray-200 text-black"}`}
+            className={`px-4 py-2 rounded-md border-2 ${
+              selectedComponent === "kasa"
+                ? "bg-blue-600 text-white border-blue-600"
+                : "bg-gray-200 text-black border-gray-400"
+            }`}
             onClick={() => setSelectedComponent("kasa")}
           >
-            Kasa
+            <img src="/images/icon/box.svg" alt="Kasa" className="w-6 h-6" />
           </button>
           <button
-            className={`px-4 py-2 rounded-md ${selectedComponent === "atolye" ? "bg-blue-600 text-white" : "bg-gray-200 text-black"}`}
+            className={`px-4 py-2 rounded-md border-2 ${
+              selectedComponent === "atolye"
+                ? "bg-blue-600 text-white border-blue-600"
+                : "bg-gray-200 text-black border-gray-400"
+            }`}
             onClick={() => setSelectedComponent("atolye")}
           >
-            Atölye
+            <img src="/images/icon/hammer.svg" alt="Atölye" className="w-6 h-6" />
           </button>
         </div>
       )}
-
       {selectedComponent === "kasa" ? (
         <IsEmriDuzenleContainer
           userId={userId}
