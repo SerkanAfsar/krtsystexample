@@ -58,8 +58,7 @@ export default function useGetWorkOrderListData() {
           islem: item?.user,
           last_process_date: item.last_process_date ? (
             <div className="flex flex-col items-start justify-start gap-2">
-              <span>{sonIslemTarihi.primary}</span>
-              <span>{sonIslemTarihi.secondary}</span>
+              <span>{sonIslemTarihi.primary + " " + sonIslemTarihi.secondary}</span>
             </div>
           ) : null,
 

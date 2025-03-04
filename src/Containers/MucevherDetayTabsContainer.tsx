@@ -53,39 +53,41 @@ export default function MucevherDetayTabsContainer({
       [],
     ) || null;
 
-  const sections: TabSectionType[] = [
-    {
-      colName: "Mücevher",
-      component: (
-        <MucevherDetaySectionOne
-          register={register}
-          setValue={setValue}
-          getValues={getValues}
-          errors={errors}
-          isEdit={isEdit}
-          mainData={data.product as ProductType}
-        />
-      ),
-    },
-    {
-      colName: "Mücevher Bilgileri",
-      component: (
-        <MucevherDetayContainer
-          register={register}
-          productList={arr}
-          isEdit={isEdit}
-          errors={errors}
-          showTitle={false}
-        />
-      ),
-    },
-    {
-      colName: data.work_order_logs && "İşçilik",
-      component: data.work_order_logs && (
-        <IsEmirleriLoglari workOrderLogs={data.work_order_logs} />
-      ),
-    },
-  ];
+   const sections: TabSectionType[] = [
+  {
+    colName: "Mücevher",
+    component: (
+      <div className="space-y-6">
+        <div className="p-4 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <MucevherDetaySectionOne
+            register={register}
+            setValue={setValue}
+            getValues={getValues}
+            errors={errors}
+            isEdit={isEdit}
+            mainData={data.product as ProductType}
+          />
+        </div>
+
+        <div className="p-4 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <MucevherDetayContainer
+            register={register}
+            productList={arr}
+            isEdit={isEdit}
+            errors={errors}
+            showTitle={false}
+          />
+        </div>
+
+        {data.work_order_logs && (
+            <IsEmirleriLoglari workOrderLogs={data.work_order_logs} />
+        )}
+      </div>
+    ),
+  },
+];
+
+    
   return (
     <CustomTabs
       productCode={`Mücevher Kodu : ${data.product_code || data.product?.code}`}

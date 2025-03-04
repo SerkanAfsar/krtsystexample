@@ -236,13 +236,13 @@ export default function UrunGruplariModul({
           .filter(item => item.product.type === type)
           .map(item => ({
             pk:item.product.pk,
-            ayar: item.product.properties.gram,
             code: item.product.code,
             firstPrice: item.cost,
             resim: item.product.image,
             modelKodu: item.product.properties.modelKodu,
             model: item.product.properties.modelTuru,
             modelTuru: item.product.properties.modelTuru,
+            ayar: item.product.properties.ayar,
             renk: item.product.properties.altinRengi,
             gram: item.product.properties.gram,
             has: item.product.properties.hasGrami,
@@ -269,6 +269,7 @@ export default function UrunGruplariModul({
             adet: item.quantity ,
             menstrual_status: item.product.properties.menstrual_status,
             maliyet: `${formatToCurrency(item.cost)} $`,
+            fiyat: item.current_cost || item.cost,
             firstPrice: item.cost,
             nerede: item.user_group_name,
             status: statusDetailsMap[item.status]?.name || item.status,
@@ -294,6 +295,7 @@ export default function UrunGruplariModul({
             adet: item.quantity ,
             menstrual_status: item.product.properties.menstrual_status,
             maliyet: `${formatToCurrency(item.cost)} $`,
+            fiyat: item.current_cost || item.cost,
             firstPrice: item.cost,
             nerede: item.user_group_name,
             status: statusDetailsMap[item.status]?.name || item.status,
@@ -338,6 +340,7 @@ export default function UrunGruplariModul({
       modelTuru: item.modelTuru ? String(item.modelTuru) : null,
       renk: (item.renk as string) ?? null,
       caratPrice: item.caratPrice != null ? Number(item.caratPrice) : null,
+      // BACKEND DİĞERLERİ DE EKLENECEK OLUNCA EKLENECEK
       ...(item.type === "Sade"
         ? { 
             current_cost: 
@@ -515,14 +518,12 @@ export default function UrunGruplariModul({
           )}
         </div>
         <div
-          className={cn(
-            "grid gap-2 py-2 text-gray-500 text-left dark:text-white", 
-            `grid-cols-${headerColumns.length}`,
-            "border-b-2 border-t-2 border-stone-200",
-          )}
-        >
+        className="grid gap-2 py-2 text-gray-500 text-left dark:text-white border-b-2 border-t-2 border-stone-200"
+        style={{ gridTemplateColumns: `repeat(${headerColumns.length}, minmax(0, 1fr))` }}
+      >
+
           {headerColumns.map((key, index) => (
-            <label className="font-bold dark:font-normal" key={index}>
+            <label className="font-bold dark:font-sm" key={index}>
               {key.title} 
             </label>
           ))}
@@ -533,10 +534,10 @@ export default function UrunGruplariModul({
               key={index}
               className={cn(
                 "mt-1 grid gap-2 pb-2 text-left text-black",
-                `grid-cols-${headerColumns.length}`,
                 "items-center",
                 "border-b-[1px] border-stone-400 py-",
               )}
+              style={{ gridTemplateColumns: `repeat(${headerColumns.length}, minmax(0, 1fr))` }}
             >
               {Object.entries(item).map(([key, value], index) => {
                 if (
@@ -584,19 +585,19 @@ export default function UrunGruplariModul({
                             const newItems = selectedValues;
                             const changedItem = newItems[selectedIndexNo];
                             let value = e.target.value;
-
                             value = value.replace(/(\.\d{2})\d+/g, '$1');
                             if (item.remaining_carat && value > item.remaining_carat) {
-                              toast.error(`Girdiğiniz karat miktarı ${item.remaining_carat} ile sınırlıdır!`, {
+                              toast.error(`Girdiğiniz karat miktarı ${Number(item.remaining_carat).toFixed(2)} ile sınırlıdır!`, {
                                 position: "top-right",
                               });
-                              value= item.remaining_carat.toString();
+                              value= String(Number(item.remaining_carat).toFixed(2));
                             }
 
                             const newMaliyet =
                               Number(value) *
                               (Number(changedItem["caratPrice"]) ? Number(changedItem["caratPrice"]) : Number(changedItem["firstPrice"])) 
 
+                            changedItem["fiyat"] = newMaliyet;
                             changedItem["used_carat"] = value;
                             changedItem["maliyet"] =
 
@@ -708,7 +709,7 @@ export default function UrunGruplariModul({
                           item.status === "Red Edildi" ? "line-through" : ""
                         )}
                         type="text" 
-                        disabled={!(userRoleID === 9 && item?.status === "Onay Bekliyor")}
+                        disabled={item?.status !== "Onay Bekliyor" || userRoleID === 2 || isDisabled}
                         value={item.fiyat}
                         onChange={(e) => {
                           let value = e.target.value;
@@ -740,7 +741,7 @@ export default function UrunGruplariModul({
                   } else {
                     return (
                       <div className={cn(
-                        "dark:text-white lg:text-base md:text-xs sm:text-xs",
+                        "dark:text-white text-sm",
                         item.status === "Red Edildi" ? "line-through" : "" 
                       )}
                       key={index}>

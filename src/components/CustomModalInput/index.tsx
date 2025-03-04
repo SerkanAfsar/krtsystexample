@@ -60,13 +60,16 @@ const CustomModalInput = React.forwardRef<HTMLInputElement, CustomProps>(
         ref={ref}
         disabled={!condition}
         className="block w-20 border border-primary px-2 py-1"
+        style={{
+          height:"23px"
+        }}
         onChange={(e) =>{
           if (name === "used_carat") {
             if (item?.properties?.remaining_carat && e.target.value > item?.properties?.remaining_carat) {
-              toast.error(`Girdiğiniz karat miktarı ${item.properties.remaining_carat} ile sınırlıdır!`, {
+              toast.error(`Girdiğiniz karat miktarı ${Number(item.properties.remaining_carat).toFixed(2)} ile sınırlıdır!`, {
                 position: "top-right",
               });
-              e.target.value = item.properties.remaining_carat.toString();
+              e.target.value = String(Number(item.properties.remaining_carat).toFixed(2));
             }
             setCaratValue(e.target.value);
           } else if (name === "adet") {

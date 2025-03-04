@@ -57,6 +57,44 @@ const PirlantaDetayContainer = ({
         value.menstrual_status == "Sertifikalı" ? value?.rapaportPrice : 4700;
 
       if (value.menstrual_status == "Sertifikasız") {
+
+        const formatNumberInput = (number: string) => {
+          if (!number) return ""; // İlk girişte boş bırak
+          number = number.replace(/[^0-9.,]/g, "");
+          number = number.replace(",", ".");
+          const parts = number.split(".");
+          if (parts.length > 2) {
+            number = parts[0] + "." + parts.slice(1).join("");
+          }
+          if (parts.length === 2) {
+            parts[1] = parts[1].substring(0, 2);
+            number = parts.join(".");
+          }
+          if (number.startsWith("0") && number.length > 1 && !number.startsWith("0.")) {
+            number = number.substring(1);
+          }
+        
+          return number;
+        };
+        
+        // Kullanım:
+        value.carpan1 = formatNumberInput(value?.carpan1 || "0");
+        value.carpan2 = formatNumberInput(value?.carpan2 || "0");
+        value.carpan3 = formatNumberInput(value?.carpan3 || "0");
+        
+        value.karat1 = formatNumberInput(value?.karat1 || "0");
+        value.karat2 = formatNumberInput(value?.karat2 || "0");
+        value.karat3 = formatNumberInput(value?.karat3 || "0");
+        
+
+        value.carpan1 = formatNumberInput(value?.carpan1 || "0");
+        value.carpan2 = formatNumberInput(value?.carpan2 || "0");
+        value.carpan3 = formatNumberInput(value?.carpan3 || "0");
+        
+        value.karat1 = formatNumberInput(value?.karat1 || "0");
+        value.karat2 = formatNumberInput(value?.karat2 || "0");
+        value.karat3 = formatNumberInput(value?.karat3 || "0");
+
         if (value.boy === "00" && value.pricePerCarat) {
           value.elek1 = "60-80";
           value.elek2 = "80-100";
@@ -129,78 +167,41 @@ const PirlantaDetayContainer = ({
       ).toFixed(2);
       const toplamKarat = Number(value?.carat);
 
-      if (value?.karat1 && value?.carpan1 && value?.carat && pricePerCarat) {
+      if (value?.carat && pricePerCarat) {
         value.karat1 = value?.karat1.replace(",", ".");
-        value.anaMaliyet1 = (
-          Number(pricePerCarat) * Number(value?.carpan1)
-        ).toFixed(2);
-        const ppc1 = (Number(anaMaliyetPPC) * Number(value?.carpan1)).toFixed(
-          2,
-        );
-        value.ppc1 = ppc1;
-        value.uretimMaliyeti1 = (
-          Number(ppc1) * Number(value?.karat1.replace(",", "."))
-        ).toFixed(2);
-        value.lot1 = "B";
-        value.lot2 = "C";
-        value.lot3 = "D";
-      }
-      if (value?.karat2 && value?.carpan2 && value?.carat && pricePerCarat) {
+        value.anaMaliyet1 = (Number(pricePerCarat) * Number(value?.carpan1)).toFixed(2);
+        const ppc1 = (Number(anaMaliyetPPC) * Number(value?.carpan1)).toFixed(2);
+        value.uretimMaliyeti1 = (Number(ppc1) * Number(value?.karat1.replace(",", "."))).toFixed(2);
         value.karat2 = value?.karat2.replace(",", ".");
-        value.anaMaliyet2 = (
-          Number(pricePerCarat) * Number(value?.carpan2)
-        ).toFixed(2);
-        const ppc2 = (Number(anaMaliyetPPC) * Number(value?.carpan2)).toFixed(
-          2,
-        );
-        value.ppc2 = ppc2;
-        value.uretimMaliyeti2 = (
-          Number(ppc2) * Number(value?.karat2.replace(",", "."))
-        ).toFixed(2);
-        value.lot1 = "B";
-        value.lot2 = "C";
-        value.lot3 = "D";
-      }
-      if (value?.karat3 && value?.carpan3 && value?.carat && pricePerCarat) {
+        value.anaMaliyet2 = (Number(pricePerCarat) * Number(value?.carpan2)).toFixed(2);
+        const ppc2 = (Number(anaMaliyetPPC) * Number(value?.carpan2)).toFixed(2,);
+        value.uretimMaliyeti2 = (Number(ppc2) * Number(value?.karat2.replace(",", "."))).toFixed(2);
         value.karat3 = value?.karat3.replace(",", ".");
-        value.anaMaliyet3 = (
-          Number(pricePerCarat) * Number(value?.carpan3)
-        ).toFixed(2);
-        const ppc3 = (Number(anaMaliyetPPC) * Number(value?.carpan3)).toFixed(
-          2,
-        );
-        value.ppc3 = ppc3;
-        value.uretimMaliyeti3 = (
-          Number(ppc3) * Number(value?.karat3.replace(",", "."))
-        ).toFixed(2);
+        value.anaMaliyet3 = (Number(pricePerCarat) * Number(value?.carpan3)).toFixed(2);
+        const ppc3 = (Number(anaMaliyetPPC) * Number(value?.carpan3)).toFixed(2);
+        value.uretimMaliyeti3 = (Number(ppc3) * Number(value?.karat3.replace(",", "."))).toFixed(2);
         value.lot1 = "B";
         value.lot2 = "C";
         value.lot3 = "D";
       }
-
+ 
       const toplamUretimMaliyeti = (
         Number(value.uretimMaliyeti3) +
         Number(value.uretimMaliyeti2) +
         Number(value.uretimMaliyeti1)
       ).toFixed(2);
-      const toplamLotMaliyet = (
-        Number(value.ppc1) +
-        Number(value.ppc2) +
-        Number(value.ppc3)
-      ).toFixed(2);
 
-      const totalCoastResult = (Number(total_costOne) * 1.1).toFixed(2)
+      const totalCostResult = (Number(total_costOne) * 1.1).toFixed(2)
 
       //const poPrice = (Number(pricePerCarat) * Number(value.carat)).toFixed(2);
       return {
         ...value,
         pricePerCarat: Number(pricePerCarat),
-        total_cost: Number(totalCoastResult),
+        total_cost: Number(totalCostResult),
         anaMaliyetPPC: Number(anaMaliyetPPC),
         total_maliyet: Number(total_maliyet),
         toplamKarat: toplamKarat,
         toplamUretimMaliyeti: Number(toplamUretimMaliyeti),
-        toplamLotMaliyet: Number(toplamLotMaliyet),
         //poPrice: Number(poPrice),
       };
     },
