@@ -47,6 +47,14 @@ export const PirlantaSertifikaKodlari: CustomOptionType[] = [
     titleVal: "ANL",
     valueVal: "ANL",
   },
+  {
+    titleVal: "GLT",
+    valueVal: "GLT",
+  },
+  {
+    titleVal: "IGSL",
+    valueVal: "IGSL",
+  },
 ];
 
 export const RenkliTasSertifikaKodlari: CustomOptionType[] = [
@@ -105,6 +113,10 @@ export const RenkliTasSertifikaKodlari: CustomOptionType[] = [
   {
     titleVal: "GIT",
     valueVal: "GIT",
+  },
+  {
+    titleVal: "GLT",
+    valueVal: "GLT",
   },
 ];
 
@@ -1556,12 +1568,23 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "0",
         relativeTo: "menstrual_status",
         required: true,
-        span: 2,
+        span: 1,
       },
       {
         name: "anaMaliyet1",
         type: "text",
         title: "Ana Maliyet",
+        placeholder: "0",
+        relativeTo: "menstrual_status",
+        required: false,
+        disabled: true,
+        rightIcon: "$",
+        span: 2,
+      },
+      {
+        name: "ppc1",
+        type: "text",
+        title: "PPC",
         placeholder: "0",
         relativeTo: "menstrual_status",
         required: false,
@@ -1578,7 +1601,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: false,
         disabled: true,
         rightIcon: "$",
-        span: 3,
+        span: 2,
       },
       {
         name: "lot2",
@@ -1615,7 +1638,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "0",
         relativeTo: "menstrual_status",
         required: true,
-        span: 2,
+        span: 1,
       },
       {
         name: "anaMaliyet2",
@@ -1629,6 +1652,17 @@ export const AddStoneSections: Array<FormSectionType> = [
         span: 2,
       },
       {
+        name: "ppc2",
+        type: "text",
+        placeholder: "0",
+        title: `${" "}`,
+        relativeTo: "menstrual_status",
+        required: false,
+        disabled: true,
+        rightIcon: "$",
+        span: 2,
+      },
+      {
         name: "uretimMaliyeti2",
         type: "text",
         placeholder: "0",
@@ -1637,7 +1671,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: false,
         disabled: true,
         rightIcon: "$",
-        span: 3,
+        span: 2,
       },
       {
         name: "lot3",
@@ -1674,13 +1708,24 @@ export const AddStoneSections: Array<FormSectionType> = [
         placeholder: "0",
         relativeTo: "menstrual_status",
         required: true,
-        span: 2,
+        span: 1,
       },
       {
         name: "anaMaliyet3",
         type: "text",
         title: `${" "}`,
         placeholder: "0",
+        relativeTo: "menstrual_status",
+        required: false,
+        disabled: true,
+        rightIcon: "$",
+        span: 2,
+      },
+      {
+        name: "ppc3",
+        type: "text",
+        placeholder: "0",
+        title: `${" "}`,
         relativeTo: "menstrual_status",
         required: false,
         disabled: true,
@@ -1696,7 +1741,7 @@ export const AddStoneSections: Array<FormSectionType> = [
         required: false,
         disabled: true,
         rightIcon: "$",
-        span: 3,
+        span: 2,
       },
       {
         name: "toplamKarat",
@@ -1719,9 +1764,9 @@ export const AddStoneSections: Array<FormSectionType> = [
         relativeTo: "menstrual_status",
         required: false,
         disabled: true,
-        colStart: "10",
+        colStart: "11",
         rightIcon: "$",
-        span: 3,
+        span: 2,
         isConstant: true,
       },
     ],

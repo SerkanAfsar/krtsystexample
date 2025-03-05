@@ -1,6 +1,7 @@
 import {
   PirlantaBoyKodlari,
   PirlantaKesimKodlariData,
+  PirlantaRenkData
 } from "@/data/Pirlanta.data";
 import { CustomOptionType } from "../types/inputTypes";
 import { UseFormGetValues } from "react-hook-form";
@@ -18,6 +19,12 @@ export const selectKesimValue = ({
 export const boyType = (value: string): string => {
   return (
     PirlantaBoyKodlari.find((a) => a.titleVal == value)?.extraValue || "UU"
+  );
+};
+
+export const renkType = (value: string): string => {
+  return (
+    PirlantaRenkData.find((a) => a.titleVal == value)?.extraValue || ""
   );
 };
 
@@ -71,13 +78,17 @@ export const generateDiamondCode = ({
   kesimKodu,
   boyKodu,
   caratValue,
+  renkKodu,
 }: {
   kesimKodu?: string;
   boyKodu?: string;
   caratValue?: number;
+  renkKodu?: string;
 }): string => {
   let code = "";
-
+  if (renkKodu) {
+    code += renkType(renkKodu);
+  }
   if (kesimKodu) {
     code += selectKesimValue({
       selectedValue: kesimKodu,

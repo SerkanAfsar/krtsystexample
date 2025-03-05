@@ -410,9 +410,13 @@ export default function IsEmriBaslatmaContainer({
                         </div>
                       </td>
                       <td className="p-2 text-sm">
-                      {product.cost
-                        ? product.cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                        : 0} $
+                        {product.cost
+                          ? (
+                              product.product.type !== "Simple" 
+                                ? Number(product.cost * 1.1).toFixed(2) 
+                                : Number(product.cost).toFixed(2)
+                            ).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                          : "0.00"} $
                       </td>
                       <td className="p-2 text-sm">
                       {product.status !== "WORKSHOP_ACCEPTED" && (
