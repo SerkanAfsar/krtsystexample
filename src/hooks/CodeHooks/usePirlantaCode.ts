@@ -23,6 +23,7 @@ export type PirlantaCodeItemType = {
   pirlantaData_fromsingleormixed?: string;
   data_carat?: number;
   isAdd: boolean;
+  data_renk?: string;
 };
 
 export default function usePirlantaCode({
@@ -34,6 +35,7 @@ export default function usePirlantaCode({
     data_menstrual_status,
     data_carat,
     isAdd,
+    data_renk
   },
 }: {
   item: PirlantaCodeItemType;
@@ -70,6 +72,7 @@ export default function usePirlantaCode({
             const code = generateDiamondCode({
               kesimKodu: data_kesim,
               boyKodu: data_boy as string,
+              renkKodu: data_renk
             });
             returnSameResult(
               GetNextOrderForMixedDiamondService({ type: "Diamond", code }),
@@ -82,6 +85,7 @@ export default function usePirlantaCode({
           const code = generateDiamondCode({
             kesimKodu: data_kesim,
             caratValue: data_carat,
+            renkKodu: data_renk
           });
 
           if (data_fromsingleormixed == "Tektaş") {
@@ -126,13 +130,14 @@ export default function usePirlantaCode({
     data_frommixedItem,
     data_carat,
     isAdd,
+    data_renk
   ]);
-
   useEffect(() => {
     if (data_fromsingleormixed == "From Mixed") {
       const code = generateDiamondCode({
         kesimKodu: data_kesim,
         boyKodu: data_boy as string,
+        renkKodu: data_renk
       });
       GetListMixedProductsCodeDiamondService({ code, type: "Diamond" })
         .then((resp: ResponseResult<string[]>) => {
@@ -151,7 +156,7 @@ export default function usePirlantaCode({
     } else {
       setExtraOptions(null);
     }
-  }, [data_fromsingleormixed, data_kesim, data_boy]);
+  }, [data_fromsingleormixed, data_kesim, data_boy, data_renk]);
 
   return {
     diamondCode,

@@ -10,6 +10,7 @@ export type MucevherListType = {
   resim: string | null;
   code: string | null;
   model: string | null;
+  cıkısGramı: string | null;
   sade: string | null;
   totalCarat: number | null;
   totalNumberOfStones: number | null;
@@ -43,6 +44,10 @@ export const MucevherListesiDataHeaders: MucevherDataTableType[] = [
   {
     Header: "Model",
     accessor: "model",
+  },
+  {
+    Header: "Çıkış Gramı",
+    accessor: "cıkısGramı",
   },
   {
     Header: "Sade",

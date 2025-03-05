@@ -29,7 +29,7 @@ const CustomModalInput = React.forwardRef<HTMLInputElement, CustomProps>(
         if (index > -1) {
           const spanRef = spanMaliyetRefs.current[indexNo];
           let maliyet = Number(spanRef.ariaLabel);
-          let caratMaliyet = Number(spanRef.ariaLabel);
+          let caratMaliyet = Number(item.product_cost?.pricePerCarat);
           if (name == "used_carat") {
             maliyet =
             caratValue && item.menstrual_status == "Mixed"

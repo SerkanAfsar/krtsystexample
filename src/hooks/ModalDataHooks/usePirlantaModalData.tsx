@@ -102,7 +102,7 @@ export default function usePirlantaModalData({
     const { adet, used_carat } = selectedItem || {};
     const firstMaliyet =
       item.menstrual_status == "Mixed"
-      ? Number(String(item.product_cost?.pricePerCarat).replace(",", "."))
+      ? Number(String(item.product_cost?.pricePerCarat).replace(",", ".")) * 1.1
       : Number(item.total_cost);
 
     return {
@@ -119,7 +119,7 @@ export default function usePirlantaModalData({
                 {
                   ...item.properties,
                   firstPrice: Number(firstMaliyet),
-                  caratPrice: Number(firstMaliyet),
+                  caratPrice: Number(String(item.product_cost?.pricePerCarat).replace(",", ".")),
                   code: item.code,
                 },
                 index,

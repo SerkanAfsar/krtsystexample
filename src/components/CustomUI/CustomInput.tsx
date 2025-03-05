@@ -89,9 +89,6 @@ const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(
               placeholder={item.placeholder ?? undefined}
               name={name}
               onChange={(e) => {
-                if (name === "girdle") {
-                  e.target.value = e.target.value.replace(/[^a-zA-Z0-9]/g, ""); 
-                }
                 if (
                   !maxLenght ||
                   (maxLenght && e.target.value.length <= maxLenght)

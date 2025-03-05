@@ -23,7 +23,6 @@ export default function MucevherDetayTabsContainer({
     getValues,
     formState: { errors },
   } = useForm<AddMucevherExternalType>();
-
   const arr =
     data?.inside_products?.reduce<CustomArrType>(
       (acc: CustomArrType, nextItem: any) => {
@@ -31,7 +30,9 @@ export default function MucevherDetayTabsContainer({
           const productItem = nextItem.product as ProductType;
           const newItem = {
             renkliTas: productItem.properties?.renkliTas as string,
-            carat: productItem.properties?.carat as number,
+            carat: nextItem?.used_carat && nextItem.used_carat > 0 
+              ? (nextItem.used_carat as number) 
+              : (productItem.properties?.carat as number),
             type: productItem.type as string,
             mensei: productItem.properties?.mensei as string,
             berraklik: productItem.properties?.berraklik as string,

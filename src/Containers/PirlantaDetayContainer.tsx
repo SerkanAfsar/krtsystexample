@@ -168,18 +168,21 @@ const PirlantaDetayContainer = ({
       const toplamKarat = Number(value?.carat);
 
       if (value?.carat && pricePerCarat) {
-        value.karat1 = value?.karat1.replace(",", ".");
+        value.karat1 = value?.karat1?.replace(",", ".");
         value.anaMaliyet1 = (Number(pricePerCarat) * Number(value?.carpan1)).toFixed(2);
         const ppc1 = (Number(anaMaliyetPPC) * Number(value?.carpan1)).toFixed(2);
-        value.uretimMaliyeti1 = (Number(ppc1) * Number(value?.karat1.replace(",", "."))).toFixed(2);
-        value.karat2 = value?.karat2.replace(",", ".");
+        value.ppc1 = ppc1;
+        value.uretimMaliyeti1 = (Number(ppc1) * Number(value?.karat1?.replace(",", "."))).toFixed(2);
+        value.karat2 = value?.karat2?.replace(",", ".");
         value.anaMaliyet2 = (Number(pricePerCarat) * Number(value?.carpan2)).toFixed(2);
-        const ppc2 = (Number(anaMaliyetPPC) * Number(value?.carpan2)).toFixed(2,);
-        value.uretimMaliyeti2 = (Number(ppc2) * Number(value?.karat2.replace(",", "."))).toFixed(2);
-        value.karat3 = value?.karat3.replace(",", ".");
+        const ppc2 = (Number(anaMaliyetPPC) * Number(value?.carpan2)).toFixed(2);
+        value.ppc2 = ppc2;
+        value.uretimMaliyeti2 = (Number(ppc2) * Number(value?.karat2?.replace(",", "."))).toFixed(2);
+        value.karat3 = value?.karat3?.replace(",", ".");
         value.anaMaliyet3 = (Number(pricePerCarat) * Number(value?.carpan3)).toFixed(2);
         const ppc3 = (Number(anaMaliyetPPC) * Number(value?.carpan3)).toFixed(2);
-        value.uretimMaliyeti3 = (Number(ppc3) * Number(value?.karat3.replace(",", "."))).toFixed(2);
+        value.ppc3 = ppc3;
+        value.uretimMaliyeti3 = (Number(ppc3) * Number(value?.karat3?.replace(",", "."))).toFixed(2);
         value.lot1 = "B";
         value.lot2 = "C";
         value.lot3 = "D";
@@ -216,6 +219,7 @@ const PirlantaDetayContainer = ({
     data_menstrual_status: data.menstrual_status,
     isAdd: isAdd,
     data_carat: data.carat,
+    data_renk: data.renk
   };
   const { diamondCode, extraOptions } = usePirlantaCode({ item });
 

@@ -160,6 +160,31 @@ export const PirlantaRenkData: CustomOptionType[] = [
     titleVal: "BLACK",
     valueVal: "BLACK",
   },
+  {
+    titleVal: "FANCY YELLOW",
+    valueVal: "FANCY YELLOW",
+    extraValue: "F-",
+  },
+  {
+    titleVal: "FANCY LIGHT YELLOW",
+    valueVal: "FANCY LIGHT YELLOW",
+    extraValue: "F-",
+  },
+  {
+    titleVal: "FANCY INTENSE YELLOW",
+    valueVal: "FANCY INTENSE YELLOW",
+    extraValue: "F-",
+  },
+  {
+    titleVal: "FANCY VIVID YELLOW",
+    valueVal: "FANCY VIVID YELLOW",
+    extraValue: "F-",
+  },
+  {
+    titleVal: "FANCY BLUE GREEN",
+    valueVal: "FANCY BLUE GREEN",
+    extraValue: "F-",
+  },
 ];
 
 export const PirlantaBerraklikData: CustomOptionType[] = [
@@ -218,6 +243,10 @@ export const PirlantaBerraklikData: CustomOptionType[] = [
   {
     titleVal: "SI",
     valueVal: "SI",
+  },
+  {
+    titleVal: "NONE",
+    valueVal: "NONE",
   },
 ];
 

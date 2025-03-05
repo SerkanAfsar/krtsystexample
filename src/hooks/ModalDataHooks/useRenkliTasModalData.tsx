@@ -115,7 +115,7 @@ export default function useRenkliTasModalData({
           const { adet, used_carat } = selectedItem || {};
           const firstMaliyet =
             item.menstrual_status == "Mixed"
-            ? Number(String(item.product_cost?.pricePerCarat).replace(",", "."))
+            ? Number(String(item.product_cost?.pricePerCarat).replace(",", ".")) * 1.1
             : Number(item.total_cost);
           return {
             sec: (
@@ -132,7 +132,7 @@ export default function useRenkliTasModalData({
                         ...item.properties,
                         code: item.code,
                         firstPrice: Number(firstMaliyet),
-                        caratPrice: Number(firstMaliyet),
+                        caratPrice: Number(String(item.product_cost?.pricePerCarat).replace(",", ".")),
                       },
                       index,
                     )

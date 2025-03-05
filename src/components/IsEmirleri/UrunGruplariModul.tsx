@@ -220,7 +220,6 @@ export default function UrunGruplariModul({
   //İş emri düzenleden gelen datalar için. Sıfırdan iş emri oluşturulması durumunda çalışmayacak.
   useEffect(() => {
   if (!urunData) return;
-
   const mapUrunDataByTitle = (urunData: any[], title: string) => {
     const typeMap: { [key: string]: string } = {
       "Sade": "Simple",
@@ -268,8 +267,17 @@ export default function UrunGruplariModul({
             renk: item.product.properties.renk ,
             adet: item.quantity ,
             menstrual_status: item.product.properties.menstrual_status,
-            maliyet: `${formatToCurrency(item.cost)} $`,
-            fiyat: item.current_cost || item.cost,
+           // maliyet: `${formatToCurrency(item.cost)} $`,
+           // fiyat: item.current_cost || item.cost,
+           maliyet: `${formatToCurrency(
+            item.product.properties.menstrual_status === "Sertifikasız"
+              ? item.cost * 1.1
+              : item.cost
+          )} $`,
+            fiyat: item.current_cost || 
+              (item.product.properties.menstrual_status === "Sertifikasız" 
+              ? item.cost * 1.1 
+              : item.cost),
             firstPrice: item.cost,
             nerede: item.user_group_name,
             status: statusDetailsMap[item.status]?.name || item.status,
@@ -294,8 +302,17 @@ export default function UrunGruplariModul({
             renk: item.product.properties.renk ,
             adet: item.quantity ,
             menstrual_status: item.product.properties.menstrual_status,
-            maliyet: `${formatToCurrency(item.cost)} $`,
-            fiyat: item.current_cost || item.cost,
+           // maliyet: `${formatToCurrency(item.cost)} $`,
+           // fiyat: item.current_cost || item.cost,
+            maliyet: `${formatToCurrency(
+              item.product.properties.menstrual_status === "Sertifikasız"
+                ? item.cost * 1.1
+                : item.cost
+            )} $`,
+              fiyat: item.current_cost || 
+                (item.product.properties.menstrual_status === "Sertifikasız" 
+                ? item.cost * 1.1 
+                : item.cost),
             firstPrice: item.cost,
             nerede: item.user_group_name,
             status: statusDetailsMap[item.status]?.name || item.status,
@@ -333,7 +350,7 @@ export default function UrunGruplariModul({
       name: (item.name as string) ?? null,
       price:
         item.caratPrice && item.type != "Sade" && item.used_carat
-          ? Number(item.caratPrice) * (item.used_carat as number)
+          ? Number(item.caratPrice) * (item.used_carat as number) * 1.1
           : Number(item.firstPrice),
       type: item.type ? String(item.type) : undefined,
       ayar: item.ayar ? String(item.ayar) : null,
@@ -421,7 +438,7 @@ export default function UrunGruplariModul({
                             return sum + (Number(item.firstPrice) || 0);
                           } else {
                             return sum + (item.used_carat != 0 && item.used_carat
-                              ? (Number(String(item.caratPrice).replace(",", ".")) * Number(item.used_carat)) 
+                              ? (Number(String(item.caratPrice).replace(",", ".")) * Number(item.used_carat)) * 1.1
                               : Number(item.firstPrice)) || 0;
                           }
                         }, 0);
@@ -592,11 +609,10 @@ export default function UrunGruplariModul({
                               });
                               value= String(Number(item.remaining_carat).toFixed(2));
                             }
-
                             const newMaliyet =
                               Number(value) *
+                              1.1 *
                               (Number(changedItem["caratPrice"]) ? Number(changedItem["caratPrice"]) : Number(changedItem["firstPrice"])) 
-
                             changedItem["fiyat"] = newMaliyet;
                             changedItem["used_carat"] = value;
                             changedItem["maliyet"] =

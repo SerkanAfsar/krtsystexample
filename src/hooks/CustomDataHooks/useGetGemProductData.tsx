@@ -68,6 +68,7 @@ export default function useGemProductData(redirectUrl: string) {
         ),
         code: item?.code,
         model: item?.properties?.model,
+        cıkısGramı: item?.properties?.output_gram,
         sade: item?.properties?.simple,
         totalCarat: item?.properties?.totalCarat,
         totalNumberOfStones: item?.properties?.totalNumberOfStones,
