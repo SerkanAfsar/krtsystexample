@@ -27,10 +27,41 @@ export default function MucevherRenkliTasSection({
   }, 0);
 
   const mainArr = isEdit ? dataList : fieldsRenkliTas;
-
   return (
     <div className="my-3 flex w-full flex-col gap-3">
       <b className="mb-1 block text-black underline">Renkli Taş Bilgileri</b>
+      {isEdit && (
+        <div className="my-3">
+          <table className="w-full table-auto border-collapse">
+            <thead>
+              <tr className="bg-gray-200">
+                <th className="border p-4 text-center font-semibold text-gray-800">Renkli Taş</th>
+                <th className="border p-4 text-center font-semibold text-gray-800">Kesim</th>
+                <th className="border p-4 text-center font-semibold text-gray-800">Karat</th>
+                <th className="border p-4 text-center font-semibold text-gray-800">Renk</th>
+                <th className="border p-4 text-center font-semibold text-gray-800">Mensei</th>
+                <th className="border p-4 text-center font-semibold text-gray-800">Adet</th>
+                <th className="border p-4 text-center font-semibold text-gray-800">Fiyat</th>
+              </tr>
+            </thead>
+            <tbody>
+              {mainArr?.map((item: any, index: number) => (
+                <tr key={item.id} className="hover:bg-gray-100 transition-all">
+                  <td className="border p-4 text-center text-gray-600">{item.renkliTas}</td>
+                  <td className="border p-4 text-center text-gray-600">{item.kesim}</td>
+                  <td className="border p-4 text-center text-gray-600">{item.carat}</td>
+                  <td className="border p-4 text-center text-gray-600">{item.renk}</td>
+                  <td className="border p-4 text-center text-gray-600">{item.mensei}</td>
+                  <td className="border p-4 text-center text-gray-600">{item.adet}</td>
+                  <td className="border p-4 text-right font-semibold text-gray-600">{Number(item.fiyat).toFixed(2)} $</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      {!isEdit && (
+      <>
       <div
         className={cn(
           "grid w-full gap-3 rounded-sm bg-gray p-1 text-black",
@@ -61,7 +92,6 @@ export default function MucevherRenkliTasSection({
         })}
       </div>
 
-      {!isEdit && (
         <button
           type="button"
           className="block w-40 self-end rounded-md bg-primary px-4 py-2 text-center text-white"
@@ -80,6 +110,7 @@ export default function MucevherRenkliTasSection({
         >
           Renkli Taş Ekle
         </button>
+       </>
       )}
     </div>
   );

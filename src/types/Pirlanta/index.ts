@@ -6,7 +6,9 @@ export type PirlantaListType = {
   carat?: string;
   sertifika?: string;
   renk?: string;
+  renk2?: string;
   berraklik?: string;
+  berraklik2?: string;
   cut?: string;
   polish?: string;
   symmetry?: string;
@@ -46,8 +48,21 @@ export const PirlantaListHeaders: Column<
         accessor: "renk",
       },
       {
+        Header: "Renk2",
+        accessor: "renk2",
+      },
+    ],
+  },
+  {
+    Header: "BERRAKLIK",
+    columns: [
+      {
         Header: "Berraklık",
         accessor: "berraklik",
+      },
+      {
+        Header: "Berraklık2",
+        accessor: "berraklik2",
       },
     ],
   },
@@ -82,6 +97,11 @@ export const PirlantaListHeaders: Column<
         Header: "Symmetry",
         accessor: "symmetry",
       },
+    ],
+  },
+  {
+    Header: "FLUORESCENCE",
+    columns: [
       {
         Header: "Fluorescence",
         accessor: "fluorescence",

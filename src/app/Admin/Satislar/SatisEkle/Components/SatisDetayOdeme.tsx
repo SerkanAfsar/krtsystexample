@@ -130,7 +130,7 @@ export default function SatisDetayOdeme({
             )}
           </div>
         ))}
-        {isShow(undefined) && !isEdit && (
+        {isShow(undefined) &&  (
           <div className="grid w-full grid-cols-4 gap-3  text-black">
             <div className="col-span-3"></div>
             <button
