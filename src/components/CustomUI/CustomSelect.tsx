@@ -44,6 +44,7 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
   ) => {
     const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
     const [selectedValue, setSelectedValue] = useState<string>(value);
+    const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const [customOptionValues, setCustomOptionValues] = useState<
       CustomOptionType[]
     >([]);
@@ -115,9 +116,23 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
           (a) => a.titleVal == values[item.firstRelated],
         );
 
+        if (values[item.firstRelated] === "BLACK" || 
+          values[item.firstRelated] === "NONE" ||
+          values[item.firstRelated].includes("FANCY")) {
+          setSelectedIndex(indexNo as number);
+        } else {
+          setSelectedIndex(null);  
+        }
+
         setDisabledIndex(indexNo as number);
       }
     }, [selectedValue, item.firstRelated, options, values]);
+    
+    useEffect(() => {
+      if (selectedIndex !== null && selectedIndex !== undefined && options) {
+        setSelectedValue(options[selectedIndex].valueVal); 
+      }
+    }, [selectedIndex, options]);
 
     return (
       <div className={cn("w-full", outerClass && outerClass)}>
@@ -173,14 +188,16 @@ const CustomSelect = React.forwardRef<HTMLSelectElement, SelectElementProps>(
                 {staticOptions
                   ? staticOptions()
                   : options?.map((item2, index) => {
+                    const isSelectedIndexDisabled = !!selectedIndex && index !== selectedIndex;
                       return (
                         <option
                           key={index}
                           value={item2.valueVal}
                           disabled={
-                            !!disabledIndex &&
+                            isSelectedIndexDisabled ||
+                            (!!disabledIndex &&
                             disabledIndex != 0 &&
-                            index < disabledIndex
+                            index < disabledIndex)
                           }
                           className="disabled:bg-slate-400 disabled:text-boxdark  dark:text-bodydark"
                         >

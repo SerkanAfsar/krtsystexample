@@ -46,8 +46,16 @@ export default function usePirlantaModalData({
       code,
       kesim,
       carat,
-      berraklik,
-      renk,
+      berraklik: properties.berraklik == "None"
+        ? properties.berraklik
+        : properties.berraklik2
+        ? `${properties.berraklik}-${properties.berraklik2}`
+        : properties.berraklik,
+      renk: (properties.renk == "Black" || properties.renk.includes("FANCY"))
+        ? properties.renk
+        : properties.renk2
+        ? `${properties.renk}-${properties.renk2}`
+        : properties.renk,
       adet: 1,
       maliyet: `${formatToCurrency(firstPrice)} $`,
       firstPrice,
@@ -105,6 +113,20 @@ export default function usePirlantaModalData({
       ? Number(String(item.product_cost?.pricePerCarat).replace(",", ".")) * 1.1
       : Number(item.total_cost);
 
+    const berraklik =
+      item?.properties?.berraklik == "None"
+        ? item?.properties?.berraklik
+        : item?.properties?.berraklik2
+        ? `${item?.properties?.berraklik}-${item?.properties?.berraklik2}`
+        : item?.properties?.berraklik;
+    
+    const renk =
+      item?.properties?.renk == "Black" || String(item?.properties?.renk).includes("FANCY")
+        ? item?.properties?.renk
+        : item?.properties?.renk2
+        ? `${item?.properties?.renk}-${item?.properties?.renk2}`
+        : item?.properties?.renk;
+    
     return {
       sec: (
         <div className="flex h-full w-full items-center justify-center">
@@ -131,8 +153,8 @@ export default function usePirlantaModalData({
       code: item?.code,
       carat: item?.properties?.carat,
       kesim: item?.properties?.kesim,
-      renk: item?.properties?.renk,
-      berraklik: item?.properties?.berraklik,
+      renk: renk,
+      berraklik: berraklik,
       adet: (
         <CustomModalInput
           name="adet"

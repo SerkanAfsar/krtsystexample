@@ -298,8 +298,8 @@ export default function UrunGruplariModul({
             kesim: item.product.properties.kesim ,
             carat: item.product.properties.carat  ,
             used_carat: item.used_carat ,
-            berraklik: item.product.properties.berraklik ,
-            renk: item.product.properties.renk ,
+            berraklik: item.product.properties.berraklik + "-" + item.product.properties.berraklik2,
+            renk: item.product.properties.renk + "-" + item.product.properties.renk2,
             adet: item.quantity ,
             menstrual_status: item.product.properties.menstrual_status,
            // maliyet: `${formatToCurrency(item.cost)} $`,
@@ -358,15 +358,10 @@ export default function UrunGruplariModul({
       renk: (item.renk as string) ?? null,
       caratPrice: item.caratPrice != null ? Number(item.caratPrice) : null,
       // BACKEND DİĞERLERİ DE EKLENECEK OLUNCA EKLENECEK
-      ...(item.type === "Sade"
-        ? { 
-            current_cost: 
-              item.fiyat != null && item.fiyat !== "" 
-                ? Number(String(item.fiyat).replace(/[$,]/g, "")) 
-                : null 
-          } 
+      ...(item.fiyat != null && item.fiyat !== "" 
+        ? { current_cost: Number(String(item.fiyat).replace(/[$,]/g, "")) } 
         : {}),
-        ...(urunData ? { status: Object.keys(statusDetailsMap).find(key => statusDetailsMap[key].name === item.status) } : {})
+      ...(urunData ? { status: Object.keys(statusDetailsMap).find(key => statusDetailsMap[key].name === item.status) } : {})
     }));
     setValues((prev: ProductItemsType[]) => {
       const indexNo = prev.findIndex((a) => a.title == title);
@@ -573,6 +568,7 @@ export default function UrunGruplariModul({
                       );
                     } else {
                       return (
+                        <div key={item.pk} className="flex items-center p ml-[-8px] gap-1">
                         <input
                           min="1"
                           key={index}
@@ -613,7 +609,7 @@ export default function UrunGruplariModul({
                               Number(value) *
                               1.1 *
                               (Number(changedItem["caratPrice"]) ? Number(changedItem["caratPrice"]) : Number(changedItem["firstPrice"])) 
-                            changedItem["fiyat"] = newMaliyet;
+                            changedItem["fiyat"] = newMaliyet.toFixed(2);
                             changedItem["used_carat"] = value;
                             changedItem["maliyet"] =
 
@@ -628,6 +624,8 @@ export default function UrunGruplariModul({
                             ]);
                           }}
                         />
+                        <span className="text-sm">/&nbsp;{Number(item.remaining_carat).toFixed(2)}</span>
+                        </div>
                       );
                     }
                   } else if (key == "adet") {

@@ -96,8 +96,20 @@ const CustomDatatable = ({
                       "!border border-stroke",
                       column.columns?.length
                       ? column.columns.some((col) => col.Header === "Karat")
-                        ? "w-[360px]"
-                        : "w-[460px]"
+                        ? "w-[350px]"
+                        : column.columns.some((col) => col.Header === "Berraklık")
+                          ? "w-[220px]" 
+                          : column.columns.some((col) => col.Header === "Polish")
+                          ? "w-[350px]" 
+                          : column.columns.some((col) => col.Header === "Fluorescence")
+                          ? "w-[150px]"
+                          : column.columns.some((col) => col.Header === "Sertifika No")
+                          ? "w-[300px]"
+                          : column.columns.some((col) => col.Header === "PPC")
+                          ? "w-[400px]"
+                          : column.columns.some((col) => col.Header === "Max")
+                          ? "w-[250px]"
+                          : "w-[460px]"
                       : "",
                       "last:sticky last:inset-0 last:z-30 last:bg-gray-3",
                     )}

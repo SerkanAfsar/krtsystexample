@@ -72,6 +72,7 @@ export default function useGetProductData(
           return data.results.map((item) => {
             return {
               berraklik: item?.properties?.berraklik,
+              berraklik2: item?.properties?.berraklik2,
               carat: item?.properties?.carat,
               code: item?.code,
               fluorescence: item?.product_certificate?.fluorescence,
@@ -90,6 +91,7 @@ export default function useGetProductData(
                   )
                 : null,
               renk: item?.properties?.renk,
+              renk2: item?.properties?.renk2,
               kesim: item?.properties?.kesim,
               symmetry: item?.product_certificate?.symmetry,
               paraportFiyatı: item?.product_cost?.rapaportPrice
