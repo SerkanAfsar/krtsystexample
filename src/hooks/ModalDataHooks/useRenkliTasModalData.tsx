@@ -140,7 +140,17 @@ export default function useRenkliTasModalData({
                 />
               </div>
             ),
-            code: item.code,
+            code: (
+              <span className="text-blue-500 underline cursor-pointer">
+                <a
+                  href={`/Admin/StokYonetimi/RenkliTas/RenkliTasEkle/${item.pk}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {item?.code}
+                </a>
+              </span>
+            ),
             name: item?.properties?.renkliTas,
             carat: item?.properties?.carat,
             berraklik: item?.properties?.berraklik,

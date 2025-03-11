@@ -752,7 +752,28 @@ export default function UrunGruplariModul({
                     </div>
                     
                   );
-                  } else {
+                } else if (key == "code") {
+                  const getLink = () => {
+                    if (title === "Pırlanta") {
+                      return `/Admin/StokYonetimi/Pirlanta/PirlantaEkle/${item.pk}`;
+                    }
+                    if (title === "Sade") {
+                      return `/Admin/StokYonetimi/Sade/SadeEkle/${item.pk}`;
+                    }
+                    if (title === "Renkli Taş") {
+                      return `/Admin/StokYonetimi/RenkliTas/RenkliTasEkle/${item.pk}`;
+                    }
+                    return "#";
+                  };
+                
+                  return (
+                    <div key={index}>
+                      <a href={getLink()} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+                        {item.code}
+                      </a>
+                    </div>
+                  );
+                } else {
                     return (
                       <div className={cn(
                         "dark:text-white text-sm",

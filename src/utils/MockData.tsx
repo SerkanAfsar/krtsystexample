@@ -141,7 +141,7 @@ export const AddSadeSections: Array<FormSectionType> = [
       {
         name: "resim",
         type: "file",
-        title: "Ürün Görseli",
+        title: "Resim Ekle",
         placeholder: "Sade Ürün Görseli Seçiniz...",
         required: true,
         requiredMessage: "Sade Ürün Görseli Seçiniz",
@@ -149,7 +149,7 @@ export const AddSadeSections: Array<FormSectionType> = [
         span: 3,
         rowSpan: 5,
         showPicture: true,
-        pictureExtraText: "PNG,JPG (MAX 3MB)",
+        pictureExtraText: "",
       },
 
       {
