@@ -112,7 +112,7 @@ export default function MucevherDetaySectionOne({
                           </defs>
                         </svg>
                       </span>
-                      <p className="text-md block text-center">
+                      <p className="text-sm block text-center">
                         Resim Sürükle Ya da Seç
                       </p>
                     </div>

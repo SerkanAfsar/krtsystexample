@@ -33,6 +33,11 @@ function CustomMucevherSaveModal({
   const [store_id, setStoreId] = useState<number>();
   const [error, setError] = useState<boolean>(false);
   const [outputGram, setOutputGram] = useState<number | undefined>();
+  const [sadekarIscilik, setSadekarIscilik] = useState<number>(0);
+  const [mihlayiciIscilik, setMihlayiciIscilik] = useState<number>(0);
+  const [cilaIscilik, setCilaIscilik] = useState<number>(0);
+  const [toplamIscilik, setToplamIscilik] = useState<number>(0);
+  const [ro, setRo] = useState<number>(0);
 
   const [warehouselist, setWarehouselist] = useState<MagazaType[]>([]);
 
@@ -55,7 +60,8 @@ function CustomMucevherSaveModal({
       if (
         !showConfirm ||
         modal.current.contains(target) ||
-        trigger.current.contains(target)
+        // boşluğa tıklanınca kapanıyor
+        trigger.current?.contains(target)
       )
         return;
       setShowConfirm(false);
@@ -82,7 +88,7 @@ function CustomMucevherSaveModal({
 
   return (
     <div
-      className={`fixed left-0 top-0 z-999999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${showConfirm ? "block" : "hidden"}`}
+      className={`fixed pt-75 left-0 top-0 z-999999 flex h-2/5 min-h-screen w-full items-center justify-center overflow-y-auto bg-black/90 px-4 py-5 ${showConfirm ? "block" : "hidden"}`}
     >
       <div
         ref={modal}
@@ -119,11 +125,11 @@ function CustomMucevherSaveModal({
             />
              <div className="block w-full">
               <label className="mb-3 block h-5 text-sm font-medium text-black dark:text-white">
-                Çıkış Gramı
+                Mücevher Ağırlığı
               </label>
               <input
                 type="number"
-                placeholder="Çıkış Gramı..."
+                placeholder="Mücevher Ağırlığı..."
                 value={outputGram}
                 onChange={(e) => setOutputGram(Number(e.target.value))}
                 className="block w-full rounded-lg border-[1.5px] border-stone-400 bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -132,7 +138,7 @@ function CustomMucevherSaveModal({
             </div>
             <div className="block w-full">
               <label className="mb-3 block h-5 text-sm font-medium text-black dark:text-white">
-                Açıklama
+                Mücevher Açıklaması
               </label>
               <textarea
                 rows={3}
@@ -142,6 +148,78 @@ function CustomMucevherSaveModal({
             </div>
           </div>
         </div>
+
+
+                  <div className="mb-5">
+            <h4 className="text-xl font-bold border-b-2 text-black border-stone-400 pb-2 text-left">
+              İşçilik Bilgileri
+            </h4>
+
+            <div className="mt-5 space-y-4">
+              <div className="flex items-center gap-4">
+                <label className="text-sm text-left font-medium text-black dark:text-white w-1/3">
+                  Sadekar İşçilik:
+                </label>
+                <input
+                  type="number"
+                  value={sadekarIscilik} 
+                  onChange={(e) => setSadekarIscilik(Number(e.target.value))}
+                  className="w-2/3 mt-2 border-b-[1.5px] border-stone-400 bg-transparent px-3 py-2 outline-none dark:border-form-strokedark dark:text-white"
+                />
+              </div>
+
+              <div className="flex items-center gap-4">
+                <label className="text-sm text-left font-medium text-black dark:text-white w-1/3">
+                  Mıhlayıcı İşçilik:
+                </label>
+                <input
+                  type="number"
+                  value={mihlayiciIscilik} 
+                  onChange={(e) => setMihlayiciIscilik(Number(e.target.value))}
+                  className="w-2/3 mt-2 border-b-[1.5px] border-stone-400 bg-transparent px-3 py-2 outline-none dark:border-form-strokedark dark:text-white"
+                />
+              </div>
+
+              <div className="flex items-center gap-4">
+                <label className="text-sm text-left font-medium text-black dark:text-white w-1/3">
+                  Cila İşçilik:
+                </label>
+                <input
+                  type="number"
+                  value={cilaIscilik} 
+                  onChange={(e) => setCilaIscilik(Number(e.target.value))}
+                  className="w-2/3 mt-2 text-left border-b-[1.5px] border-stone-400 bg-transparent px-3 py-2 outline-none dark:border-form-strokedark dark:text-white"
+                />
+              </div>
+
+              <div className="flex items-center gap-4">
+                <label className="text-sm text-left font-medium text-black dark:text-white w-1/3">
+                  Toplam İşçilik:
+                </label>
+                <input
+                  type="number"
+                  value={toplamIscilik} 
+                  onChange={(e) => setToplamIscilik(Number(e.target.value))}
+                  className="w-2/3 mt-2 border-b-[1.5px] border-stone-400 bg-transparent px-3 py-2 outline-none dark:border-form-strokedark dark:text-white"
+                />
+              </div>
+
+              <div className="flex items-center gap-4">
+                <label className="text-sm text-left font-medium text-black dark:text-white w-1/3">
+                  RO:
+                </label>
+                <input
+                  type="number"
+                  value={ro} 
+                  onChange={(e) => setRo(Number(e.target.value))}
+                  className="w-2/3 mt-2 border-b-[1.5px] border-stone-400 bg-transparent px-3 py-2 outline-none dark:border-form-strokedark dark:text-white"
+                />
+              </div>
+            </div>
+          </div>
+
+
+
 
         <div className="mb-5 flex w-full border-l-6 border-warning bg-warning bg-opacity-[15%] p-4 text-left shadow-md dark:bg-[#1B1B24] dark:bg-opacity-30 md:p-4">
           <div className="mr-5 flex h-9 w-9 items-center justify-center rounded-lg bg-warning bg-opacity-30">

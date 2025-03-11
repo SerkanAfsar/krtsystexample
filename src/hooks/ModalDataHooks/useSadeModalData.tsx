@@ -129,7 +129,17 @@ export default function useSadeModalData({
             ) : null,
             modelKodu: item?.properties?.modelKodu,
             ayar: item?.properties?.ayar,
-            code: item.code,
+            code: (
+              <span className="text-blue-500 underline cursor-pointer">
+                <a
+                  href={`/Admin/StokYonetimi/Sade/SadeEkle/${item.pk}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {item?.code}
+                </a>
+              </span>
+            ),
             renk: item?.properties?.altinRengi,
             gram: item?.properties?.gram,
             has: item?.properties?.hasGrami,

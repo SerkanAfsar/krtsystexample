@@ -48,7 +48,7 @@ export default function CustomImageSelect({
       {!image ? (
         <div
           id="FileUpload"
-          className="relative block w-full appearance-none rounded-sm border border-dashed border-stone-400 bg-white px-4 py-4 dark:border-strokedark dark:bg-boxdark sm:py-14"
+          className="relative block w-full appearance-none rounded-sm border border-dashed border-stone-400 bg-white px-4 py-4 !pt-24 dark:border-strokedark dark:bg-boxdark sm:py-14"
         >
           <input
             type="file"
@@ -57,7 +57,7 @@ export default function CustomImageSelect({
             className="absolute inset-0 z-50 m-0 h-full w-full p-0 opacity-0 outline-none"
             onChange={(event) => setFiles(event.target.files as FileList)}
           />
-          <div className="flex flex-col items-center justify-center space-y-3">
+          <div className="flex flex-col items-center justify-center space-y-3 mb-8">
             <span className="flex h-11.5 w-11.5 items-center justify-center rounded-full border border-stroke bg-primary/5 dark:border-strokedark">
               <svg
                 width="20"

@@ -51,7 +51,7 @@ export default function usePirlantaModalData({
         : properties.berraklik2
         ? `${properties.berraklik}-${properties.berraklik2}`
         : properties.berraklik,
-      renk: (properties.renk == "Black" || properties.renk.includes("FANCY"))
+      renk: (properties.renk == "BLACK" || properties.renk.includes("FANCY"))
         ? properties.renk
         : properties.renk2
         ? `${properties.renk}-${properties.renk2}`
@@ -121,7 +121,7 @@ export default function usePirlantaModalData({
         : item?.properties?.berraklik;
     
     const renk =
-      item?.properties?.renk == "Black" || String(item?.properties?.renk).includes("FANCY")
+      item?.properties?.renk == "BLACK" || String(item?.properties?.renk).includes("FANCY")
         ? item?.properties?.renk
         : item?.properties?.renk2
         ? `${item?.properties?.renk}-${item?.properties?.renk2}`
@@ -150,7 +150,17 @@ export default function usePirlantaModalData({
           />
         </div>
       ),
-      code: item?.code,
+      code: (
+        <span className="text-blue-500 underline cursor-pointer">
+          <a
+            href={`/Admin/StokYonetimi/Pirlanta/PirlantaEkle/${item.pk}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {item?.code}
+          </a>
+        </span>
+      ),
       carat: item?.properties?.carat,
       kesim: item?.properties?.kesim,
       renk: renk,
