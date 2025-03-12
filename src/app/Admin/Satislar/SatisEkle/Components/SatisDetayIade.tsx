@@ -8,6 +8,7 @@ export default function SatisDetayIade({
   append,
   remove,
   register,
+  setValue,
 }: {
   fields?: any;
   append: any;
@@ -74,10 +75,10 @@ export default function SatisDetayIade({
                   rightIcon: "$",
                 }}
                 disabled={item.isExist}
-                {...(register(`refund_details.${index}.payment_price`),
-                {
+                {...register(`refund_details.${index}.payment_price`, {
                   valueAsNumber: true,
                 })}
+                setFormValues={setValue}
                 value={item.payment_price}
               />
             </div>

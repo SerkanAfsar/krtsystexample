@@ -4,7 +4,7 @@ import { ResponseResult } from "@/types/responseTypes";
 import { CustomDataListType } from "@/types/types";
 import { GetAllSatisList } from "@/Services/Satis.Services";
 import { SaleResponseType, SatisListesiHeaderType } from "@/types/Satis";
-import { dolarFormat, formatDate } from "@/utils";
+import { dolarFormat, formatTarih } from "@/utils";
 import { FaPencil } from "react-icons/fa6";
 import Link from "next/link";
 
@@ -50,8 +50,8 @@ export default function useSatisListData({
         const data = resp.data as CustomDataListType<SaleResponseType>;
         const dataOneResult: SatisListesiHeaderType[] = data.results.map(
           (item: SaleResponseType) => {
-            const createdAtDate = formatDate(item.created_at);
-            const updatedAtDate = formatDate(item.updated_at);
+            const createdAtDate = formatTarih(item.created_at);
+            const updatedAtDate = formatTarih(item.updated_at);
             return {
               satisId: (
                 <div className="flex w-full items-center justify-center">
@@ -61,8 +61,7 @@ export default function useSatisListData({
 
               sonAlinanOdemeTarihi: (
                 <div className="flex flex-col items-start justify-start leading-6">
-                  <span>{updatedAtDate.primary}</span>
-                  <span>{updatedAtDate.secondary}</span>
+                  <span>{updatedAtDate}</span>
                 </div>
               ),
               kalan: dolarFormat(item.total_remaining_amount),
@@ -77,8 +76,7 @@ export default function useSatisListData({
               toplamTutar: dolarFormat(item.total as number),
               satisTarihi: (
                 <div className="flex flex-col items-start justify-start leading-6">
-                  <span>{createdAtDate.primary}</span>
-                  <span>{createdAtDate.secondary}</span>
+                  <span>{createdAtDate}</span>
                 </div>
               ),
               islemler: islemlerArea({ id: item.id as number }),

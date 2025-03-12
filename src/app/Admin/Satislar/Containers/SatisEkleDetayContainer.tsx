@@ -17,7 +17,7 @@ import {
 import SatisDetayMusteri from "../SatisEkle/Components/SatisDetayMusteri";
 import SatisDetayUrunler from "../SatisEkle/Components/SatisDetayUrunler";
 import SatisDetayOdeme from "../SatisEkle/Components/SatisDetayOdeme";
-import { cn, stringToMoney } from "@/utils";
+import { cn } from "@/utils";
 import SatisDetayIade from "../SatisEkle/Components/SatisDetayIade";
 import { useState } from "react";
 
@@ -133,14 +133,14 @@ export default function SatisEkleDetayContainer({
           };
         }, {}),
       };
-
+      //console.log(requestData)
       const response = await UpdateSatisService({ data: requestData });
 
       const paymentBody: any = {
         customer_order_id: Number(id),
         payment_details:
           data.payments
-            .filter((a) => a.isExist == false)
+            .filter((a) => a.isExist !== true)
             .reduce((acc: any, next: any) => {
               return {
                 ...acc,
@@ -148,6 +148,7 @@ export default function SatisEkleDetayContainer({
               };
             }, {}) || [],
       };
+      //console.log(paymentBody)
 
       const paymentResponse = await SaleMakePaymentEdit({
         data: paymentBody,
@@ -191,7 +192,7 @@ export default function SatisEkleDetayContainer({
       const requestData: SaleTypeFormResult = {
         customer_id: data.customer_id,
         total_remaining_amount: Number(toplamKalanTutar),
-        total: stringToMoney(toplamTutar),
+        total: Number(toplamMaliyet),
         total_paid_amount: toplamOdenenTutar,
         products: data.products || [],
         payment_details: data.payments.reduce((acc: any, next: any) => {
