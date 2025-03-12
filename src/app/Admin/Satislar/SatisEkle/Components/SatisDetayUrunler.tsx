@@ -111,7 +111,6 @@ export default function SatisDetayUrunler({
               sales_price &&
               total_cost &&
               Number(sales_price) < Number(total_cost);
-            console.log(sales_price, total_cost);
 
             return (
               <div

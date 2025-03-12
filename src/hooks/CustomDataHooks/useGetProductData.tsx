@@ -12,10 +12,8 @@ import { PirlantaListType } from "@/types/Pirlanta";
 
 import Image from "next/image";
 import { SadeModelTurleri } from "@/data/Sade.data";
-import { dolarFormat } from "@/utils";
+import { dolarFormat, formatTarih } from "@/utils";
 import Link from "next/link";
-import { formatDate } from "date-fns";
-import { tr } from "date-fns/locale";
 
 export default function useGetProductData(
   type: "Diamond" | "Simple" | "ColoredStone",
@@ -84,10 +82,8 @@ export default function useGetProductData(
               sertifika: sertifikaFunc(item),
               sertifikaNo: sertifikaFunc(item),
               sertifikaTarihi: item.product_certificate?.sertifikaTarihi
-                ? formatDate(
+                ? formatTarih(
                     item.product_certificate?.sertifikaTarihi as string,
-                    "dd MMMM yyyy",
-                    { locale: tr },
                   )
                 : null,
               renk: item?.properties?.renk,

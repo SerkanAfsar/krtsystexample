@@ -84,19 +84,6 @@ export default function SatisDetayMusteri({
           />
           <CustomInput
             item={{
-              name: "customer_name",
-              required: false,
-              disabled: true,
-              type: "text",
-
-              title: "Müşteri Adı",
-              placeholder: "Müşteri Adı",
-            }}
-            disabled={true}
-            value={customerDetail.name}
-          />
-          <CustomInput
-            item={{
               name: "customer_phone",
               required: false,
               disabled: true,

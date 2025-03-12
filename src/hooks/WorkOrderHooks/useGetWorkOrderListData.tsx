@@ -1,4 +1,4 @@
-import { dolarFormat, formatDate } from "@/utils";
+import { dolarFormat, formatTarih } from "@/utils";
 import {
   ConvertWorkOrderStatus,
   WorkOrderStatusType,
@@ -42,7 +42,7 @@ export default function useGetWorkOrderListData() {
       }
       const data = resp.results as WorkOrderType[];
       const dataOneResult: any = data.map((item) => {
-        const sonIslemTarihi = formatDate(item.last_process_date as string);
+        const date = formatTarih(item.last_process_date as string);
         return {
           id: item.id,
           code: item?.product_temp_code ? (
@@ -58,7 +58,7 @@ export default function useGetWorkOrderListData() {
           islem: item?.user,
           last_process_date: item.last_process_date ? (
             <div className="flex flex-col items-start justify-start gap-2">
-              <span>{sonIslemTarihi.primary + " " + sonIslemTarihi.secondary}</span>
+              <span>{date}</span>
             </div>
           ) : null,
 

@@ -9,7 +9,7 @@ import { formatToCurrency } from "@/utils";
 import Image from "next/image";
 import { GetTedarikciPursahedList } from "@/Services/Supplier.Services";
 import { SupplierProductHeaderType } from "@/types/Tedarikci";
-import { formatDate } from "@/utils";
+import { formatTarih } from "@/utils";
 
 export default function useTedarikciyeBagliUrunlerTable({
   tedarikciId,
@@ -35,7 +35,7 @@ export default function useTedarikciyeBagliUrunlerTable({
     const totalCarat =
       item?.properties?.totalCarat || item?.properties?.remaining_carat;
 
-    const alisTarihi = formatDate(item.buy_date as string);
+    const alisTarihi = formatTarih(item.buy_date as string);
 
     return {
       image: item?.image ? (
@@ -49,7 +49,7 @@ export default function useTedarikciyeBagliUrunlerTable({
       ) : null,
       code: item?.code,
       buy_date: item.buy_date
-        ? `${alisTarihi.primary} ${alisTarihi.secondary}`
+        ? `${alisTarihi}`
         : "",
       product_cost: item?.product_cost
         ? `${formatToCurrency(Number(item.product_cost))}`

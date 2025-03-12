@@ -31,6 +31,17 @@ export const formatDate = (value: string) => {
   };
 };
 
+export const formatTarih = (value: string) => {
+  const tarih = new Date(value);
+  const gun = tarih.getDate().toString().padStart(2, '0');
+  const ay = (tarih.getMonth() + 1).toString().padStart(2, '0'); 
+  const yil = tarih.getFullYear();
+  const saat = tarih.getHours().toString().padStart(2, '0');
+  const dakika = tarih.getMinutes().toString().padStart(2, '0');
+
+  return `${gun}.${ay}.${yil} ${saat}:${dakika}`;
+}
+
 export const stringToMoney = (value: string | number): number => {
   if (value) {
     return Number(value.toString().replace(".", "").replace(",", "."));

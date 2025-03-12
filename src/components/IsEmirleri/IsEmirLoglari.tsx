@@ -1,4 +1,4 @@
-import { formatDate, formatToCurrency } from "@/utils";
+import { formatTarih, formatToCurrency } from "@/utils";
 import { useEffect, useState } from 'react';
 import {
   WorkOrderListType,
@@ -71,15 +71,14 @@ export default function IsEmirleriLoglari({
         </div>
 
         {newData?.map((item, index) => {
-          const { primary, secondary } = formatDate(item.created_at as string);
+          const date  = formatTarih(item.created_at as string);
           return (
             <div
               key={index}
               className="grid grid-cols-6 items-center gap-3 border-l-[1px] border-r-[1px] border-t-[1px] border-[#e5e9ed] p-3 font-medium  capitalize  text-black last:border-b-[1px]"
             >
               <div className="flex flex-col items-center justify-center gap-1  text-center">
-                <span>{primary}</span>
-                <span>{secondary}</span>
+                <span>{date}</span>
               </div>
               <div className="text-center">
               {item.from_group ? item.from_group : "-"}

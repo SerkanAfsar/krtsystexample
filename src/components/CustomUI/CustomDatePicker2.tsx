@@ -40,7 +40,7 @@ const CustomDatePicker2 = ({
 
   useEffect(() => {
     setValue &&
-      setValue(name, item.format ? format(value as Date, item.format) : value);
+      setValue(name, item.format ? format(value as Date, "dd.MM.yyyy") : value);
   }, [value, name, setValue, item?.format]);
 
   return (
@@ -66,7 +66,7 @@ const CustomDatePicker2 = ({
         onBlur={onBlur}
         onChange={onChange}
         value={value}
-        format={item?.format || null}
+        format="dd.MM.yyyy"
         disabled={rest.disabled}
       />
       {err && (

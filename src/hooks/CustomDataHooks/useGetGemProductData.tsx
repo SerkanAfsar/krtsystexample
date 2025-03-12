@@ -75,7 +75,7 @@ export default function useGemProductData(redirectUrl: string) {
         totalLaborCost: dolarFormat(item?.properties?.totalLaborCost as number),
         priceTag: dolarFormat(item?.properties?.priceTag as number),
         tedarikci: item?.supplier?.name || "Üretim",
-        girisTarihi: item?.properties?.productionDate,
+        girisTarihi: String(item?.properties?.productionDate).replace(/\//g, "."),
         ambar: item?.store?.name || null,
         islemler: islemlerArea({
           id: item?.pk as number,
