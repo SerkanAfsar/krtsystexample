@@ -28,37 +28,55 @@ export default function MucevherSadeSection({
 
   const mainArr = isEdit ? dataList : fieldsSade;
 
-  //console.log("mainarr is ", mainArr);
-
   return (
     <div className="mb-3 flex w-full flex-col gap-3">
-      <b className="mb-1 block text-black underline">Sade Bilgileri</b>
+      {!isEdit && ( <b className="mb-1 block text-black underline">Sade Bilgileri</b>)}
       {isEdit && (
-        <div className="my-3">
-          <table className="w-full table-auto border-collapse">
-            <thead>
-              <tr className="bg-gray-200">
-                <th className="border p-4 text-center font-semibold text-gray-800">Model Turu</th>
-                <th className="border p-4 text-center font-semibold text-gray-800">Gram</th>
-                <th className="border p-4 text-center font-semibold text-gray-800">Ayar</th>
-                <th className="border p-4 text-center font-semibold text-gray-800">Renk</th>
-                <th className="border p-4 text-center font-semibold text-gray-800">Has Gramı</th>
-                <th className="border p-4 text-center font-semibold text-gray-800">Fiyat</th>
-              </tr>
-            </thead>
-            <tbody>
-              {mainArr?.map((item: any, index: number) => (
-                <tr key={item.id} className="hover:bg-gray-100 transition-all">
-                  <td className="border p-4 text-center text-gray-600">{item.modelTuru}</td>
-                  <td className="border p-4 text-center text-gray-600">{item.gram}</td>
-                  <td className="border p-4 text-center text-gray-600">{item.ayar}</td>
-                  <td className="border p-4 text-center text-gray-600">{item.altinRengi}</td>
-                  <td className="border p-4 text-center text-gray-600">{item.hasGram}</td>
-                  <td className="border p-4 text-right font-semibold text-gray-600">{Number(item.fiyat).toFixed(2)} $</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="my-3 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="border-b border-stroke dark:border-strokedark">
+            <div className="p-4 text-lg font-medium text-black dark:text-white">
+              Sade Bilgileri
+            </div>
+          </div>
+          <hr />
+          <div className="block w-full p-5">
+            <div className="grid grid-cols-7 items-center gap-3 rounded-md border-[#e5e9ed] bg-[#f9fafb] p-3 font-medium text-black">
+              <div className="text-center">Ürün Kodu</div>
+              <div className="text-center">Model Türü</div>
+              <div className="text-center">Gram</div>
+              <div className="text-center">Ayar</div>
+              <div className="text-center">Renk</div>
+              <div className="text-center">Has Gramı</div>
+              <div className="text-center">Fiyat</div>
+            </div>
+            {mainArr?.map((item: any, index: number) => (
+              <div
+                key={item.id}
+                className="grid grid-cols-7 items-center gap-3 border-l-[1px] border-r-[1px] border-t-[1px] border-[#e5e9ed] p-3 font-medium capitalize text-black last:border-b-[1px]"
+              >
+                <div className="text-center">
+                  {item.code ? (
+                    <a
+                      href={`/Admin/StokYonetimi/Sade/SadeEkle/${item.pk}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:underline"
+                    >
+                      {item.code}
+                    </a>
+                  ) : (
+                    "-"
+                  )}
+                </div>
+                <div className="text-center">{item.modelTuru}</div>
+                <div className="text-center">{item.gram}</div>
+                <div className="text-center">{item.ayar}</div>
+                <div className="text-center">{item.altinRengi}</div>
+                <div className="text-center">{item.hasGram}</div>
+                <div className="text-right font-semibold">{Number(item.fiyat).toFixed(2)} $</div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
       {!isEdit && (

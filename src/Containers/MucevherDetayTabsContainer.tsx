@@ -29,6 +29,8 @@ export default function MucevherDetayTabsContainer({
         if (nextItem["product"]) {
           const productItem = nextItem.product as ProductType;
           const newItem = {
+            code: productItem.code as string,
+            pk: productItem.pk as number,
             renkliTas: productItem.properties?.renkliTas as string,
             carat: nextItem?.used_carat && nextItem.used_carat > 0 
               ? (nextItem.used_carat as number) 
@@ -40,7 +42,9 @@ export default function MucevherDetayTabsContainer({
             kesim: productItem.properties?.kesim as string,
             renk: productItem.properties?.renk as string,
             altinRengi: productItem.properties?.altinRengi as string,
-            fiyat: productItem.total_cost as number,
+            fiyat: productItem.menstrual_status === "Single"
+                ? productItem.total_cost
+                : (nextItem?.used_carat ? Number(productItem.product_cost?.pricePerCarat) * Number(nextItem.used_carat) * 1.1 : productItem.total_cost),
             modelTuru: productItem.properties?.modelTuru as string,
             gram: productItem.properties?.gram as number,
             ayar: productItem.properties?.ayar as number,

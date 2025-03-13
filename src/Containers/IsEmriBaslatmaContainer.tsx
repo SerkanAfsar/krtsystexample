@@ -12,6 +12,7 @@ import CustomMucevherSaveModal from "../components/CustomUI/CustomMucevherSaveMo
 import { PostWorkOderUpdateStatus, PostWorkOderWastages, GetWorkOrderProductList } from "@/Services/WorkOrder.Services";
 import { useUserStore } from "@/store/useUserStore";
 import { WorkOrderWastagePayloadType } from "../types/WorkOrder.types";
+import WastageAndUnUsedModul from "../components/IsEmirleri/WastageAndUnUsedModul"
 
 type StatusDetails = {
   className: string;
@@ -43,6 +44,8 @@ export default function IsEmriBaslatmaContainer({
 }) {
   const [productList, setProductList] = useState<any[]>([]);
   const [fireValues, setFireValues] = useState<{ [key: number]: number }>({});
+  const [fireKaratValues, setFireKaratValues] = useState<{ [key: number]: number }>({});
+  const [unUsed, setUnUsed] = useState<{ [key: number]: number }>({});
   const [description, setDescription] = useState<string>("");
   const [outputGram, setOutputGram] = useState<number | string>("");
   const [iscilik, setIscilik] = useState<number | string>("");
@@ -52,6 +55,7 @@ export default function IsEmriBaslatmaContainer({
   const [editableUruns, setEditableUruns] = useState<SeciliUrunType[]>([]);
   const [statu, setStatu] = useState<boolean>(false);
   const [isSendClicked, setIsSendClicked] = useState(false);
+  const [activeTab, setActiveTab] = useState("production"); 
   const { user } = useUserStore(); 
   const userRoleID = user?.groups[0]?.id;
   const resetForm = () => {
@@ -59,6 +63,7 @@ export default function IsEmriBaslatmaContainer({
     setOutputGram("");
     setIscilik("");
     setFireValues({});
+    setFireKaratValues({});
 };
 
   const fetchWorkOrderProducts = async (id: number) => {
@@ -118,6 +123,14 @@ export default function IsEmriBaslatmaContainer({
 
   const handleFireChange = (id: number, value: number) => {
     setFireValues((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleFireKaratChange = (id: number, value: number) => {
+    setFireKaratValues((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleUnUsed = (id: number, value: number) => {
+    setUnUsed((prev) => ({ ...prev, [id]: value }));
   };
 
   const handleConfirmation = (cirak?: UserType, targetUser?: UserType, items?: SeciliUrunType[]) => {
@@ -317,139 +330,219 @@ export default function IsEmriBaslatmaContainer({
         )}
       >
         <div className="border-b border-stroke dark:border-strokedark p-4">
-          <h3 className="text-lg font-medium text-black dark:text-white">
+        <div className="flex items-center space-x-4 text-sm">
+          <button
+            onClick={() => setActiveTab("production")}
+            className={`relative px-4 py-2 text-gray-800 font-medium transition-colors duration-300 ${
+              activeTab === "production"
+                ? "text-blue-600"
+                : "text-gray-600 hover:text-blue-600"
+            }`}
+          >
             Üretim Ürünleri
-          </h3>
+            {activeTab === "production" && (
+              <span className="absolute bottom-0 left-0 w-full h-[2px] bg-blue-600" />
+            )}
+          </button>
+          <span className="text-gray-600">/</span>
+          <button
+            onClick={() => setActiveTab("waste")}
+            className={`relative px-4 py-2 text-gray-800 font-medium transition-colors duration-300 ${
+              activeTab === "waste"
+                ? "text-blue-600"
+                : "text-gray-600 hover:text-blue-600"
+            }`}
+          >
+            Fire Ürünler
+            {activeTab === "waste" && (
+              <span className="absolute bottom-0 left-0 w-full h-[2px] bg-blue-600" />
+            )}
+          </button>
+          <span className="text-gray-600">/</span>
+          <button
+            onClick={() => setActiveTab("unused")}
+            className={`relative px-4 py-2 text-gray-800 font-medium transition-colors duration-300 ${
+              activeTab === "unused"
+                ? "text-blue-600"
+                : "text-gray-600 hover:text-blue-600"
+            }`}
+          >
+            Kullanılmayan Ürünler
+            {activeTab === "unused" && (
+              <span className="absolute bottom-0 left-0 w-full h-[2px] bg-blue-600" />
+            )}
+          </button>
         </div>
-        <div className="overflow-x-auto p-4">
-          <table className="w-full table-fixed border-collapse">
-            <thead>
-              <tr className="bg-gray-100 dark:bg-gray-700">
-                {[
-                  "ID",
-                  "Kod",
-                  "Resim",
-                  "Ürün Tipi",
-                  "Adet",
-                  "Kullanılan Karat",
-                  "Fire",
-                  "Toplam Fire",
-                  "Nerede",
-                  "Statu",
-                  "Fiyat",
-                  "İşlemler"
-                ].map((header, index) => (
-                  <th key={index} className="border-b border-gray p-2 text-left text-sm font-medium">
-                    {header}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {productList.length > 0 ? (
-                productList.map((product) => {
-                  const productStatus = product.status; 
-                  const statusDetails = statusDetailsMap[productStatus];
-                  return (
-                    <tr key={product.id}>
-                      <td className="p-2 text-sm">{product.product.pk}</td>
-                      <td className="p-2 text-sm">{product.product.code || "-"}</td>
-                      <td className="p-2 text-sm">
-                        {product.product.image ? (
-                          <img 
-                          src={product.product.image} 
-                          alt="Ürün Resmi" 
-                          className="w-10 h-10" 
-                          />
-                        ) : (
-                          "-"
-                        )}
-                      </td>
-                      <td className="p-2 text-sm">
-                      {product.product.type === "Simple" 
-                        ? "Sade" 
-                        : product.product.type === "ColoredStone" 
-                        ? "Renkli Taş" 
-                        : product.product.type === "Diamond" 
-                        ? "Pırlanta" 
-                        : product.product.type || "-"}
-                      </td>
-                      <td className="p-2 text-sm">{product.quantity || "-"}</td>
-                      <td className="p-2 text-sm">
-                        {product.used_carat && product.used_carat !== 0 
-                          ? product.used_carat 
-                          : product.product.properties?.carat && product.product.properties.carat !== 0 
-                            ? product.product.properties.carat 
-                            : "-"}
-                      </td>
-                      <td className="p-2 text-sm">
-                        <input
-                          type="number"
-                          onChange={(e) => {
-                            const value = parseFloat(e.target.value) || 0;
-                            const maxAllowed = (product.wastage || 0) + (product.quantity || 0);
-                      
-                            if (value > maxAllowed) {
-                              toast.error("Fire toplamı adetten fazla olamaz!", { position: "top-right" });;            
-                              handleFireChange(product.id, 0); 
-                            } else {
-                              handleFireChange(product.id, value);
-                            }
-                          }}
-                          className="w-20 border p-1 text-sm"
-                          disabled={product.status !== "WORKSHOP_ACCEPTED"}
-                        />
-                      </td>
-                      <td className="p-2 text-sm">{product.wastage || 0}</td>
-                      <td className="p-2 text-sm">{product.user_group_name || ""} </td>
-                      <td className="p-2 text-sm">
-                        <div className={`p ml-[-25px] pt-2 h-8 w-28 lg:w-28 md:w-22 sm:w-20 rounded-full text-center text-xs font-bold whitespace-nowrap dark:disabled:text-white border-2 leading-[2],
-                           ${statusDetails?.className}`}
-                           >
-                          {statusDetails?.name}
-                        </div>
-                      </td>
-                      <td className="p-2 text-sm">
-                        {product.cost
-                          ? (
-                              product.product.type !== "Simple" 
-                                ? Number(product.cost * 1.1).toFixed(2) 
-                                : Number(product.cost).toFixed(2)
-                            ).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                          : "0.00"} $
-                      </td>
-                      <td className="p-2 text-sm">
-                      {product.status !== "WORKSHOP_ACCEPTED" && (
-                        <button
-                          className={`p-2 w-8 h-8 ${
-                            (product.status === "SENT_TO_WORKSHOP" && userRoleID === 2) ||
-                            (userRoleID !== 2 && (product.status === "WORKSHOP_SENT" || product.status === "PRODUCTION_WORKSHOP_APPROVED"))
-                              ? "opacity-50 cursor-not-allowed"
-                              : "cursor-pointer"
-                          }`}
-                          onClick={() => handleConfirmationOpen(product, product.id)}
-                          disabled={
-                            (product.status === "SENT_TO_WORKSHOP" && userRoleID === 2) ||
-                            (product.status !== "SENT_TO_WORKSHOP" && userRoleID !== 2)
-                          }
-                          >
-                          <img src="/images/icon/confirmation.svg" alt="confirmation" />
-                        </button>
-                      )}
-                      </td>
-                    </tr>
-                  );
-                })
-              ) : (
-                <tr>
-                  <td colSpan={11} className="p-4 text-center text-sm">
-                    Ürün yok.
-                  </td>
+        </div>
+        {activeTab === "production" && (
+          <div className="overflow-x-auto p-4">
+            <table className="w-full table-auto border-collapse">
+              <thead>
+                <tr className="bg-gray-100 dark:bg-gray-700">
+                  {[
+                    "ID",
+                    "Kod",
+                    "Resim",
+                    "Ürün Tipi",
+                    "Adet",
+                    "Kullanılan Karat",
+                    "Fire Adet",
+                    "Fire Karat",
+                    "Kullanılmayan Karat",
+                    "Nerede",
+                    "Statu",
+                    "Fiyat",
+                    "İşlemler"
+                  ].map((header, index) => (
+                    <th key={index} className="border-b border-gray p-2 text-left text-sm font-medium">
+                      {header}
+                    </th>
+                  ))}
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {productList.length > 0 ? (
+                  productList.map((product) => {
+                    const productStatus = product.status; 
+                    const statusDetails = statusDetailsMap[productStatus];
+                    return (
+                      <tr key={product.id}>
+                        <td className="p-2 text-sm">{product.product.pk}</td>
+                        <td className="p-2 text-sm">{product.product.code || "-"}</td>
+                        <td className="p-2 text-sm">
+                          {product.product.image ? (
+                            <img 
+                            src={product.product.image} 
+                            alt="Ürün Resmi" 
+                            className="w-10 h-10" 
+                            />
+                          ) : (
+                            "-"
+                          )}
+                        </td>
+                        <td className="p-2 text-sm">
+                        {product.product.type === "Simple" 
+                          ? "Sade" 
+                          : product.product.type === "ColoredStone" 
+                          ? "Renkli Taş" 
+                          : product.product.type === "Diamond" 
+                          ? "Pırlanta" 
+                          : product.product.type || "-"}
+                        </td>
+                        <td className="p-2 text-sm">{product.quantity || "-"}</td>
+                        <td className="p-2 text-sm">
+                          {product.used_carat && product.used_carat !== 0 
+                            ? product.used_carat 
+                            : product.product.properties?.carat && product.product.properties.carat !== 0 
+                              ? product.product.properties.carat 
+                              : "-"}
+                        </td>
+                        <td className="p-2 text-sm">
+                          <input
+                            type="number"
+                            onChange={(e) => {
+                              const value = parseFloat(e.target.value) || 0;
+                              const maxAllowed = (product.wastage || 0) + (product.quantity || 0);
+                        
+                              if (value > maxAllowed) {
+                                toast.error("Fire toplamı adetten fazla olamaz!", { position: "top-right" });;            
+                                handleFireChange(product.id, 0); 
+                              } else {
+                                handleFireChange(product.id, value);
+                              }
+                            }}
+                            className="w-20 border p-1 text-sm"
+                            disabled={product.status !== "WORKSHOP_ACCEPTED"}
+                          />
+                        </td>
+                        <td className="p-2 text-sm">
+                          <input
+                            type="number"
+                            onChange={(e) => {
+                              const value = parseFloat(e.target.value) || 0;
+                              const maxAllowed = (product.used_carat);
+                        
+                              if (value > maxAllowed) {
+                                toast.error("Fire toplamı karatı kullanılan karattan fazla olamaz!", { position: "top-right" });;            
+                                handleFireKaratChange(product.id, 0); 
+                              } else {
+                                handleFireKaratChange(product.id, value);
+                              }
+                            }}
+                            className="w-20 border p-1 text-sm"
+                            disabled={product.status !== "WORKSHOP_ACCEPTED"}
+                          />
+                        </td>
+                        <td className="p-2 text-sm">
+                          <input
+                            type="number"
+                            onChange={(e) => {
+                              const value = parseFloat(e.target.value) || 0;
+                              const maxAllowed = (product.used_carat);
+                        
+                              if (value > maxAllowed) {
+                                toast.error("Kullanılmayan karat toplam karattan fazla olamaz!", { position: "top-right" });;            
+                                handleUnUsed(product.id, 0); 
+                              } else {
+                                handleUnUsed(product.id, value);
+                              }
+                            }}
+                            className="w-20 border p-1 text-sm"
+                            disabled={product.status !== "WORKSHOP_ACCEPTED"}
+                          />
+                        </td>
+                        <td className="pr-8 text-sm">{product.user_group_name || ""} </td>
+                        <td className="p-2 text-sm">
+                          <div className={`p ml-[-25px] pt-2 h-8 w-28 lg:w-28 md:w-22 sm:w-20 rounded-full text-center text-xs font-bold whitespace-nowrap dark:disabled:text-white border-2 leading-[2],
+                            ${statusDetails?.className}`}
+                            >
+                            {statusDetails?.name}
+                          </div>
+                        </td>
+                        <td className="p-2 text-sm">
+                          {product.cost
+                            ? (
+                                product.product.type !== "Simple" 
+                                  ? Number(product.cost * 1.1).toFixed(2) 
+                                  : Number(product.cost).toFixed(2)
+                              ).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                            : "0.00"} $
+                        </td>
+                        <td className="p-2 text-sm">
+                        {product.status !== "WORKSHOP_ACCEPTED" && (
+                          <button
+                            className={`p-2 w-8 h-8 ${
+                              (product.status === "SENT_TO_WORKSHOP" && userRoleID === 2) ||
+                              (userRoleID !== 2 && (product.status === "WORKSHOP_SENT" || product.status === "PRODUCTION_WORKSHOP_APPROVED"))
+                                ? "opacity-50 cursor-not-allowed"
+                                : "cursor-pointer"
+                            }`}
+                            onClick={() => handleConfirmationOpen(product, product.id)}
+                            disabled={
+                              (product.status === "SENT_TO_WORKSHOP" && userRoleID === 2) ||
+                              (product.status !== "SENT_TO_WORKSHOP" && userRoleID !== 2)
+                            }
+                            >
+                            <img src="/images/icon/confirmation.svg" alt="confirmation" />
+                          </button>
+                        )}
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <tr>
+                    <td colSpan={13} className="p-4 text-center text-sm">
+                      Ürün yok.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+        {activeTab === "waste" && <WastageAndUnUsedModul type="waste" />}
+        {activeTab === "unused" && <WastageAndUnUsedModul type="unused" />}
       </div>
       <div className="flex justify-end mt-4">
       <button
