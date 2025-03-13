@@ -61,10 +61,9 @@ export default function IsEmirleriLoglari({
       </div>
       <hr />
       <div className="block w-full p-5">
-        <div className="grid grid-cols-6 items-center gap-3  rounded-md border-[#e5e9ed] bg-[#f9fafb] p-3  font-medium text-black">
+        <div className="grid grid-cols-5 items-center gap-3  rounded-md border-[#e5e9ed] bg-[#f9fafb] p-3  font-medium text-black">
           <div className="text-center">Tarih</div>
           <div className="text-center">Atölye</div>
-          <div className="text-center">İşçilik</div>
           <div className="text-center">Çıkış Gramı</div>
           <div className="text-center">Açıklama</div>
           <div className="text-center">İşçilik Maliyeti</div>
@@ -75,7 +74,7 @@ export default function IsEmirleriLoglari({
           return (
             <div
               key={index}
-              className="grid grid-cols-6 items-center gap-3 border-l-[1px] border-r-[1px] border-t-[1px] border-[#e5e9ed] p-3 font-medium  capitalize  text-black last:border-b-[1px]"
+              className="grid grid-cols-5 items-center gap-3 border-l-[1px] border-r-[1px] border-t-[1px] border-[#e5e9ed] p-3 font-medium  capitalize  text-black last:border-b-[1px]"
             >
               <div className="flex flex-col items-center justify-center gap-1  text-center">
                 <span>{date}</span>
@@ -83,12 +82,9 @@ export default function IsEmirleriLoglari({
               <div className="text-center">
               {item.from_group ? item.from_group : "-"}
               </div>
-              <div className="text-center">
-                {`${formatToCurrency(item.cost || 0)} $`}
-              </div>
               <div className="text-center">{`${item?.output_gram} gr`}</div>
               <div className="text-center">{item.description}</div>
-              <div className="text-center">{`${formatToCurrency(item.cost || 0)} $`}</div>
+              <div className="text-center font-semibold">{`${formatToCurrency(item.cost || 0)} $`}</div>
             </div>
           );
         })}

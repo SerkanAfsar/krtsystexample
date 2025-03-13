@@ -29,35 +29,55 @@ export default function MucevherPirlantaSection({
 
   return (
     <div className="my-3 flex w-full flex-col gap-3">
-      <b className="mb-1 block text-black underline">Pırlanta Bilgileri</b>
+      {!isEdit && ( <b className="mb-1 block text-black underline">Pırlanta Bilgileri</b>)}
       {isEdit && (
-        <div className="my-3">
-          <table className="w-full table-auto border-collapse">
-            <thead>
-              <tr className="bg-gray-200">
-                <th className="border p-4 text-center font-semibold text-gray-800">Kesim</th>
-                <th className="border p-4 text-center font-semibold text-gray-800">Carat</th>
-                <th className="border p-4 text-center font-semibold text-gray-800">Berraklık</th>
-                <th className="border p-4 text-center font-semibold text-gray-800">Renk</th>
-                <th className="border p-4 text-center font-semibold text-gray-800">Mensei</th>
-                <th className="border p-4 text-center font-semibold text-gray-800">Adet</th>
-                <th className="border p-4 text-center font-semibold text-gray-800">Fiyat</th>
-              </tr>
-            </thead>
-            <tbody>
-              {mainArr?.map((item: any, index: number) => (
-                <tr key={item.id} className="hover:bg-gray-100 transition-all">
-                  <td className="border p-4 text-center text-gray-600">{item.kesim}</td>
-                  <td className="border p-4 text-center text-gray-600">{item.carat}</td>
-                  <td className="border p-4 text-center text-gray-600">{item.berraklik}</td>
-                  <td className="border p-4 text-center text-gray-600">{item.renk}</td>
-                  <td className="border p-4 text-center text-gray-600">{item.mensei}</td>
-                  <td className="border p-4 text-center text-gray-600">{item.adet}</td>
-                  <td className="border p-4 text-right font-semibold text-gray-600">{Number(item.fiyat).toFixed(2)} $</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="my-3 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="border-b border-stroke dark:border-strokedark">
+            <div className="p-4 text-lg font-medium text-black dark:text-white">
+              Pırlanta  Bilgileri
+            </div>
+          </div>
+          <hr />
+          <div className="block w-full p-5">
+            <div className="grid grid-cols-8 items-center gap-3 rounded-md border-[#e5e9ed] bg-[#f9fafb] p-3 font-medium text-black">
+              <div className="text-center">Ürün Kodu</div>
+              <div className="text-center">Kesim</div>
+              <div className="text-center">Berraklık</div>
+              <div className="text-center">Karat</div>
+              <div className="text-center">Renk</div>
+              <div className="text-center">Mensei</div>
+              <div className="text-center">Adet</div>
+              <div className="text-center">Fiyat</div>
+            </div>
+            {mainArr?.map((item: any, index: number) => (
+              <div
+                key={item.id}
+                className="grid grid-cols-8 items-center gap-3 border-l-[1px] border-r-[1px] border-t-[1px] border-[#e5e9ed] p-3 font-medium capitalize text-black last:border-b-[1px]"
+              >
+                <div className="text-center">
+                  {item.code ? (
+                    <a
+                      href={`/Admin/StokYonetimi/Pirlanta/PirlantaEkle/${item.pk}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:underline"
+                    >
+                      {item.code}
+                    </a>
+                  ) : (
+                    "-"
+                  )}
+                </div>
+                <div className="text-center">{item.kesim}</div>
+                <div className="text-center">{item.berraklik}</div>
+                <div className="text-center">{item.carat}</div>
+                <div className="text-center">{item.renk}</div>
+                <div className="text-center">{item.mensei}</div>
+                <div className="text-center">{item.adet}</div>
+                <div className="text-right font-semibold">{Number(item.fiyat).toFixed(2)} $</div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
       {!isEdit && (
