@@ -443,7 +443,7 @@ export const PirlantaBoyKodlari: CustomOptionType[] = [
   },
   {
     titleVal: "1.50-1.99",
-    valueVal: "1.00-1.49",
+    valueVal: "1.50-1.99",
     extraValue: "UB",
   },
   {

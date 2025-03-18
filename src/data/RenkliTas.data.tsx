@@ -40,7 +40,6 @@ export const RenkliTasRenkListesi: CustomOptionType[] = [
   { titleVal: "Turquoise", valueVal: "Turquoise" },
   { titleVal: "Indigo", valueVal: "Indigo" },
   { titleVal: "Cobalt", valueVal: "Cobalt" },
-  { titleVal: "Cobalt", valueVal: "Cobalt" },
 ];
 
 export const RenkliTasListesiData: CustomOptionType[] = [

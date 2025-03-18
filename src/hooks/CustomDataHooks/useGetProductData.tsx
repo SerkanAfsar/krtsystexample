@@ -19,6 +19,7 @@ export default function useGetProductData(
   type: "Diamond" | "Simple" | "ColoredStone",
   redirectUrl: string,
   sertifikaFunc?: any,
+  extraParams?: any,
 ) {
   const router = useRouter();
   const params = useSearchParams();
@@ -31,7 +32,6 @@ export default function useGetProductData(
   const itemRef = useRef<any | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [imgUrl, setImageUrl] = useState<string>();
-
   const order_by = params.get("order_by");
   const sort = (params.get("sort") as "asc" | "desc") || undefined;
 
@@ -160,6 +160,7 @@ export default function useGetProductData(
       page: activePage,
       sort,
       type,
+      extraParams,
     }).then((resp: ResponseResult<ProductListType>) => {
       if (resp?.success) {
         const data = resp.data as ProductListType;
@@ -183,7 +184,7 @@ export default function useGetProductData(
         }
       }
     });
-  }, [activePage, order_by, sort]);
+  }, [activePage, order_by, sort, extraParams]);
 
   useEffect(() => {
     updateData();

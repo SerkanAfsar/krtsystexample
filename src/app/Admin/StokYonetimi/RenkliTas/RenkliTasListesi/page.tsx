@@ -8,10 +8,13 @@ import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
 import useGetProductData from "@/hooks/CustomDataHooks/useGetProductData";
 import { RenklitasListHeaders } from "@/types/RenkliTas";
 import Link from "next/link";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import CustomErrorAlert from "@/components/CustomUI/Alerts/CustomErrorAlert";
+import CustomSearchModul from "@/components/CustomModals/CustomSearchModul"
+
 
 export default function RenkliTasStokListesi() {
+  const [extraParams, setExtraParams] = useState<any>();
   const sertificateUrl = useCallback((item: any) => {
     if (item?.product_certificate?.sertifika == "GIA") {
       return (
@@ -51,7 +54,12 @@ export default function RenkliTasStokListesi() {
     "ColoredStone",
     "/Admin/StokYonetimi/RenkliTas/RenkliTasEkle/",
     sertificateUrl,
+    extraParams
   );
+
+  const handleSearch = (params: any) => {
+    setExtraParams(params);
+  };
 
   return (
     <DefaultLayout>
@@ -68,13 +76,16 @@ export default function RenkliTasStokListesi() {
       {error ? (
         <CustomErrorAlert title="Hata" description={error} />
       ) : (
-        <CustomDatatable
-          totalPageCount={totalPageCount}
-          columns={RenklitasListHeaders}
-          data={activeData}
-          activePage={activePage}
-          setActivePage={setActivePage}
-        />
+        <div>
+          <CustomSearchModul onSearch={handleSearch} product={"coloredStone"}/>
+          <CustomDatatable
+            totalPageCount={totalPageCount}
+            columns={RenklitasListHeaders}
+            data={activeData}
+            activePage={activePage}
+            setActivePage={setActivePage}
+          />
+        </div>
       )}
     </DefaultLayout>
   );

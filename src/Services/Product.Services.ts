@@ -70,11 +70,13 @@ export const GetProductDatatableService = async ({
   page,
   type,
   sort,
+  extraParams,
 }: {
   order_by?: string | null;
   page?: number;
   type?: string | null;
   sort?: "asc" | "desc";
+  extraParams?: any; 
 }): Promise<ResponseResult<ProductListType>> => {
   let urlPath: string = "product/?";
   urlPath += `order_by=${order_by ? (sort == "asc" ? `${order_by}` : `-${order_by}`) : "pk"}`;
@@ -83,6 +85,12 @@ export const GetProductDatatableService = async ({
   }
   if (type) {
     urlPath += `&type=${type}`;
+  }
+
+  if (extraParams) {
+    Object.keys(extraParams).forEach((key) => {
+      urlPath += `&${key}=${extraParams[key]}`;
+    });
   }
 
   const result = await BaseService({
