@@ -6,6 +6,8 @@ import useGetProductData from "@/hooks/CustomDataHooks/useGetProductData";
 import { SadeListHeaders } from "@/types/Sade";
 import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
 import CustomErrorAlert from "@/components/CustomUI/Alerts/CustomErrorAlert";
+import CustomSearchModul from "@/components/CustomModals/CustomSearchModul"
+import { useState } from "react";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 
@@ -49,6 +51,7 @@ import "react-image-lightbox/style.css";
 // ];
 
 export default function SadeStokListesi() {
+  const [extraParams, setExtraParams] = useState<any>();
   const {
     activeData,
     activePage,
@@ -66,7 +69,12 @@ export default function SadeStokListesi() {
     "Simple",
     "/Admin/StokYonetimi/Sade/SadeEkle/",
     undefined,
+    extraParams
   );
+
+  const handleSearch = (params: any) => {
+    setExtraParams(params);
+  };
 
   return (
     <DefaultLayout>
@@ -90,6 +98,8 @@ export default function SadeStokListesi() {
               onCloseRequest={() => setIsOpen(false)}
             />
           )}
+          <div>
+          <CustomSearchModul onSearch={handleSearch} product={"sade"}/>
           <CustomDatatable
             setFirstCenter={true}
             totalPageCount={totalPageCount}
@@ -98,6 +108,7 @@ export default function SadeStokListesi() {
             activePage={activePage}
             setActivePage={setActivePage}
           />
+          </div>
         </>
       )}
     </DefaultLayout>

@@ -3,14 +3,16 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CustomDatatable from "@/components/CustomUI/CustomDatatable";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import Link from "next/link";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import useGetProductData from "@/hooks/CustomDataHooks/useGetProductData";
 import { PirlantaListHeaders } from "@/types/Pirlanta";
 
 import CustomDeleteModal from "@/components/CustomUI/CustomDeleteModal";
 import CustomErrorAlert from "@/components/CustomUI/Alerts/CustomErrorAlert";
+import CustomSearchModul from "@/components/CustomModals/CustomSearchModul"
 
 export default function PirlantaListesi() {
+  const [extraParams, setExtraParams] = useState<any>();
   const sertificateUrl = useCallback((item: any) => {
     if (item?.product_certificate?.sertifika == "GIA") {
       return (
@@ -50,7 +52,12 @@ export default function PirlantaListesi() {
     "Diamond",
     "/Admin/StokYonetimi/Pirlanta/PirlantaEkle/",
     sertificateUrl,
+    extraParams
   );
+
+  const handleSearch = (params: any) => {
+    setExtraParams(params);
+  };
 
   return (
     <DefaultLayout>
@@ -66,13 +73,16 @@ export default function PirlantaListesi() {
       {error ? (
         <CustomErrorAlert title="Hata" description={error} />
       ) : (
-        <CustomDatatable
-          totalPageCount={totalPageCount}
-          columns={PirlantaListHeaders}
-          data={activeData}
-          activePage={activePage}
-          setActivePage={setActivePage}
-        />
+        <div>
+          <CustomSearchModul onSearch={handleSearch} product={"diamond"}/>
+          <CustomDatatable
+            totalPageCount={totalPageCount}
+            columns={PirlantaListHeaders}
+            data={activeData}
+            activePage={activePage}
+            setActivePage={setActivePage}
+          />
+        </div>
       )}
     </DefaultLayout>
   );
