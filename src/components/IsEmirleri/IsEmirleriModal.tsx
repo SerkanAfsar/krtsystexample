@@ -1,11 +1,12 @@
 "use client";
 
-//import { useEffect, useState } from "react";
+//import { useState } from "react";
 import CustomErrorAlert from "../CustomUI/Alerts/CustomErrorAlert";
 import CustomDatatable from "../CustomUI/CustomDatatable";
 //import { IoMdCloseCircle } from "react-icons/io";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
+//import CustomSearchModul from "@/components/CustomModals/CustomSearchModul"
 
 export default function IsEmirleriModal({
   title,
@@ -15,7 +16,7 @@ export default function IsEmirleriModal({
   setSelectedValues,
   selectedValues,
   model,
-  isDuzenleContainer
+  isDuzenleContainer,
 }: {
   title: string;
   modalHeaderColumns: any;
@@ -24,8 +25,10 @@ export default function IsEmirleriModal({
   tableFunction?: any;
   selectedValues?: any;
   model?: any;
+  extraParams?: any;
   isDuzenleContainer?: boolean;
 }) {
+  //const [extraParams, setExtraParams] = useState<any>();
   if (!tableFunction) {
     return null;
   }
@@ -38,11 +41,26 @@ export default function IsEmirleriModal({
     isOpen,
     setIsOpen,
     imgSrc,
-  } = tableFunction({ setSelectedValues, selectedValues, isDuzenleContainer, model});
+  } = tableFunction({ setSelectedValues, selectedValues, isDuzenleContainer, model, /*extraParams*/});
 
+  const groupType = (() => {
+    if (title.includes("Sade")) return "simple";
+    if (title.includes("Pırlanta")) return "diamond";
+    if (title.includes("Renkli")) return "coloredStone";
+    return "";
+  })();
+  
+  /*const handleSearch = (params: any) => {
+    setExtraParams((prevState: any) => {
+      return { ...prevState, ...params }; 
+    });
+  };*/
+    
   return (
     <div className="fixed inset-0 z-999 flex h-full w-full items-center justify-center bg-black bg-opacity-80">
       <div className="flex h-[90%] w-[90%] animate-modalAnimation flex-col items-center justify-start gap-3 rounded-lg bg-white p-3 dark:bg-graydark">
+     {/* <div className="fixed inset-0 z-999 flex h-full w-full justify-center bg-black bg-opacity-80">
+      <div className="mt-5 w-[90%] animate-modalAnimation flex-col justify-start gap-3 rounded-lg bg-white p-3 dark:bg-graydark overflow-y-auto">*/}
         <div className="flex w-full items-center justify-center">
           <h3 className="flex justify-center text-lg font-bold dark:text-white">{title}</h3>
           <button
@@ -69,6 +87,8 @@ export default function IsEmirleriModal({
                 onCloseRequest={() => setIsOpen(false)}
               />
             )}
+            {/*<CustomSearchModul onSearch={handleSearch} product={groupType}/>
+            <div className="w-full h-3/4"> </div>*/}
             <CustomDatatable
               className={"block shadow-none"}
               totalPageCount={totalPageCount}

@@ -13,10 +13,12 @@ export default function useRenkliTasModalData({
   setSelectedValues,
   selectedValues,
   isDuzenleContainer,
+  extraParams
 }: {
   setSelectedValues: any;
   selectedValues: SeciliUrunType[];
   isDuzenleContainer: boolean;
+  extraParams: any;
 }) {
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<any>([]);
@@ -101,7 +103,8 @@ export default function useRenkliTasModalData({
     //model:null eklenecek
     GetWorkOrderProductListModalService({
       type: "ColoredStone",
-      page: activePage
+      page: activePage,
+      extraParams: extraParams
     }).then((resp: ResponseResult<ProductListType>) => {
       if (resp?.success) {
         const data = resp.data as ProductListType;
@@ -224,7 +227,7 @@ export default function useRenkliTasModalData({
         setError(resp.error?.at(0) || "Hata");
       }
     });
-  }, [activePage]);
+  }, [activePage, extraParams]);
 
   useEffect(() => {
     updateData();

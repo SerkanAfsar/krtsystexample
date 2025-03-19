@@ -10,11 +10,13 @@ import CustomModalInput from "@/components/CustomModalInput";
 export default function usePirlantaModalData({
   setSelectedValues,
   selectedValues,
-  isDuzenleContainer
+  isDuzenleContainer,
+  extraParams
 }: {
   setSelectedValues: any;
   selectedValues: SeciliUrunType[];
   isDuzenleContainer: boolean;
+  extraParams: any;
 }) {
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<any>([]);
@@ -229,7 +231,8 @@ export default function usePirlantaModalData({
     //model:null eklenecek
     GetWorkOrderProductListModalService({
       type: "Diamond",
-      page: activePage
+      page: activePage,
+      extraParams: extraParams
     }).then((resp: ResponseResult<ProductListType>) => {
       if (resp?.success) {
         const data = resp.data as ProductListType;
@@ -246,7 +249,7 @@ export default function usePirlantaModalData({
         setError(resp.error?.at(0) || "Hata");
       }
     });
-  }, [activePage]);
+  }, [activePage, extraParams]);
 
   useEffect(() => {
     updateData();

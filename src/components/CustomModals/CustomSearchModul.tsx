@@ -196,8 +196,8 @@ export default function CustomSearchModul({ onSearch, product  }: Props) {
   };
 
   return (
-    <div className="p-6 mb-10 bg-white shadow-md rounded-lg space-y-4">
-      <div className="flex space-x-4 items-end">
+    <div className="p-6 w-full mb-10 bg-white shadow-md rounded-lg space-y-4">
+      <div className="grid grid-cols-4 gap-4">
         <div className="flex-1">
           <label className="block py-2 ext-sm font-medium">Ürün Kodu</label>
           <input
@@ -222,9 +222,6 @@ export default function CustomSearchModul({ onSearch, product  }: Props) {
             <option value="Mixed">Sertifikasız</option>
           </select>
         </div>
-      </div>
-
-      <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block py-2 text-sm font-medium">Key</label>
           <select
@@ -268,30 +265,7 @@ export default function CustomSearchModul({ onSearch, product  }: Props) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block py-2 text-sm font-medium">Alış Tarihi - Başlangıç</label>
-          <DatePicker
-            name="buy_date_after"
-            value={searchParams?.buy_date_after || ""}
-            format="dd.MM.yyyy"
-            onChange={(value: any) => handleDateChange(value, "buy_date_after")}
-            className="h-8 w-full"
-          />
-        </div>
-        <div>
-          <label className="block py-2 text-sm font-medium">Alış Tarihi - Bitiş</label>
-          <DatePicker
-            name="buy_date_before"
-            value={searchParams?.buy_date_before || ""}
-            format="dd.MM.yyyy"
-            onChange={(value: any) => handleDateChange(value, "buy_date_before")}
-            className="h-8 w-full"
-          />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-4 gap-4">
         <div>
           <label className="block py-2 text-sm font-medium">Maliyet (Min)</label>
           <div className="flex items-center border rounded w-full">
@@ -319,6 +293,26 @@ export default function CustomSearchModul({ onSearch, product  }: Props) {
           />
           <span className="px-2 text-black font-bold">$</span>
         </div>
+        </div>
+        <div>
+          <label className="block py-2 text-sm font-medium">Alış Tarihi - Başlangıç</label>
+          <DatePicker
+            name="buy_date_after"
+            value={searchParams?.buy_date_after || ""}
+            format="dd.MM.yyyy"
+            onChange={(value: any) => handleDateChange(value, "buy_date_after")}
+            className="h-9 w-full"
+          />
+        </div>
+        <div>
+          <label className="block py-2 text-sm font-medium">Alış Tarihi - Bitiş</label>
+          <DatePicker
+            name="buy_date_before"
+            value={searchParams?.buy_date_before || ""}
+            format="dd.MM.yyyy"
+            onChange={(value: any) => handleDateChange(value, "buy_date_before")}
+            className="h-9 w-full"
+          />
         </div>
       </div>
 
