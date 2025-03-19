@@ -12,12 +12,14 @@ export default function useSadeModalData({
   setSelectedValues,
   selectedValues,
   isDuzenleContainer,
-  model
+  model,
+  extraParams
 }: {
   setSelectedValues: any;
   selectedValues: SeciliUrunType[];
   isDuzenleContainer: boolean;
   model: string;
+  extraParams: any;
 }) {
   const [activePage, setActivePage] = useState<number>(1);
   const [activeData, setActiveData] = useState<any>([]);
@@ -82,7 +84,8 @@ export default function useSadeModalData({
     GetWorkOrderProductListModalService({
       type: "Simple",
       page: activePage,
-      model: model
+      model: model,
+      extraParams: extraParams
     }).then((resp: ResponseResult<ProductListType>) => {
       if (resp?.success) {
         const data = resp.data as ProductListType;
@@ -157,7 +160,7 @@ export default function useSadeModalData({
         setError(resp.error?.at(0) || "Hata");
       }
     });
-  }, [activePage]);
+  }, [activePage, extraParams]);
 
   useEffect(() => {
     updateData();

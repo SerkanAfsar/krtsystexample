@@ -35,12 +35,14 @@ export const GetWorkOrderProductListModalService = async ({
   type,
   code,
   page,
-  model
+  model,
+  extraParams,
 }: {
   type?: string;
   code?: string;
   page?: Number;
   model?: string;
+  extraParams?: any; 
 }) => {
   let url = `product/product-list/?&type=${type}&page=${page}`;
   if (model) {
@@ -49,6 +51,13 @@ export const GetWorkOrderProductListModalService = async ({
   if (code) {
     url += `&code=${code}`;
   }
+  
+  if (extraParams) {
+    Object.keys(extraParams).forEach((key) => {
+      url += `&${key}=${extraParams[key]}`;
+    });
+  }
+
   const result = await BaseService({
     url: url,
     bodyData: null,
