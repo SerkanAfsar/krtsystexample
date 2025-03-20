@@ -6,10 +6,14 @@ import { FinishWorkOrder } from "@/Services/WorkOrder.Services";
 
 import { useRouter } from "next/navigation";
 import { MagazaType } from "@/types/Magaza";
+import { ProductType } from "@/types/types";
 
 import { CustomDataListType } from "@/types/types";
 import { CustomOptionType } from "@/types/inputTypes";
 import { GetMagazaDatatableService } from "@/Services/Magaza.Services";
+import CustomFinishDataTable from "@/components/CustomUI/CustomFinishDataTable"
+import { GetWorkOrderProductList } from "@/Services/WorkOrder.Services";
+
 
 import { toast } from 'react-toastify'; 
 
@@ -38,8 +42,9 @@ function CustomMucevherSaveModal({
   const [cilaIscilik, setCilaIscilik] = useState<number>(0);
   const [toplamIscilik, setToplamIscilik] = useState<number>(0);
   const [ro, setRo] = useState<number>(0);
-
   const [warehouselist, setWarehouselist] = useState<MagazaType[]>([]);
+  const [workOrderProductList, setWorkOrderProductList] = useState<ProductType[]>([]);
+
 
   useEffect(() => {
     GetMagazaDatatableService({})
@@ -52,6 +57,20 @@ function CustomMucevherSaveModal({
         }
       })
       .catch((err) => console.log(err));
+
+      GetWorkOrderProductList({work_order_id: id})
+        .then((resp) => {
+          if (resp.success && resp.data) {
+            const data = resp.data as ProductType[]; 
+            console.log(data)
+            setWorkOrderProductList(data)
+          } else {
+            console.log(resp.error);
+          }
+        })
+        .catch((err) => console.log(err));
+ 
+
   }, []);
 
   useEffect(() => {
@@ -87,9 +106,8 @@ function CustomMucevherSaveModal({
   }, [img, store_id]);
 
   return (
-    <div
-      className={`fixed pt-75 left-0 top-0 z-999999 flex h-2/5 min-h-screen w-full items-center justify-center overflow-y-auto bg-black/90 px-4 py-5 ${showConfirm ? "block" : "hidden"}`}
-    >
+     <div className="fixed inset-0 z-999 flex h-full justify-center bg-black bg-opacity-80">
+      <div className="mt-5 animate-modalAnimation  justify-start gap-3 rounded-lg bg-white p-3 dark:bg-graydark overflow-y-auto">
       <div
         ref={modal}
         onFocus={() => setShowConfirm(true)}
@@ -148,11 +166,12 @@ function CustomMucevherSaveModal({
             </div>
           </div>
         </div>
-
-
-                  <div className="mb-5">
+        <CustomFinishDataTable title="Geri Gönderilen" data={[]}/>
+        <CustomFinishDataTable title="Fire" data={[]}/>
+        <CustomFinishDataTable title="Tüketilen" data={workOrderProductList}/>
+            <div className="mb-5 mt-5">
             <h4 className="text-xl font-bold border-b-2 text-black border-stone-400 pb-2 text-left">
-              İşçilik Bilgileri
+              İşçilik Bilgileri 
             </h4>
 
             <div className="mt-5 space-y-4">
@@ -161,6 +180,11 @@ function CustomMucevherSaveModal({
                   Sadekar İşçilik:
                 </label>
                 <input
+                  type="number"
+                  disabled= {true}
+                  className="w-2/3 mt-2 border-b-[1.5px] border-stone-400 bg-transparent px-3 py-2 outline-none dark:border-form-strokedark dark:text-white"
+                />
+                 <input
                   type="number"
                   value={sadekarIscilik} 
                   onChange={(e) => setSadekarIscilik(Number(e.target.value))}
@@ -172,6 +196,11 @@ function CustomMucevherSaveModal({
                 <label className="text-sm text-left font-medium text-black dark:text-white w-1/3">
                   Mıhlayıcı İşçilik:
                 </label>
+                <input
+                  type="number"
+                  disabled= {true}
+                  className="w-2/3 mt-2 border-b-[1.5px] border-stone-400 bg-transparent px-3 py-2 outline-none dark:border-form-strokedark dark:text-white"
+                />
                 <input
                   type="number"
                   value={mihlayiciIscilik} 
@@ -186,6 +215,11 @@ function CustomMucevherSaveModal({
                 </label>
                 <input
                   type="number"
+                  disabled= {true}
+                  className="w-2/3 mt-2 text-left border-b-[1.5px] border-stone-400 bg-transparent px-3 py-2 outline-none dark:border-form-strokedark dark:text-white"
+                />
+                 <input
+                  type="number"
                   value={cilaIscilik} 
                   onChange={(e) => setCilaIscilik(Number(e.target.value))}
                   className="w-2/3 mt-2 text-left border-b-[1.5px] border-stone-400 bg-transparent px-3 py-2 outline-none dark:border-form-strokedark dark:text-white"
@@ -196,6 +230,11 @@ function CustomMucevherSaveModal({
                 <label className="text-sm text-left font-medium text-black dark:text-white w-1/3">
                   Toplam İşçilik:
                 </label>
+                <input
+                  type="number"
+                  disabled= {true}
+                  className="w-2/3 mt-2 border-b-[1.5px] border-stone-400 bg-transparent px-3 py-2 outline-none dark:border-form-strokedark dark:text-white"
+                />
                 <input
                   type="number"
                   value={toplamIscilik} 
@@ -210,9 +249,14 @@ function CustomMucevherSaveModal({
                 </label>
                 <input
                   type="number"
-                  value={ro} 
-                  onChange={(e) => setRo(Number(e.target.value))}
+                  disabled= {true}
                   className="w-2/3 mt-2 border-b-[1.5px] border-stone-400 bg-transparent px-3 py-2 outline-none dark:border-form-strokedark dark:text-white"
+                />  
+                <input
+                type="number"
+                value={ro} 
+                onChange={(e) => setRo(Number(e.target.value))}
+                className="w-2/3 mt-2 border-b-[1.5px] border-stone-400 bg-transparent px-3 py-2 outline-none dark:border-form-strokedark dark:text-white"
                 />
               </div>
             </div>
@@ -310,6 +354,7 @@ function CustomMucevherSaveModal({
           </button>
         </div>
       </div>
+    </div>
     </div>
   );
 }

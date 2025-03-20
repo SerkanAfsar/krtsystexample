@@ -37,7 +37,6 @@ export default function MucevherPirlantaSection({
               Pırlanta  Bilgileri
             </div>
           </div>
-          <hr />
           <div className="block w-full p-5">
             <div className="grid grid-cols-8 items-center gap-3 rounded-md border-[#e5e9ed] bg-[#f9fafb] p-3 font-medium text-black">
               <div className="text-center">Ürün Kodu</div>
