@@ -1,7 +1,6 @@
 "use client";
-import { FaBoxes, FaHome, FaMoneyBillWave } from "react-icons/fa";
 import { IoDiamond } from "react-icons/io5";
-import { GiCrystalEarrings, GiGems, GiStakeHammer } from "react-icons/gi";
+import { GiCrystalEarrings, GiGems } from "react-icons/gi";
 
 import React, { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -12,7 +11,7 @@ import Image from "next/image";
 import SidebarLinkGroup from "./SidebarLinkGroup";
 import { LiaRingSolid } from "react-icons/lia";
 
-import { RiExportFill, RiImportFill, RiStore3Fill } from "react-icons/ri";
+import { RiExportFill, RiImportFill } from "react-icons/ri";
 
 import { useUserStore } from "@/store/useUserStore";
 
@@ -132,7 +131,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           "bg-graydark dark:bg-meta-4"
                         }`}
                       >
-                        <FaHome />
+                        <img
+                          src="/images/icon/mainpage.svg"
+                          className="w-5 h-5"
+                        />
                         Ana Menü
                       </Link>
                     </React.Fragment>
@@ -143,9 +145,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           </div>
 
           <div>
-            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
-              STOK YÖNETİMİ
-            </h3>
             <ul className="mb-6 flex flex-col gap-1.5">
               <SidebarLinkGroup
                 activeCondition={
@@ -169,7 +168,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         }}
                       >
                         {/* <MdBorderColor /> */}
-                        <FaBoxes />
+                        <img
+                          src="/images/icon/stok.svg"
+                          className="w-5 h-5"
+                        />
                         Stok Yönetimi
                         <svg
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
@@ -570,9 +572,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           </div>
 
           <div>
-            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
-              ÜRETİM İŞ EMİRLERİ
-            </h3>
             <ul className="mb-6 flex flex-col gap-1.5">
               <SidebarLinkGroup
                 activeCondition={
@@ -596,7 +595,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         }}
                       >
                         {/* <MdBorderColor /> */}
-                        <GiStakeHammer />
+                        <img
+                          src="/images/icon/uretim.svg"
+                          className="w-5 h-5"
+                        />
                         Üretim İş Emirleri
                         <svg
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
@@ -661,9 +663,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             </ul>
           </div>
           <div>
-            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
-              FİNANS
-            </h3>
             <ul className="mb-6 flex flex-col gap-1.5">
               <SidebarLinkGroup
                 activeCondition={
@@ -687,7 +686,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         }}
                       >
                         {/* <MdOutlineAttachMoney /> */}
-                        <FaMoneyBillWave />
+                        <img
+                          src="/images/icon/finans.svg"
+                          className="w-5 h-5"
+                        />
                         Finans
                         <svg
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
@@ -736,9 +738,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             </ul>
           </div>
           <div>
-            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
-              MAĞAZALAR
-            </h3>
             <ul className="mb-6 flex flex-col gap-1.5">
               <SidebarLinkGroup
                 activeCondition={
@@ -762,7 +761,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         }}
                       >
                         {/* <MdOutlineAttachMoney /> */}
-                        <FaMoneyBillWave />
+                        <img
+                          src="/images/icon/magaza.svg"
+                          className="w-5 h-5"
+                        />
                         Mağazalar
                         <svg
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
@@ -824,9 +826,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             </ul>
           </div>
           <div>
-            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
-              FİRMALAR
-            </h3>
             <ul className="mb-6 flex flex-col gap-1.5">
               <SidebarLinkGroup
                 activeCondition={
@@ -852,7 +851,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         {/* <MdBorderColor /> */}
                         {/* <FaBoxes /> */}
                         {/* <RiStore3Fill /> */}
-                        <RiStore3Fill />
+                        <img
+                          src="/images/icon/firmalar.svg"
+                          className="w-5 h-5"
+                        />
                         Firmalar
                         <svg
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
@@ -1118,6 +1120,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             }}
                           </SidebarLinkGroup>
                         </ul>
+
+
                       </div>
                       {/* <!-- Dropdown Menu End --> */}
                     </React.Fragment>
@@ -1127,9 +1131,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             </ul>
           </div>
           <div>
-            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
-              SATIŞLAR
-            </h3>
             <ul className="mb-6 flex flex-col gap-1.5">
               <SidebarLinkGroup
                 activeCondition={
@@ -1153,7 +1154,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         }}
                       >
                         {/* <MdOutlineAttachMoney /> */}
-                        <FaMoneyBillWave />
+                        <img
+                          src="/images/icon/satislar.svg"
+                          className="w-5 h-5"
+                        />
                         Satışlar
                         <svg
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
