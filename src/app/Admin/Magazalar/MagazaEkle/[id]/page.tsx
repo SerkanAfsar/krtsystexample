@@ -9,11 +9,10 @@ import MagazaDetayContainer from "../../Containers/MagazaDetayContainer";
 export default async function TedarikciEkle({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params; 
   const result: ResponseResult<MagazaType> = await GetMagazaService({
-    id: Number(id),
+    id: Number(params.id),
   });
   if (!result.success) {
     if (result.statusCode == 404) {

@@ -6,9 +6,8 @@ import { AddDiamondType } from "../../../../../../types/formTypes";
 import { ProductType } from "../../../../../../types/types";
 import { notFound } from "next/navigation";
 
-const PirlantaGuncelle = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const { id } = await params; 
-  const result = await GetProductService({ id: Number(id) });
+const PirlantaGuncelle = async ({ params }: { params: { id: string } }) => {
+  const result = await GetProductService({ id: Number(params.id) });
   if (result?.success) {
     const data = result.data as ProductType;
     const properties = data.properties;

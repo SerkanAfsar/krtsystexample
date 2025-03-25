@@ -22,7 +22,7 @@ export const BaseService = async ({
   isFormData?: boolean;
 }): Promise<ResponseResult<any> | any> => {
   try {
-    const cookieStore = await cookies();
+    const cookieStore = cookies();
     const jwt = cookieStore.get("jwt")?.value || null;
 
     const headers: headersType = {

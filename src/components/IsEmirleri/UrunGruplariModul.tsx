@@ -298,12 +298,8 @@ export default function UrunGruplariModul({
             kesim: item.product.properties.kesim ,
             carat: item.product.properties.carat  ,
             used_carat: item.used_carat ,
-            berraklik: item.product.properties.berraklik2
-              ? item.product.properties.berraklik + "-" + item.product.properties.berraklik2
-              : item.product.properties.berraklik,
-            renk: item.product.properties.renk2
-              ? item.product.properties.renk + "-" + item.product.properties.renk2
-              : item.product.properties.renk,
+            berraklik: item.product.properties.berraklik + "-" + item.product.properties.berraklik2,
+            renk: item.product.properties.renk + "-" + item.product.properties.renk2,
             adet: item.quantity ,
             menstrual_status: item.product.properties.menstrual_status,
            // maliyet: `${formatToCurrency(item.cost)} $`,

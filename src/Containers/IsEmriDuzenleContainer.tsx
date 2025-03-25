@@ -27,8 +27,8 @@ import { toast } from "react-toastify";
 import { WorkOrderQueueApiService } from "@/ApiServices/WorkOrders.ApiService";
 import { MucevherCode } from "@/utils/Mucevher.Utils";
 import { GetWorkOrderProductList } from "@/Services/WorkOrder.Services";
-import ReactQuill from 'react-quill-new';
-import 'react-quill-new/dist/quill.snow.css';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import { useUserStore } from "@/store/useUserStore";
 
 

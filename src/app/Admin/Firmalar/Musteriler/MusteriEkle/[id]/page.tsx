@@ -10,11 +10,10 @@ import { GetMusteriService } from "@/Services/Customer.Service";
 export default async function TedarikciEkle({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params; 
   const result: ResponseResult<MusteriType> = await GetMusteriService({
-    id: Number(id),
+    id: Number(params.id),
   });
 
   if (result.success) {

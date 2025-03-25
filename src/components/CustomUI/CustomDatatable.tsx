@@ -372,9 +372,6 @@ const CustomDatatable = ({
                     <td
                       className={cn(
                         "z-20 border border-slate-400 !align-middle text-sm font-thin last:sticky last:inset-0 last:z-30 last:bg-gray-3  last:text-center",
-                        (cell.column.Header !== "İşlemler" &&
-                          (row.original as { outOfStock?: boolean }).outOfStock &&
-                          "text-red line-through"),
                         (cell.column.Header === "Maliyet" 
                           || cell.column.Header === "PPC" 
                           || cell.column.Header === "Rapaport" 
