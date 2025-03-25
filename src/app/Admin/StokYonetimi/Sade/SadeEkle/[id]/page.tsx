@@ -9,9 +9,10 @@ import { getGramAltinKuru, getDolarKuru } from "@/utils/Sade.Utils";
 export default async function SadeDetay({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>
 }) {
-  const result = await GetProductService({ id: Number(params.id) });
+  const { id } = await params; 
+  const result = await GetProductService({ id: Number(id) });
   if (result?.success) {
     const data = result.data as ProductType;
 

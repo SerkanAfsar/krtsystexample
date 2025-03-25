@@ -9,10 +9,11 @@ import { notFound } from "next/navigation";
 export default async function TedarikciEkle({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params; 
   const result: ResponseResult<TedarikciType> = await GetTedarikciService({
-    id: Number(params.id),
+  id: Number(id),
   });
   if (result.success) {
     return (

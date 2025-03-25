@@ -3,10 +3,14 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import MucevherDetayTabsContainer from "@/Containers/MucevherDetayTabsContainer";
 import { GetGemProductService } from "@/Services/Product.Services";
 import { MucevherDetayType } from "@/types/Mucevher";
-import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
-const MucevherDetay = async ({ params }: { params: Params }) => {
-  const result = await GetGemProductService({ product_id: Number(params.id) });
+type Params = {
+  [key: string]: string;
+};
+
+const MucevherDetay = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params; 
+  const result = await GetGemProductService({ product_id: Number(id) });
 
   if (!result.success) {
     return (

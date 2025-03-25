@@ -9,9 +9,10 @@ import { notFound } from "next/navigation";
 export default async function RenkliTaskGuncelle({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>
 }) {
-  const result = await GetProductService({ id: Number(params.id) });
+  const { id } = await params; 
+  const result = await GetProductService({ id: Number(id) });
   if (result?.success) {
     const data = result.data as ProductType;
     const properties = data.properties;

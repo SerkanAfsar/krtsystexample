@@ -19,9 +19,11 @@ import "react-image-lightbox/style.css";
 
 export default function MucevherStokListesi() {
   const [showModal, setShowModal] = useState<boolean>(false);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null); 
   const [selectedType, setSelectedType] = useState<string>("");
-  const reactToPrintFn = useReactToPrint({ contentRef });
+  const reactToPrintFn = useReactToPrint({
+    contentRef: contentRef as React.RefObject<Element>,
+  });
 
   const {
     activeData,

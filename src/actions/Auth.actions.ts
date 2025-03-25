@@ -8,7 +8,7 @@ import { jwtDecode, JwtPayload } from "jwt-decode";
 
 export const loginServer = async (data: LoginType) => {
   const result = await LoginService({ data });
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
 
   if (result?.success) {
     const data = result.data as AuthType;
@@ -37,7 +37,8 @@ export const loginServer = async (data: LoginType) => {
 
 export const getLoggedUserId = async () => {
   "use server";
-  const token = cookies().get("jwt")?.value;
+  const cookieStore = await cookies();  
+  const token = cookieStore.get("jwt")?.value;
   if (token) {
     const { user_id } = jwtDecode(token) as JwtPayload & { user_id: number };
     return user_id;
@@ -47,6 +48,7 @@ export const getLoggedUserId = async () => {
 
 export const logOutAction = async () => {
   "use server";
-  await cookies().delete("jwt");
+  const cookieStore = await cookies();  
+  cookieStore.delete("jwt");
   redirect("/");
 };

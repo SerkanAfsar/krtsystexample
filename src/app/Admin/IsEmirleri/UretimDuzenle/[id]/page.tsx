@@ -7,7 +7,6 @@ import {
   GetWorkOrderById,
   GetWorkOrderGroupTypes,
 } from "@/Services/WorkOrder.Services";
-import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import {
   WorkOrderTeamGroupType,
   WorkOrderType,
@@ -18,22 +17,22 @@ import { ResponseResult } from "../../../../../types/responseTypes";
 import { UserGroupsType } from "../../../../../types/types";
 import { getLoggedUserId } from "@/actions/Auth.actions";
 
-export default async function UretimDuzenle({ params }: { params: Params }) {
-  const cookieStore = cookies();
+export default async function UretimDuzenle({ params }: { params: Promise<{ id: string }> }) {
+  const cookieStore = await cookies();
   const userGroups: UserGroupsType[] = JSON.parse(
     cookieStore.get("user_groups")?.value || "",
   );
-
+  const { id } = await params; 
   const userId = await getLoggedUserId();
   const isAdmin = userGroups.some((a) => a.name == "Üretim Müdürü");
 
-  if (!params?.id || isNaN(params?.id)) {
+  if (!id || isNaN(Number(id))) {
     return notFound();
   }
 
   const workOrderResult: ResponseResult<WorkOrderType> = await GetWorkOrderById(
     {
-      id: params.id,
+      id: Number(id),
     },
   );
 
