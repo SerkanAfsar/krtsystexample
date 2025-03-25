@@ -63,6 +63,11 @@ export default function useGetProductData(
                 id: item?.pk as number,
                 productCode: item?.code,
               }),
+              outOfStock: item.menstrual_status === "Mixed"
+                ? item?.properties?.remaining_carat === 0
+                : item.menstrual_status === "Single"
+                ? item?.remaining_count === 0
+                : false,
             };
           }) as RenkliTasListType[];
         }
@@ -104,6 +109,11 @@ export default function useGetProductData(
               ppc: item?.product_cost?.pricePerCarat
                 ? dolarFormat(Number(item?.product_cost?.pricePerCarat))
                 : undefined,
+              outOfStock: item.menstrual_status === "Mixed"
+                ? item?.properties?.remaining_carat === 0
+                : item.menstrual_status === "Single"
+                ? item?.remaining_count === 0
+                : false,
             };
           }) as PirlantaListType[];
         }
@@ -145,6 +155,11 @@ export default function useGetProductData(
                 id: item?.pk as number,
                 productCode: item?.code,
               }),
+              outOfStock: item.menstrual_status === "Mixed"
+                ? item?.properties?.remaining_carat === 0
+                : item.menstrual_status === "Single"
+                ? item?.remaining_count === 0
+                : false,
             };
           }) as SadeListType[];
         }
