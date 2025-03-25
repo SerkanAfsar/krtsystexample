@@ -4,8 +4,8 @@ import IsEmriContainer from "@/Containers/IsEmriContainer";
 import { cookies } from "next/headers";
 import { UserGroupsType } from "../../../../types/types";
 
-const UretimIsEmriEkle = () => {
-  const cookieStore = cookies();
+const UretimIsEmriEkle = async () => {  
+  const cookieStore = await cookies(); 
   const userGroups: UserGroupsType[] = JSON.parse(
     cookieStore.get("user_groups")?.value || "",
   );
