@@ -194,7 +194,7 @@ export default function IsEmriContainer() {
 
   const lastData: AddWorkOrderType = {
     model_type: model?.id ?? 0,
-    total_product_cost: totalPrice.toString(),
+    total_product_cost: Number(totalPrice).toFixed(2),
     gender,
     description,
     workorder_products: lastItems,

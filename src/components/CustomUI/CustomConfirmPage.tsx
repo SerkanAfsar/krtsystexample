@@ -7,13 +7,15 @@ type ConfirmPropsType = {
   item: SeciliUrunType; 
   items?: SeciliUrunType[]; 
   title?: string; 
+  toKasa?: boolean;
   onConfirm: (cirak?: UserType, targetLocation?: UserType, items?: SeciliUrunType[]) => void;
   onCancel: () => void;
 };
-const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, title, onConfirm, onCancel }) => {
+const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, title, toKasa, onConfirm, onCancel }) => {
   const [ciraklar, setCiraklar] = useState<UserType[]>([]);
   const [selectedCirak, setSelectedCirak] = useState<UserType | null>(null);
   const [atolye, setAtolye] = useState<number | null>(4);
+  const [kasa, setKasa] = useState<number | null>(9);
   const [users, setUsers] = useState<UserType[]>([]);
   const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
   const groupIdsMap: { [key: string]: number } = {
@@ -44,7 +46,7 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, ti
             }
           }
         }
-        const groupId = statusGroupMap[item.status];
+        const groupId = toKasa ? Number(kasa) : statusGroupMap[item.status]
         if (groupId !== undefined) {
           const targets = await GetUsersByUserGroups({ group_ids: [groupId] });
           setUsers(targets);
@@ -54,7 +56,7 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, ti
     
       fetchData();
     }
-  }, [item.status, atolye]);
+  }, [item.status, atolye, kasa]);
 
 
   const renderCirakSecimi = () => (
@@ -107,10 +109,25 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, ti
         className="w-full mt-1 p-2 border border-gray-300 rounded-md"
         value={atolye || 4}
         onChange={(e) => setAtolye(Number(e.target.value))}
-      >
-        <option value={4}>Mıhlayıcı</option>
-        <option value={5}>Cilacı</option>
-        <option value={1}>Sadekar</option>
+        >
+          <option value={4}>Mıhlayıcı</option>
+          <option value={5}>Cilacı</option>
+          <option value={1}>Sadekar</option> 
+      </select>
+    </div>
+  );
+
+  const renderKasaSelection = () => (
+    <div className="w-3/4 mt-3 flex flex-col items-center justify-center">
+      <label className="text-sm font-medium text-gray-700">Gideceği Atölyeyi Seçiniz</label>
+      <select
+        className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+        value={kasa || 9}
+        onChange={(e) => setKasa(Number(e.target.value))}
+        >
+          <option value={9}>Sade Kasa</option>
+          <option value={8}>Pırlanta Kasa</option>
+          <option value={7}>Renkli Taş kasa</option> 
       </select>
     </div>
   );
@@ -261,7 +278,7 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, ti
         } else {
           message = (
             <>
-              <strong>{item.code}</strong> kodlu ürünü göndermek istediğinize emin misiniz?
+              <strong>{(item.product as any).code}</strong> kodlu ürünü göndermek istediğinize emin misiniz?
             </>
           );      
           buttonText = 'Gönder';
@@ -269,11 +286,19 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, ti
         cirakSecimi = renderCirakSecimi()
         targetLocationSecimi = (
           <div className="w-full flex flex-col items-center justify-center">
-          {renderWorkshopSelection()} 
+          {toKasa ? renderKasaSelection() : renderWorkshopSelection()} 
           {renderUserSelection()} 
         </div>
         );
         break;
+        case 'SENT_TO_TILL':
+          message = (
+            <>
+              <strong>{(item.product as any).code}</strong> kodlu ürünü teslim aldığınıza emin misiniz?
+            </>
+          );
+          buttonText = 'Onayla';
+          break;
         default:
           message = 'Bilinmeyen bir durum';
           buttonText = 'Tamam';
