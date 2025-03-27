@@ -228,7 +228,7 @@ export default function IsEmriDuzenleContainer ({
   }
   const lastData: UpdateWorkOrderType = {
     model_type : modelType,
-    current_cost : String(totalPrice),
+    current_cost : Number(totalPrice).toFixed(2),
     gender,
     description,
     workorder_products: lastItems,

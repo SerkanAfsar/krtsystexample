@@ -144,7 +144,9 @@ export default function IsEmriBaslatmaContainer({
       if (isSendClicked) {
         const wastagePayload = workOrderProductIds.map((productId) => ({
           work_order_product_id: Number(productId),
-          wastage: String(fireValues[Number(productId)] || "0"), 
+          wastage: fireKaratValues[Number(productId)] ? Number(fireKaratValues[Number(productId)]) : null, 
+          wastage_quantity: fireValues[Number(productId)] ? Number(fireValues[Number(productId)]) : null, 
+          unused_carat: unUsed[Number(productId)] ? Number(unUsed[Number(productId)]) : null, 
         }));
         
         const WorkOrderWastagePayload: WorkOrderWastagePayloadType = {
@@ -408,7 +410,24 @@ export default function IsEmriBaslatmaContainer({
                     return (
                       <tr key={product.id}>
                         <td className="p-2 text-sm">{product.product.pk}</td>
-                        <td className="p-2 text-sm">{product.product.code || "-"}</td>
+                        <td className="p-2 text-sm whitespace-nowrap">
+                            <a 
+                              href={
+                                product.product.type === "Diamond"
+                                  ? `/Admin/StokYonetimi/Pirlanta/PirlantaEkle/${product.product.pk}`
+                                  : product.product.type === "Simple"
+                                  ? `/Admin/StokYonetimi/Sade/SadeEkle/${product.product.pk}`
+                                  : product.product.type === "ColoredStone"
+                                  ? `/Admin/StokYonetimi/RenkliTas/RenkliTasEkle/${product.product.pk}`
+                                  : "#"
+                              } 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="text-blue-500 underline"
+                            >
+                              {product.product.code}
+                          </a>
+                        </td>
                         <td className="p-2 text-sm">
                           {product.product.image ? (
                             <img 
@@ -460,10 +479,13 @@ export default function IsEmriBaslatmaContainer({
                             type="number"
                             onChange={(e) => {
                               const value = parseFloat(e.target.value) || 0;
-                              const maxAllowed = (product.used_carat);
-                        
+                              const maxAllowed = (product.used_carat && product.used_carat !== 0 
+                                ? product.used_carat 
+                                : product.product.properties?.carat && product.product.properties.carat !== 0 
+                                  ? product.product.properties.carat 
+                                  : 0);
                               if (value > maxAllowed) {
-                                toast.error("Fire toplamı karatı kullanılan karattan fazla olamaz!", { position: "top-right" });;            
+                                toast.error("Fire toplam karatı kullanılan karattan fazla olamaz!", { position: "top-right" });;            
                                 handleFireKaratChange(product.id, 0); 
                               } else {
                                 handleFireKaratChange(product.id, value);
@@ -478,8 +500,11 @@ export default function IsEmriBaslatmaContainer({
                             type="number"
                             onChange={(e) => {
                               const value = parseFloat(e.target.value) || 0;
-                              const maxAllowed = (product.used_carat);
-                        
+                              const maxAllowed = (product.used_carat && product.used_carat !== 0 
+                                ? product.used_carat 
+                                : product.product.properties?.carat && product.product.properties.carat !== 0 
+                                  ? product.product.properties.carat 
+                                  : 0);
                               if (value > maxAllowed) {
                                 toast.error("Kullanılmayan karat toplam karattan fazla olamaz!", { position: "top-right" });;            
                                 handleUnUsed(product.id, 0); 
@@ -501,11 +526,7 @@ export default function IsEmriBaslatmaContainer({
                         </td>
                         <td className="p-2 text-sm">
                           {product.cost
-                            ? (
-                                product.product.type !== "Simple" 
-                                  ? Number(product.cost * 1.1).toFixed(2) 
-                                  : Number(product.cost).toFixed(2)
-                              ).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                            ? (Number(product.cost).toFixed(2)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                             : "0.00"} $
                         </td>
                         <td className="p-2 text-sm">
@@ -541,8 +562,8 @@ export default function IsEmriBaslatmaContainer({
             </table>
           </div>
         )}
-        {activeTab === "waste" && <WastageAndUnUsedModul type="waste" />}
-        {activeTab === "unused" && <WastageAndUnUsedModul type="unused" />}
+        {activeTab === "waste" && <WastageAndUnUsedModul type="waste" workOderData={workOrderData}/>}
+        {activeTab === "unused" && <WastageAndUnUsedModul type="unused" workOderData={workOrderData} />}
       </div>
       <div className="flex justify-end mt-4">
       <button

@@ -419,3 +419,41 @@ export const FinishWorkOrder = async ({
   
   return result as ResponseResult<any>;
 };
+
+export const GetWastageProductList = async ({
+  work_order_id,
+}: {
+  work_order_id: number;
+}): Promise<ResponseResult<ProductListType>> => {
+  let urlPath: string = "product/work-order/product-wastage-list?";
+  if (work_order_id) {
+    urlPath += `work_order_id=${work_order_id.toString()}`;
+  }
+
+  const result = await BaseService({
+    url: urlPath,
+    bodyData: null,
+    method: "GET",
+    hasToken: true,
+  });
+  return result as ResponseResult<ProductListType>;
+};
+
+export const GetRefundProductList = async ({
+  work_order_id,
+}: {
+  work_order_id: number;
+}): Promise<ResponseResult<ProductListType>> => {
+  let urlPath: string = "product/work-order/product-refund-list?";
+  if (work_order_id) {
+    urlPath += `work_order_id=${work_order_id.toString()}`;
+  }
+
+  const result = await BaseService({
+    url: urlPath,
+    bodyData: null,
+    method: "GET",
+    hasToken: true,
+  });
+  return result as ResponseResult<ProductListType>;
+};

@@ -123,7 +123,9 @@ export type WorkOrderNotificationType = {
 export type WorkOrderWastagePayloadType = {
   work_order_product_wastage: {
     work_order_product_id: number;
-    wastage: string;
+    wastage: number | null;
+    wastage_quantity: number | null;
+    unused_carat: number | null;
   }[];
   will_update_products: {
     work_order_product_ids: number[];

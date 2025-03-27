@@ -26,12 +26,37 @@ const CustomFinishDataTable = ({
                 key={item.id}
                 className="grid grid-cols-6 items-center gap-3 border-l-[1px] border-r-[1px] border-t-[1px] border-[#e5e9ed] p-3 capitalize text-black last:border-b-[1px]"
               >
-                <div className="text-center">{item.product.pk}</div>
-                <div className="text-center">{item.product.code}</div>
-                <div className="text-center">{item.product.type}</div>
-                <div className="text-center">{item.quantity}</div>
-                <div className="text-center">{item.used_carat}</div>
-                <div className="text-right">{item.cost} ₺</div>
+                <div className="text-center">{item.product.pk ? item.product.pk : "-"}</div>
+                <div className="text-center whitespace-nowrap">
+                  <a 
+                    href={
+                      item.product.type === "Diamond"
+                        ? `/Admin/StokYonetimi/Pirlanta/PirlantaEkle/${item.product.pk}`
+                        : item.product.type === "Simple"
+                        ? `/Admin/StokYonetimi/Sade/SadeEkle/${item.product.pk}`
+                        : item.product.type === "ColoredStone"
+                        ? `/Admin/StokYonetimi/RenkliTas/RenkliTasEkle/${item.product.pk}`
+                        : "#"
+                    } 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-blue-500 underline"
+                  >
+                    {item.product.code}
+                  </a>
+                </div>
+                <div className="text-center">
+                  {item.product.type === "Simple" 
+                    ? "Sade" 
+                    : item.product.type === "ColoredStone" 
+                    ? "Renkli Taş" 
+                    : item.product.type === "Diamond" 
+                    ? "Pırlanta" 
+                    : item.product.type || "-"}
+                </div>
+                <div className="text-center">{item.quantity ?? 1}</div>
+                <div className="text-center"> {item.used_carat ?? item.refunded_carat ?? item.wastage_carat ?? 0}</div>
+                <div className="text-right">{item.cost ?? "-"}</div>
               </div>
             ))}
           </div>

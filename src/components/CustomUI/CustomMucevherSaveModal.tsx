@@ -12,7 +12,11 @@ import { CustomDataListType } from "@/types/types";
 import { CustomOptionType } from "@/types/inputTypes";
 import { GetMagazaDatatableService } from "@/Services/Magaza.Services";
 import CustomFinishDataTable from "@/components/CustomUI/CustomFinishDataTable"
-import { GetWorkOrderProductList } from "@/Services/WorkOrder.Services";
+import { 
+  GetWorkOrderProductList,
+  GetWastageProductList,
+  GetRefundProductList
+ } from "@/Services/WorkOrder.Services";
 
 
 import { toast } from 'react-toastify'; 
@@ -44,6 +48,8 @@ function CustomMucevherSaveModal({
   const [ro, setRo] = useState<number>(0);
   const [warehouselist, setWarehouselist] = useState<MagazaType[]>([]);
   const [workOrderProductList, setWorkOrderProductList] = useState<ProductType[]>([]);
+  const [wastageProductList, setWastageProductList] = useState<ProductType[]>([]);
+  const [refundedrProductList, setRefundedProductList] = useState<ProductType[]>([]);
 
 
   useEffect(() => {
@@ -62,7 +68,6 @@ function CustomMucevherSaveModal({
         .then((resp) => {
           if (resp.success && resp.data) {
             const data = resp.data as ProductType[]; 
-            console.log(data)
             setWorkOrderProductList(data)
           } else {
             console.log(resp.error);
@@ -70,6 +75,27 @@ function CustomMucevherSaveModal({
         })
         .catch((err) => console.log(err));
  
+        GetWastageProductList({work_order_id: id})
+        .then((resp) => {
+          if (resp.success && resp.data) {
+            const data = resp.data as ProductType[]; 
+            setWastageProductList(data)
+          } else {
+            console.log(resp.error);
+          }
+        })
+        .catch((err) => console.log(err));
+
+        GetRefundProductList({work_order_id: id})
+        .then((resp) => {
+          if (resp.success && resp.data) {
+            const data = resp.data as ProductType[]; 
+            setRefundedProductList(data)
+          } else {
+            console.log(resp.error);
+          }
+        })
+        .catch((err) => console.log(err));
 
   }, []);
 
@@ -166,8 +192,8 @@ function CustomMucevherSaveModal({
             </div>
           </div>
         </div>
-        <CustomFinishDataTable title="Geri Gönderilen" data={[]}/>
-        <CustomFinishDataTable title="Fire" data={[]}/>
+        <CustomFinishDataTable title="Geri Gönderilen" data={refundedrProductList}/>
+        <CustomFinishDataTable title="Fire" data={wastageProductList}/>
         <CustomFinishDataTable title="Tüketilen" data={workOrderProductList}/>
             <div className="mb-5 mt-5">
             <h4 className="text-xl font-bold border-b-2 text-black border-stone-400 pb-2 text-left">

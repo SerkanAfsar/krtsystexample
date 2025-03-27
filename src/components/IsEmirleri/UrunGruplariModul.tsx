@@ -271,12 +271,12 @@ export default function UrunGruplariModul({
            // fiyat: item.current_cost || item.cost,
            maliyet: `${formatToCurrency(
             item.product.properties.menstrual_status === "Sertifikasız"
-              ? item.cost * 1.1
+              ? item.cost 
               : item.cost
           )} $`,
             fiyat: item.current_cost || 
               (item.product.properties.menstrual_status === "Sertifikasız" 
-              ? item.cost * 1.1 
+              ? item.cost 
               : item.cost),
             firstPrice: item.cost,
             nerede: item.user_group_name,
@@ -310,12 +310,12 @@ export default function UrunGruplariModul({
            // fiyat: item.current_cost || item.cost,
             maliyet: `${formatToCurrency(
               item.product.properties.menstrual_status === "Sertifikasız"
-                ? item.cost * 1.1
+                ? item.cost 
                 : item.cost
             )} $`,
               fiyat: item.current_cost || 
                 (item.product.properties.menstrual_status === "Sertifikasız" 
-                ? item.cost * 1.1 
+                ? item.cost
                 : item.cost),
             firstPrice: item.cost,
             nerede: item.user_group_name,
@@ -350,18 +350,17 @@ export default function UrunGruplariModul({
     const items: WorkOrderProductType[] = selectedValues.map((item) => ({
       product_id: Number(item.pk),
       quantity: item.adet ? Number(item.adet) : 1,
-      used_carat: item.used_carat != null ? Number(item.used_carat) : 0,
+      used_carat: item.used_carat != null ? Number(item.used_carat) : Number(item.carat),
       name: (item.name as string) ?? null,
       price:
         item.caratPrice && item.type != "Sade" && item.used_carat
-          ? Number(item.caratPrice) * (item.used_carat as number) * 1.1
-          : Number(item.firstPrice),
+          ? Number((Number(item.caratPrice) * Number(item.used_carat) * 1.1).toFixed(2))
+          : Number(Number(item.firstPrice).toFixed(2)),
       type: item.type ? String(item.type) : undefined,
       ayar: item.ayar ? String(item.ayar) : null,
       modelTuru: item.modelTuru ? String(item.modelTuru) : null,
       renk: (item.renk as string) ?? null,
-      caratPrice: item.caratPrice != null ? Number(item.caratPrice) : null,
-      // BACKEND DİĞERLERİ DE EKLENECEK OLUNCA EKLENECEK
+      caratPrice: item.caratPrice != null ? Number(item.caratPrice).toFixed(2) : null,
       ...(item.fiyat != null && item.fiyat !== "" 
         ? { current_cost: Number(String(item.fiyat).replace(/[$,]/g, "")) } 
         : {}),
