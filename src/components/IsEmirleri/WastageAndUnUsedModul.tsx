@@ -37,6 +37,7 @@ import CustomConfirmPage from "@/components/CustomUI/CustomConfirmPage";
     const [productList, setProductList] = useState<any[]>([]);
     const [editableUrun, setEditableUrun] = useState<SeciliUrunType>({});
     const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+    const [kasaType, setKasaType] = useState<string>("");
     const { user } = useUserStore(); 
     const userRoleID = user?.groups[0]?.id;
 
@@ -64,6 +65,7 @@ import CustomConfirmPage from "@/components/CustomUI/CustomConfirmPage";
 
     const handleConfirmationOpen = (item: any) => {
       setEditableUrun(item); 
+      setKasaType(item.product.type)
       setConfirmModalOpen(true); 
     };
 
@@ -193,20 +195,29 @@ import CustomConfirmPage from "@/components/CustomUI/CustomConfirmPage";
                       </div>
                     </td>
                     <td className="p-2 text-sm">
-                      <button
+                      {product.status !== "TILL_ACCEPTED" && (
+                        <button
                           className={`p-2 w-8 h-8 ${
-                            (product.status === "SENT_TO_KASA" && userRoleID === 2) 
+                            (["PRODUCTION_WORKSHOP_APPROVED", "WORKSHOP_SENT"].includes(product.status) && userRoleID !== 2) ||
+                            (product.status === "SENT_TO_TILL" &&
+                              ((product.product.type === "Simple" && userRoleID !== 9) ||
+                              (product.product.type === "Diamond" && userRoleID !== 8) ||
+                              (product.product.type === "ColoredStone" && userRoleID !== 7)))
                               ? "opacity-50 cursor-not-allowed"
                               : "cursor-pointer"
                           }`}
                           onClick={() => handleConfirmationOpen(product)}
                           disabled={
-                            (product.status === "SENT_TO_KASA" && userRoleID === 2) ||
-                            (product.status !== "SENT_TO_KASA" && userRoleID !== 2)
+                            (["PRODUCTION_WORKSHOP_APPROVED", "WORKSHOP_SENT"].includes(product.status) && userRoleID !== 2) ||
+                            (product.status === "SENT_TO_TILL" &&
+                              ((product.product.type === "Simple" && userRoleID !== 9) ||
+                              (product.product.type === "Diamond" && userRoleID !== 8) ||
+                              (product.product.type === "ColoredStone" && userRoleID !== 7)))
                           }
-                          >
+                        >
                           <img src="/images/icon/confirmation.svg" alt="confirmation" />
                         </button>
+                      )}
                     </td>
                   </tr>
                 ))
@@ -217,7 +228,7 @@ import CustomConfirmPage from "@/components/CustomUI/CustomConfirmPage";
             <CustomConfirmPage
               isOpen={confirmModalOpen}
               item={editableUrun}
-              toKasa={true}
+              kasaType={kasaType}
               onConfirm={handleConfirmation}
               onCancel={() => {
                 setConfirmModalOpen(false);
