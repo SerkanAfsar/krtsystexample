@@ -541,7 +541,10 @@ export default function IsEmriBaslatmaContainer({
                             onClick={() => handleConfirmationOpen(product, product.id)}
                             disabled={
                               (product.status === "SENT_TO_WORKSHOP" && userRoleID === 2) ||
-                              (product.status !== "SENT_TO_WORKSHOP" && userRoleID !== 2)
+                              (product.status !== "SENT_TO_WORKSHOP" && userRoleID !== 2) ||
+                              (userRoleID === 7) ||
+                              (userRoleID === 8) ||
+                              (userRoleID === 9) 
                             }
                             >
                             <img src="/images/icon/confirmation.svg" alt="confirmation" />

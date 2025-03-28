@@ -7,15 +7,14 @@ type ConfirmPropsType = {
   item: SeciliUrunType; 
   items?: SeciliUrunType[]; 
   title?: string; 
-  toKasa?: boolean;
+  kasaType?: string;
   onConfirm: (cirak?: UserType, targetLocation?: UserType, items?: SeciliUrunType[]) => void;
   onCancel: () => void;
 };
-const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, title, toKasa, onConfirm, onCancel }) => {
+const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, title, kasaType, onConfirm, onCancel }) => {
   const [ciraklar, setCiraklar] = useState<UserType[]>([]);
   const [selectedCirak, setSelectedCirak] = useState<UserType | null>(null);
   const [atolye, setAtolye] = useState<number | null>(4);
-  const [kasa, setKasa] = useState<number | null>(9);
   const [users, setUsers] = useState<UserType[]>([]);
   const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
   const groupIdsMap: { [key: string]: number } = {
@@ -30,6 +29,16 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, ti
     'Üretim Onayladı': atolye || 4,
     'PRODUCTION_WORKSHOP_APPROVED': atolye || 4,
     'Geri Gönderildi': groupIdsMap[title ?? 'default']
+  };
+  const kasaTitleMap: { [key: string]: string } = {
+    "Simple": "Sade Kasa",
+    "ColoredStone": "Renkli Taş Kasa",
+    "Diamond": "Pırlanta Kasa",
+  };
+  const kasaMap: { [key: string]: number } = {
+    "Simple": 9,
+    "ColoredStone": 7,
+    "Diamond": 8,
   };
  
   useEffect(() => {
@@ -46,7 +55,7 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, ti
             }
           }
         }
-        const groupId = toKasa ? Number(kasa) : statusGroupMap[item.status]
+        const groupId = kasaType ? Number(kasaMap[kasaType]) : statusGroupMap[item.status]
         if (groupId !== undefined) {
           const targets = await GetUsersByUserGroups({ group_ids: [groupId] });
           setUsers(targets);
@@ -56,7 +65,7 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, ti
     
       fetchData();
     }
-  }, [item.status, atolye, kasa]);
+  }, [item.status, atolye]);
 
 
   const renderCirakSecimi = () => (
@@ -122,12 +131,9 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, ti
       <label className="text-sm font-medium text-gray-700">Gideceği Atölyeyi Seçiniz</label>
       <select
         className="w-full mt-1 p-2 border border-gray-300 rounded-md"
-        value={kasa || 9}
-        onChange={(e) => setKasa(Number(e.target.value))}
+        value={kasaType ? kasaMap[kasaType] : -1}
         >
-          <option value={9}>Sade Kasa</option>
-          <option value={8}>Pırlanta Kasa</option>
-          <option value={7}>Renkli Taş kasa</option> 
+          <option value={kasaType ? kasaMap[kasaType] : -1}>{kasaType ? kasaTitleMap[kasaType] : ""}</option>
       </select>
     </div>
   );
@@ -286,7 +292,7 @@ const CustomConfirmPage: React.FC<ConfirmPropsType> = ({ isOpen, item, items, ti
         cirakSecimi = renderCirakSecimi()
         targetLocationSecimi = (
           <div className="w-full flex flex-col items-center justify-center">
-          {toKasa ? renderKasaSelection() : renderWorkshopSelection()} 
+          {kasaType ? renderKasaSelection() : renderWorkshopSelection()} 
           {renderUserSelection()} 
         </div>
         );
