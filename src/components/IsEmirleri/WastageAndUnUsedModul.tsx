@@ -4,9 +4,10 @@ import {WorkOrderType,} from "@/types/WorkOrder.types";
 import {
   GetWastageProductList,
   GetRefundProductList,
-  //PostWorkOderUpdateStatus
+  PostWorkOderUpdateStatus
 } from "@/Services/WorkOrder.Services";
 import { useUserStore } from "@/store/useUserStore";
+import { toast } from "react-toastify";
 import CustomConfirmPage from "@/components/CustomUI/CustomConfirmPage";  
 
 
@@ -38,6 +39,7 @@ import CustomConfirmPage from "@/components/CustomUI/CustomConfirmPage";
     const [editableUrun, setEditableUrun] = useState<SeciliUrunType>({});
     const [confirmModalOpen, setConfirmModalOpen] = useState(false);
     const [kasaType, setKasaType] = useState<string>("");
+    const [statu, setStatu] = useState<boolean>(false);
     const { user } = useUserStore(); 
     const userRoleID = user?.groups[0]?.id;
 
@@ -56,8 +58,8 @@ import CustomConfirmPage from "@/components/CustomUI/CustomConfirmPage";
         userGiving: Number(user?.id)
       },
       SENT_TO_TILL: {
-        className: "text-green-500 border-green-500",
-        name: "Üretim Onayladı",
+        className: "text-purple-500 border-purple-500",
+        name: "Kasaya Gönderildi",
         newStatus: "TILL_ACCEPTED",
         userGiving: Number(user?.id)
       },
@@ -70,34 +72,30 @@ import CustomConfirmPage from "@/components/CustomUI/CustomConfirmPage";
     };
 
     const handleConfirmation = (cirak?: UserType, targetUser?:UserType) => {
-      const workOrderProductIds = editableUrun.id;
+      const workOrderProductId = [editableUrun.id];
       const currentStatus = editableUrun.status;
       const statusKey = currentStatus && statusDetailsMap[currentStatus] ? currentStatus : null;
       let newStatus = statusKey ? statusDetailsMap[statusKey]?.newStatus ?? "" : "";
       let userGiving = statusKey ? statusDetailsMap[statusKey]?.userGiving ?? null : null;
-        console.log(editableUrun)
-        console.log(workOrderProductIds)
-        console.log(newStatus)
-        console.log(cirak)
-        console.log(userGiving)
-        console.log(targetUser)
-       /* if (statusKey) {
+        if (statusKey) {
           PostWorkOderUpdateStatus({
-            work_order_product_ids: workOrderProductIds.map(id => Number(id)),
+            work_order_product_ids: workOrderProductId.map(id => Number(id)),
             status: newStatus,
             pupil_user_id: cirak?.id ? Number(cirak.id) : null,
             from_user_id: userGiving ? Number(userGiving) : null,
-            target_user_id: currentStatus == "Gönderildi" ? Number(userGiving) : (targetUser?.id ? Number(targetUser.id) : null)
+            target_user_id: currentStatus == "PRODUCTION_WORKSHOP_APPROVED" ? Number(targetUser?.id) : Number(userGiving),
+            action: type == "waste" ? "WorkOrderProductWastage" : "WorkOrderRefundProduct"
           }).then((resp) => {
             if (resp?.success) {
-              //setStatu((prevStatu: boolean) => !prevStatu);
+              toast.success("Ürünün durumu başarıyla değişti!", { position: "top-right" });
+              setStatu(prevStatu => !prevStatu);
           } else {
             return toast.error("Ürünün durumu değiştirilemedi!", {
               position: "top-right",
             });
               }
           });
-        }*/
+        }
         setConfirmModalOpen(false);
       }
 
@@ -120,7 +118,7 @@ import CustomConfirmPage from "@/components/CustomUI/CustomConfirmPage";
           });
         }
        
-      }, [type]);
+      }, [type, statu]);
 
       return (
         <div className="overflow-x-auto p-4">
