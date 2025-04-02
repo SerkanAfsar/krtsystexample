@@ -406,15 +406,21 @@ export const FinishWorkOrder = async ({
   store_id,
   image,
   output_gram,
+  work_order_log_group_by,
 }: {
   work_order_id: number;
   store_id: number;
   image: string;
   output_gram: number;
+  work_order_log_group_by: {
+    sadekar_cost: number;
+    mıhlayıcı_cost: number;
+    cilacı_cost: number;
+  };
 }): Promise<ResponseResult<any>> => {  
   const result = await BaseService({
     url: "product/finish-work-order/",
-    bodyData: { work_order_id, store_id, image, output_gram },
+    bodyData: { work_order_id, store_id, image, output_gram, work_order_log_group_by  },
     method: "POST",
     hasToken: true,
   });
@@ -458,4 +464,23 @@ export const GetRefundProductList = async ({
     hasToken: true,
   });
   return result as ResponseResult<ProductListType>;
+};
+
+export const GetWorkCosts = async ({
+  work_order_id,
+}: {
+  work_order_id: number;
+}): Promise<ResponseResult<any>> => {
+  let urlPath: string = "product/work-order-log?";
+  if (work_order_id) {
+    urlPath += `work_order_id=${work_order_id.toString()}`;
+  }
+
+  const result = await BaseService({
+    url: urlPath,
+    bodyData: null,
+    method: "GET",
+    hasToken: true,
+  });
+  return result as ResponseResult<any>;
 };
