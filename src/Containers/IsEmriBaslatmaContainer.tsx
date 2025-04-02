@@ -238,10 +238,16 @@ export default function IsEmriBaslatmaContainer({
   };
 
   const handleFinishProduction = () => {
+    if (productList.length === 0) {
+      return toast.error("Ürün listesi boş!", {
+        position: "top-right",
+      });
+    }
+  
     const allApproved = productList.every(product => product.status === "PRODUCTION_WORKSHOP_APPROVED");
-
+  
     if (allApproved) {
-      setFinishModalOpen(true)
+      setFinishModalOpen(true);
     } else {
       return toast.error("Hala üretimde olan ürünler var!", {
         position: "top-right",
@@ -328,7 +334,6 @@ export default function IsEmriBaslatmaContainer({
       </div>
       <div className={cn(
         "mb-1 rounded-sm border border-stroke bg-white pb-5 shadow-default dark:border-strokedark dark:bg-boxdark",
-        ["Completed", "Cancelled"].includes(workOrderData.status) ? "pointer-events-none opacity-50" : ""
         )}
       >
         <div className="border-b border-stroke dark:border-strokedark p-4">
@@ -377,7 +382,11 @@ export default function IsEmriBaslatmaContainer({
         </div>
         </div>
         {activeTab === "production" && (
-          <div className="overflow-x-auto p-4">
+          <div className={cn(
+            "overflow-x-auto p-4",
+            ["Completed", "Cancelled"].includes(workOrderData.status) ? "pointer-events-none opacity-50" : ""
+            )}
+          >
             <table className="w-full table-auto border-collapse">
               <thead>
                 <tr className="bg-gray-100 dark:bg-gray-700">
@@ -572,9 +581,9 @@ export default function IsEmriBaslatmaContainer({
       <button
         className={cn(
           "mt-8 rounded-md bg-primary p-3 text-white h-12 w-1/4",
-          userRoleID !== 2 ? "opacity-50 cursor-not-allowed" : ""
+          userRoleID !== 2 || ["Completed", "Cancelled"].includes(workOrderData.status) ?  "opacity-50 cursor-not-allowed" : ""
         )}
-        disabled={userRoleID !== 2}
+        disabled={userRoleID !== 2 || ["Completed", "Cancelled"].includes(workOrderData.status)}
         onClick={handleFinishProduction} 
       >
         Üretimi Bitir

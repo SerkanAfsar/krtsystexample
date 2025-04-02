@@ -15,7 +15,8 @@ import CustomFinishDataTable from "@/components/CustomUI/CustomFinishDataTable"
 import { 
   GetWorkOrderProductList,
   GetWastageProductList,
-  GetRefundProductList
+  GetRefundProductList,
+  GetWorkCosts
  } from "@/Services/WorkOrder.Services";
 
 
@@ -44,12 +45,17 @@ function CustomMucevherSaveModal({
   const [sadekarIscilik, setSadekarIscilik] = useState<number>(0);
   const [mihlayiciIscilik, setMihlayiciIscilik] = useState<number>(0);
   const [cilaIscilik, setCilaIscilik] = useState<number>(0);
-  const [toplamIscilik, setToplamIscilik] = useState<number>(0);
   const [ro, setRo] = useState<number>(0);
   const [warehouselist, setWarehouselist] = useState<MagazaType[]>([]);
   const [workOrderProductList, setWorkOrderProductList] = useState<ProductType[]>([]);
   const [wastageProductList, setWastageProductList] = useState<ProductType[]>([]);
   const [refundedrProductList, setRefundedProductList] = useState<ProductType[]>([]);
+  const [workCosts, setWorkCosts] = useState({
+    totalLaborCost: 0,
+    mihlayiciCost: 0,
+    sadekarCost: 0,
+    cilaciCost: 0,
+  });
 
 
   useEffect(() => {
@@ -68,7 +74,8 @@ function CustomMucevherSaveModal({
         .then((resp) => {
           if (resp.success && resp.data) {
             const data = resp.data as ProductType[]; 
-            setWorkOrderProductList(data)
+            const filteredData = data.filter(item => item.status == "PRODUCTION_WORKSHOP_APPROVED");
+            setWorkOrderProductList(filteredData);
           } else {
             console.log(resp.error);
           }
@@ -97,6 +104,31 @@ function CustomMucevherSaveModal({
         })
         .catch((err) => console.log(err));
 
+        GetWorkCosts({work_order_id: id})
+        .then((resp) => {
+          if (resp.success && resp.data) {
+            const costs = {
+              totalLaborCost: resp.data.total_labor_cost || 0,
+              mihlayiciCost: 0,
+              sadekarCost: 0,
+              cilaciCost: 0,
+            };
+            if (resp.data.logs) {
+              resp.data.logs.forEach((item: any) => {
+                if (item.user_group === "Mıhlayıcı") costs.mihlayiciCost = item.cost;
+                if (item.user_group === "Sadekar") costs.sadekarCost = item.cost;
+                if (item.user_group === "Cilacı") costs.cilaciCost = item.cost;
+              });
+            }
+    
+            setWorkCosts(costs);
+            setCilaIscilik(costs.cilaciCost)
+            setMihlayiciIscilik(costs.mihlayiciCost)
+            setSadekarIscilik(costs.sadekarCost)
+          } 
+        })
+        .catch((err) => console.log(err));
+      
   }, []);
 
   useEffect(() => {
@@ -207,6 +239,7 @@ function CustomMucevherSaveModal({
                 </label>
                 <input
                   type="number"
+                  value={workCosts.sadekarCost}
                   disabled= {true}
                   className="w-2/3 mt-2 border-b-[1.5px] border-stone-400 bg-transparent px-3 py-2 outline-none dark:border-form-strokedark dark:text-white"
                 />
@@ -224,6 +257,7 @@ function CustomMucevherSaveModal({
                 </label>
                 <input
                   type="number"
+                  value={workCosts.mihlayiciCost}
                   disabled= {true}
                   className="w-2/3 mt-2 border-b-[1.5px] border-stone-400 bg-transparent px-3 py-2 outline-none dark:border-form-strokedark dark:text-white"
                 />
@@ -237,10 +271,11 @@ function CustomMucevherSaveModal({
 
               <div className="flex items-center gap-4">
                 <label className="text-sm text-left font-medium text-black dark:text-white w-1/3">
-                  Cila İşçilik:
+                  Cilacı İşçilik:
                 </label>
                 <input
                   type="number"
+                  value={workCosts.cilaciCost}
                   disabled= {true}
                   className="w-2/3 mt-2 text-left border-b-[1.5px] border-stone-400 bg-transparent px-3 py-2 outline-none dark:border-form-strokedark dark:text-white"
                 />
@@ -258,13 +293,14 @@ function CustomMucevherSaveModal({
                 </label>
                 <input
                   type="number"
+                  value={workCosts.totalLaborCost}
                   disabled= {true}
                   className="w-2/3 mt-2 border-b-[1.5px] border-stone-400 bg-transparent px-3 py-2 outline-none dark:border-form-strokedark dark:text-white"
                 />
                 <input
                   type="number"
-                  value={toplamIscilik} 
-                  onChange={(e) => setToplamIscilik(Number(e.target.value))}
+                  value={sadekarIscilik + mihlayiciIscilik + cilaIscilik}
+                  disabled= {true}
                   className="w-2/3 mt-2 border-b-[1.5px] border-stone-400 bg-transparent px-3 py-2 outline-none dark:border-form-strokedark dark:text-white"
                 />
               </div>
@@ -359,6 +395,11 @@ function CustomMucevherSaveModal({
                 store_id,
                 image: img as string,
                 output_gram: Number(outputGram),
+                work_order_log_group_by: {
+                  sadekar_cost: sadekarIscilik,
+                  mıhlayıcı_cost: mihlayiciIscilik,
+                  cilacı_cost: cilaIscilik,
+                }
               })
                 .then((resp) => {
                   if (resp?.success) {
