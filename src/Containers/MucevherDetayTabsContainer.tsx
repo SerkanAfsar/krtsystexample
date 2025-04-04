@@ -42,9 +42,7 @@ export default function MucevherDetayTabsContainer({
             kesim: productItem.properties?.kesim as string,
             renk: productItem.properties?.renk as string,
             altinRengi: productItem.properties?.altinRengi as string,
-            fiyat: productItem.menstrual_status === "Single"
-                ? productItem.total_cost
-                : (nextItem?.used_carat ? Number(productItem.product_cost?.pricePerCarat) * Number(nextItem.used_carat) * 1.1 : productItem.total_cost),
+            fiyat: nextItem.current_cost,
             modelTuru: productItem.properties?.modelTuru as string,
             gram: productItem.properties?.gram as number,
             ayar: productItem.properties?.ayar as number,

@@ -95,6 +95,7 @@ export type WorkOrderLogType = {
   from_person: string;
   to_person: string;
   from_group: string;
+  user_group: string;
   to_group: string;
   wastage: number | null;
   output_gram: number;

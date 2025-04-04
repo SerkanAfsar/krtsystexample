@@ -63,14 +63,14 @@ export default function useGetWorkOrderListData() {
           ) : null,
 
           totalProductColumn: (
-            <CustomToolTip text={dolarFormat(item.total_cost as number)}>
+            <CustomToolTip text={dolarFormat(Number(item.current_cost) + Number(item.labor_cost))}>
               <div className="flex flex-col  items-center justify-center gap-1">
                 <b>Maliyet</b>
                 <div>
                   Malzeme :{" "}
                   {/* {stringToMoney(item.total_product_cost.toString() || "")} $
                    */}
-                  {dolarFormat(Number(item.total_product_cost))}
+                  {dolarFormat(Number(item.current_cost))}
                 </div>
                 <div>
                   {/* İşçilik : {stringToMoney(item.labor_cost?.toString() || "")} $ */}

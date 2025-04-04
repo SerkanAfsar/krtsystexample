@@ -55,8 +55,12 @@ const CustomFinishDataTable = ({
                     : item.product.type || "-"}
                 </div>
                 <div className="text-center">{item.quantity ?? 1}</div>
-                <div className="text-center"> {item.used_carat ?? item.refunded_carat ?? item.wastage_carat ?? 0}</div>
-                <div className="text-right">{item.cost ?? "-"}</div>
+                <div className="text-center"> 
+                  {item.product.type === "Simple" 
+                  ? "-" : 
+                  item.used_carat ?? item.refunded_carat ?? item.wastage_carat ?? 0}
+                </div>
+                <div className="text-right">{item.current_cost ? item.current_cost + "$" : "-"}</div>
               </div>
             ))}
           </div>
