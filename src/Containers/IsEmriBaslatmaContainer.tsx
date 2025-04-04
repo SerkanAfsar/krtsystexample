@@ -459,11 +459,15 @@ export default function IsEmriBaslatmaContainer({
                         </td>
                         <td className="p-2 text-sm">{product.quantity || "-"}</td>
                         <td className="p-2 text-sm">
-                          {product.used_carat && product.used_carat !== 0 
-                            ? product.used_carat 
-                            : product.product.properties?.carat && product.product.properties.carat !== 0 
-                              ? product.product.properties.carat 
-                              : "-"}
+                        {
+                          product.product.type === "Simple"
+                            ? "-"
+                            : product.used_carat && product.used_carat !== 0
+                              ? product.used_carat
+                              : product.product.properties?.carat && product.product.properties.carat !== 0
+                                ? product.product.properties.carat
+                                : "-"
+                        }
                         </td>
                         <td className="p-2 text-sm">
                           <input
@@ -534,8 +538,8 @@ export default function IsEmriBaslatmaContainer({
                           </div>
                         </td>
                         <td className="p-2 text-sm">
-                          {product.cost
-                            ? (Number(product.cost).toFixed(2)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                          {product.current_cost
+                            ? (Number(product.current_cost).toFixed(2)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                             : "0.00"} $
                         </td>
                         <td className="p-2 text-sm">

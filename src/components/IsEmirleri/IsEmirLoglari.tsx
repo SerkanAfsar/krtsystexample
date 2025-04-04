@@ -80,9 +80,9 @@ export default function IsEmirleriLoglari({
                 <span>{date}</span>
               </div>
               <div className="text-center">
-              {item.from_group ? item.from_group : "-"}
+              {item.user_group ? item.user_group : "-"}
               </div>
-              <div className="text-center">{`${item?.output_gram} gr`}</div>
+              <div className="text-center">{item?.output_gram ? `${item?.output_gram} gr` : "-"}</div>
               <div className="text-center">{item.description}</div>
               <div className="text-center font-semibold">{`${formatToCurrency(item.cost || 0)} $`}</div>
             </div>

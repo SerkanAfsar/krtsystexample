@@ -183,7 +183,11 @@ import CustomConfirmPage from "@/components/CustomUI/CustomConfirmPage";
                         ? "Pırlanta" 
                         : product.product.type || "-"}
                     </td>
-                    <td className="p-2 text-sm">{type === "waste" ? product.wastage_carat : product.refunded_carat}</td>
+                    <td className="p-2 text-sm">
+                      {product.product.type === "Simple" 
+                      ? "-" 
+                      : type === "waste" ? product.wastage_carat : product.refunded_carat}
+                    </td>
                     <td className="p-2 text-sm">{product.user_group_name}</td>
                     <td className="p-2 text-sm">
                       <div className={`p ml-[-25px] pt-2 h-8 w-28 lg:w-28 md:w-22 sm:w-20 rounded-full text-center text-xs font-bold whitespace-nowrap dark:disabled:text-white border-2 leading-[2],
