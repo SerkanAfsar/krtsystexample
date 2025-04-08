@@ -63,6 +63,12 @@ import CustomConfirmPage from "@/components/CustomUI/CustomConfirmPage";
         newStatus: "TILL_ACCEPTED",
         userGiving: Number(user?.id)
       },
+      TILL_ACCEPTED: {
+        className: "text-green-500 border-green-500",
+        name: "Kasa Teslim Aldı",
+        newStatus: "TILL_ACCEPTED",
+        userGiving: Number(user?.id)
+      },
     };
 
     const handleConfirmationOpen = (item: any) => {

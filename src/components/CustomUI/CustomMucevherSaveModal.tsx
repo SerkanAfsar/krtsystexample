@@ -21,6 +21,7 @@ import {
 
 
 import { toast } from 'react-toastify'; 
+import { FcInfo } from "react-icons/fc";
 
 
 function CustomMucevherSaveModal({
@@ -45,7 +46,7 @@ function CustomMucevherSaveModal({
   const [sadekarIscilik, setSadekarIscilik] = useState<number>(0);
   const [mihlayiciIscilik, setMihlayiciIscilik] = useState<number>(0);
   const [cilaIscilik, setCilaIscilik] = useState<number>(0);
-  const [ro, setRo] = useState<number>(0);
+  const [ro, setRo] = useState<number>(1);
   const [warehouselist, setWarehouselist] = useState<MagazaType[]>([]);
   const [workOrderProductList, setWorkOrderProductList] = useState<ProductType[]>([]);
   const [wastageProductList, setWastageProductList] = useState<ProductType[]>([]);
@@ -306,11 +307,18 @@ function CustomMucevherSaveModal({
               </div>
 
               <div className="flex items-center gap-4">
-                <label className="text-sm text-left font-medium text-black dark:text-white w-1/3">
-                  RO:
-                </label>
+              <label className="text-sm font-medium text-black dark:text-white w-1/3 flex items-center gap-1">
+                Çarpan :
+                <div className="group relative flex items-center">
+                  <FcInfo className="w-5 h-5 cursor-pointer" />
+                  <div className="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 w-40 bg-black text-white text-xs p-2 rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    1.1 1.2 gibi çarpan değerleri giriniz.
+                  </div>
+                </div>
+              </label>
                 <input
                   type="number"
+                  value={1} 
                   disabled= {true}
                   className="w-2/3 mt-2 border-b-[1.5px] border-stone-400 bg-transparent px-3 py-2 outline-none dark:border-form-strokedark dark:text-white"
                 />  

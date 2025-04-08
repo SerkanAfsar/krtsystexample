@@ -60,7 +60,7 @@ const CustomFinishDataTable = ({
                   ? "-" : 
                   item.used_carat ?? item.refunded_carat ?? item.wastage_carat ?? 0}
                 </div>
-                <div className="text-right">{item.current_cost ? item.current_cost + "$" : "-"}</div>
+                <div className="text-right">{item.current_cost ? item.current_cost.toFixed(2) + "$" : "-"}</div>
               </div>
             ))}
           </div>

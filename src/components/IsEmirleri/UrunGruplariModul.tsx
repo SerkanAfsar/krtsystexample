@@ -246,7 +246,7 @@ export default function UrunGruplariModul({
             gram: item.product.properties.gram,
             has: item.product.properties.hasGrami,
             maliyet: `${formatToCurrency(item.cost)} $`,
-            fiyat: item.current_cost || item.cost,
+            fiyat: item.current_cost.toFixed(2) || item.cost.toFixed(2),
             nerede: item.user_group_name,
             status: statusDetailsMap[item.status]?.name || item.status,
             type: "Sade",
@@ -274,10 +274,10 @@ export default function UrunGruplariModul({
               ? item.cost 
               : item.cost
           )} $`,
-            fiyat: item.current_cost || 
+            fiyat: item.current_cost.toFixed(2) || 
               (item.product.properties.menstrual_status === "Sertifikasız" 
-              ? item.cost 
-              : item.cost),
+              ? item.cost.toFixed(2) 
+              : item.cost.toFixed(2)),
             firstPrice: item.cost,
             nerede: item.user_group_name,
             status: statusDetailsMap[item.status]?.name || item.status,
@@ -313,10 +313,10 @@ export default function UrunGruplariModul({
                 ? item.cost 
                 : item.cost
             )} $`,
-              fiyat: item.current_cost || 
+              fiyat: item.current_cost.toFixed(2) || 
                 (item.product.properties.menstrual_status === "Sertifikasız" 
-                ? item.cost
-                : item.cost),
+                ? item.cost.toFixed(2)
+                : item.cost.toFixed(2)),
             firstPrice: item.cost,
             nerede: item.user_group_name,
             status: statusDetailsMap[item.status]?.name || item.status,
